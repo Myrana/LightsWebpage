@@ -1,17 +1,30 @@
 <?php
 
-$servername = "romoserver.local";
-$username = "hellweek";
-$password = "covert69guess";
-$dbName = "LedLightSystem";
+include_once('CommonFunctions.php');
+
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: Registration.php");
+  exit();
+}
 
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbName);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-} 
+if(isset($_REQUEST['Config']))
+{
+	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1')";
+
+
+	if ($conn->query($sql) === TRUE) {
+  	echo "<h1>Your record was added to the database successfully.</h1>";
+} else {
+  echo "<h1>Error: " . $conn->error . "</h1>";
+}
+
+$conn->close();
+
+	
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -63,7 +76,7 @@ includeHTML();
 </script>
   	<!-- body code goes here -->
 	  <h1>Config Page</h1>
-<form class="Config Page" action="ConfigRecord.php" method="post">
+	          <form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	
 	<p><label for="LightSystemName">Light System Name:</label><br />
 	  <input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
@@ -121,7 +134,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	<p><label for="Brightness">Brightness:</label><br />
 	  <input type="number" id="Brightness" name="Brightness" min="1" max="200" value="60"></p>
 	
-<button type="submit" name="Submit">Add Record</button>
+<button type="submit" name="Config">Add Record</button>
 </form>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 

@@ -1,6 +1,24 @@
 <?php
 
+include_once("CommonFunctions.php");
 
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: Registration.php");
+  exit();
+}
+
+
+if (!empty($_POST))
+{ 
+	$test = $_POST['test'];
+
+	$client = new Mosquitto\Client();
+	$client->connect("Romoserver.local", 1883, 5);
+	$client->loop();
+	$mid = $client->publish('patio1.local', 'ON');
+	$client->loop();
+}
 ?>
 
 <!doctype html>
@@ -47,7 +65,7 @@ function includeHTML() {
 <script>
 includeHTML();
 </script>
-	<form name="testform" action="TestSubmit.php" method="post">
+	<form name="testform" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
 	<p><label for="test">test area:</label><br />
 		<textarea name="test" rows="4" cols="50"></textarea></p>
