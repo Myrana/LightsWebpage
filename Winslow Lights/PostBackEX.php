@@ -1,10 +1,31 @@
+<?php
+
+if (!empty($_POST))
+{ 
+	$test = $_POST['test'];
+
+	$client = new Mosquitto\Client();
+	$client->connect("Romoserver.local", 1883, 5);
+	$client->loop();
+	$mid = $client->publish('patio1.local', 'ON');
+	$client->loop();
+	echo "true";
+}
+else
+{
+	echo "false";
+}
+
+
+?>
+
 <!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registration Page</title>
+<title>Test page</title>
 <script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
-<link href="Styles.css" rel="stylesheet" type="text/css">
+<link href="Styles.css" rel="stylesheet" type="text/css">	
 </head>
 
 <script>
@@ -42,33 +63,15 @@ function includeHTML() {
 <script>
 includeHTML();
 </script>
-  	<!-- body code goes here -->
-	  <h1>Registration Page</h1>
-<form class="page" action="Registered.php" method="post">
-	
-	<p><label for="username">Username:</label><br />
-	  <input name="username" type="text" id="username" placeholder="50 characters or less" maxlength="100"></p>
-	
-	<p><label for="password">Password:</label><br />
-	  <input name="password" type="text" id="password" placeholder="50 characters or less" maxlength="50"></p>
-	
-	<p><label for="admin">Is admin?:</label><br />
-	  <input type="checkbox" id="admin" name="admin" value="admin">
-		<label for="admin">Yes</label>
-	
-	</p>
-	
-	<p><label for="email">Email:</label><br />
-	  <input name="email" type="text" id="email" placeholder="100 characters or less" maxlength="50"></p>
-	
-	<p><label for="phonenumber">Phone Number:</label><br />
-	  <input name="phonenumber" type="text" id="phonenumber" placeholder="10 characters or less" maxlength="50"></p>
-	
-	<p><label for="twitter">Twitter:</label><br />
-	  <input name="twitter" type="text" id="twitter" placeholder="50 characters or less" maxlength="50"></p>
+        <form name="testform" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
+		
+	<p><label for="test">test area:</label><br />
+		<textarea name="test" rows="4" cols="50"></textarea></p>
+		<p><button type="submit" name="Submit">Test Button</button></p>
 	
-<button type="submit" name="Submit">Add User</button>
-</form>
+		</form>
+	
+	
 </body>
 </html>

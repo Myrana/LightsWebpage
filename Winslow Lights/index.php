@@ -1,8 +1,21 @@
 <?php
+include_once("CommonFunctions.php");
+
+if(isset($_REQUEST['Login']))
+{ 
+	$_SESSION['authorized'] = 0;
+	$qry = "SELECT authorized FROM registrationTable WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
+	
+	$row = mysqli_query($conn, $qry);
+	if(mysqli_num_rows($row) == 1)
+	{
+	  $_SESSION['authorized'] = 1;
+	  echo "You Are logged In";
+	}
+
+}
 
 
-session_start();
-$_SESSION['SessionTest'] = "Rock and roll testing the session!";
 
 ?>
 
@@ -51,5 +64,13 @@ includeHTML();
 </script>
 	
 <h1>Home</h1>
+	<form name="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<p><label>Username:</label> <br />
+			<input type="text" name="Username"></p>
+		<p><label>Password:</label> <br />
+			<input type="password" name="Password">
+		</p>
+	<button type="submit" name="Login">Login</button>
+	</form>
 </body>
 </html>

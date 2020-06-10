@@ -1,17 +1,40 @@
 <?php
 
-$servername = "romoserver.local";
-$username = "hellweek";
-$password = "covert69guess";
-$dbName = "LedLightSystem";
+include_once('CommonFunctions.php');
 
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbName);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-} 
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: Registration.php");
+  exit();
+}
+
+if(isset($_REQUEST['LightShow']))
+{ 
+
+	$systemName = $_POST['SystemName'];
+
+	$onoff = "ON";
+	if (empty($_POST['lights']))
+		$onoff = "OFF";
+	//$systemName = $_POST['Lights'];
+
+	foreach($_POST['ShowName'] as $selectedOption)
+	       $showArray[] = $selectedOption;
+
+	$sendArray['state'] = $onoff;;
+	$sendArray['shows'] = $showArray;
+	$sendArray['brightness'] = $_POST['Brightness'];
+
+
+	$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$systemName);
+	$option = '';
+	$query_data = mysqli_fetch_array($displayStrip);
+
+	sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+	
+}
+
 
 ?>
 
@@ -63,7 +86,6 @@ includeHTML();
 	
 <?php
 	
-session_start();	
 	
 $displayStrip = mysqli_query($conn,"SELECT ID, systemName FROM lightSystems WHERE enabled = 1");
 $option = '';
@@ -76,8 +98,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 ?>
 	
-	
-	<form action="SystemNamePageSubmit.php" method="post">
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<p><label for="SystemName">System Name:</label><br />
 	<select name="SystemName">
 		<?php echo $option;?>
@@ -102,7 +123,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 ?>
 		
 	<p><label for="ShowName">Show Name (may select multiple)</label><br />
-	<select name="ShowName[]" multiple= "multiple">
+	<select name="ShowName[]" size="7" multiple= "multiple">
 		<?php echo $option;?>
 		</select>	
 	</p>
@@ -110,7 +131,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	  <input type="number" id="Brightness" name="Brightness" min="10" max="200" value="10"></p>
 		
 	
-		<p><button type="submit" name="Submit">Send Command</button></p>
+		<p><button type="submit" name="LightShow">Send Command</button></p>
 	</form>
 		
 	
