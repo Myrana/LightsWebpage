@@ -14,13 +14,9 @@ if(isset($_SESSION['last_action']))
     $expireAfterSeconds = $expireAfter * 60;
     
     //Check to see if they have been inactive for too long.
-    if($secondsInactive >= $expireAfterSeconds){
-        //User has been inactive for too long.
-        //Kill their session.
-        session_unset();
-        session_destroy();
-		header("Location: index.php");
-  		exit();
+    if($secondsInactive >= $expireAfterSeconds)
+    {
+      killUserSession();
     }
     
 }
@@ -49,4 +45,11 @@ function sendMQTT($arg_1, $arg_2)
 	$client->loop();
 }
 
+function killUserSession()
+{
+	session_unset();
+        session_destroy();
+        header("Location: index.php");
+        exit();
+}
 ?>
