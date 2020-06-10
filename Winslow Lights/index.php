@@ -10,6 +10,7 @@ if(isset($_REQUEST['Login']))
 	if(mysqli_num_rows($row) == 1)
 	{
 	  $_SESSION['authorized'] = 1;
+	  $_SESSION['User'] = $_POST['Username'];
 	  echo "You Are logged In";
 	}
 
