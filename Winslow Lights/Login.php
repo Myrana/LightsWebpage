@@ -1,9 +1,30 @@
+<?php
+include_once("CommonFunctions.php");
+
+if(isset($_REQUEST['Login']))
+{ 
+	$_SESSION['authorized'] = 0;
+	$qry = "SELECT authorized FROM registrationTable WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
+	
+	$row = mysqli_query($conn, $qry);
+	if(mysqli_num_rows($row) == 1)
+	{
+	  $_SESSION['authorized'] = 1;
+	  $_SESSION['User'] = $_POST['Username'];
+	  echo "You Are logged In";
+	}
+
+}
+
+
+
+?>
 
 <!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Winslow's Illuminous LEDs - Home</title>
+<title>Home</title>
 <script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
 <link href="Styles.css" rel="stylesheet" type="text/css">
 </head>
@@ -44,21 +65,13 @@ includeHTML();
 </script>
 	
 <h1>Home</h1>
-    <?php
-include_once('CommonFunctions.php');
-
-
-
-?>
-	<form>
-	
-		<p>Welcome to Winslow's Illuminous LEDs a powerful at home accent lightning company powered by raspberry pis.</p>
-		
-		<p>
-		Each kit will come with everything needed to hang and set up your light show including the raspberry pi preloaded with several light shows already and down the line, you will be able to create your own shows based on your needs. These kits will need to be powered by 12 volts, which is not included in the kit. These kits are designed to work both indoors and outdoors.
+	<form name="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<p><label>Username:</label> <br />
+			<input type="text" name="Username"></p>
+		<p><label>Password:</label> <br />
+			<input type="password" name="Password">
 		</p>
-	
+	<button type="submit" name="Login">Login</button>
 	</form>
 </body>
 </html>
-
