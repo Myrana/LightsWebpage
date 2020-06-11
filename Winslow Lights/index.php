@@ -1,4 +1,11 @@
 
+<?php
+
+include_once('CommonFunctions.php');
+
+?>
+
+
 <!doctype html>
 <html>
 <head>
@@ -44,12 +51,6 @@ includeHTML();
 </script>
 	
 <h1>Home</h1>
-    <?php
-include_once('CommonFunctions.php');
-
-
-
-?>
 	<form>
 	
 		<p>Welcome to Winslow's Illuminous LEDs a powerful at home accent lightning company powered by raspberry pis.</p>
