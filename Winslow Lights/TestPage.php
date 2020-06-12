@@ -171,8 +171,20 @@ while($query_data = mysqli_fetch_array($displayStrip))
 }
 	
 ?>
-
-	<p><label for="ShowName">Show Name</label><br />
+	</form>
+	
+	</div>
+<div class="column">
+	
+	<form>
+		
+	
+	<p><input type="color" id="color 1"><label for ="color 1">Color 1</label> <br />
+		<input type="color" id="color 2"><label for ="color 2">Color 2</label> <br />
+		<input type="color" id="color 3"><label for ="color 3">Color 3</label> <br />
+		<input type="color" id="color 4"><label for ="color 4">Color 4</label> <br /></p>
+	
+		<p><label for="ShowName">Show Name</label><br />
 	<select name="ShowName" size="7">
 		<?php echo $option;?>
 		</select>
@@ -194,19 +206,8 @@ slider.oninput = function() {
 }
 </script>
 	
-		<p><button type="submit" name="LightShow">Send Command</button></p>
-	</form>
-	
-	</div>
-<div class="column">
-	
-	<form>
-	
-	<input type="color" id="color 1"><label for ="color 1">Color 1</label> <br />
-		<input type="color" id="color 2"><label for ="color 2">Color 2</label> <br />
-		<input type="color" id="color 3"><label for ="color 3">Color 3</label> <br />
-		<input type="color" id="color 4"><label for ="color 4">Color 4</label> <br />
-	
+		<p><button type="submit" name="LightShow">Send Show</button></p>
+		
 	</form>
 	
 	</div>	
