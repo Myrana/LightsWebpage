@@ -10,29 +10,39 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
+if(isset($_REQUEST['Power']))
+{ 
+    $_SESSION["LightSystemID"]  = $_POST['SystemName'];
+    $_SESSION["Brightness"] = $_POST['Brightness'];
+    $onoff = "ON";
+    if (empty($_POST['lights']))
+      $onoff = "OFF";
+    
+    $sendArray['state'] = $onoff;;
+    $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+    $query_data = mysqli_fetch_array($displayStrip);
+
+    sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+
+}
+
 if(isset($_REQUEST['LightShow']))
 { 
 
-	$_SESSION["LightSystemID"]  = $_POST['SystemName'];
+    $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
 
-	$onoff = "ON";
-	if (empty($_POST['lights']))
-		$onoff = "OFF";
+    foreach($_POST['ShowName'] as $selectedOption)
+	$showArray[] = $selectedOption;
 
-	foreach($_POST['ShowName'] as $selectedOption)
-	       $showArray[] = $selectedOption;
-
-	$sendArray['state'] = $onoff;;
-	$sendArray['shows'] = $showArray;
+    $sendArray['shows'] = $showArray;
     $sendArray['brightness'] = $_SESSION["Brightness"];
 
 
-	$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-	$option = '';
-	$query_data = mysqli_fetch_array($displayStrip);
+    $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+    $query_data = mysqli_fetch_array($displayStrip);
 
-	sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+    sendMQTT($query_data['serverHostName'], json_encode($sendArray));
 	
 }
 
@@ -115,7 +125,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	</p>
 		<label for="On">On</label>
 	<input type="checkbox" name="lights"  value="ON" checked>
-		
+	<p><button type="submit" name="Power">Power</button></p>	
 		<?php
 	
 	
@@ -137,7 +147,8 @@ while($query_data = mysqli_fetch_array($displayStrip))
 		</select>	
 	</p>
 		<p><label for="Brightness">Brightness:</label><br />
-<input type="number" value=<?php echo $_SESSION["Brightness"];?> id="Brightness" name="Brightness" min="10" max="200"></p>
+<input type="range" step="1" value=<?php echo $_SESSION["Brightness"];?> id="Brightness" name="Brightness" min="10" max="200"></p>
+<output for="Brightness" onforminput="value = Brightness.valueasnumber;"></output>
 		
 	
 		<p><button type="submit" name="LightShow">Send Command</button></p>
