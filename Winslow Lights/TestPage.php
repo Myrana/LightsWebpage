@@ -178,6 +178,8 @@ while($query_data = mysqli_fetch_array($displayStrip))
 		</select>
 		
 	</p>
+	<p><button type="submit" name="ConfigShow">Config show</button></p>	
+	
 		<p><label for="Brightness">Brightness:</label><br />
 <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
