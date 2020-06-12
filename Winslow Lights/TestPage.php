@@ -199,6 +199,20 @@ while($query_data = mysqli_fetch_array($displayStrip))
 		<input type="color" Name="color_4" id="color4"><label for ="color4">Color 4</label> <br /></p>
 	
 
+		<p><label for="Delay">Delay:</label><br />
+<input type="range" step="1" id="Delay" name="Delay" min="1" max="1000" value="1">
+Value: <span id="DelayValue"></span></p>
+
+<script>
+var slider = document.getElementById("Delay");
+var output = document.getElementById("DelayValue");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
+		
 		<p><label for="Brightness">Brightness:</label><br />
 <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
@@ -212,6 +226,11 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 </script>
+		
+		<label for="On">Clear on Start</label>
+	<input type="checkbox" name="clearStart">
+		<label for="On">Clear on Finish</label>
+	<input type="checkbox" name="clearFinish">
 	
 		<p><button type="submit" name="LightShow">Send Show</button></p>
 		
