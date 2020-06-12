@@ -7,8 +7,8 @@ nav {
     background: rgb(205,202,251);
 	background: radial-gradient(circle, rgba(205,202,251,1) 0%, rgba(135,7,111,1) 48%, rgba(236,134,91,1) 89%);
     position: relative;
-    box-shadow: 0px 6px 10px 0px #000;
     -webkit-box-shadow: 0px 6px 10px 0px #000;
+	box-shadow: 0px 6px 10px 0px #000;
 }
 
 ul {
@@ -22,15 +22,6 @@ ul a{
 }
 
 
-
-.DropdownMenu{
-    display: none;
-	
-}
-
-.DropdownMenu form{
-    width: 2px;
-}
 
 /* Page Styles */
 body{
@@ -56,11 +47,16 @@ label{
 	font-weight: bold;
 }
 
+
 /* Footer */
 footer{
 	font-weight: bold;
 	font-style: italic;
 	text-align: center;
 }
-.page {
+
+
+.column {
+    width: 50%;
+    float: left;
 }
