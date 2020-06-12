@@ -3,6 +3,7 @@
 include_once('CommonFunctions.php');
 
 $_SESSION["Brightness"] = 20;
+$_SESSION["LightSystemID"] = -1;
 
 if($_SESSION['authorized'] == 0)
 {
@@ -147,9 +148,18 @@ while($query_data = mysqli_fetch_array($displayStrip))
 		</select>	
 	</p>
 		<p><label for="Brightness">Brightness:</label><br />
-<input type="range" step="1" value=<?php echo $_SESSION["Brightness"];?> id="Brightness" name="Brightness" min="10" max="200"></p>
-<output for="Brightness" onforminput="value = Brightness.valueasnumber;"></output>
-		
+<input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
+Value: <span id="BrightnessValue"></span></p>
+
+<script>
+var slider = document.getElementById("Brightness");
+var output = document.getElementById("BrightnessValue");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
 	
 		<p><button type="submit" name="LightShow">Send Command</button></p>
 	</form>
