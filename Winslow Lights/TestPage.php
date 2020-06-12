@@ -13,7 +13,6 @@ if($_SESSION['authorized'] == 0)
 
 if(isset($_REQUEST['Power']))
 { 
-echo "1";
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
     $onoff = "ON";
@@ -31,7 +30,7 @@ echo "1";
 
 if(isset($_REQUEST['ConfigShow']))
 { 
-echo "2";
+
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
 
@@ -54,16 +53,26 @@ echo "2";
 
 if(isset($_REQUEST['LightShow']))
 { 
-echo "3";
+
+    $r = 5;
+    $g = 3;
+    $b = 12;
+
+
+    $hex = $_POST['color_1'];
+    list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
+    $_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
 
     foreach($_POST['ShowName'] as $selectedOption)
-	$showArray[] = $selectedOption;
+	  $showArray[] = $selectedOption;
 
     $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
-
+    $sendArray['color1'] = $_SESSION["Color1"];
+    
 
     $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
     $query_data = mysqli_fetch_array($displayStrip);
@@ -171,27 +180,25 @@ while($query_data = mysqli_fetch_array($displayStrip))
 }
 	
 ?>
-	</form>
+
 	
 	</div>
 <div class="column">
 	
-	<form>
-		
+
+    <form>
+    <p><label for="ShowName">Show Name</label><br /><select name="ShowName" size="7">
+    <?php echo $option;?></select>
+</p>
+<p><button type="submit" name="ConfigShow">Config show</button></p>
+
+
+	<p><input type="color"  Name="color_1" id="color1"><label for ="color1">Color 1</label> <br />
+		<input type="color" Name-"color_2" id="color2"><label for ="color2">Color 2</label> <br />
+		<input type="color" Name="color_3" id="color3"><label for ="color3">Color 3</label> <br />
+		<input type="color" Name="color_4" id="color4"><label for ="color4">Color 4</label> <br /></p>
 	
-	<p><input type="color" id="color 1"><label for ="color 1">Color 1</label> <br />
-		<input type="color" id="color 2"><label for ="color 2">Color 2</label> <br />
-		<input type="color" id="color 3"><label for ="color 3">Color 3</label> <br />
-		<input type="color" id="color 4"><label for ="color 4">Color 4</label> <br /></p>
-	
-		<p><label for="ShowName">Show Name</label><br />
-	<select name="ShowName" size="7">
-		<?php echo $option;?>
-		</select>
-		
-	</p>
-	<p><button type="submit" name="ConfigShow">Config show</button></p>	
-	
+
 		<p><label for="Brightness">Brightness:</label><br />
 <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
@@ -209,7 +216,7 @@ slider.oninput = function() {
 		<p><button type="submit" name="LightShow">Send Show</button></p>
 		
 	</form>
-	
+	</form>
 	</div>	
 
 	
