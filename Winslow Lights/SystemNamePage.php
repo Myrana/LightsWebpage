@@ -2,6 +2,7 @@
 
 include_once('CommonFunctions.php');
 
+$_SESSION["Brightness"] = 20;
 
 if($_SESSION['authorized'] == 0)
 {
@@ -12,22 +13,22 @@ if($_SESSION['authorized'] == 0)
 if(isset($_REQUEST['LightShow']))
 { 
 
-	$systemName = $_POST['SystemName'];
+	$_SESSION["LightSystemID"]  = $_POST['SystemName'];
+    $_SESSION["Brightness"] = $_POST['Brightness'];
 
 	$onoff = "ON";
 	if (empty($_POST['lights']))
 		$onoff = "OFF";
-	//$systemName = $_POST['Lights'];
 
 	foreach($_POST['ShowName'] as $selectedOption)
 	       $showArray[] = $selectedOption;
 
 	$sendArray['state'] = $onoff;;
 	$sendArray['shows'] = $showArray;
-	$sendArray['brightness'] = $_POST['Brightness'];
+    $sendArray['brightness'] = $_SESSION["Brightness"];
 
 
-	$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$systemName);
+	$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
 	$option = '';
 	$query_data = mysqli_fetch_array($displayStrip);
 
@@ -93,7 +94,15 @@ while($query_data = mysqli_fetch_array($displayStrip))
 {
 	//echo $query_data['stripName'];
 	//<option>$query_data['stripName']</option>
-	$option .="<option value = '".$query_data['ID']."'>".$query_data['systemName']."</option>";
+    if($query_data['ID'] == $_SESSION["LightSystemID"] )
+    {
+
+        $option .="<option value = '".$query_data['ID']."' selected='selected'>".$query_data['systemName']."</option>";
+    }
+    else
+    {
+        $option .="<option value = '".$query_data['ID']."'>".$query_data['systemName']."</option>";
+    }
 }
 	
 ?>
@@ -121,14 +130,14 @@ while($query_data = mysqli_fetch_array($displayStrip))
 }
 	
 ?>
-		
+
 	<p><label for="ShowName">Show Name (may select multiple)</label><br />
 	<select name="ShowName[]" size="7" multiple= "multiple">
 		<?php echo $option;?>
 		</select>	
 	</p>
 		<p><label for="Brightness">Brightness:</label><br />
-	  <input type="number" id="Brightness" name="Brightness" min="10" max="200" value="10"></p>
+<input type="number" value=<?php echo $_SESSION["Brightness"];?> id="Brightness" name="Brightness" min="10" max="200"></p>
 		
 	
 		<p><button type="submit" name="LightShow">Send Command</button></p>
