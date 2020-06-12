@@ -132,7 +132,18 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	  <input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></p>
 	
 	<p><label for="Brightness">Brightness:</label><br />
-	  <input type="number" id="Brightness" name="Brightness" min="1" max="200" value="60"></p>
+	  <input type="range" id="Brightness" name="Brightness" min="1" max="200" value="60">
+		Value: <span id="BrightnessValue"></span></p>
+
+<script>
+var slider = document.getElementById("Brightness");
+var output = document.getElementById("BrightnessValue");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
 	
 <button type="submit" name="Config">Add Record</button>
 </form>
