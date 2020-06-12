@@ -13,7 +13,6 @@ if($_SESSION['authorized'] == 0)
 
 if(isset($_REQUEST['Power']))
 { 
-echo "1";
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
     $onoff = "ON";
@@ -28,40 +27,16 @@ echo "1";
 
 }
 
-
-if(isset($_REQUEST['ConfigShow']))
-{ 
-echo "2";
-    $_SESSION["LightSystemID"]  = $_POST['SystemName'];
-    $_SESSION["Brightness"] = $_POST['Brightness'];
-
-
-    $displayStrip = mysqli_query($conn,"SELECT serverHostName,numColors,hasDelay, hasSpeed, isBlink, hasWidth  FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-    $query_data = mysqli_fetch_array($displayStrip);
-    if(mysqli_num_rows($query_data) >= 1)
-    {
-     	$_SESSION["numColors"] = $query_data['numColors'];
-     	$_SESSION["hasDelay"] = $query_data['hasDelay'];
-     	$_SESSION["hasSpeed"] = $query_data['hasSpeed'];
-     	$_SESSION["isBlink"] = $query_data['isBlink'];
-     	$_SESSION["hasWidth"] = $query_data['hasWidth'];
-     	
-    }
-
-}
-
-
-
 if(isset($_REQUEST['LightShow']))
 { 
-echo "3";
+
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
 
     foreach($_POST['ShowName'] as $selectedOption)
 	$showArray[] = $selectedOption;
 
-    $sendArray['shows'] =  $_POST['ShowName'];
+    $sendArray['shows'] = $showArray;
     $sendArray['brightness'] = $_SESSION["Brightness"];
 
 
@@ -143,7 +118,10 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 ?>
 	
-	<div class="column">
+		
+	
+
+<div class="column">
 	
 	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<p><label for="SystemName">System Name:</label><br />
