@@ -204,12 +204,12 @@ while($query_data = mysqli_fetch_array($displayStrip))
 Value: <span id="DelayValue"></span></p>
 
 <script>
-var slider = document.getElementById("Delay");
-var output = document.getElementById("DelayValue");
-output.innerHTML = slider.value;
+var delaySlider = document.getElementById("Delay");
+var delayOutput = document.getElementById("DelayValue");
+delayOutput.innerHTML = delaySlider.value;
 
-slider.oninput = function() {
-  output.innerHTML = this.value;
+delaySlider.oninput = function() {
+delayOutput.innerHTML = this.value;
 }
 </script>
 		
@@ -218,12 +218,12 @@ slider.oninput = function() {
 Value: <span id="BrightnessValue"></span></p>
 
 <script>
-var slider = document.getElementById("Brightness");
-var output = document.getElementById("BrightnessValue");
-output.innerHTML = slider.value;
+var brightnessSlider = document.getElementById("Brightness");
+var brightnessOutput = document.getElementById("BrightnessValue");
+brightnessOutput.innerHTML = brightnessSlider.value;
 
-slider.oninput = function() {
-  output.innerHTML = this.value;
+brightnessSlider.oninput = function() {
+brightnessOutput.innerHTML = this.value;
 }
 </script>
 		
