@@ -143,6 +143,11 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 ?>
 	
+		
+	
+
+<div class="column">
+	
 	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<p><label for="SystemName">System Name:</label><br />
 	<select name="SystemName">
@@ -167,12 +172,12 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 ?>
 
-	<p><label for="ShowName">Show Name </label><br />
-	<select name="ShowName" size="7" >
+	<p><label for="ShowName">Show Name</label><br />
+	<select name="ShowName" size="7">
 		<?php echo $option;?>
-		</select>	
+		</select>
+		
 	</p>
-	<p><button type="submit" name="ConfigShow">Config show</button></p>	
 		<p><label for="Brightness">Brightness:</label><br />
 <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
@@ -189,7 +194,21 @@ slider.oninput = function() {
 	
 		<p><button type="submit" name="LightShow">Send Command</button></p>
 	</form>
-		
+	
+	</div>
+<div class="column">
+	
+	<form>
+	
+	<input type="color" id="color 1"><label for ="color 1">Color 1</label> <br />
+		<input type="color" id="color 2"><label for ="color 2">Color 2</label> <br />
+		<input type="color" id="color 3"><label for ="color 3">Color 3</label> <br />
+		<input type="color" id="color 4"><label for ="color 4">Color 4</label> <br />
+	
+	</form>
+	
+	</div>	
+
 	
 	<?php
 	
