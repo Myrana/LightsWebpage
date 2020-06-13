@@ -19,6 +19,10 @@ if(isset($_REQUEST['Login']))
 
 	$conn->close();
 }
+else
+{
+	killUserSession();
+}
 
 
 
