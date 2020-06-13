@@ -156,6 +156,20 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
+    if(isset($_REQUEST['SavePlaylist']))
+    {
+
+
+        $sendArray['savePlaylist'] = 1;
+        $SendArray['playlistName'] = _POST['PlaylistName'];
+        $sendArray['UserID'] = $_SESSION['UserID'];
+        $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+        $query_data = mysqli_fetch_array($displayStrip);
+
+        sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+
+    }
+
 ?>
 
 <!doctype html>
@@ -347,13 +361,13 @@ brightnessSlider.oninput = function()
 		<option id="hardcoded">hardcoded for now</option>
 		</select>	
 		<p>
-			<label>New Show Name</label> <br />
-			<input type="text" name="SaveShowName">
+			<label>New Play List Name</label> <br />
+			<input type="text" name="PlaylistName">
 			</p>	
 		
 		<p>
-		<button type="submit" name="SaveShow" style="margin: 3px;">Save Show</button> 
-		<button type="submit" name="PlayShow">Play Show</button>	
+		<button type="submit" name="SavePlaylist" style="margin: 3px;">Save Shows</button>
+		<button type="submit" name="PlayPlayList">Play</button>
 		</p>
 		
 		</form>
