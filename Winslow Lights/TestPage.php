@@ -276,7 +276,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 ?>
 
 <div class="column">
-	
+	<div class="ColumnStyles">
 
     <form>
     <p><label for="ShowName">Show Name</label><br /><select name="ShowName" size="7">
@@ -350,10 +350,10 @@ brightnessSlider.oninput = function()
 	
 		<p><button type="submit" name="LightShow">Send Show</button></p>
 		
-	
+	</div>
 	</div>
 	<div class="column">
-		
+		<div class="ColumnStyles">
 		<?php
 	
 	
@@ -390,7 +390,7 @@ $conn->close();
 		</form>
 		</form>
 	</form>
-	
+	</div>
 	</div>
 </body>
 </html>
