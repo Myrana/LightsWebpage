@@ -361,7 +361,7 @@ brightnessSlider.oninput = function()
 		<option id="hardcoded">hardcoded for now</option>
 		</select>	
 		<p>
-			<label>New Play List Name</label> <br />
+			<label>New Playlist Name</label> <br />
 			<input type="text" name="PlaylistName">
 			</p>	
 		
