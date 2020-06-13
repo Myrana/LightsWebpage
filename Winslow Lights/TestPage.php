@@ -382,6 +382,8 @@ $displayStrip = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
 $option = '';
 while($query_data = mysqli_fetch_array($displayStrip))
 {
+
+
   $option .="<option value = '".$query_data['ID']."'>".$query_data['playlistName']."</option>";
 	
 }
@@ -389,15 +391,26 @@ while($query_data = mysqli_fetch_array($displayStrip))
 $conn->close();
 
 ?>
-	
+
+<script>
+    function testMe()
+    {
+        var playlistName = document.getElementById("PlayListNameId");
+        var playListId = document.getElementById("PlayListId");
+        var selectedText = playListId.options[playListId.selectedIndex].text;
+        playlistName.value = selectedText;
+
+    }
+</script>
+
 	<form>
 		<label>Playlist</label> <br />
-		<select name="Playlist" size="7">
+		<select id="PlayListId"  name="Playlist" size="7" onChange="testMe();">
 		<?php echo $option;?>
 		</select>	
 		<p>
 			<label>New Playlist Name*</label> <br />
-			<input type="text" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" required>
+			<input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" required>
 			</p>	
 		
 		<p>
