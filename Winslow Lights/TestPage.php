@@ -157,7 +157,7 @@ if(isset($_REQUEST['LightShow']))
     {
 
         $sendArray['savePlaylist'] = 1;
-        $sendArray['playlistName'] = $_POST['PlaylistName'];
+        $sendArray['playlistName'] = $_POST['Playlist'];
         $sendArray['UserID'] = $_SESSION['UserID'];
         $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
         $query_data = mysqli_fetch_array($displayStrip);
@@ -170,6 +170,19 @@ if(isset($_REQUEST['LightShow']))
     {
 
         $sendArray['playPlaylist'] = 1;
+        $sendArray['playlistName'] = $_POST['Playlist'];
+        $sendArray['UserID'] = $_SESSION['UserID'];
+        $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+        $query_data = mysqli_fetch_array($displayStrip);
+
+        sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+
+    }
+
+if(isset($_REQUEST['btnDeletePlaylist']))
+    {
+
+        $sendArray['deletePlaylist'] = 1;
         $sendArray['playlistName'] = $_POST['Playlist'];
         $sendArray['UserID'] = $_SESSION['UserID'];
         $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
@@ -389,6 +402,7 @@ $conn->close();
 		
 		<p>
 		<button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
+		<button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
 		<button type="submit" name="btnPlaylist">Play</button>
 		</p>
 		
