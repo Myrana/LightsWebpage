@@ -125,7 +125,7 @@ if(isset($_REQUEST['LightShow']))
     foreach($_POST['ShowName'] as $selectedOption)
 	  $showArray[] = $selectedOption;
 
-	$sendArray['UserID'] = $_SESSION['UserID'];
+    $sendArray['UserID'] = $_SESSION['UserID'];
     $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
     $sendArray['delay'] = $_SESSION["Delay"];
@@ -143,7 +143,7 @@ if(isset($_REQUEST['LightShow']))
     $sendArray['clearFinish'] = 1;
 
     $onoff = "ON";
-    if (empty($_POST['lights']))
+    if (empty($_POST['powerOn']))
       $onoff = "OFF";
 
     $sendArray['state'] = $onoff;;
