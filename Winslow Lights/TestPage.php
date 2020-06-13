@@ -161,7 +161,7 @@ if(isset($_REQUEST['LightShow']))
 
 
         $sendArray['savePlaylist'] = 1;
-        $SendArray['playlistName'] = _POST['PlaylistName'];
+        $sendArray['playlistName'] = _POST['PlaylistName'];
         $sendArray['UserID'] = $_SESSION['UserID'];
         $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
         $query_data = mysqli_fetch_array($displayStrip);
