@@ -353,15 +353,11 @@ brightnessSlider.oninput = function()
 		<div class="ColumnStyles">
 		<?php
 	
-	
-
 $displayStrip = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
 $option = '';
 while($query_data = mysqli_fetch_array($displayStrip))
 {
-	//echo $query_data['stripName'];
-	//<option>$query_data['stripName']</option>
-	$option .="<option value = '".$query_data['ID']."'>".$query_data['playlistName']."</option>";
+  $option .="<option value = '".$query_data['ID']."'>".$query_data['playlistName']."</option>";
 	
 }
 
