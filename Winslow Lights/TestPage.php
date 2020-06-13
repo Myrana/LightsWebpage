@@ -153,12 +153,24 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
-    if(isset($_REQUEST['SavePlaylist']))
+    if(isset($_REQUEST['btnSavelist']))
     {
-
 
         $sendArray['savePlaylist'] = 1;
         $sendArray['playlistName'] = $_POST['PlaylistName'];
+        $sendArray['UserID'] = $_SESSION['UserID'];
+        $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+        $query_data = mysqli_fetch_array($displayStrip);
+
+        sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+
+    }
+
+    if(isset($_REQUEST['btnPlaylist']))
+    {
+
+        $sendArray['playPlaylist'] = 1;
+        $sendArray['playlistName'] = $_POST['Playlist'];
         $sendArray['UserID'] = $_SESSION['UserID'];
         $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
         $query_data = mysqli_fetch_array($displayStrip);
@@ -376,8 +388,8 @@ $conn->close();
 			</p>	
 		
 		<p>
-		<button type="submit" name="SavePlaylist" style="margin: 3px;">Save Shows</button>
-		<button type="submit" name="PlayPlayList">Play</button>
+		<button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
+		<button type="submit" name="btnPlaylist">Play</button>
 		</p>
 		
 		</form>
