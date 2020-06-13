@@ -17,6 +17,7 @@ if(!empty($_POST))
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
     $_SESSION["Delay"] = $_POST['Delay'];
+    $_SESSION["NumLoops"] = $_POST['NumLoops'];
 
 }
 
@@ -32,7 +33,7 @@ if(isset($_REQUEST['Power']))
     $query_data = mysqli_fetch_array($displayStrip);
 
     sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-
+    
 }
 
 
@@ -125,6 +126,7 @@ if(isset($_REQUEST['LightShow']))
     $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
     $sendArray['delay'] = $_SESSION["Delay"];
+    $sendArray['numLoops'] = $_SESSION["NumLoops"];
     $sendArray['colors'] = $sendColors;
 
     $onoff = "ON";
@@ -142,7 +144,7 @@ if(isset($_REQUEST['LightShow']))
     $query_data = mysqli_fetch_array($displayStrip);
 
     sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-	
+
 }
 
 
@@ -213,7 +215,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
         $option .="<option value = '".$query_data['ID']."'>".$query_data['systemName']."</option>";
     }
 }
-	
+
 ?>
 	
 		
@@ -230,7 +232,11 @@ while($query_data = mysqli_fetch_array($displayStrip))
 		<label for="On">On</label>
 	<input type="checkbox" name="lights"  value="ON" checked>
 	<p><button type="submit" name="Power">Power</button></p>	
-		<?php
+
+	
+	</div>
+
+<?php
 	
 	
 
@@ -241,12 +247,13 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	//echo $query_data['stripName'];
 	//<option>$query_data['stripName']</option>
 	$option .="<option value = '".$query_data['ID']."'>".$query_data['showName']."</option>";
-}
 	
+}
+
+$conn->close();
+
 ?>
 
-	
-	</div>
 <div class="column">
 	
 
@@ -264,7 +271,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 
 		<p><label for="Delay">Delay:</label><br />
-<input type="range" step="1" id="Delay" name="Delay" min="1" max="1000" value="1">
+<input type="range" step="1" id="Delay" name="Delay" min="1" max="1000" value="<?php echo $_SESSION["Delay"];?>">
 Value: <span id="DelayValue"></span></p>
 
 <script>
@@ -276,6 +283,21 @@ delaySlider.oninput = function() {
 delayOutput.innerHTML = this.value;
 }
 </script>
+
+	<p><label for="NumLoops">Number Of Loops:</label><br />
+<input type="range" step="1" id="NumLoops" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
+Value: <span id="NumLoopsValue"></span></p>
+
+<script>
+var numLoopsSlider = document.getElementById("NumLoops");
+var numLoopsOutput = document.getElementById("NumLoopsValue");
+numLoopsOutput.innerHTML = numLoopsSlider.value;
+
+numLoopsSlider.oninput = function() {
+numLoopsOutput.innerHTML = this.value;
+}
+</script>
+
 		
 		<p><label for="Brightness">Brightness:</label><br />
 <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
@@ -301,13 +323,7 @@ brightnessOutput.innerHTML = this.value;
 	</form>
 	</form>
 	</div>	
-
 	
-	<?php
-	
-	$conn->close();
-	
-	?>	
 </body>
 </html>
 
