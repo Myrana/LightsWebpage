@@ -272,7 +272,6 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 }
 
-$conn->close();
 
 ?>
 
@@ -354,11 +353,29 @@ brightnessSlider.oninput = function()
 	
 	</div>
 	<div class="column">
+		
+		<?php
+	
+	
+
+$displayStrip = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
+$option = '';
+while($query_data = mysqli_fetch_array($displayStrip))
+{
+	//echo $query_data['stripName'];
+	//<option>$query_data['stripName']</option>
+	$option .="<option value = '".$query_data['ID']."'>".$query_data['playlistName']."</option>";
+	
+}
+
+$conn->close();
+
+?>
 	
 	<form>
 		<label>Playlist</label> <br />
 		<select name="Playlist" size="7">
-		<option id="hardcoded">hardcoded for now</option>
+		<?php echo $option;?>
 		</select>	
 		<p>
 			<label>New Playlist Name</label> <br />
