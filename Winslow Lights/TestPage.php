@@ -156,7 +156,7 @@ if(isset($_REQUEST['LightShow']))
     if(isset($_REQUEST['SavePlaylist']))
     {
 
-
+        echo "we are here save";
         $sendArray['savePlaylist'] = 1;
         $sendArray['playlistName'] = $_POST['PlaylistName'];
         $sendArray['UserID'] = $_SESSION['UserID'];
@@ -167,10 +167,10 @@ if(isset($_REQUEST['LightShow']))
 
     }
 
-if(isset($_REQUEST['PlayPlaylist']))
+    if(isset($_REQUEST['PlayPlaylist']))
     {
 
-
+        echo "we are here";
         $sendArray['playPlaylist'] = 1;
         $sendArray['playlistName'] = $_POST['Playlist'];
         $sendArray['UserID'] = $_SESSION['UserID'];
@@ -391,7 +391,7 @@ $conn->close();
 		
 		<p>
 		<button type="submit" name="SavePlaylist" style="margin: 3px;">Save Shows</button>
-		<button type="submit" name="PlayPlayList">Play</button>
+		<button type="submit" name="PlayPlaylist">Play</button>
 		</p>
 		
 		</form>
