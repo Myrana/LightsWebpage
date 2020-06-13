@@ -371,8 +371,8 @@ $conn->close();
 		<?php echo $option;?>
 		</select>	
 		<p>
-			<label>New Playlist Name</label> <br />
-			<input type="text" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)">
+			<label>New Playlist Name*</label> <br />
+			<input type="text" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" required>
 			</p>	
 		
 		<p>
