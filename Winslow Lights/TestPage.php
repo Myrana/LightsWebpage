@@ -4,6 +4,8 @@ include_once('CommonFunctions.php');
 
 $_SESSION["Brightness"] = 20;
 $_SESSION["LightSystemID"] = -1;
+$_SESSION["Delay"] = 10;
+$_SESSION["NumLoops"] = 1;
 
 if($_SESSION['authorized'] == 0)
 {
