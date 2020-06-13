@@ -13,7 +13,7 @@ if(isset($_REQUEST['Login']))
 	  $_SESSION['User'] = $_POST['Username'];
 	  $_SESSION'isAdmin'] = $row['isAdmin'];
 	  $_SESSION'UserID'] = $row['ID'];
-	  echo <p>"Hello, " . $_SESSION['User'] . " UserID: " . $_SESSION'UserID']</p>;
+	  echo "Hello, " . $_SESSION['User'] . " UserID: " . $_SESSION'UserID'];
 	}
 
 	$conn->close();
