@@ -325,12 +325,16 @@ brightnessSlider.oninput = function()
 	<input type="checkbox" name="clearStart">
 		<label for="On">Clear on Finish</label>
 	<input type="checkbox" name="clearFinish">
+		<p>
+		<label for="On">Power On</label>
+	<input type="checkbox" name="PowerOn">	
+		</p>
 	
 		<p><button type="submit" name="LightShow">Send Show</button></p>
 		
 	</form>
 	</form>
-	</div>	
+	</div>
 	
 </body>
 </html>
