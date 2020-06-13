@@ -19,7 +19,7 @@ if(isset($_REQUEST['Login']))
 
 	$conn->close();
 }
-else
+else if($_SESSION['authorized'] == 1)
 {
 	killUserSession();
 }
