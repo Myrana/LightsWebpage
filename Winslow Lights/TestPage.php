@@ -11,10 +11,18 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
-if(isset($_REQUEST['Power']))
-{ 
+
+if(!empty($_POST))
+{
     $_SESSION["LightSystemID"]  = $_POST['SystemName'];
     $_SESSION["Brightness"] = $_POST['Brightness'];
+    $_SESSION["Delay"] = $_POST['Delay'];
+
+}
+
+if(isset($_REQUEST['Power']))
+{ 
+
     $onoff = "ON";
     if (empty($_POST['lights']))
       $onoff = "OFF";
@@ -31,8 +39,6 @@ if(isset($_REQUEST['Power']))
 if(isset($_REQUEST['ConfigShow']))
 { 
 
-    $_SESSION["LightSystemID"]  = $_POST['SystemName'];
-    $_SESSION["Brightness"] = $_POST['Brightness'];
 
 
     $displayStrip = mysqli_query($conn,"SELECT serverHostName,numColors,hasDelay, hasSpeed, isBlink, hasWidth  FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
@@ -59,20 +65,78 @@ if(isset($_REQUEST['LightShow']))
     $b = 12;
 
 
-    $hex = $_POST['color_1'];
-    list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+    if(isset($_POST['color_1']))
+    {
+        $hex = $_POST['color_1'];
+        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
 
-    $_SESSION["LightSystemID"]  = $_POST['SystemName'];
-    $_SESSION["Brightness"] = $_POST['Brightness'];
-    $_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
+
+        $color["r"] = $r;
+        $color["g"] = $g;
+        $color["b"] = $b;
+        $sendColors['color1'] = $color;
+
+    }
+
+    if(isset($_POST['color_2']))
+    {
+        $hex = $_POST['color_2'];
+        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+
+        $color["r"] = $r;
+        $color["g"] = $g;
+        $color["b"] = $b;
+        $sendColors['color2'] = $color;
+
+    }
+
+    if(isset($_POST['color_3']))
+    {
+        $hex = $_POST['color_3'];
+        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+
+        $color["r"] = $r;
+        $color["g"] = $g;
+        $color["b"] = $b;
+        $sendColors['color3'] = $color;
+
+    }
+
+   if(isset($_POST['color_4']))
+   {
+       $hex = $_POST['color_4'];
+       list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+
+       $color["r"] = $r;
+       $color["g"] = $g;
+       $color["b"] = $b;
+       $sendColors['color4'] = $color;
+
+   }
+
+    //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
 
     foreach($_POST['ShowName'] as $selectedOption)
 	  $showArray[] = $selectedOption;
 
     $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
-    $sendArray['color1'] = $_SESSION["Color1"];
-    
+    $sendArray['delay'] = $_SESSION["Delay"];
+    $sendArray['colors'] = $sendColors;
+
+    $onoff = "ON";
+    if (empty($_POST['clearStart']))
+         $onoff = 0;
+    $sendArray['clearStart'] = 1;
+
+    $onoff = "ON";
+    if (empty($_POST['clearFinish']))
+         $onoff = 0;
+    $sendArray['clearFinish'] = 1;
+
 
     $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
     $query_data = mysqli_fetch_array($displayStrip);
@@ -194,7 +258,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 
 
 	<p><input type="color"  Name="color_1" id="color1"><label for ="color1">Color 1</label> <br />
-		<input type="color" Name-"color_2" id="color2"><label for ="color2">Color 2</label> <br />
+		<input type="color" Name="color_2" id="color2"><label for ="color2">Color 2</label> <br />
 		<input type="color" Name="color_3" id="color3"><label for ="color3">Color 3</label> <br />
 		<input type="color" Name="color_4" id="color4"><label for ="color4">Color 4</label> <br /></p>
 	
