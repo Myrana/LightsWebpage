@@ -153,7 +153,7 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
-    if(isset($_REQUEST['SavePlaylist']))
+    if(isset($_REQUEST['btnSavelist']))
     {
 
         echo "we are here save";
@@ -167,7 +167,7 @@ if(isset($_REQUEST['LightShow']))
 
     }
 
-    if(isset($_REQUEST['PlayPlaylist']))
+    if(isset($_REQUEST['btnPlaylist']))
     {
 
         echo "we are here";
@@ -390,8 +390,8 @@ $conn->close();
 			</p>	
 		
 		<p>
-		<button type="submit" name="SavePlaylist" style="margin: 3px;">Save Shows</button>
-		<button type="submit" name="PlayPlaylist">Play</button>
+		<button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
+		<button type="submit" name="btnPlaylist">Play</button>
 		</p>
 		
 		</form>
