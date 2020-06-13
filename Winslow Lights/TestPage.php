@@ -122,9 +122,6 @@ if(isset($_REQUEST['LightShow']))
 
     //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
 
-    foreach($_POST['ShowName'] as $selectedOption)
-	  $showArray[] = $selectedOption;
-
 	$sendArray['UserID'] = $_SESSION['UserID'];
     $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
@@ -142,11 +139,11 @@ if(isset($_REQUEST['LightShow']))
          $onoff = 0;
     $sendArray['clearFinish'] = 1;
 
-    $onoff = "ON";
-    if (empty($_POST['lights']))
-      $onoff = "OFF";
 
-    $sendArray['state'] = $onoff;;
+    if (empty($_POST['lightson']))
+        $sendArray['powerOn'] = "ON";
+
+
 
     $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
     $query_data = mysqli_fetch_array($displayStrip);
@@ -332,7 +329,7 @@ brightnessSlider.oninput = function()
 	<input type="checkbox" name="clearFinish">
 		<p>
 		<label for="On">Power On</label>
-	<input type="checkbox" name="lights" value="ON" checked>	
+	<input type="checkbox" name="powerOn" value="ON" checked>
 		</p>
 	
 		<p><button type="submit" name="LightShow">Send Show</button></p>
