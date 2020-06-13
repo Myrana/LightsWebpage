@@ -125,6 +125,7 @@ if(isset($_REQUEST['LightShow']))
     foreach($_POST['ShowName'] as $selectedOption)
 	  $showArray[] = $selectedOption;
 
+	$sendArray['UserID'] = $_SESSION['UserID'];
     $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
     $sendArray['delay'] = $_SESSION["Delay"];
@@ -281,8 +282,9 @@ var delaySlider = document.getElementById("Delay");
 var delayOutput = document.getElementById("DelayValue");
 delayOutput.innerHTML = delaySlider.value;
 
-delaySlider.oninput = function() {
-delayOutput.innerHTML = this.value;
+delaySlider.oninput = function() 
+{
+	delayOutput.innerHTML = this.value;
 }
 </script>
 
@@ -295,24 +297,28 @@ var numLoopsSlider = document.getElementById("NumLoops");
 var numLoopsOutput = document.getElementById("NumLoopsValue");
 numLoopsOutput.innerHTML = numLoopsSlider.value;
 
-numLoopsSlider.oninput = function() {
-numLoopsOutput.innerHTML = this.value;
+numLoopsSlider.oninput = function() 
+{
+	numLoopsOutput.innerHTML = this.value;
 }
 </script>
 
 		
-		<p><label for="Brightness">Brightness:</label><br />
-<input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
+<p><label for="Brightness">Brightness:</label><br />
+	<input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
 
 <script>
+	
 var brightnessSlider = document.getElementById("Brightness");
 var brightnessOutput = document.getElementById("BrightnessValue");
 brightnessOutput.innerHTML = brightnessSlider.value;
 
-brightnessSlider.oninput = function() {
-brightnessOutput.innerHTML = this.value;
+brightnessSlider.oninput = function() 
+{
+	brightnessOutput.innerHTML = this.value;
 }
+
 </script>
 		
 		<label for="On">Clear on Start</label>

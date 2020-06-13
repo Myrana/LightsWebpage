@@ -4,16 +4,19 @@ include_once("CommonFunctions.php");
 if(isset($_REQUEST['Login']))
 { 
 	$_SESSION['authorized'] = 0;
-	$qry = "SELECT authorized FROM registrationTable WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
+	$qry = "SELECT ID,authorized,isAdmin FROM registrationTable WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
 	
 	$row = mysqli_query($conn, $qry);
 	if(mysqli_num_rows($row) == 1)
 	{
 	  $_SESSION['authorized'] = 1;
 	  $_SESSION['User'] = $_POST['Username'];
-	  echo "You Are logged In";
+	  $_SESSION'isAdmin'] = $row['isAdmin'];
+	  $_SESSION'UserID'] = $row['ID'];
+	  echo <p>"Hello, " . $_SESSION['User'] . " UserID: " . $_SESSION'UserID']</p>;
 	}
 
+	$conn->close();
 }
 
 
