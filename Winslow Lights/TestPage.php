@@ -391,6 +391,21 @@ includeHTML();
 		<input type="color" Name="color_2" id="color2"><br />
 		<input type="color" Name="color_3" id="color3"><br />
 		<input type="color" Name="color_4" id="color4"><br /></p>
+		
+		<p><label for="Width">Width:</label><br />
+<input type="range" step="1" id="WidthId" name="Width" min="1" max="300">
+Value: <span id="WidthValue"></span></p>
+
+<script>
+var widthSlider = document.getElementById("WidthId");
+var widthOutput = document.getElementById("WidthValue");
+widthOutput.innerHTML = widthSlider.value;
+
+widthSlider.oninput = function() 
+{
+	widthOutput.innerHTML = this.value;
+}
+</script>
 	
 
 		<p><label for="Delay">Delay:</label><br />
