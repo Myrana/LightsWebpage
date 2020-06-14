@@ -29,15 +29,15 @@ if(!empty($_POST))
 }
 
 if(isset($_REQUEST['Power']))
-{ 
+{
 
-	$onoff = "ON";
+    $onoff = "ON";
     if (empty($_POST['lights']))
       $onoff = "OFF";
-    
-    $sendArray['state'] = $onoff;   
-	sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
-	
+
+    $sendArray['state'] = $onoff;
+    sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+
 }
 
 
@@ -45,7 +45,7 @@ if(isset($_REQUEST['Power']))
 
 
 if(isset($_REQUEST['LightShow']))
-{ 
+{
 
     $r = 5;
     $g = 3;
@@ -181,8 +181,8 @@ if(isset($_REQUEST['LightShow']))
         }
 
     }
-    
-	
+
+
 $lightSystemsoption = '';
 $lightSystemsScript = '';
 $results = mysqli_query($conn,"SELECT ID, systemName, stripHeight, stripWidth, brightness FROM lightSystems WHERE enabled = 1");
@@ -190,8 +190,8 @@ if(mysqli_num_rows($results) > 0)
 {
 
     $lightSystemsScript .= "let systemsMap = new Map();\r\n";
-	while($row = mysqli_fetch_array($results))
-	{
+    while($row = mysqli_fetch_array($results))
+    {
         $lightSystemsScript .= "var system = new Object(); \r";
 
         $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
@@ -202,13 +202,13 @@ if(mysqli_num_rows($results) > 0)
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
-		if($row['ID'] == $_SESSION["LightSystemID"] )
-	
-			$lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
-		else
-			$lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
-	
-	}
+        if($row['ID'] == $_SESSION["LightSystemID"] )
+
+            $lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
+        else
+            $lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+
+    }
 }
 
 
@@ -218,38 +218,38 @@ $lightShowsScript = '';
 $results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops FROM lightShows WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
-	$lightShowsScript .= "let showMap = new Map();\r\n";
+    $lightShowsScript .= "let showMap = new Map();\r\n";
 
-	while($row = mysqli_fetch_array($results))
-	{
-		$lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
-		
-		
-		$lightShowsScript .= "var show = new Object(); \r";
-    	
-    	$lightShowsScript .= "	show.id = " . $row['ID'] .";\r";
-    	$lightShowsScript .= "	show.showName = '" . $row['showName'] ."';\r";
-    	$lightShowsScript .= "	show.numColors = " . $row['numColors'] .";\r";
-    	$lightShowsScript .= "	show.hasDelay = " . $row['hasDelay'] .";\r";
+    while($row = mysqli_fetch_array($results))
+    {
+        $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
+
+
+        $lightShowsScript .= "var show = new Object(); \r";
+
+        $lightShowsScript .= "    show.id = " . $row['ID'] .";\r";
+        $lightShowsScript .= "    show.showName = '" . $row['showName'] ."';\r";
+        $lightShowsScript .= "    show.numColors = " . $row['numColors'] .";\r";
+        $lightShowsScript .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
         $lightShowsScript .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
         $lightShowsScript .= "  show.hasLoops = " . $row['hasLoops'] .";\r";
-    	
-    	$lightShowsScript .= "	showMap.set(" . $row['ID'] . ", show);\r";
-    	
-  
-    	
 
-	}
-		
+        $lightShowsScript .= "    showMap.set(" . $row['ID'] . ", show);\r";
+
+
+
+
+    }
+
 }
 
 $playlistoption = '';
 $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userID = " . $_SESSION['UserID']);
 if(mysqli_num_rows($results) > 0)
 {
-	while($row = mysqli_fetch_array($results))
-	  $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
-	
+    while($row = mysqli_fetch_array($results))
+      $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
+
 }
 
 $conn->close();
@@ -261,8 +261,8 @@ $conn->close();
 <head>
 <meta charset="utf-8">
 <title>System Name Page</title>
-<script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>	
-<link href="Styles.css" rel="stylesheet" type="text/css">	
+<script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
+<link href="Styles.css" rel="stylesheet" type="text/css">
 </head>
 
 <script>
@@ -285,7 +285,7 @@ function includeHTML() {
           elmnt.removeAttribute("w3-include-html");
           includeHTML();
         }
-      }      
+      }
       xhttp.open("GET", file, true);
       xhttp.send();
       /*exit the function:*/
@@ -295,13 +295,13 @@ function includeHTML() {
 };
 </script>
 <body>
-	<div w3-include-html="Nav.html"></div>
-	
+    <div w3-include-html="Nav.html"></div>
+
 <script>
 includeHTML();
 </script>
-	
-	
+
+
 
 <script>
 
@@ -322,132 +322,125 @@ includeHTML();
 
 
 <div class="column">
-	
-	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-	<p><label for="SystemName">System Name:</label><br />
-	<select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
-		<?php echo $lightSystemsoption;?>
-		</select>	
-	</p>
-		<label for="On">On</label>
-	<input type="checkbox" name="lights"  value="ON" checked>
-	<p><button type="submit" name="Power">Power</button></p>	
 
-	
-	</div>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+    <p><label for="SystemName">System Name:</label><br />
+    <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
+        <?php echo $lightSystemsoption;?>
+        </select>
+    </p>
+        <label for="On">On</label>
+    <input type="checkbox" name="lights"  value="ON" checked>
+    <p><button type="submit" name="Power">Power</button></p>
 
-	
+
+    </div>
+
+
 
 
 <script>
-	
-	<?php echo $lightShowsScript;?>
-	
+
+    <?php echo $lightShowsScript;?>
+
     function setShowSettings()
     {
-	
-		var showNameId = document.getElementById("ShowNameId");
-		var index = parseInt(showNameId.value);
-		
-		var widthHide = document.getElementById("widthHide");
-		var delayHide = document.getElementById("delayHide");
-		var loopsHide = document.getElementById("loopsHide");
-		
-		
-		var color1 = document.getElementById("color1");
-		var color2 = document.getElementById("color2");
-		var color3 = document.getElementById("color3");
-		var color4 = document.getElementById("color4");
-		var delay = document.getElementById("DelayId");
+
+        var showNameId = document.getElementById("ShowNameId");
+        var index = parseInt(showNameId.value);
+
+
+        var color1 = document.getElementById("color1");
+        var color2 = document.getElementById("color2");
+        var color3 = document.getElementById("color3");
+        var color4 = document.getElementById("color4");
+        var delay = document.getElementById("DelayId");
         var width = document.getElementById("WidthId");
         var loops = document.getElementById("NumLoopsId");
 
-		color1.setAttribute('disabled', true);
-		color2.setAttribute('disabled', true);
-		color3.setAttribute('disabled', true);
-		color4.setAttribute('disabled', true);
-		delay.setAttribute('disabled', true);
+        color1.setAttribute('disabled', true);
+        color2.setAttribute('disabled', true);
+        color3.setAttribute('disabled', true);
+        color4.setAttribute('disabled', true);
+        delay.setAttribute('disabled', true);
         width.setAttribute('disabled', true);
         loops.setAttribute('disabled', true);
 
         if(showMap.get(index).hasWidth == 1)
         {
-			width.setAttribute('disabled', false);
+            width.setAttribute('disabled', false);
             width.disabled = false;
-			widthHide.style.display = "none";
         }
 
         if(showMap.get(index).hasLoops == 1)
         {
             loops.setAttribute('disabled', false);
             loops.disabled = false;
-			loopsHide.style.display = "none";
         }
 
         if(showMap.get(index).hasDelay == 1)
         {
             delay.setAttribute('disabled', false);
             delay.disabled = false;
-			delayHide.style.display = "none";
         }
-		
-		if(showMap.get(index).numColors >= 1)
-		{
-			color1.setAttribute('disabled', false);
+
+        if(showMap.get(index).numColors >= 1)
+        {
+            color1.setAttribute('disabled', false);
             color1.disabled = false;
-		}
-		
-		if(showMap.get(index).numColors >= 2)
-		{
-            
-			color2.setAttribute('disabled', false);
+        }
+
+        if(showMap.get(index).numColors >= 2)
+        {
+
+            color2.setAttribute('disabled', false);
             color2.disabled = false;
-		}
-		
-		if(showMap.get(index).numColors >= 3)
-		{
-			color3.setAttribute('disabled', false);
+        }
+
+        if(showMap.get(index).numColors >= 3)
+        {
+            color3.setAttribute('disabled', false);
             color3.disabled = false;
-		}
-		
-		if(showMap.get(index).numColors == 4)
-		{
-			color4.setAttribute('disabled', false);
+        }
+
+        if(showMap.get(index).numColors == 4)
+        {
+            color4.setAttribute('disabled', false);
             color4.disabled = false;
-		}
+        }
     }
 </script>
 
 <div class="column">
-	<div class="ColumnStyles">
+    <div class="ColumnStyles">
 
     <form>
     <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" size="7" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>
 </p>
 
-	<p><input type="color"  Name="color_1" id="color1"><br />
-		<input type="color" Name="color_2" id="color2"><br />
-		<input type="color" Name="color_3" id="color3"><br />
-		<input type="color" Name="color_4" id="color4"><br /></p>
-		
-		<label for="Width">Width:</label><br />
+    <p><input type="color"  Name="color_1" id="color1"><br />
+        <input type="color" Name="color_2" id="color2"><br />
+        <input type="color" Name="color_3" id="color3"><br />
+        <input type="color" Name="color_4" id="color4"><br /></p>
+
+        <p><label for="Width">Width:</label><br />
 <input type="range" step="1" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
-			Value: <span id="WidthValue"></span></p>
+Value: <span id="WidthValue"></span></p>
 
 <script>
 var widthSlider = document.getElementById("WidthId");
 var widthOutput = document.getElementById("WidthValue");
 widthOutput.innerHTML = widthSlider.value;
 
-widthSlider.oninput = function() 
+widthSlider.oninput = function()
 {
-	widthOutput.innerHTML = this.value;
+    widthOutput.innerHTML = this.value;
 }
 </script>
-	
 
-		<p><label for="Delay">Delay:</label><br />
+
+        <p><label for="Delay">Delay:</label><br />
 <input type="range" step="1" id="DelayId" name="Delay" min="1" max="1000" value="<?php echo $_SESSION["Delay"];?>">
 Value: <span id="DelayValue"></span></p>
 
@@ -456,13 +449,13 @@ var delaySlider = document.getElementById("DelayId");
 var delayOutput = document.getElementById("DelayValue");
 delayOutput.innerHTML = delaySlider.value;
 
-delaySlider.oninput = function() 
+delaySlider.oninput = function()
 {
-	delayOutput.innerHTML = this.value;
+    delayOutput.innerHTML = this.value;
 }
 </script>
 
-	<p><label for="NumLoops">Number Of Loops:</label><br />
+    <p><label for="NumLoops">Number Of Loops:</label><br />
 <input type="range" step="1" id="NumLoopsId" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
 Value: <span id="NumLoopsValue"></span></p>
 
@@ -471,91 +464,91 @@ var numLoopsSlider = document.getElementById("NumLoops");
 var numLoopsOutput = document.getElementById("NumLoopsValue");
 numLoopsOutput.innerHTML = numLoopsSlider.value;
 
-numLoopsSlider.oninput = function() 
+numLoopsSlider.oninput = function()
 {
-	numLoopsOutput.innerHTML = this.value;
+    numLoopsOutput.innerHTML = this.value;
 }
 </script>
 
-		
+
 <p><label for="Brightness">Brightness:</label><br />
-	<input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
+    <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
 
 <script>
-	
+
 var brightnessSlider = document.getElementById("Brightness");
 var brightnessOutput = document.getElementById("BrightnessValue");
 brightnessOutput.innerHTML = brightnessSlider.value;
 
-brightnessSlider.oninput = function() 
+brightnessSlider.oninput = function()
 {
-	brightnessOutput.innerHTML = this.value;
+    brightnessOutput.innerHTML = this.value;
 }
 
 </script>
-		
-		<label for="On">Clear on Start</label>
-	<input type="checkbox" name="clearStart">
-		<label for="On">Clear on Finish</label>
-	<input type="checkbox" name="clearFinish">
-		<p>
-		<label for="On">Power On</label>
-	<input type="checkbox" name="powerOn" value="OFF">
-		</p>
-	
-		<p><button type="submit" name="LightShow">Send Show</button></p>
-		
-	</div>
-	</div>
-	<div class="column">
-		<div class="ColumnStyles">
-		
-        
+
+        <label for="On">Clear on Start</label>
+    <input type="checkbox" name="clearStart">
+        <label for="On">Clear on Finish</label>
+    <input type="checkbox" name="clearFinish">
+        <p>
+        <label for="On">Power On</label>
+    <input type="checkbox" name="powerOn" value="OFF">
+        </p>
+
+        <p><button type="submit" name="LightShow">Send Show</button></p>
+
+    </div>
+    </div>
+    <div class="column">
+        <div class="ColumnStyles">
+
+
 
 
 
 <script>
-	
+
     function testMe()
     {
         var playlistName = document.getElementById("PlayListNameId");
         var playListId = document.getElementById("PlayListId");
         var selectedText = playListId.options[playListId.selectedIndex].text;
         playlistName.value = selectedText;
-        
+
       //  alert(playListId.value);
         //alert(showMap.get(playListId.selectedIndex - 1).name);
-        ///for (let key of showMap.keys()) 
+        ///for (let key of showMap.keys())
         //{
-  
-			//alert(key);
-		//}
+
+            //alert(key);
+        //}
 
     }
 </script>
 
-	<form>
-		<label>Playlist</label> <br />
-		<select id="PlayListId"  name="Playlist" size="7" onChange="testMe();">
-		<?php echo $playlistoption;?>
-		</select>	
-		<p>
-			<label>New Playlist Name*</label> <br />
-			<input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
-			</p>	
-		
-		<p>
-		<button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
-		<button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
-		<button type="submit" name="btnPlaylist">Play</button>
-		</p>
-		
-		</form>
-		</form>
-	</form>
-	</div>
-	</div>
+    <form>
+        <label>Playlist</label> <br />
+        <select id="PlayListId"  name="Playlist" size="7" onChange="testMe();">
+        <?php echo $playlistoption;?>
+        </select>
+        <p>
+            <label>New Playlist Name*</label> <br />
+            <input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
+            </p>
+
+        <p>
+        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
+        <button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
+        <button type="submit" name="btnPlaylist">Play</button>
+        </p>
+
+        </form>
+        </form>
+    </form>
+    </div>
+    </div>
 </body>
 </html>
 
