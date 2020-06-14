@@ -132,15 +132,11 @@ if(isset($_REQUEST['LightShow']))
     $sendArray['numLoops'] = $_SESSION["NumLoops"];
     $sendArray['colors'] = $sendColors;
 
-    $onoff = "ON";
-    if (empty($_POST['clearStart']))
-         $onoff = 0;
-    $sendArray['clearStart'] = 1;
+    if (!empty($_POST['clearStart']))
+        $sendArray['clearStart'] = 1;
 
-    $onoff = "ON";
-    if (empty($_POST['clearFinish']))
-         $onoff = 0;
-    $sendArray['clearFinish'] = 1;
+    if (!empty($_POST['clearFinish']))
+        $sendArray['clearFinish'] = 1;
 
     if (!empty($_POST['powerOn']))
        $sendArray['powerOn'] = "OFF";
@@ -155,14 +151,16 @@ if(isset($_REQUEST['LightShow']))
 
     if(isset($_REQUEST['btnSavelist']))
     {
+        if(!empty($_POST['PlaylistName']))
+        {
+            $sendArray['savePlaylist'] = 1;
+            $sendArray['playlistName'] = $_POST['PlaylistName'];
+            $sendArray['UserID'] = $_SESSION['UserID'];
+            $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+            $query_data = mysqli_fetch_array($displayStrip);
 
-        $sendArray['savePlaylist'] = 1;
-        $sendArray['playlistName'] = $_POST['PlaylistName'];
-        $sendArray['UserID'] = $_SESSION['UserID'];
-        $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-        $query_data = mysqli_fetch_array($displayStrip);
-
-        sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+            sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+        }
 
     }
 
@@ -179,7 +177,7 @@ if(isset($_REQUEST['LightShow']))
 
     }
 
-if(isset($_REQUEST['btnDeletePlaylist']))
+    if(isset($_REQUEST['btnDeletePlaylist']))
     {
 
         $sendArray['deletePlaylist'] = 1;
@@ -410,7 +408,7 @@ $conn->close();
 		</select>	
 		<p>
 			<label>New Playlist Name*</label> <br />
-			<input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" required>
+			<input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" >
 			</p>	
 		
 		<p>
