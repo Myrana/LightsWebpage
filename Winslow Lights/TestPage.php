@@ -205,14 +205,9 @@ if(mysqli_num_rows($results) > 0)
 	while($row = mysqli_fetch_array($results))
 	{
 		if($row['ID'] == $_SESSION["LightSystemID"] )
-		{
-
 			$lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
-		}
 		else
-		{
 			$lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
-		}
 	}
 }
 
@@ -222,10 +217,8 @@ $results = mysqli_query($conn,"SELECT ID, showName FROM lightShows WHERE enabled
 if(mysqli_num_rows($results) > 0)
 {
 	while($row = mysqli_fetch_array($results))
-	{
 		$lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
 		
-	}
 }
 
 $playlistoption = '';
@@ -233,12 +226,8 @@ $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where u
 if(mysqli_num_rows($results) > 0)
 {
 	while($row = mysqli_fetch_array($results))
-	{
-
-
 	  $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
-		
-	}
+	
 }
 
 $conn->close();
