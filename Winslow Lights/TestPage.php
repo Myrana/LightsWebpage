@@ -184,12 +184,24 @@ if(isset($_REQUEST['LightShow']))
     
 	
 $lightSystemsoption = '';
-$results = mysqli_query($conn,"SELECT ID, systemName FROM lightSystems WHERE enabled = 1");
+$lightSystemsScript = '';
+$results = mysqli_query($conn,"SELECT ID, systemName, stripHeight, stripWidth, brightness FROM lightSystems WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
 
+    $lightSystemsScript .= "let systemsMap = new Map();\r\n";
 	while($row = mysqli_fetch_array($results))
 	{
+        $lightSystemsScript .= "var system = new Object(); \r";
+
+        $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
+        $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
+        $lightSystemsScript .= "    system.stripHeight = " . $row['stripHeight'] .";\r";
+        $lightSystemsScript .= "    system.stripWidth = " . $row['stripWidth'] .";\r";
+        $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
+
+        $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
+
 		if($row['ID'] == $_SESSION["LightSystemID"] )
 	
 			$lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
@@ -216,7 +228,7 @@ if(mysqli_num_rows($results) > 0)
 		$lightShowsScript .= "var show = new Object(); \r";
     	
     	$lightShowsScript .= "	show.id = " . $row['ID'] .";\r";
-    	$lightShowsScript .= "	show.name = '" . $row['showName'] ."';\r";
+    	$lightShowsScript .= "	show.showName = '" . $row['showName'] ."';\r";
     	$lightShowsScript .= "	show.numColors = " . $row['numColors'] .";\r";
     	$lightShowsScript .= "	show.hasDelay = " . $row['hasDelay'] .";\r";
         $lightShowsScript .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
@@ -293,14 +305,15 @@ includeHTML();
 
 <script>
 
-
+<?php echo $lightSystemsScript;?>
 
     function setSystemSettings()
     {
-        //var systemNameId = document.getElementById("SystemNameId");
-       // var index = parseInt(systemNameId.value);
-        //alert(systemsMap.get(index).systemName);
-        alert("Bob");
+        var systemNameId = document.getElementById("SystemNameId");
+        var index = parseInt(systemNameId.value);
+
+        alert(index);
+        foreach()
 
     }
 
@@ -312,7 +325,7 @@ includeHTML();
 	
 	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<p><label for="SystemName">System Name:</label><br />
-	<select name="SystemName" onChange="setShowSettings();">
+	<select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
 		<?php echo $lightSystemsoption;?>
 		</select>	
 	</p>
