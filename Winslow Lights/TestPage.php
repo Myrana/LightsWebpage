@@ -422,7 +422,7 @@ $conn->close();
 		</select>	
 		<p>
 			<label>New Playlist Name*</label> <br />
-			<input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)">
+			<input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
 			</p>	
 		
 		<p>
