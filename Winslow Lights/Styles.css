@@ -47,6 +47,9 @@ label{
 	font-weight: bold;
 }
 
+select {
+	width: 100%;
+}
 
 /* Footer */
 footer{
