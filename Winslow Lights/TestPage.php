@@ -389,10 +389,10 @@ includeHTML();
 <p><button type="submit" name="ConfigShow">Config show</button></p>
 
 
-	<p><input type="color"  Name="color_1" id="color1"><label for ="color1">Color 1</label> <br />
-		<input type="color" Name="color_2" id="color2"><label for ="color2">Color 2</label> <br />
-		<input type="color" Name="color_3" id="color3"><label for ="color3">Color 3</label> <br />
-		<input type="color" Name="color_4" id="color4"><label for ="color4">Color 4</label> <br /></p>
+	<p><input type="color"  Name="color_1" id="color1"><br />
+		<input type="color" Name="color_2" id="color2"><br />
+		<input type="color" Name="color_3" id="color3"><br />
+		<input type="color" Name="color_4" id="color4"><br /></p>
 	
 
 		<p><label for="Delay">Delay:</label><br />
