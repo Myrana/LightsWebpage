@@ -38,23 +38,6 @@ if(isset($_REQUEST['Power']))
 }
 
 
-if(isset($_REQUEST['ConfigShow']))
-{ 
-
-	$results = mysqli_query($conn,"SELECT serverHostName,numColors,hasDelay, hasSpeed, isBlink, hasWidth  FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-	if(mysqli_num_rows($results) > 0)
-	{
-		$row = mysqli_fetch_array($results);
-
-		$_SESSION["numColors"] = $row['numColors'];
-		$_SESSION["hasDelay"] = $row['hasDelay'];
-		$_SESSION["hasSpeed"] = $row['hasSpeed'];
-		$_SESSION["isBlink"] = $row['isBlink'];
-		$_SESSION["hasWidth"] = $row['hasWidth'];
-		
-	}
-
-}
 
 
 
@@ -217,7 +200,7 @@ if(mysqli_num_rows($results) > 0)
 $lightShowsoption = '';
 $lightShowsScript = '';
 
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay FROM lightShows WHERE enabled = 1");
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth FROM lightShows WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
 	$lightShowsScript .= "let showMap = new Map();\r\n";
@@ -233,6 +216,7 @@ if(mysqli_num_rows($results) > 0)
     	$lightShowsScript .= "	show.name = '" . $row['showName'] ."';\r";
     	$lightShowsScript .= "	show.numColors = " . $row['numColors'] .";\r";
     	$lightShowsScript .= "	show.hasDelay = " . $row['hasDelay'] .";\r";
+        $lightShowsScript .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
     	
     	$lightShowsScript .= "	showMap.set(" . $row['ID'] . ", show);\r";
     	
