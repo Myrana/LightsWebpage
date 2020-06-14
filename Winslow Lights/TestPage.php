@@ -386,8 +386,6 @@ includeHTML();
     <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" size="7" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>
 </p>
-<p><button type="submit" name="ConfigShow">Config show</button></p>
-
 
 	<p><input type="color"  Name="color_1" id="color1"><br />
 		<input type="color" Name="color_2" id="color2"><br />
