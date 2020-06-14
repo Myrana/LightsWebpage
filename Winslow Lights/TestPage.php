@@ -203,7 +203,7 @@ if(mysqli_num_rows($results) > 0)
 $lightShowsoption = '';
 $lightShowsScript = '';
 
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth FROM lightShows WHERE enabled = 1");
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops FROM lightShows WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
 	$lightShowsScript .= "let showMap = new Map();\r\n";
@@ -220,6 +220,7 @@ if(mysqli_num_rows($results) > 0)
     	$lightShowsScript .= "	show.numColors = " . $row['numColors'] .";\r";
     	$lightShowsScript .= "	show.hasDelay = " . $row['hasDelay'] .";\r";
         $lightShowsScript .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
+        $lightShowsScript .= "  show.hasLoops = " . $row['hasLoops'] .";\r";
     	
     	$lightShowsScript .= "	showMap.set(" . $row['ID'] . ", show);\r";
     	
@@ -327,19 +328,26 @@ includeHTML();
 		var color4 = document.getElementById("color4");
 		var delay = document.getElementById("DelayId");
         var width = document.getElementById("WidthId");
+        var loops = document.getElementById("NumLoopsId");
 
-		
 		color1.setAttribute('disabled', true);
 		color2.setAttribute('disabled', true);
 		color3.setAttribute('disabled', true);
 		color4.setAttribute('disabled', true);
 		delay.setAttribute('disabled', true);
         width.setAttribute('disabled', true);
+        loops.setAttribute('disabled', true);
 
         if(showMap.get(index).hasWidth == 1)
         {
 			width.setAttribute('disabled', false);
             width.disabled = false;
+        }
+
+        if(showMap.get(index)loops == 1)
+        {
+            loops.setAttribute('disabled', false);
+            loops.disabled = false;
         }
 
         if(showMap.get(index).hasDelay == 1)
@@ -420,7 +428,7 @@ delaySlider.oninput = function()
 </script>
 
 	<p><label for="NumLoops">Number Of Loops:</label><br />
-<input type="range" step="1" id="NumLoops" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
+<input type="range" step="1" id="NumLoopsId" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
 Value: <span id="NumLoopsValue"></span></p>
 
 <script>
