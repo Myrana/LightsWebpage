@@ -400,7 +400,7 @@ includeHTML();
 Value: <span id="DelayValue"></span></p>
 
 <script>
-var delaySlider = document.getElementById("Delay");
+var delaySlider = document.getElementById("DelayId");
 var delayOutput = document.getElementById("DelayValue");
 delayOutput.innerHTML = delaySlider.value;
 
