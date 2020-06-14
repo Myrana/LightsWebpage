@@ -349,7 +349,6 @@ includeHTML();
         var showNameId = document.getElementById("ShowNameId");
         var index = parseInt(showNameId.value);
 
-
         var color1 = document.getElementById("color1");
         var color2 = document.getElementById("color2");
         var color3 = document.getElementById("color3");
@@ -410,6 +409,7 @@ includeHTML();
         }
     }
 </script>
+	
 
 <div class="column">
     <div class="ColumnStyles">
@@ -424,9 +424,9 @@ includeHTML();
         <input type="color" Name="color_3" id="color3"><br />
         <input type="color" Name="color_4" id="color4"><br /></p>
 
-        <p><label for="Width">Width:</label><br />
+        <div id="widthHide"><p><label for="Width">Width:</label><br />
 <input type="range" step="1" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
-Value: <span id="WidthValue"></span></p>
+			Value: <span id="WidthValue"></span></p></div>
 
 <script>
 var widthSlider = document.getElementById("WidthId");
