@@ -220,7 +220,6 @@ $lightShowsScript = '';
 $results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay FROM lightShows WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
-	$lightShowsScript = "var shows = new Object(); \r";
 	$lightShowsScript .= "let showMap = new Map();\r\n";
 
 	while($row = mysqli_fetch_array($results))
@@ -355,7 +354,6 @@ includeHTML();
 		
 		if(showMap.get(index).numColors >= 1)
 		{
-            alert("1");
 			color1.setAttribute('disabled', false);
             color1.disabled = false;
 		}
@@ -378,19 +376,6 @@ includeHTML();
 			color4.setAttribute('disabled', false);
             color4.disabled = false;
 		}
-		
-		
-		/*for (let [key, value] of showMap.entries()) 	
-		{
-				
-				if(key == index)
-				{
-					alert(key + ' = ' + value.name + value.numColors)	
-				}
-						
-		}
-  
-		*/
     }
 </script>
 
@@ -479,8 +464,6 @@ brightnessSlider.oninput = function()
 
 
 <script>
-	
-	//<?php echo $lightShowsScript;?>
 	
     function testMe()
     {
