@@ -6,6 +6,7 @@ $_SESSION["Brightness"] = 20;
 $_SESSION["LightSystemID"] = -1;
 $_SESSION["Delay"] = 10;
 $_SESSION["NumLoops"] = 1;
+$_SESSION["Width"] = 1;
 
 $conn = getDatabaseConnection();
 
@@ -22,6 +23,8 @@ if(!empty($_POST))
     $_SESSION["Brightness"] = $_POST['Brightness'];
     $_SESSION["Delay"] = $_POST['Delay'];
     $_SESSION["NumLoops"] = $_POST['NumLoops'];
+    $_SESSION["Width"] = $_POST['Width'];
+
 
 }
 
@@ -323,16 +326,25 @@ includeHTML();
 		var color3 = document.getElementById("color3");
 		var color4 = document.getElementById("color4");
 		var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+
 		
 		color1.setAttribute('disabled', true);
 		color2.setAttribute('disabled', true);
 		color3.setAttribute('disabled', true);
 		color4.setAttribute('disabled', true);
 		delay.setAttribute('disabled', true);
+        width.setAttribute('disabled', true);
 
-		if(showMap.get(index).hasDelay == 1)
+        if(showMap.get(index).hasWidth == 1)
         {
-			delay.setAttribute('disabled', false);
+			width.setAttribute('disabled', false);
+            width.disabled = false;
+        }
+
+        if(showMap.get(index).hasDelay == 1)
+        {
+            delay.setAttribute('disabled', false);
             delay.disabled = false;
         }
 		
@@ -377,7 +389,7 @@ includeHTML();
 		<input type="color" Name="color_4" id="color4"><br /></p>
 		
 		<p><label for="Width">Width:</label><br />
-<input type="range" step="1" id="WidthId" name="Width" min="1" max="300">
+<input type="range" step="1" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
 Value: <span id="WidthValue"></span></p>
 
 <script>
