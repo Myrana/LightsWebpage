@@ -67,89 +67,88 @@ if(isset($_REQUEST['LightShow']))
     $g = 3;
     $b = 12;
 
-
-    if(isset($_POST['color_1']))
-    {
-        if($hex != '#000000')
-        {
-            $hex = $_POST['color_1'];
-            list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-            $color["r"] = $r;
-            $color["g"] = $g;
-            $color["b"] = $b;
-            $sendColors['color1'] = $color;
-        }
-
-    }
-
-    if(isset($_POST['color_2']))
-    {
-        $hex = $_POST['color_2'];
-        if($hex != '#000000')
-        {
-            list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-            $color["r"] = $r;
-            $color["g"] = $g;
-            $color["b"] = $b;
-            $sendColors['color2'] = $color;
-        }
-
-    }
-
-    if(isset($_POST['color_3']))
-    {
-        $hex = $_POST['color_3'];
-        if($hex != '#000000')
-        {
-            list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-            $color["r"] = $r;
-            $color["g"] = $g;
-            $color["b"] = $b;
-            $sendColors['color3'] = $color;
-        }
-
-    }
-
-   if(isset($_POST['color_4']))
-   {
-       $hex = $_POST['color_4'];
-       if($hex != '#000000')
-       {
-          list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-           $color["r"] = $r;
-           $color["g"] = $g;
-           $color["b"] = $b;
-           $sendColors['color4'] = $color;
-        }
-
-   }
-
-    //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
-
-    foreach($_POST['ShowName'] as $selectedOption)
-	  $showArray[] = $selectedOption;
-
     $sendArray['UserID'] = $_SESSION['UserID'];
-    $sendArray['shows'] =  $_POST['ShowName'];
     $sendArray['brightness'] = $_SESSION["Brightness"];
-    $sendArray['delay'] = $_SESSION["Delay"];
-    $sendArray['numLoops'] = $_SESSION["NumLoops"];
-    $sendArray['colors'] = $sendColors;
 
-    if (!empty($_POST['clearStart']))
-        $sendArray['clearStart'] = 1;
+    if(!empty($_POST['ShowName']))
+    {
+        if(isset($_POST['color_1']))
+        {
+            if($hex != '#000000')
+            {
+                $hex = $_POST['color_1'];
+                list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
 
-    if (!empty($_POST['clearFinish']))
-        $sendArray['clearFinish'] = 1;
 
-    if (!empty($_POST['powerOn']))
-       $sendArray['powerOn'] = "OFF";
+                $color["r"] = $r;
+                $color["g"] = $g;
+                $color["b"] = $b;
+                $sendColors['color1'] = $color;
+            }
+
+        }
+
+        if(isset($_POST['color_2']))
+        {
+            $hex = $_POST['color_2'];
+            if($hex != '#000000')
+            {
+                list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+
+                $color["r"] = $r;
+                $color["g"] = $g;
+                $color["b"] = $b;
+                $sendColors['color2'] = $color;
+            }
+
+        }
+
+        if(isset($_POST['color_3']))
+        {
+            $hex = $_POST['color_3'];
+            if($hex != '#000000')
+            {
+                list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+
+                $color["r"] = $r;
+                $color["g"] = $g;
+                $color["b"] = $b;
+                $sendColors['color3'] = $color;
+            }
+
+        }
+
+       if(isset($_POST['color_4']))
+       {
+           $hex = $_POST['color_4'];
+           if($hex != '#000000')
+           {
+              list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+               $color["r"] = $r;
+               $color["g"] = $g;
+               $color["b"] = $b;
+               $sendColors['color4'] = $color;
+            }
+
+       }
+        $sendArray['shows'] =  $_POST['ShowName'];
+
+        $sendArray['delay'] = $_SESSION["Delay"];
+        $sendArray['numLoops'] = $_SESSION["NumLoops"];
+        $sendArray['colors'] = $sendColors;
+        if (!empty($_POST['clearStart']))
+            $sendArray['clearStart'] = 1;
+
+        if (!empty($_POST['clearFinish']))
+            $sendArray['clearFinish'] = 1;
+
+        if (!empty($_POST['powerOn']))
+           $sendArray['powerOn'] = "OFF";
+
+    }
+    //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
 
     $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
     $query_data = mysqli_fetch_array($displayStrip);
@@ -386,7 +385,7 @@ brightnessSlider.oninput = function()
 		<div class="ColumnStyles">
 		<?php
 	
-$displayStrip = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
+            $displayStrip = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userID = " . $_SESSION['UserID']);
 $option = '';
 while($query_data = mysqli_fetch_array($displayStrip))
 {
