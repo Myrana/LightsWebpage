@@ -418,9 +418,9 @@ includeHTML();
 		<input type="color" Name="color_3" id="color3"><br />
 		<input type="color" Name="color_4" id="color4"><br /></p>
 		
-		<div id="widthHide"><label for="Width">Width:</label><br />
+		<label for="Width">Width:</label><br />
 <input type="range" step="1" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
-			Value: <span id="WidthValue"></span></p></div>
+			Value: <span id="WidthValue"></span></p>
 
 <script>
 var widthSlider = document.getElementById("WidthId");
