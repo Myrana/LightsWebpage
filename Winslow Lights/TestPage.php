@@ -70,53 +70,63 @@ if(isset($_REQUEST['LightShow']))
 
     if(isset($_POST['color_1']))
     {
-        $hex = $_POST['color_1'];
-        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+        if($hex != '#000000')
+        {
+            $hex = $_POST['color_1'];
+            list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
 
 
-        $color["r"] = $r;
-        $color["g"] = $g;
-        $color["b"] = $b;
-        $sendColors['color1'] = $color;
+            $color["r"] = $r;
+            $color["g"] = $g;
+            $color["b"] = $b;
+            $sendColors['color1'] = $color;
+        }
 
     }
 
     if(isset($_POST['color_2']))
     {
         $hex = $_POST['color_2'];
-        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+        if($hex != '#000000')
+        {
+            list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
 
 
-        $color["r"] = $r;
-        $color["g"] = $g;
-        $color["b"] = $b;
-        $sendColors['color2'] = $color;
+            $color["r"] = $r;
+            $color["g"] = $g;
+            $color["b"] = $b;
+            $sendColors['color2'] = $color;
+        }
 
     }
 
     if(isset($_POST['color_3']))
     {
         $hex = $_POST['color_3'];
-        list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+        if($hex != '#000000')
+        {
+            list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
 
 
-        $color["r"] = $r;
-        $color["g"] = $g;
-        $color["b"] = $b;
-        $sendColors['color3'] = $color;
+            $color["r"] = $r;
+            $color["g"] = $g;
+            $color["b"] = $b;
+            $sendColors['color3'] = $color;
+        }
 
     }
 
    if(isset($_POST['color_4']))
    {
        $hex = $_POST['color_4'];
-       list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-       $color["r"] = $r;
-       $color["g"] = $g;
-       $color["b"] = $b;
-       $sendColors['color4'] = $color;
+       if($hex != '#000000')
+       {
+          list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+           $color["r"] = $r;
+           $color["g"] = $g;
+           $color["b"] = $b;
+           $sendColors['color4'] = $color;
+        }
 
    }
 
