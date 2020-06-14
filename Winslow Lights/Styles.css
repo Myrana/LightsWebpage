@@ -69,3 +69,7 @@ footer{
 	box-shadow: 0px 6px 10px 0px #000;
 	margin: 15px;
 }
+
+input:disabled {
+	display: none;
+}
