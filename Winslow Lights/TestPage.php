@@ -7,6 +7,8 @@ $_SESSION["LightSystemID"] = -1;
 $_SESSION["Delay"] = 10;
 $_SESSION["NumLoops"] = 1;
 
+$conn = getDatabaseConnection();
+
 if($_SESSION['authorized'] == 0)
 {
   header("Location: Registration.php");
@@ -26,35 +28,31 @@ if(!empty($_POST))
 if(isset($_REQUEST['Power']))
 { 
 
-    $onoff = "ON";
+	$onoff = "ON";
     if (empty($_POST['lights']))
       $onoff = "OFF";
     
-    $sendArray['state'] = $onoff;
-    $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-    $query_data = mysqli_fetch_array($displayStrip);
-
-    sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-    
+    $sendArray['state'] = $onoff;   
+	sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+	
 }
 
 
 if(isset($_REQUEST['ConfigShow']))
 { 
 
+	$results = mysqli_query($conn,"SELECT serverHostName,numColors,hasDelay, hasSpeed, isBlink, hasWidth  FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+	if(mysqli_num_rows($results) > 0)
+	{
+		$row = mysqli_fetch_array($results);
 
-
-    $displayStrip = mysqli_query($conn,"SELECT serverHostName,numColors,hasDelay, hasSpeed, isBlink, hasWidth  FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-    $query_data = mysqli_fetch_array($displayStrip);
-    if(mysqli_num_rows($query_data) >= 1)
-    {
-     	$_SESSION["numColors"] = $query_data['numColors'];
-     	$_SESSION["hasDelay"] = $query_data['hasDelay'];
-     	$_SESSION["hasSpeed"] = $query_data['hasSpeed'];
-     	$_SESSION["isBlink"] = $query_data['isBlink'];
-     	$_SESSION["hasWidth"] = $query_data['hasWidth'];
-     	
-    }
+		$_SESSION["numColors"] = $row['numColors'];
+		$_SESSION["hasDelay"] = $row['hasDelay'];
+		$_SESSION["hasSpeed"] = $row['hasSpeed'];
+		$_SESSION["isBlink"] = $row['isBlink'];
+		$_SESSION["hasWidth"] = $row['hasWidth'];
+		
+	}
 
 }
 
@@ -150,10 +148,7 @@ if(isset($_REQUEST['LightShow']))
     }
     //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
 
-    $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-    $query_data = mysqli_fetch_array($displayStrip);
-
-    sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+    sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 
 }
 
@@ -196,13 +191,57 @@ if(isset($_REQUEST['LightShow']))
             $sendArray['deletePlaylist'] = 1;
             $sendArray['playlistName'] = $_POST['Playlist'];
             $sendArray['UserID'] = $_SESSION['UserID'];
-            $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-            $query_data = mysqli_fetch_array($displayStrip);
-
-            sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+            sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
         }
 
     }
+    
+	
+$lightSystemsoption = '';
+$results = mysqli_query($conn,"SELECT ID, systemName FROM lightSystems WHERE enabled = 1");
+if(mysqli_num_rows($results) > 0)
+{
+
+	while($row = mysqli_fetch_array($results))
+	{
+		if($row['ID'] == $_SESSION["LightSystemID"] )
+		{
+
+			$lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
+		}
+		else
+		{
+			$lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+		}
+	}
+}
+
+
+$lightShowsoption = '';
+$results = mysqli_query($conn,"SELECT ID, showName FROM lightShows WHERE enabled = 1");
+if(mysqli_num_rows($results) > 0)
+{
+	while($row = mysqli_fetch_array($results))
+	{
+		$lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
+		
+	}
+}
+
+$playlistoption = '';
+$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userID = " . $_SESSION['UserID']);
+if(mysqli_num_rows($results) > 0)
+{
+	while($row = mysqli_fetch_array($results))
+	{
+
+
+	  $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
+		
+	}
+}
+
+$conn->close();
 
 ?>
 
@@ -252,28 +291,6 @@ includeHTML();
 </script>
 	
 	
-<?php
-	
-	
-$displayStrip = mysqli_query($conn,"SELECT ID, systemName FROM lightSystems WHERE enabled = 1");
-$option = '';
-while($query_data = mysqli_fetch_array($displayStrip))
-{
-	//echo $query_data['stripName'];
-	//<option>$query_data['stripName']</option>
-    if($query_data['ID'] == $_SESSION["LightSystemID"] )
-    {
-
-        $option .="<option value = '".$query_data['ID']."' selected='selected'>".$query_data['systemName']."</option>";
-    }
-    else
-    {
-        $option .="<option value = '".$query_data['ID']."'>".$query_data['systemName']."</option>";
-    }
-}
-
-?>
-	
 		
 	
 
@@ -282,7 +299,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<p><label for="SystemName">System Name:</label><br />
 	<select name="SystemName">
-		<?php echo $option;?>
+		<?php echo $lightSystemsoption;?>
 		</select>	
 	</p>
 		<label for="On">On</label>
@@ -292,29 +309,16 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	
 	</div>
 
-<?php
-	
 	
 
-$displayStrip = mysqli_query($conn,"SELECT ID, showName FROM lightShows WHERE enabled = 1");
-$option = '';
-while($query_data = mysqli_fetch_array($displayStrip))
-{
-	//echo $query_data['stripName'];
-	//<option>$query_data['stripName']</option>
-	$option .="<option value = '".$query_data['ID']."'>".$query_data['showName']."</option>";
-	
-}
 
-
-?>
 
 <div class="column">
 	<div class="ColumnStyles">
 
     <form>
     <p><label for="ShowName">Show Name</label><br /><select name="ShowName" size="7">
-    <?php echo $option;?></select>
+    <?php echo $lightShowsoption;?></select>
 </p>
 <p><button type="submit" name="ConfigShow">Config show</button></p>
 
@@ -388,21 +392,10 @@ brightnessSlider.oninput = function()
 	</div>
 	<div class="column">
 		<div class="ColumnStyles">
-		<?php
-	
-            $displayStrip = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userID = " . $_SESSION['UserID']);
-$option = '';
-while($query_data = mysqli_fetch_array($displayStrip))
-{
+		
+        
 
 
-  $option .="<option value = '".$query_data['ID']."'>".$query_data['playlistName']."</option>";
-	
-}
-
-$conn->close();
-
-?>
 
 <script>
     function testMe()
@@ -418,7 +411,7 @@ $conn->close();
 	<form>
 		<label>Playlist</label> <br />
 		<select id="PlayListId"  name="Playlist" size="7" onChange="testMe();">
-		<?php echo $option;?>
+		<?php echo $playlistoption;?>
 		</select>	
 		<p>
 			<label>New Playlist Name*</label> <br />

@@ -29,12 +29,32 @@ $_SESSION['password'] = "covert69guess";
 $_SESSION['dbName'] = "LedLightSystem";
 
 
-// Create connection
-$conn = new mysqli($_SESSION['servername'], $_SESSION['username'], $_SESSION['password'] , $_SESSION['dbName']);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-} 
+function getDatabaseConnection()
+{
+	// Create connection
+	$conn = new mysqli($_SESSION['servername'], $_SESSION['username'], $_SESSION['password'] , $_SESSION['dbName']);
+	// Check connection
+	if ($conn->connect_error) 
+	{
+	  die("Connection failed: " . $conn->connect_error);
+	} 
+	
+	return $conn;
+}
+
+function getServerHostName($arg_1)
+{
+	$retVal = "localhost";
+	$con = getDatabaseConnection();
+	$results = mysqli_query($con ,"SELECT serverHostName FROM lightSystems WHERE ID = ".$arg_1);
+    if(mysqli_num_rows($results) > 0)
+	{
+		$row = mysqli_fetch_array($results);
+		$retVal = $row['serverHostName'];
+	}
+	
+	return $retVal;		
+}
 
 function sendMQTT($arg_1, $arg_2)
 {
@@ -48,8 +68,8 @@ function sendMQTT($arg_1, $arg_2)
 function killUserSession()
 {
 	session_unset();
-        session_destroy();
-        header("Location: index.php");
-        exit();
+	session_destroy();
+	header("Location: index.php");
+	exit();
 }
 ?>

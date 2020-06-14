@@ -3,6 +3,7 @@ include_once("CommonFunctions.php");
 
 if(isset($_REQUEST['Login']))
 { 
+	$conn = getDatabaseConnection();
 	$_SESSION['authorized'] = 0;
 	$qry = "SELECT ID,isAdmin FROM registrationTable WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
 	
