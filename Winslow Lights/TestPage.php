@@ -310,10 +310,22 @@ includeHTML();
     function setSystemSettings()
     {
         var systemNameId = document.getElementById("SystemNameId");
-        var index = parseInt(systemNameId.value);
+        var widthId  = document.getElementById("WidthId");
+        var widthOutput = document.getElementById("WidthValue");
 
-        alert(index);
-        foreach()
+        var index = parseInt(systemNameId.value);
+        var numLeds = systemsMap.get(index).stripWidth * systemsMap.get(index).stripHeight;
+
+        if(widthId.value > numLeds)
+        {
+            widthId.setAttribute('value', numLeds);
+            widthId.value = numLeds;
+            widthOutput.innerHTML = numLeds;
+
+        }
+
+        widthId.setAttribute('max', numLeds);
+        widthId.max = numLeds;
 
     }
 
@@ -350,10 +362,10 @@ includeHTML();
         var index = parseInt(showNameId.value);
 
 
-        var color1 = document.getElementById("color1");
-        var color2 = document.getElementById("color2");
-        var color3 = document.getElementById("color3");
-        var color4 = document.getElementById("color4");
+        var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
         var delay = document.getElementById("DelayId");
         var width = document.getElementById("WidthId");
         var loops = document.getElementById("NumLoopsId");
@@ -419,13 +431,13 @@ includeHTML();
     <?php echo $lightShowsoption;?></select>
 </p>
 
-    <p><input type="color"  Name="color_1" id="color1"><br />
-        <input type="color" Name="color_2" id="color2"><br />
-        <input type="color" Name="color_3" id="color3"><br />
-        <input type="color" Name="color_4" id="color4"><br /></p>
+    <p><input type="color"  Name="color_1" id="Color1"><br />
+        <input type="color" Name="color_2" id="Color2"><br />
+        <input type="color" Name="color_3" id="Color3"><br />
+        <input type="color" Name="color_4" id="Color4"><br /></p>
 
         <p><label for="Width">Width:</label><br />
-<input type="range" step="1" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
+<input type="range" step="1" id="WidthId" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
 Value: <span id="WidthValue"></span></p>
 
 <script>
@@ -460,7 +472,7 @@ delaySlider.oninput = function()
 Value: <span id="NumLoopsValue"></span></p>
 
 <script>
-var numLoopsSlider = document.getElementById("NumLoops");
+var numLoopsSlider = document.getElementById("NumLoopsId");
 var numLoopsOutput = document.getElementById("NumLoopsValue");
 numLoopsOutput.innerHTML = numLoopsSlider.value;
 
@@ -510,27 +522,20 @@ brightnessSlider.oninput = function()
 
 <script>
 
-    function testMe()
+    function setPlaylistName()
     {
         var playlistName = document.getElementById("PlayListNameId");
         var playListId = document.getElementById("PlayListId");
         var selectedText = playListId.options[playListId.selectedIndex].text;
         playlistName.value = selectedText;
 
-      //  alert(playListId.value);
-        //alert(showMap.get(playListId.selectedIndex - 1).name);
-        ///for (let key of showMap.keys())
-        //{
-
-            //alert(key);
-        //}
 
     }
 </script>
 
     <form>
         <label>Playlist</label> <br />
-        <select id="PlayListId"  name="Playlist" size="7" onChange="testMe();">
+        <select id="PlayListId"  name="Playlist" size="7" onChange="setPlaylistName();">
         <?php echo $playlistoption;?>
         </select>
         <p>
