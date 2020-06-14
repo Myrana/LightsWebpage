@@ -290,14 +290,29 @@ includeHTML();
 </script>
 	
 	
-		
-	
+
+<script>
+
+
+
+    function setSystemSettings()
+    {
+        //var systemNameId = document.getElementById("SystemNameId");
+       // var index = parseInt(systemNameId.value);
+        //alert(systemsMap.get(index).systemName);
+        alert("Bob");
+
+    }
+
+
+</script>
+
 
 <div class="column">
 	
 	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<p><label for="SystemName">System Name:</label><br />
-	<select name="SystemName">
+	<select name="SystemName" onChange="setShowSettings();">
 		<?php echo $lightSystemsoption;?>
 		</select>	
 	</p>
@@ -344,7 +359,7 @@ includeHTML();
             width.disabled = false;
         }
 
-        if(showMap.get(index)loops == 1)
+        if(showMap.get(index).hasLoops == 1)
         {
             loops.setAttribute('disabled', false);
             loops.disabled = false;
