@@ -208,6 +208,7 @@ if(mysqli_num_rows($results) > 0)
 			$lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
 		else
 			$lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+
 	}
 }
 
@@ -243,8 +244,15 @@ $conn->close();
 <link href="Styles.css" rel="stylesheet" type="text/css">	
 </head>
 
+<body>
+	<div w3-include-html="Nav.html"></div>
+	
+	
+
 <script>
-function includeHTML() {
+
+function includeHTML() 
+{
   var z, i, elmnt, file, xhttp;
   /*loop through a collection of all HTML elements:*/
   z = document.getElementsByTagName("*");
@@ -271,15 +279,45 @@ function includeHTML() {
     }
   }
 };
-</script>
-<body>
-	<div w3-include-html="Nav.html"></div>
-	
-<script>
+
 includeHTML();
+var delaySlider = document.getElementById("Delay");
+var delayOutput = document.getElementById("DelayValue");
+delayOutput.innerHTML = delaySlider.value;
+
+delaySlider.oninput = function() 
+{
+	delayOutput.innerHTML = this.value;
+}
+
+var numLoopsSlider = document.getElementById("NumLoops");
+var numLoopsOutput = document.getElementById("NumLoopsValue");
+numLoopsOutput.innerHTML = numLoopsSlider.value;
+
+numLoopsSlider.oninput = function() 
+{
+	numLoopsOutput.innerHTML = this.value;
+}
+	
+var brightnessSlider = document.getElementById("Brightness");
+var brightnessOutput = document.getElementById("BrightnessValue");
+brightnessOutput.innerHTML = brightnessSlider.value;
+
+brightnessSlider.oninput = function() 
+{
+	brightnessOutput.innerHTML = this.value;
+}
+
+
+    function testMe()
+    {
+        var playlistName = document.getElementById("PlayListNameId");
+        var playListId = document.getElementById("PlayListId");
+        var selectedText = playListId.options[playListId.selectedIndex].text;
+        playlistName.value = selectedText;
+
+    }
 </script>
-	
-	
 		
 	
 
@@ -322,49 +360,17 @@ includeHTML();
 <input type="range" step="1" id="Delay" name="Delay" min="1" max="1000" value="<?php echo $_SESSION["Delay"];?>">
 Value: <span id="DelayValue"></span></p>
 
-<script>
-var delaySlider = document.getElementById("Delay");
-var delayOutput = document.getElementById("DelayValue");
-delayOutput.innerHTML = delaySlider.value;
-
-delaySlider.oninput = function() 
-{
-	delayOutput.innerHTML = this.value;
-}
-</script>
 
 	<p><label for="NumLoops">Number Of Loops:</label><br />
 <input type="range" step="1" id="NumLoops" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
 Value: <span id="NumLoopsValue"></span></p>
 
-<script>
-var numLoopsSlider = document.getElementById("NumLoops");
-var numLoopsOutput = document.getElementById("NumLoopsValue");
-numLoopsOutput.innerHTML = numLoopsSlider.value;
-
-numLoopsSlider.oninput = function() 
-{
-	numLoopsOutput.innerHTML = this.value;
-}
-</script>
 
 		
 <p><label for="Brightness">Brightness:</label><br />
 	<input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
 Value: <span id="BrightnessValue"></span></p>
 
-<script>
-	
-var brightnessSlider = document.getElementById("Brightness");
-var brightnessOutput = document.getElementById("BrightnessValue");
-brightnessOutput.innerHTML = brightnessSlider.value;
-
-brightnessSlider.oninput = function() 
-{
-	brightnessOutput.innerHTML = this.value;
-}
-
-</script>
 		
 		<label for="On">Clear on Start</label>
 	<input type="checkbox" name="clearStart">
@@ -381,21 +387,8 @@ brightnessSlider.oninput = function()
 	</div>
 	<div class="column">
 		<div class="ColumnStyles">
-		
-        
 
 
-
-<script>
-    function testMe()
-    {
-        var playlistName = document.getElementById("PlayListNameId");
-        var playListId = document.getElementById("PlayListId");
-        var selectedText = playListId.options[playListId.selectedIndex].text;
-        playlistName.value = selectedText;
-
-    }
-</script>
 
 	<form>
 		<label>Playlist</label> <br />
