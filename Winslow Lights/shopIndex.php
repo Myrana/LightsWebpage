@@ -1,25 +1,26 @@
 <?php
 include('CommonFunctions.php');
 $status="";
-if (isset($_POST['code']) && $_POST['code']!=""){
-$code = $_POST['code'];
-$result = mysqli_query(
-$con,
-"SELECT * FROM products WHERE code='$code'"
-);
-$row = mysqli_fetch_assoc($result);
-$name = $row['name'];
-$code = $row['code'];
-$price = $row['price'];
-$image = $row['image'];
- 
-$cartArray = array(
- $code=>array(
- 'name'=>$name,
- 'code'=>$code,
- 'price'=>$price,
- 'quantity'=>1,
- 'image'=>$image)
+
+    $conn = getDatabaseConnection();
+
+if (isset($_POST['code']) && $_POST['code']!="")
+    {
+        $code = $_POST['code'];
+        $result = mysqli_query($con,"SELECT * FROM products WHERE code='$code'");
+        $row = mysqli_fetch_assoc($result);
+        $name = $row['name'];
+        $code = $row['code'];
+        $price = $row['price'];
+        $image = $row['image'];
+
+        $cartArray = array(
+         $code=>array(
+         'name'=>$name,
+         'code'=>$code,
+         'price'=>$price,
+         'quantity'=>1,
+         'image'=>$image)
 );
  
 if(empty($_SESSION["shopping_cart"])) {
