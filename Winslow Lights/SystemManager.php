@@ -41,6 +41,15 @@ if(isset($_REQUEST['Power']))
 }
 
 
+if(isset($_REQUEST['ClearQueue']))
+{
+
+    
+    $sendArray['clearQueue'] = 1;
+    sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+
+}
+
 
 
 
@@ -510,6 +519,7 @@ brightnessSlider.oninput = function()
         </p>
 
         <p><button type="submit" name="LightShow">Send Show</button></p>
+        <p><button type="submit" name="ClearQueue">Clear Queue</button></p>
 
     </div>
     </div>

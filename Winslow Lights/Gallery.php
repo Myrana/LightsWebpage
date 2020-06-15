@@ -12,10 +12,10 @@
             {
                 if($row["isVideo"] == 0)
                 {
-                    //echo $row['path'];
+                    
                     $photoGallery .= '<div class="responsive"><div class="gallery">';
                     $photoGallery .= '<a target="_blank" href="' . $row["path"] . '">';
-                    $photoGallery .= '<img src="' . $row['path'] . '" alt="holdme" width="1920" height="1017">';
+                    $photoGallery .= '<img src="' . $row['path'] . '" alt="' . $row['description'] . '" width="1920" height="1017">';
 
                     $photoGallery .= '</a></div></div>';
                 }
@@ -31,11 +31,6 @@
             }
 
          }
-
-
- //   <video width="400" controls autoplay>
-  //  <source src="/media/BRTG9591.MOV" type="video/mp4">
-  //  </video>
 
 ?>
 
