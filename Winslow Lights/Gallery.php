@@ -3,6 +3,7 @@
    include_once('CommonFunctions.php');
 
     $photoGallery = "";
+	$videoGallery = "";
     $conn = getDatabaseConnection();
      $results = mysqli_query($conn,"SELECT description, path, isVideo  FROM productMedia WHERE enabled = 1");
          if(mysqli_num_rows($results) > 0)
@@ -21,10 +22,10 @@
                 }
                 else
                 {
-                    $photoGallery .= '<div class="responsive"><div class="gallery">';
-                    $photoGallery .= '<video width="400" controls autoplay>';
-                    $photoGallery .= '<source src="' . $row['path'] . '" type="video/mp4">';
-                    $photoGallery .= '</video></div></div>';
+                    $videoGallery .= '<div class="responsive"><div class="gallery">';
+                    $videoGallery .= '<video width="400" controls autoplay>';
+                    $videoGallery .= '<source src="' . $row['path'] . '" type="video/mp4">';
+                    $videoGallery .= '</video></div></div>';
 
                 }
 
@@ -78,9 +79,15 @@ function includeHTML() {
 <script>
 includeHTML();
 </script>
+<div class="column" style="width: 50%">
 
 <?php echo $photoGallery ?>
-
+	</div>
+	
+	<div class="column" style="width: 50%">
+		
+	<?php echo $videoGallery ?>
+		</div>
 
 </body>
 </html>

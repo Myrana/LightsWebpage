@@ -343,8 +343,10 @@ includeHTML();
 
 
 <div class="column">
+	
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<img src="System-Control.png" alt="System Control" />
     <p><label for="SystemName">System Name:</label><br />
     <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
         <?php echo $lightSystemsoption;?>
@@ -434,6 +436,8 @@ includeHTML();
 
 <div class="column">
     <div class="ColumnStyles">
+		
+		<img src="Show-Designer.png" alt="Show Designer" />
 
     <form>
     <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" size="7" onChange="setShowSettings();">
@@ -526,7 +530,7 @@ brightnessSlider.oninput = function()
     <div class="column">
         <div class="ColumnStyles">
 
-
+<img src="Playlist-Manager.png" alt="Playlist Manager" />
 
 
 
