@@ -19,12 +19,23 @@
 
                     $photoGallery .= '</a></div></div>';
                 }
+                else
+                {
+                    $photoGallery .= '<div class="responsive"><div class="gallery">';
+                    $photoGallery .= '<video width="400" controls autoplay>';
+                    $photoGallery .= '<source src="' . $row['path'] . '" type="video/mp4">';
+                    $photoGallery .= '</video></div></div>';
+
+                }
 
             }
 
          }
 
 
+ //   <video width="400" controls autoplay>
+  //  <source src="/media/BRTG9591.MOV" type="video/mp4">
+  //  </video>
 
 ?>
 
@@ -74,6 +85,7 @@ includeHTML();
 </script>
 
 <?php echo $photoGallery ?>
+
 
 </body>
 </html>
