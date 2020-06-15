@@ -444,61 +444,33 @@ includeHTML();
     <?php echo $lightShowsoption;?></select>
 </p>
 
-    <p><input type="color"  Name="color_1" id="Color1"><br />
-        <input type="color" Name="color_2" id="Color2"><br />
-        <input type="color" Name="color_3" id="Color3"><br />
-        <input type="color" Name="color_4" id="Color4"><br /></p>
+    <p><input type="color"  Name="color_1" id="Color1" value ="#6512e0"><br />
+        <input type="color" Name="color_2" id="Color2" value="#906bfa"><br />
+        <input type="color" Name="color_3" id="Color3" value="#2c2367"><br />
+        <input type="color" Name="color_4" id="Color4" value="#ad5e8c"><br /></p>
 
         <p><label for="Width">Width:</label><br />
-<input type="range" step="1" id="WidthId" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
-Value: <span id="WidthValue"></span></p>
+<input type="number" id="WidthId" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
 
-<script>
-var widthSlider = document.getElementById("WidthId");
-var widthOutput = document.getElementById("WidthValue");
-widthOutput.innerHTML = widthSlider.value;
 
-widthSlider.oninput = function()
-{
-    widthOutput.innerHTML = this.value;
-}
-</script>
 
 
         <p><label for="Delay">Delay:</label><br />
-<input type="range" step="1" id="DelayId" name="Delay" min="1" max="1000" value="<?php echo $_SESSION["Delay"];?>">
-Value: <span id="DelayValue"></span></p>
+<input type="number" id="DelayId" name="Delay" min="1" max="1000" value="<?php echo $_SESSION["Delay"];?>">
+</p>
 
-<script>
-var delaySlider = document.getElementById("DelayId");
-var delayOutput = document.getElementById("DelayValue");
-delayOutput.innerHTML = delaySlider.value;
 
-delaySlider.oninput = function()
-{
-    delayOutput.innerHTML = this.value;
-}
-</script>
 
     <p><label for="NumLoops">Number Of Loops:</label><br />
-<input type="range" step="1" id="NumLoopsId" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
-Value: <span id="NumLoopsValue"></span></p>
+<input type="number" id="NumLoopsId" name="NumLoops" min="1" max="1000" value="<?php echo $_SESSION["NumLoops"];?>">
+</p>
 
-<script>
-var numLoopsSlider = document.getElementById("NumLoopsId");
-var numLoopsOutput = document.getElementById("NumLoopsValue");
-numLoopsOutput.innerHTML = numLoopsSlider.value;
 
-numLoopsSlider.oninput = function()
-{
-    numLoopsOutput.innerHTML = this.value;
-}
-</script>
 
 
 <p><label for="Brightness">Brightness:</label><br />
-    <input type="range" step="1" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
-Value: <span id="BrightnessValue"></span></p>
+    <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="10" max="200">
+</p>
 
 <script>
 
@@ -513,17 +485,17 @@ brightnessSlider.oninput = function()
 
 </script>
 
-        <label for="On">Clear on Start</label>
+        <p><label for="On">Clear on Start</label>
     <input type="checkbox" name="clearStart">
         <label for="On">Clear on Finish</label>
     <input type="checkbox" name="clearFinish">
-        <p>
+   
         <label for="On">Power On</label>
     <input type="checkbox" name="powerOn" value="OFF">
         </p>
 
-        <p><button type="submit" name="LightShow">Send Show</button></p>
-        <p><button type="submit" name="ClearQueue">Clear Queue</button></p>
+        <p><button type="submit" name="LightShow">Send Show</button>
+			<button type="submit" name="ClearQueue">Clear Queue</button></p>
 
     </div>
     </div>
@@ -548,7 +520,7 @@ brightnessSlider.oninput = function()
 </script>
 
     <form>
-        <label>Playlist</label> <br />
+       
         <select id="PlayListId"  name="Playlist" size="7" onChange="setPlaylistName();">
         <?php echo $playlistoption;?>
         </select>
