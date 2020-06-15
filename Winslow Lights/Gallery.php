@@ -1,3 +1,33 @@
+<?PHP
+
+   include_once('CommonFunctions.php');
+
+    $photoGallery = "";
+    $conn = getDatabaseConnection();
+     $results = mysqli_query($conn,"SELECT description, path, isVideo  FROM productMedia WHERE enabled = 1");
+         if(mysqli_num_rows($results) > 0)
+         {
+
+            while($row = mysqli_fetch_array($results))
+            {
+                if($row["isVideo"] == 0)
+                {
+                    //echo $row['path'];
+                    $photoGallery .= '<div class="responsive"><div class="gallery">';
+                    $photoGallery .= '<a target="_blank" href="' . $row["path"] . '">';
+                    $photoGallery .= '<img src="' . $row['path'] . '" alt="holdme" width="1920" height="1017">';
+
+                    $photoGallery .= '</a></div></div>';
+                }
+
+            }
+
+         }
+
+
+
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -43,28 +73,7 @@ function includeHTML() {
 includeHTML();
 </script>
 
-<body>
-	<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="Gallery Images/Sims 4/backyard.png">
-      <img src="Gallery Images/Sims 4/backyard.png" alt="sims 4 backyard" width="1920" height="1017">
-    </a>  </div>
-</div>
-
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="Gallery Images/Sims 4/Beach.png">
-      <img src="Gallery Images/Sims 4/Beach.png" alt="sims on a beach" width="1920" height="1017">
-    </a>      </div>
-</div>
-
-<div class="responsive">
-  <div class="gallery">
-    <a target="_blank" href="Gallery Images/Sims 4/familyroom.png">
-      <img src="Gallery Images/Sims 4/familyroom.png" alt="sims 4 family room" width="1920" height="1017">
-    </a>  </div>
-</div>
+<?php echo $photoGallery ?>
 
 </body>
 </html>
