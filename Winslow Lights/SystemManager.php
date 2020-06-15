@@ -44,7 +44,6 @@ if(isset($_REQUEST['Power']))
 if(isset($_REQUEST['ClearQueue']))
 {
 
-    
     $sendArray['clearQueue'] = 1;
     sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 
