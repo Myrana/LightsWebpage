@@ -346,7 +346,7 @@ includeHTML();
 	
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<img src="System-Control.png" alt="System Control" />
+		<img src="System-Control.png" alt="System Control" width="100%" />
     <p><label for="SystemName">System Name:</label><br />
     <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
         <?php echo $lightSystemsoption;?>
@@ -437,7 +437,7 @@ includeHTML();
 <div class="column">
     <div class="ColumnStyles">
 		
-		<img src="Show-Designer.png" alt="Show Designer" />
+		<img src="Show-Designer.png" alt="Show Designer" width="100%" />
 
     <form>
     <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" size="7" onChange="setShowSettings();">
@@ -502,7 +502,7 @@ brightnessSlider.oninput = function()
     <div class="column">
         <div class="ColumnStyles">
 
-<img src="Playlist-Manager.png" alt="Playlist Manager" />
+<img src="Playlist-Manager.png" alt="Playlist Manager" width="100%" />
 
 
 
