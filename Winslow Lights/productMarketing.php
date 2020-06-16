@@ -4,8 +4,8 @@ include_once('CommonFunctions.php');
 
 $conn = getDatabaseConnection();
 
-$enabled = "0";
-$media = "0";
+$enabled = 0;
+$media = 0;
 
 if (!empty($_POST)) 
 {
