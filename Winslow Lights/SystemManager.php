@@ -7,6 +7,7 @@ $_SESSION["LightSystemID"] = -1;
 $_SESSION["Delay"] = 10;
 $_SESSION["NumLoops"] = 1;
 $_SESSION["Width"] = 1;
+$_SESSION["ColorEvery"] = 2;
 
 $conn = getDatabaseConnection();
 
@@ -24,7 +25,7 @@ if(!empty($_POST))
     $_SESSION["Delay"] = $_POST['Delay'];
     $_SESSION["NumLoops"] = $_POST['NumLoops'];
     $_SESSION["Width"] = $_POST['Width'];
-
+	$_SESSION["ColorEvery"] = $_POST['ColorEvery'];
 
 }
 
@@ -138,6 +139,9 @@ if(isset($_REQUEST['LightShow']))
 
         if (!empty($_POST['powerOn']))
            $sendArray['powerOn'] = "OFF";
+           
+        if (!empty($_POST['ColorEvery']))
+           $sendArray['colorEvery'] = $_SESSION["ColorEvery"];
 
     }
     //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
@@ -223,7 +227,7 @@ if(mysqli_num_rows($results) > 0)
 $lightShowsoption = '';
 $lightShowsScript = '';
 
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops FROM lightShows WHERE enabled = 1");
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops, colorEvery FROM lightShows WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
     $lightShowsScript .= "let showMap = new Map();\r\n";
@@ -241,6 +245,7 @@ if(mysqli_num_rows($results) > 0)
         $lightShowsScript .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
         $lightShowsScript .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
         $lightShowsScript .= "  show.hasLoops = " . $row['hasLoops'] .";\r";
+        $lightShowsScript .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
 
         $lightShowsScript .= "    showMap.set(" . $row['ID'] . ", show);\r";
 
@@ -379,6 +384,7 @@ includeHTML();
         var delay = document.getElementById("DelayId");
         var width = document.getElementById("WidthId");
         var loops = document.getElementById("NumLoopsId");
+        var colorEvery = document.getElementById("ColorEveryId");
 
         color1.setAttribute('disabled', true);
         color2.setAttribute('disabled', true);
@@ -387,11 +393,13 @@ includeHTML();
         delay.setAttribute('disabled', true);
         width.setAttribute('disabled', true);
         loops.setAttribute('disabled', true);
-
+		colorEvery.setAttribute('disabled', true);
+		
         if(showMap.get(index).hasWidth == 1)
         {
             width.setAttribute('disabled', false);
             width.disabled = false;
+
         }
 
         if(showMap.get(index).hasLoops == 1)
@@ -430,6 +438,14 @@ includeHTML();
             color4.setAttribute('disabled', false);
             color4.disabled = false;
         }
+        
+        
+        if(showMap.get(index).colorEvery == 1)
+        {
+            colorEvery.setAttribute('disabled', false);
+            colorEvery.disabled = false;
+        }
+        
     }
 </script>
 
@@ -449,7 +465,10 @@ includeHTML();
         <input type="color" Name="color_4" id="Color4" value="#ad5e8c"><br /></p>
 
         <p><label for="Width">Width:</label><br />
-<input type="number" id="WidthId" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
+<input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["width"];?>"><br />
+<label for="ColorEvery">Color Every X Led:</label>
+<input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
+</p>
 
 
 
