@@ -4,6 +4,12 @@ include_once('CommonFunctions.php');
 
 $conn = getDatabaseConnection();
 
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: Registration.php");
+  exit();
+}
+
 $enabled = 0;
 $media = 0;
 
