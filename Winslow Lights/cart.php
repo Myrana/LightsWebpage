@@ -83,12 +83,12 @@ $cart_count = count(array_keys($_SESSION["shopping_cart"]));
 }
 ?>	
 	
-	<div class="cart">
+	<div class="cart" style="margin: 15px;">
 <?php
 if(isset($_SESSION["shopping_cart"])){
     $total_price = 0;
 ?> 
-<table class="table">
+<table class="table" style = "background-color: white; border: 1 px solid black;">
 <tbody>
 <tr>
 <td></td>
@@ -142,6 +142,7 @@ $total_price += ($product["price"]*$product["quantity"]);
 </td>
 </tr>
 </tbody>
+	<button type="submit" class="purchess">Proceed to Payment</button>
 </table> 
   <?php
 }else{
