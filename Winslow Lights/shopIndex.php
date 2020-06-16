@@ -2,7 +2,7 @@
 include('CommonFunctions.php');
 $status="";
 
-    $conn = getDatabaseConnection();
+    $con = getDatabaseConnection();
 
 if (isset($_POST['code']) && $_POST['code']!="")
     {

@@ -1,5 +1,8 @@
 
 <?php
+
+include_once('CommonFunctions.php');
+
 $status="";
 if (isset($_POST['action']) && $_POST['action']=="remove"){
 if(!empty($_SESSION["shopping_cart"])) {
