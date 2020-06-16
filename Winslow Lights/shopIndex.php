@@ -87,6 +87,8 @@ function includeHTML() {
 <script>
 includeHTML();
 </script>
+
+<img src="Shop.png" alt="Shop" />	
 	
 <?php
 if(!empty($_SESSION["shopping_cart"])) {

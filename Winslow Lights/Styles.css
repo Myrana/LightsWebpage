@@ -106,6 +106,8 @@ div.desc {
  float:left;
  padding: 10px;
  text-align: center;
+ background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+ border: 1px solid black;	
  }
 .product_wrapper:hover {
  box-shadow: 0 0 0 2px #e5e5e5;
@@ -116,20 +118,16 @@ div.desc {
  }
 .product_wrapper .buy {
  text-transform: uppercase;
- background: #F68B1E;
- border: 1px solid #F68B1E;
+ background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+ border: 1px solid black;
  cursor: pointer;
- color: #fff;
+ color: #000;
  padding: 8px 40px;
  margin-top: 10px;
 }
-.product_wrapper .buy:hover {
- background: #f17e0a;
- border-color: #f17e0a;
-}
+
 .message_box .box{
  margin: 10px 0px;
- border: 1px solid #2b772e;
  text-align: center;
  font-weight: bold;
  color: #2b772e;
@@ -142,14 +140,16 @@ div.desc {
  float:right;
  font-weight:bold;
  position:relative;
+ margin-top: 15px;	
  }
 .cart_div a {
  color:#000;
+ text-decoration: none;
  } 
 .cart_div span {
  font-size: 12px;
  line-height: 14px;
- background: #F68B1E;
+ background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
  padding: 2px;
  border: 2px solid #fff;
  border-radius: 50%;
@@ -167,6 +167,7 @@ div.desc {
  color: #0067ab;
  cursor: pointer;
  padding: 0px;
+ text-decoration: none;	
  }
 .cart .remove:hover {
  text-decoration:underline;
