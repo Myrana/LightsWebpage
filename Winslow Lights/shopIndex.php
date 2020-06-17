@@ -87,9 +87,9 @@ function includeHTML() {
 <script>
 includeHTML();
 </script>
-
+<div class="imagewrapper">
 <img src="Shop.png" alt="Shop" />	
-	
+	</div>
 <?php
 if(!empty($_SESSION["shopping_cart"])) {
 $cart_count = count(array_keys($_SESSION["shopping_cart"]));
