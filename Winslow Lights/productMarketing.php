@@ -10,8 +10,6 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
-$enabled = 0;
-$media = 0;
 
 if (!empty($_POST)) 
 {
@@ -21,11 +19,18 @@ if (!empty($_POST))
     $text = $_POST['text'];
     $media = $_POST['media'];
     $enabled = $_POST['enabled'];
-   
 
-	//$sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio) VALUES('')
+	
+if(isset($_REQUEST['media']))
+{
 
-	//$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType) VALUES('" . '$lightSystemName' . "','" . '$serverHostName' . "', 257)";
+    $mediaChecked = 1;
+    if (empty($_POST['media']))
+      $mediaChecked = 0;
+
+}
+	
+	
 
 	$sql = "INSERT INTO productMedia(description, path, text, isVideo, enabled) VALUES('" . $_POST['description'] . "','" . $_POST['path'] . "', '" . $_POST['text'] . "','" . $_POST['media'] . "','" . $_POST['enabled'] . "')";
 

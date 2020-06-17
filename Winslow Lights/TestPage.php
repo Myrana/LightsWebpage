@@ -545,15 +545,58 @@ brightnessSlider.oninput = function()
 
         <p>
         <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
+		<button id="btnEditlist">Edit Shows</button>	
         <button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
         <button type="submit" name="btnPlaylist">Play</button>
         </p>
+		
+		<div id="editPlaylistModal" class="modal">
+	
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<input type="text" name="testtext" id="testtext">
+		<button type="submit" name="btnEditPlaylist">Edit Show</button>
+		
+		</div>
+	
+	</div>
+	
+	<script>
+// Get the modal
+var modal = document.getElementById("editPlaylistModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("btnEditlist");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 
         </form>
         </form>
     </form>
     </div>
     </div>
+	
+
+	
 </body>
 </html>
 
