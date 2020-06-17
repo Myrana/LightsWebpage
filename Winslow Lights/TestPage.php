@@ -564,7 +564,13 @@ brightnessSlider.oninput = function()
   <div class="modal-content">
     <span class="close">&times;</span>
     <p>Some text in the Modal..</p>
-	<input type="text">  
+	<form>
+	  <label>Playlist</label> <br />
+        <select id="PlayListId"  name="Playlist" size="7" onChange="setPlaylistName();">
+        <?php echo $playlistoption;?>
+        </select>
+	  
+	  </form>
   </div>
 
 </div>
