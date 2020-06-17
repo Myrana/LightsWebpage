@@ -544,12 +544,20 @@ brightnessSlider.oninput = function()
             </p>
 
         <p>
-        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
-		<button id="btnEditlist">Edit Shows</button>	
+        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>	
         <button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
         <button type="submit" name="btnPlaylist">Play</button>
         </p>
 		
+
+        </form>
+        </form>
+    </form>
+	<button id="btnEditlist">Edit Shows</button>
+    </div>
+	
+    </div>
+	
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
@@ -588,14 +596,6 @@ window.onclick = function(event) {
   }
 }
 </script>
-
-        </form>
-        </form>
-    </form>
-    </div>
-    </div>
-	
-
 	
 </body>
 </html>
