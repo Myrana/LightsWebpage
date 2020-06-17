@@ -465,7 +465,7 @@ includeHTML();
         <input type="color" Name="color_4" id="Color4" value="#ad5e8c"><br /></p>
 
         <p><label for="Width">Width:</label><br />
-<input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["width"];?>"><br />
+<input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"><br />
 <label for="ColorEvery">Color Every X Led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
