@@ -13,26 +13,18 @@ if($_SESSION['authorized'] == 0)
 
 if (!empty($_POST)) 
 {
- 
-    $description= $_POST['description'];
-    $path = $_POST['path'];
-    $text = $_POST['text'];
-    $media = $_POST['media'];
-    $enabled = $_POST['enabled'];
-
-	
-if(isset($_REQUEST['media']))
-{
 
     $mediaChecked = 1;
     if (empty($_POST['media']))
       $mediaChecked = 0;
 
-}
+    $enabledChecked = 1;
+    if (empty($_POST['enabled']))
+      $enabledChecked = 0;
 	
 	
 
-	$sql = "INSERT INTO productMedia(description, path, text, isVideo, enabled) VALUES('" . $_POST['description'] . "','" . $_POST['path'] . "', '" . $_POST['text'] . "','" . $_POST['media'] . "','" . $_POST['enabled'] . "')";
+	$sql = "INSERT INTO productMedia(description, path, text, isVideo, enabled) VALUES('" . $_POST['description'] . "','" . $_POST['path'] . "', '" . $_POST['text'] . "','" . $mediaChecked . "','" . $enabledChecked . "')";
 
 
 	if ($conn->query($sql) === TRUE) {
@@ -99,14 +91,14 @@ includeHTML();
 <form name="productMedia" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	
 	<p><label for="description">Description:</label><br />
-	  <input name="description" type="text" id="description" placeholder="what does this do?" maxlength="255"></p>
+	  <input name="description" type="text" id="description" placeholder="what does this do?" maxlength="255" required ></p>
 	
 	<p><label for="path">Path:</label><br />
-	  <input name="path" type="text" id="path" placeholder="The location of the media" maxlength="255"></p>
+	  <input name="path" type="text" id="path" placeholder="The location of the media" maxlength="255" required></p>
 	
 	
 	<p><label for="text">Alt Text:</label><br />
-	  <input name="text" type="text" id="text" placeholder="This fills in the alt text"></p>
+	  <input name="text" type="text" id="text" placeholder="This fills in the alt text" required></p>
 	
 	<p><label for="media">Is media?:</label><br />
 	  <input type="checkbox" id="media" name="media" value="1">
