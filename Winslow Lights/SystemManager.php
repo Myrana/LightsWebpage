@@ -20,12 +20,23 @@ if($_SESSION['authorized'] == 0)
 
 if(!empty($_POST))
 {
-    $_SESSION["LightSystemID"]  = $_POST['SystemName'];
-    $_SESSION["Brightness"] = $_POST['Brightness'];
-    $_SESSION["Delay"] = $_POST['Delay'];
-    $_SESSION["NumLoops"] = $_POST['NumLoops'];
-    $_SESSION["Width"] = $_POST['Width'];
-	$_SESSION["ColorEvery"] = $_POST['ColorEvery'];
+    if(!empty($_POST['SystemName']))
+        $_SESSION["LightSystemID"]  = $_POST['SystemName'];
+
+    if(!empty($_POST['Brightness']))
+        $_SESSION["Brightness"] = $_POST['Brightness'];
+
+    if(!empty($_POST['Delay']))
+        $_SESSION["Delay"] = $_POST['Delay'];
+
+    if(!empty($_POST['NumLoops']))
+        $_SESSION["NumLoops"] = $_POST['NumLoops'];
+
+    if(!empty($_POST['Width']))
+        $_SESSION["Width"] = $_POST['Width'];
+
+    if(!empty($_POST['ColorEvery']))
+        $_SESSION["ColorEvery"] = $_POST['ColorEvery'];
 
 }
 
@@ -126,11 +137,19 @@ if(isset($_REQUEST['LightShow']))
             }
 
        }
-        $sendArray['shows'] =  $_POST['ShowName'];
 
-        $sendArray['delay'] = $_SESSION["Delay"];
-        $sendArray['numLoops'] = $_SESSION["NumLoops"];
-        $sendArray['colors'] = $sendColors;
+        if(!empty($_POST['ShowName']))
+            $sendArray['shows'] =  $_POST['ShowName'];
+
+        if(!empty($_POST['Delay']))
+            $sendArray['delay'] = $_SESSION["Delay"];
+
+        if(!empty($_POST['ShowName']))
+            $sendArray['numLoops'] = $_SESSION["NumLoops"];
+
+        if(!empty($_POST['colors']))
+            $sendArray['colors'] = $sendColors;
+        
         if (!empty($_POST['clearStart']))
             $sendArray['clearStart'] = 1;
 
@@ -466,6 +485,7 @@ includeHTML();
 
         <p><label for="Width">Width:</label><br />
 <input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"><br />
+
 <label for="ColorEvery">Color Every X Led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
