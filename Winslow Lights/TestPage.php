@@ -550,20 +550,20 @@ brightnessSlider.oninput = function()
         <button type="submit" name="btnPlaylist">Play</button>
         </p>
 		
-		<div id="editPlaylistModal" class="modal">
-	
-	<div class="modal-content">
-		<span class="close">&times;</span>
-		<input type="text" name="testtext" id="testtext">
-		<button type="submit" name="btnEditPlaylist">Edit Show</button>
-		
-		</div>
-	
-	</div>
-	
-	<script>
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+	<input type="text">  
+  </div>
+
+</div>
+
+<script>
 // Get the modal
-var modal = document.getElementById("editPlaylistModal");
+var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("btnEditlist");
