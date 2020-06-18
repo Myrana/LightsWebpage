@@ -20,12 +20,13 @@ $_SESSION["ColorEvery"] = 2;
     <?php echo $lightShowsoption;?></select>
 </p>
 
-    <p><input type="color"  Name="color_1" id="Color1" value ="#6512e0"><br />
-        <input type="color" Name="color_2" id="Color2" value="#906bfa"><br />
-        <input type="color" Name="color_3" id="Color3" value="#2c2367"><br />
-        <input type="color" Name="color_4" id="Color4" value="#ad5e8c"><br /></p>
+    <p><label for="colors">Colors:</label>
+		<input type="color"  Name="color_1" id="Color1" value ="#6512e0">
+        <input type="color" Name="color_2" id="Color2" value="#906bfa">
+        <input type="color" Name="color_3" id="Color3" value="#2c2367">
+        <input type="color" Name="color_4" id="Color4" value="#ad5e8c"></p>
 
-        <p><label for="Width">Width:</label><br />
+        <p><label for="Width">Width:</label>
 <input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"><br />
 
 <label for="ColorEvery">Color Every X Led:</label>
@@ -35,20 +36,20 @@ $_SESSION["ColorEvery"] = 2;
 
 
 
-        <p><label for="Delay">Delay:</label><br />
+        <p><label for="Delay">Delay:</label>
 <input type="number" id="DelayId" name="Delay" min="1" max="100000" value="<?php echo $_SESSION["Delay"];?>">
 </p>
 
 
 
-    <p><label for="NumLoops">Number Of Loops:</label><br />
+    <p><label for="NumLoops">Number Of Loops:</label>
 <input type="number" id="NumLoopsId" name="NumLoops" min="1" max="100000" value="<?php echo $_SESSION["NumLoops"];?>">
 </p>
 
 
 
 
-<p><label for="Brightness">Brightness:</label><br />
+<p><label for="Brightness">Brightness:</label>
     <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="200">
 </p>
 
