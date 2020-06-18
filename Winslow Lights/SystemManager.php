@@ -8,6 +8,7 @@ $_SESSION["Delay"] = 10;
 $_SESSION["NumLoops"] = 1;
 $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
+$_SESSION["ShowName"] = -1;
 
 $conn = getDatabaseConnection();
 
@@ -41,6 +42,9 @@ if(!empty($_REQUEST))
 
     if(!empty($_POST['ChgBrightness']))
         $_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
+
+    if(!empty($_POST['ShowName']))
+        $_SESSION["ShowName"] = $_POST['ShowName'];
 
 }
 
@@ -274,6 +278,7 @@ if(mysqli_num_rows($results) > 0)
 
     while($row = mysqli_fetch_array($results))
     {
+        
         $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
 
 
