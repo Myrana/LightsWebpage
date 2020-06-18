@@ -540,15 +540,10 @@ includeHTML();
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-	<form>
-	  <label>Playlist</label> <br />
-    // add your select tag here Amanda
-        <?php include('showDesigner.php'); ?>
-	  
-	  </form>
-  </div>
 
-</div>
+        <?php include('showDesigner.php'); ?>
+
+    </div>
 
 <script>
 // Get the modal
