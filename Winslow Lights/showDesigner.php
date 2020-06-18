@@ -16,7 +16,7 @@ $_SESSION["ColorEvery"] = 2;
 		
 		<img src="Show-Designer.png" alt="Show Designer" width="100%" />
 
-    <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" size="7" onChange="setShowSettings();">
+    <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>
 </p>
 
