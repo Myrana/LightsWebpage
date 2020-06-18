@@ -474,6 +474,5 @@ window.onclick = function(event) {
 </script>
 	
 </body>
-	<?php include("Footer.php"); ?>
 </html>
 
