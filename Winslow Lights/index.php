@@ -16,7 +16,7 @@ include_once('CommonFunctions.php');
 </head>
 
 <body>
-<?php include("testNav.php");  ?>
+<?php include("Nav.php");  ?>
 	
 <h1>Home</h1>
 	<form>
