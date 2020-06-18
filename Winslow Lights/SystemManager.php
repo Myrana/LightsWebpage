@@ -270,7 +270,7 @@ $lightShowsScript = '';
 $results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops, colorEvery FROM lightShows WHERE enabled = 1");
 if(mysqli_num_rows($results) > 0)
 {
-    $lightShowsScript .= "let showMap = new Map();\r\n";
+    $lightShowsScript .= "let showMap = new Map();\r";
 
     while($row = mysqli_fetch_array($results))
     {
