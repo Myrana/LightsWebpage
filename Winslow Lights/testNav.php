@@ -1,5 +1,5 @@
 
-
+<?php include_once("CommonFunctions.php"); ?>
 
 <img src="winslowBanner.png" alt="Winslow's Illuminous LEDs" width="100%">
 	<nav>
@@ -29,7 +29,7 @@
 	</form>
 	  
 	  <?php
-include_once("CommonFunctions.php");
+
 
 if(isset($_REQUEST['Login']))
 { 

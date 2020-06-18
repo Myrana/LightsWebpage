@@ -1,11 +1,4 @@
 
-<?php
-
-include_once('CommonFunctions.php');
-
-?>
-
-
 <!doctype html>
 <html>
 <head>
@@ -16,7 +9,7 @@ include_once('CommonFunctions.php');
 </head>
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("testNav.php");  ?>
 	
 <h1>Home</h1>
 	<form>
