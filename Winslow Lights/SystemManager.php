@@ -540,13 +540,10 @@ includeHTML();
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-	<form>
-	  <label>Playlist</label> <br />
+	
         <select id="PlayListId"  name="Playlist" onChange="setPlaylistName();">
         <?php echo $playlistoption;?>
         </select>
-	  
-	  </form>
   </div>
 
 </div>
