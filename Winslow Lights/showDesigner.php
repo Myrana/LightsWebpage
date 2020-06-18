@@ -27,9 +27,9 @@ $_SESSION["ColorEvery"] = 2;
         <input type="color" Name="color_4" id="Color4" value="#ad5e8c"></p>
 
         <p><label for="Width">Width:</label>
-<input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"><br />
+<input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
 
-<label for="ColorEvery">Color Every X Led:</label>
+<p><label for="ColorEvery">Color Every X Led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
 
