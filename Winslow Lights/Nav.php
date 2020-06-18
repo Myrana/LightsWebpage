@@ -1,4 +1,5 @@
-	<img src="winslowBanner.png" alt="Winslow's Illuminous LEDs" width="100%">
+
+<img src="winslowBanner.png" alt="Winslow's Illuminous LEDs" width="100%">
 	<nav>
 	  <ul><a href="index.php" title="Home" ><i class="fas fa-home" style="color: #34eb86"></i></a></ul>
 	  <ul><a href="Gallery.php" title="Gallery" style="color: cornflowerblue"><i class="fas fa-images"></i></a></ul>
@@ -8,5 +9,6 @@
 	  <ul><a href="TestPage.php" title="Test Page" ><i class="fas fa-exclamation-circle" style="color: #6beb34"></i></a></ul>
 	  <ul><a href="SystemManager.php" title="System Manager"><i class="fas fa-network-wired" style="color: #cc33ff"></i></a></ul>	
 	  <ul><a href="productMarketing.php" title="ProductMarketing"><i class="fas fa-user-shield" style="color: khaki"></i></a></ul>	
-	  <ul style="float: right"><a href="Login.php"><i class="fas fa-unlock-alt" style="color: #ff0000"></i> Login |<i class="fas fa-user" style="color: aquamarine"></i> Register</a></ul>	
+	  <ul style="float: right"><a href="Login.php"><i class="fas fa-unlock-alt" style="color: #ff0000"></i> Login |<i class="fas fa-user" style="color: aquamarine"></i> Register</a></ul>		
 </nav>
+
