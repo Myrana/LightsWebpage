@@ -38,6 +38,9 @@ if(!empty($_POST))
     if(!empty($_POST['ColorEvery']))
         $_SESSION["ColorEvery"] = $_POST['ColorEvery'];
 
+    if(!empty($_POST['ChgBrightness']))
+        $_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
+
 }
 
 if(isset($_REQUEST['Power']))
@@ -51,6 +54,23 @@ if(isset($_REQUEST['Power']))
     sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 
 }
+
+
+    if(isset($_REQUEST['btnChgBrightness']))
+    {
+
+        if(!empty($_POST['Brightness']))
+        {
+
+            $_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
+            $sendArray['brightness'] = $_POST['ChgBrightness'];
+
+            sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+        }
+
+    }
+
+
 
 
 if(isset($_REQUEST['ClearQueue']))
@@ -71,7 +91,7 @@ if(isset($_REQUEST['LightShow']))
     $g = 3;
     $b = 12;
 
-    $sendArray['UserID'] = $_SESSION['UserID'];
+
     $sendArray['brightness'] = $_SESSION["Brightness"];
 
     if(!empty($_POST['ShowName']))
@@ -376,9 +396,12 @@ includeHTML();
         <?php echo $lightSystemsoption;?>
         </select>
     </p>
+    <p><label for="ChgBrightness">Change Brightness:</label>
+        <input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="200">
+        <button type="submit" name="btnChgBrightness">Change</button>
+    </p>
         <label for="On">On</label>
-    <input type="checkbox" name="lights"  value="ON" checked>
-    <p><button type="submit" name="Power">Power</button></p>
+    <input type="checkbox" name="lights"  value="ON" checked><button type="submit" name="Power">Power</button>
 
 
     </div>

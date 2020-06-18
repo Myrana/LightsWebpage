@@ -52,18 +52,6 @@ $_SESSION["ColorEvery"] = 2;
     <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="200">
 </p>
 
-<script>
-
-var brightnessSlider = document.getElementById("Brightness");
-var brightnessOutput = document.getElementById("BrightnessValue");
-brightnessOutput.innerHTML = brightnessSlider.value;
-
-brightnessSlider.oninput = function()
-{
-    brightnessOutput.innerHTML = this.value;
-}
-
-</script>
 
         <p><label for="On">Clear on Start</label>
     <input type="checkbox" name="clearStart">
