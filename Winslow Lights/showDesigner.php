@@ -2,12 +2,6 @@
 
 include_once('CommonFunctions.php');
 
-$_SESSION["Brightness"] = 20;
-$_SESSION["LightSystemID"] = -1;
-$_SESSION["Delay"] = 10;
-$_SESSION["NumLoops"] = 1;
-$_SESSION["Width"] = 1;
-$_SESSION["ColorEvery"] = 2;
 
 ?>
 

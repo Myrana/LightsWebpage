@@ -18,7 +18,7 @@ if($_SESSION['authorized'] == 0)
 }
 
 
-if(!empty($_POST))
+if(!empty($_REQUEST))
 {
     $sendArray['UserID'] = $_SESSION['UserID'];
     if(!empty($_POST['SystemName']))
