@@ -121,7 +121,7 @@ include_once('CommonFunctions.php');
 
 
     <p><label for="NumLoops">Number Of Loops:</label>
-<input type="number" id="NumLoopsId" name="NumLoops" min="1" max="100000" value="<?php echo $_SESSION["NumLoops"];?>">
+<input type="number" id="NumLoopsId" name="NumLoops" min="1" max="1000000000" value="<?php echo $_SESSION["NumLoops"];?>">
 </p>
 
 
