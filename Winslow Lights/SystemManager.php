@@ -1,6 +1,6 @@
 <?php
 
-include_once('CommonFunctions.php');
+include('CommonFunctions.php');
 
 $_SESSION["Brightness"] = 20;
 $_SESSION["LightSystemID"] = -1;
@@ -542,9 +542,8 @@ includeHTML();
     <span class="close">&times;</span>
 	<form>
 	  <label>Playlist</label> <br />
-        <select id="PlayListId"  name="Playlist" onChange="setPlaylistName();">
-        <?php echo $playlistoption;?>
-        </select>
+    // add your select tag here Amanda
+        <?php include('showDesigner.php'); ?>
 	  
 	  </form>
   </div>
