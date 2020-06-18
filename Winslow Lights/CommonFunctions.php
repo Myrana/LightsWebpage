@@ -58,7 +58,6 @@ function getServerHostName($arg_1)
 
 function sendMQTT($arg_1, $arg_2)
 {
-    $arg_2['UserID'] = $_SESSION['UserID'];
 	$client = new Mosquitto\Client();
 	$client->connect('romoserver.local', 1883, 5);
 	$client->loop();

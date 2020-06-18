@@ -20,6 +20,7 @@ if($_SESSION['authorized'] == 0)
 
 if(!empty($_POST))
 {
+    $sendArray['UserID'] = $_SESSION['UserID'];
     if(!empty($_POST['SystemName']))
         $_SESSION["LightSystemID"]  = $_POST['SystemName'];
 
