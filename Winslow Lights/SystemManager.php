@@ -347,7 +347,7 @@ function includeHTML() {
   }
 };
 </script>
-<body>
+<body onload="setShowSettings();">
     <div w3-include-html="Nav.html"></div>
 
 <script>
