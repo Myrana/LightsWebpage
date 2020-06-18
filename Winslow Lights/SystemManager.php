@@ -514,7 +514,7 @@ includeHTML();
     }
 </script>
 
-        <select id="PlayListId"  name="Playlist" size="7" onChange="setPlaylistName();">
+        <select id="PlayListId"  name="Playlist" onChange="setPlaylistName();">
         <?php echo $playlistoption;?>
         </select>
         <p>
