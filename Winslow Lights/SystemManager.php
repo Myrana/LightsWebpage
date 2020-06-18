@@ -266,29 +266,28 @@ if(mysqli_num_rows($results) > 0)
 
 
 $lightShowsoption = '';
-$lightShowsScript = '';
-
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops, colorEvery FROM lightShows WHERE enabled = 1");
+$_SESSION['lightShowsScript'] = '';
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
-    $lightShowsScript .= "let showMap = new Map();\r";
+    $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
 
     while($row = mysqli_fetch_array($results))
     {
         $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
 
 
-        $lightShowsScript .= "var show = new Object(); \r";
+        $_SESSION['lightShowsScript'] .= "var show = new Object(); \r";
 
-        $lightShowsScript .= "    show.id = " . $row['ID'] .";\r";
-        $lightShowsScript .= "    show.showName = '" . $row['showName'] ."';\r";
-        $lightShowsScript .= "    show.numColors = " . $row['numColors'] .";\r";
-        $lightShowsScript .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
-        $lightShowsScript .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
-        $lightShowsScript .= "  show.hasLoops = " . $row['hasLoops'] .";\r";
-        $lightShowsScript .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
+        $_SESSION['lightShowsScript'] .= "    show.id = " . $row['ID'] .";\r";
+        $_SESSION['lightShowsScript'] .= "    show.showName = '" . $row['showName'] ."';\r";
+        $_SESSION['lightShowsScript'] .= "    show.numColors = " . $row['numColors'] .";\r";
+        $_SESSION['lightShowsScript'] .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.hasLoops = " . $row['hasLoops'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
 
-        $lightShowsScript .= "    showMap.set(" . $row['ID'] . ", show);\r";
+        $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
 
 
 
@@ -348,7 +347,7 @@ function includeHTML() {
   }
 };
 </script>
-<body onload="setShowSettings();">
+<body onload="initShowSystem();">
     <div w3-include-html="Nav.html"></div>
 
 <script>
@@ -361,11 +360,18 @@ includeHTML();
 
 <?php echo $lightSystemsScript;?>
 
+	function initShowSystem()
+	{
+		setSystemSettings();
+		setShowSettings();
+	}
+
     function setSystemSettings()
     {
         var systemNameId = document.getElementById("SystemNameId");
         var widthId  = document.getElementById("WidthId");
         var widthOutput = document.getElementById("WidthValue");
+        var chgBrightnessId = document.getElementById("ChgBrightnessId");
 
         var index = parseInt(systemNameId.value);
         var numLeds = systemsMap.get(index).stripWidth * systemsMap.get(index).stripHeight;
@@ -381,6 +387,7 @@ includeHTML();
         widthId.setAttribute('max', numLeds);
         widthId.max = numLeds;
 
+		chgBrightnessId.value = systemsMap.get(index).brightness;
     }
 
 
@@ -398,7 +405,7 @@ includeHTML();
         </select>
     </p>
     <p><label for="ChgBrightness">Change Brightness:</label>
-        <input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="200">
+        <input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="255">
         <button type="submit" name="btnChgBrightness">Change</button>
     </p>
         <label for="On">On</label>
@@ -410,88 +417,6 @@ includeHTML();
 
 
 
-<script>
-
-    <?php echo $lightShowsScript;?>
-
-    function setShowSettings()
-    {
-
-        var showNameId = document.getElementById("ShowNameId");
-        var index = parseInt(showNameId.value);
-
-
-        var color1 = document.getElementById("Color1");
-        var color2 = document.getElementById("Color2");
-        var color3 = document.getElementById("Color3");
-        var color4 = document.getElementById("Color4");
-        var delay = document.getElementById("DelayId");
-        var width = document.getElementById("WidthId");
-        var loops = document.getElementById("NumLoopsId");
-        var colorEvery = document.getElementById("ColorEveryId");
-
-        color1.setAttribute('disabled', true);
-        color2.setAttribute('disabled', true);
-        color3.setAttribute('disabled', true);
-        color4.setAttribute('disabled', true);
-        delay.setAttribute('disabled', true);
-        width.setAttribute('disabled', true);
-        loops.setAttribute('disabled', true);
-		colorEvery.setAttribute('disabled', true);
-		
-        if(showMap.get(index).hasWidth == 1)
-        {
-            width.setAttribute('disabled', false);
-            width.disabled = false;
-
-        }
-
-        if(showMap.get(index).hasLoops == 1)
-        {
-            loops.setAttribute('disabled', false);
-            loops.disabled = false;
-        }
-
-        if(showMap.get(index).hasDelay == 1)
-        {
-            delay.setAttribute('disabled', false);
-            delay.disabled = false;
-        }
-
-        if(showMap.get(index).numColors >= 1)
-        {
-            color1.setAttribute('disabled', false);
-            color1.disabled = false;
-        }
-
-        if(showMap.get(index).numColors >= 2)
-        {
-
-            color2.setAttribute('disabled', false);
-            color2.disabled = false;
-        }
-
-        if(showMap.get(index).numColors >= 3)
-        {
-            color3.setAttribute('disabled', false);
-            color3.disabled = false;
-        }
-
-        if(showMap.get(index).numColors == 4)
-        {
-            color4.setAttribute('disabled', false);
-            color4.disabled = false;
-        }
-        
-        
-        if(showMap.get(index).colorEvery == 1)
-        {
-            colorEvery.setAttribute('disabled', false);
-            colorEvery.disabled = false;
-        }
-        
-    }
-</script>
 
 <?php include_once('showDesigner.php'); ?>
 

@@ -5,6 +5,90 @@ include_once('CommonFunctions.php');
 
 ?>
 
+<script>
+
+    <?php echo $_SESSION['lightShowsScript'];?>
+
+    function setShowSettings()
+    {
+
+        var showNameId = document.getElementById("ShowNameId");
+        var index = parseInt(showNameId.value);
+
+
+        var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
+        var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+        var loops = document.getElementById("NumLoopsId");
+        var colorEvery = document.getElementById("ColorEveryId");
+
+        color1.setAttribute('disabled', true);
+        color2.setAttribute('disabled', true);
+        color3.setAttribute('disabled', true);
+        color4.setAttribute('disabled', true);
+        delay.setAttribute('disabled', true);
+        width.setAttribute('disabled', true);
+        loops.setAttribute('disabled', true);
+		colorEvery.setAttribute('disabled', true);
+		
+        if(showMap.get(index).hasWidth == 1)
+        {
+            width.setAttribute('disabled', false);
+            width.disabled = false;
+
+        }
+
+        if(showMap.get(index).hasLoops == 1)
+        {
+            loops.setAttribute('disabled', false);
+            loops.disabled = false;
+        }
+
+        if(showMap.get(index).hasDelay == 1)
+        {
+            delay.setAttribute('disabled', false);
+            delay.disabled = false;
+        }
+
+        if(showMap.get(index).numColors >= 1)
+        {
+            color1.setAttribute('disabled', false);
+            color1.disabled = false;
+        }
+
+        if(showMap.get(index).numColors >= 2)
+        {
+
+            color2.setAttribute('disabled', false);
+            color2.disabled = false;
+        }
+
+        if(showMap.get(index).numColors >= 3)
+        {
+            color3.setAttribute('disabled', false);
+            color3.disabled = false;
+        }
+
+        if(showMap.get(index).numColors == 4)
+        {
+            color4.setAttribute('disabled', false);
+            color4.disabled = false;
+        }
+        
+        
+        if(showMap.get(index).colorEvery == 1)
+        {
+            colorEvery.setAttribute('disabled', false);
+            colorEvery.disabled = false;
+        }
+        
+    }
+</script>
+
+
 <div class="column">
     <div class="ColumnStyles">
 		
