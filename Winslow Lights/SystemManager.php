@@ -5,7 +5,7 @@ include('CommonFunctions.php');
 $_SESSION["Brightness"] = 20;
 $_SESSION["LightSystemID"] = -1;
 $_SESSION["Delay"] = 10;
-$_SESSION["NumLoops"] = 1;
+$_SESSION["Minutes"] = 1;
 $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
 $_SESSION["ShowName"] = -1;
@@ -31,8 +31,8 @@ if(!empty($_REQUEST))
     if(!empty($_POST['Delay']))
         $_SESSION["Delay"] = $_POST['Delay'];
 
-    if(!empty($_POST['NumLoops']))
-        $_SESSION["NumLoops"] = $_POST['NumLoops'];
+    if(!empty($_POST['Minutes']))
+        $_SESSION["Minutes"] = $_POST['Minutes'];
 
     if(!empty($_POST['Width']))
         $_SESSION["Width"] = $_POST['Width'];
@@ -170,7 +170,7 @@ if(isset($_REQUEST['LightShow']))
             $sendArray['delay'] = $_SESSION["Delay"];
 
         if(!empty($_POST['ShowName']))
-            $sendArray['numLoops'] = $_SESSION["NumLoops"];
+            $sendArray['Minutes'] = $_SESSION["Minutes"];
 
         //if(!empty($sendColors)
         //if($sendColors.count() > 0)
@@ -271,7 +271,7 @@ if(mysqli_num_rows($results) > 0)
 
 $lightShowsoption = '';
 $_SESSION['lightShowsScript'] = '';
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasLoops, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
     $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
@@ -289,7 +289,7 @@ if(mysqli_num_rows($results) > 0)
         $_SESSION['lightShowsScript'] .= "    show.numColors = " . $row['numColors'] .";\r";
         $_SESSION['lightShowsScript'] .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.hasLoops = " . $row['hasLoops'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
 
         $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";

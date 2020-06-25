@@ -22,7 +22,7 @@ include_once('CommonFunctions.php');
         var color4 = document.getElementById("Color4");
         var delay = document.getElementById("DelayId");
         var width = document.getElementById("WidthId");
-        var loops = document.getElementById("NumLoopsId");
+        var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 
         color1.setAttribute('disabled', true);
@@ -31,7 +31,7 @@ include_once('CommonFunctions.php');
         color4.setAttribute('disabled', true);
         delay.setAttribute('disabled', true);
         width.setAttribute('disabled', true);
-        loops.setAttribute('disabled', true);
+        minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		
         if(showMap.get(index).hasWidth == 1)
@@ -43,8 +43,8 @@ include_once('CommonFunctions.php');
 
         if(showMap.get(index).hasLoops == 1)
         {
-            loops.setAttribute('disabled', false);
-            loops.disabled = false;
+            minutes.setAttribute('disabled', false);
+            minutes.disabled = false;
         }
 
         if(showMap.get(index).hasDelay == 1)
@@ -120,8 +120,8 @@ include_once('CommonFunctions.php');
 
 
 
-    <p><label for="NumLoops">Number Of Loops:</label>
-<input type="number" id="NumLoopsId" name="NumLoops" min="1" max="1000000000" value="<?php echo $_SESSION["NumLoops"];?>">
+    <p><label for="NumMinutes">Number Of Minutes:</label>
+<input type="number" id="NumMinutesId" name="NumMinutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
 </p>
 
 
