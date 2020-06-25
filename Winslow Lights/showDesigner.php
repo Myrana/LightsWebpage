@@ -121,7 +121,7 @@ include_once('CommonFunctions.php');
 
 
     <p><label for="NumMinutes">Number Of Minutes:</label>
-<input type="number" id="NumMinutesId" name="NumMinutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
+<input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
 </p>
 
 
