@@ -170,7 +170,7 @@ if(isset($_REQUEST['LightShow']))
             $sendArray['delay'] = $_SESSION["Delay"];
 
         if(!empty($_POST['ShowName']))
-            $sendArray['Minutes'] = $_SESSION["Minutes"];
+            $sendArray['minutes'] = $_SESSION["Minutes"];
 
         //if(!empty($sendColors)
         //if($sendColors.count() > 0)

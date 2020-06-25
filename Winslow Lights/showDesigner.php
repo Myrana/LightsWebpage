@@ -41,7 +41,7 @@ include_once('CommonFunctions.php');
 
         }
 
-        if(showMap.get(index).hasLoops == 1)
+        if(showMap.get(index).hasMinutes == 1)
         {
             minutes.setAttribute('disabled', false);
             minutes.disabled = false;
