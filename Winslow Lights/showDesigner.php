@@ -128,7 +128,7 @@ include_once('CommonFunctions.php');
 
 
 <p><label for="Brightness">Brightness:</label>
-    <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="200">
+    <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="255">
 </p>
 
 
