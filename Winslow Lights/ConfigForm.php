@@ -10,10 +10,26 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
+if (!empty($_POST)) 
+{
+
+    $motionChecked = 1;
+    if (empty($_POST['motionFeature']))
+      $motionChecked = 0;
+	
+	$motionDelayChecked = 1;
+    if (empty($_POST['motionDelay']))
+      $motionDelayChecked = 0;
+
+    $lightChecked = 1;
+    if (empty($_POST['lightFeature']))
+      $enabledChecked = 0;
+	
+}
 
 if(isset($_REQUEST['Config']))
 {
-	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1')";
+	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['motionFeature'] . "', '" . $_POST['motionDelay'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['lightFeature'] . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "')";
 
 
 	if ($conn->query($sql) === TRUE) {
@@ -45,7 +61,7 @@ $conn->close();
 <body>
 <?php include("Nav.php");  ?>
 	  <h1>Config Page</h1>
-	          <form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	          <div class="column"><form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	
 	<p><label for="LightSystemName">Light System Name:</label><br />
 	  <input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
@@ -74,11 +90,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 		</select>	
 	</p>	
 	
-	<?php
-	
-	$conn->close();
-	
-	?>
+
 
 
 <p><label for="StripHeight">Strip Height:</label><br />
@@ -101,21 +113,132 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	  <input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></p>
 	
 	<p><label for="Brightness">Brightness:</label><br />
-	  <input type="range" id="Brightness" name="Brightness" min="1" max="200" value="60">
-		Value: <span id="BrightnessValue"></span></p>
+	  <input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60">
+		</p>
+				  
+<?php
+	
+	
 
-<script>
-var slider = document.getElementById("Brightness");
-var output = document.getElementById("BrightnessValue");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
+$displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
+$option = '';
+while($query_data = mysqli_fetch_array($displayUsername))
+{
+	//echo $query_data['stripName'];
+	//<option>$query_data['stripName']</option>
+	$option .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
 }
+	
+?>
+		
+	<p><label for="userID">Light System User:</label><br />
+	<select name="userID">
+		<?php echo $option;?>
+		</select>	
+	</p>	
+	
+	<?php
+	
+	$conn->close();
+	
+	?>
+	</div>
+<div class="column">
+<div class="ColumnStyles">
+	
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#motionFeature").click(function () {
+            if ($(this).is(":checked")) {
+                $("#motionFields").show();
+            } else {
+                $("#motionFields").hide();
+            }
+        });
+    });
+	
+	$(function () {
+        $("#lightFeature").click(function () {
+            if ($(this).is(":checked")) {
+                $("#lightFields").show();
+            } else {
+                $("#lightFields").hide();
+            }
+        });
+    });
 </script>
 	
-<button type="submit" name="Config">Add Record</button>
-</form>
+	<?php
+$playlistoption = '';
+$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where enabled = 1");
+if(mysqli_num_rows($results) > 0)
+{
+    while($row = mysqli_fetch_array($results))
+      $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
+
+}
+
+
+?>
+	
+	
+
+	
+<p><label for="motionFeature">Does system use a motion sensor?</label>
+	
+	<input type="checkbox" id="motionFeature" value="1" /></p>
+	
+	<div id="motionFields" style="display: none">
+	
+		<label>Motion Delay:</label><br />
+		<input type="number" id="motionDelay" name="motionDelay" min="10">
+	<p>
+	<label for="motionPlaylist">Motion Playlist:</label>
+		<select id="PlayListId"  name="motionPlaylist">
+        <?php echo $playlistoption;?>
+        </select>
+
+	
+	</p>
+	
+	<P>
+	
+	<label for="motionFeatureGPIO">Motion GPIO Pin:</label><br />
+	  <input type="number" id="motionFeatureGPIO" name="motionFeatureGPIO" min="1" max="52" value="18">	
+	
+	</P>
+	
+	</div>
+	</div>
+			  
+</div>
+	<div class="column"><div class="ColumnStyles">
+	<p><label for="lightFeature">Does system use a light sensor?</label>
+	
+	<input type="checkbox" id="lightFeature" value="1" /></p>
+	
+	<div id="lightFields" style="display: none">
+	
+		<label for="lightPlaylist">Light Playlist:</label>
+		<select id="PlayListId"  name="lightPlaylist">
+        <?php echo $playlistoption;?>
+        </select>
+		
+		<P>
+		
+		<label for="lightFeatureGPIO">Motion GPIO Pin:</label><br />
+	  <input type="number" id="lightFeatureGPIO" name="lightFeatureGPIO" min="1" max="52" value="18">
+		
+		</P>
+	
+	</div>
+	<button type="submit" name="Config">Add Record</button>
+</form>	
+	</div>
+			  
+</div>				  
+	
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script src="../js/jquery-3.4.1.min.js"></script>
@@ -124,5 +247,8 @@ slider.oninput = function() {
 	<script src="../js/popper.min.js"></script> 
 	<script src="../js/bootstrap-4.4.1.js"></script>
   </body>
-	<?php include("Footer.php"); ?>
+
 </html>
+<?php  $conn->close();
+
+?> 
