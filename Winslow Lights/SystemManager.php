@@ -243,7 +243,7 @@ if(isset($_REQUEST['LightShow']))
 
 $lightSystemsoption = '';
 $lightSystemsScript = '';
-$results = mysqli_query($conn,"SELECT ID, systemName, stripHeight, stripWidth, brightness FROM lightSystems WHERE enabled = 1");
+    $results = mysqli_query($conn,"SELECT ID, systemName, stripHeight, stripWidth, brightness FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
 if(mysqli_num_rows($results) > 0)
 {
 
