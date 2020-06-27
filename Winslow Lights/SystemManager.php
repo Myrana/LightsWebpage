@@ -9,6 +9,7 @@ $_SESSION["Minutes"] = 1;
 $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
 $_SESSION["ShowName"] = -1;
+$_SESSION["ChgBrightness"] = 20;
 
 $conn = getDatabaseConnection();
 
@@ -68,7 +69,7 @@ if(isset($_REQUEST['Power']))
         {
 
             $_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
-            $sendArray['brightness'] = $_POST['ChgBrightness'];
+            $sendArray['chgBrightness'] = $_POST['ChgBrightness'];
 
             sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
         }
@@ -164,7 +165,7 @@ if(isset($_REQUEST['LightShow']))
        }
 
         if(!empty($_POST['ShowName']))
-            $sendArray['shows'] =  $_POST['ShowName'];
+            $sendArray['show'] =  $_POST['ShowName'];
 
         if(!empty($_POST['Delay']))
             $sendArray['delay'] = $_SESSION["Delay"];
