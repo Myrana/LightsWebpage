@@ -16,16 +16,18 @@ if (!empty($_POST))
 {
 }
 
-/*
+
 if(isset($_REQUEST['Config']))
 {
 	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['motionFeature'] . "', '" . $_POST['motionDelay'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['lightFeature'] . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "')";
 
 
-	if ($conn->query($sql) === TRUE) {
-  	echo "<h1>Your record was added to the database successfully.</h1>";
+	if ($conn->query($sql) === TRUE)
+    {
+        echo "<h1>Your record was added to the database successfully.</h1>";
+    }
 }
- */
+
 
 
 
