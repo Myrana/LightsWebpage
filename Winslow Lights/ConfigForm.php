@@ -4,16 +4,19 @@ include_once('CommonFunctions.php');
 
 $conn = getDatabaseConnection();
 
+
 if($_SESSION['authorized'] == 0)
 {
   header("Location: Registration.php");
   exit();
 }
 
+
 if (!empty($_POST))
 {
 }
 
+/*
 if(isset($_REQUEST['Config']))
 {
 	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['motionFeature'] . "', '" . $_POST['motionDelay'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['lightFeature'] . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "')";
@@ -22,15 +25,17 @@ if(isset($_REQUEST['Config']))
 	if ($conn->query($sql) === TRUE) {
   	echo "<h1>Your record was added to the database successfully.</h1>";
 }
+ */
+
 
 
     $displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
-    $option = '';
+    $stripTypes = '';
     while($query_data = mysqli_fetch_array($displayStrip))
     {
         //echo $query_data['stripName'];
         //<option>$query_data['stripName']</option>
-        $option .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
+        $stripTypes .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
     }
 
 
@@ -38,12 +43,12 @@ if(isset($_REQUEST['Config']))
 
 
     $displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
-    $option = '';
+    $users = '';
     while($query_data = mysqli_fetch_array($displayUsername))
     {
         //echo $query_data['stripName'];
         //<option>$query_data['stripName']</option>
-        $option .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
+        $users .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
     }
 	
 	$playlistoption = '';
@@ -56,7 +61,6 @@ if(mysqli_num_rows($results) > 0)
 }
 
     $conn->close();
-
 
 ?>
 <!DOCTYPE html>
@@ -86,7 +90,7 @@ if(mysqli_num_rows($results) > 0)
 
 	<p><label for="StripType">Strip Type:</label><br />
 	<select name="StripType">
-		<?php echo $option;?>
+		<?php echo $stripTypes;?>
 		</select>	
 	</p>	
 	
@@ -119,7 +123,7 @@ if(mysqli_num_rows($results) > 0)
 
 	<p><label for="userID">Light System User:</label><br />
 	<select name="userID">
-		<?php echo $option;?>
+		<?php echo $users;?>
 		</select>	
 	</p>	
 	
