@@ -185,7 +185,7 @@ if(mysqli_num_rows($results) > 0)
 	
 
 	
-<p><label for="motionFeature">Does system use a motion sensor?</label>
+<p><label for="motionFeature">Use a motion sensor?</label>
 	
 	<input type="checkbox" id="motionFeature" value="1" /></p>
 	
@@ -214,7 +214,7 @@ if(mysqli_num_rows($results) > 0)
 			  
 </div>
 	<div class="column"><div class="ColumnStyles">
-	<p><label for="lightFeature">Does system use a light sensor?</label>
+	<p><label for="lightFeature">Use a light sensor?</label>
 	
 	<input type="checkbox" id="lightFeature" value="1" /></p>
 	
