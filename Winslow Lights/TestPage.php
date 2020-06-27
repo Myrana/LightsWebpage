@@ -263,6 +263,10 @@ $conn->close();
 <title>System Name Page</title>
 <script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
 <link href="Styles.css" rel="stylesheet" type="text/css">
+	
+<script src='spectrum.js'></script>
+<link rel='stylesheet' href='spectrum.css' />
+	
 </head>
 
 
@@ -390,6 +394,8 @@ $conn->close();
         }
     }
 </script>
+	
+	
 
 <div class="column">
     <div class="ColumnStyles">
@@ -399,10 +405,19 @@ $conn->close();
     <?php echo $lightShowsoption;?></select>
 </p>
 
-    <p><input type="color"  Name="color_1" id="Color1"><br />
+    <p><input type="text"  Name="color_1" id="Color1" /><br />
         <input type="color" Name="color_2" id="Color2"><br />
         <input type="color" Name="color_3" id="Color3"><br />
         <input type="color" Name="color_4" id="Color4"><br /></p>
+		
+	<script>
+		$("#Color1").spectrum({
+	color: "Red",		
+    preferredFormat: "rgb",
+    showInput: true,
+		}); 
+		
+		</script>	
 
         <p><label for="Width">Width:</label><br />
 <input type="range" step="1" id="WidthId" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">

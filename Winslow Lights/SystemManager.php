@@ -303,7 +303,7 @@ if(mysqli_num_rows($results) > 0)
 }
 
 $playlistoption = '';
-$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userID = " . $_SESSION['UserID']);
+$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userId =" . $_SESSION['UserID'] . " or userId =1");
 if(mysqli_num_rows($results) > 0)
 {
     while($row = mysqli_fetch_array($results))
