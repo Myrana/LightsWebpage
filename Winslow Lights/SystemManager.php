@@ -62,19 +62,19 @@ if(isset($_REQUEST['Power']))
 }
 
 
-    if(isset($_REQUEST['btnChgBrightness']))
-    {
+if(isset($_REQUEST['btnChgBrightness']))
+{
 
-        if(!empty($_POST['Brightness']))
-        {
+	if(!empty($_POST['Brightness']))
+	{
 
-            $_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
-            $sendArray['chgBrightness'] = $_POST['ChgBrightness'];
+		$_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
+		$sendArray['chgBrightness'] = $_POST['ChgBrightness'];
 
-            sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
-        }
+		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+	}
 
-    }
+}
 
 
 
@@ -198,48 +198,48 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
-    if(isset($_REQUEST['btnSavelist']))
-    {
-        if(!empty($_POST['PlaylistName']))
-        {
-            $sendArray['savePlaylist'] = 1;
-            $sendArray['playlistName'] = $_POST['PlaylistName'];
-            $sendArray['UserID'] = $_SESSION['UserID'];
-            $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-            $query_data = mysqli_fetch_array($displayStrip);
+if(isset($_REQUEST['btnSavelist']))
+{
+	if(!empty($_POST['PlaylistName']))
+	{
+		$sendArray['savePlaylist'] = 1;
+		$sendArray['playlistName'] = $_POST['PlaylistName'];
+		$sendArray['UserID'] = $_SESSION['UserID'];
+		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+		$query_data = mysqli_fetch_array($displayStrip);
 
-            sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-        }
+		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+	}
 
-    }
+}
 
-    if(isset($_REQUEST['btnPlaylist']))
-    {
+if(isset($_REQUEST['btnPlaylist']))
+{
 
-        if(!empty($_POST['Playlist']))
-        {
-            $sendArray['playPlaylist'] = 1;
-            $sendArray['playlistName'] = $_POST['Playlist'];
-            $sendArray['UserID'] = $_SESSION['UserID'];
-            $displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-            $query_data = mysqli_fetch_array($displayStrip);
+	if(!empty($_POST['Playlist']))
+	{
+		$sendArray['playPlaylist'] = 1;
+		$sendArray['playlistName'] = $_POST['Playlist'];
+		$sendArray['UserID'] = $_SESSION['UserID'];
+		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+		$query_data = mysqli_fetch_array($displayStrip);
 
-            sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-        }
-    }
+		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+	}
+}
 
-    if(isset($_REQUEST['btnDeletePlaylist']))
-    {
+if(isset($_REQUEST['btnDeletePlaylist']))
+{
 
-        if(!empty($_POST['Playlist']))
-        {
-            $sendArray['deletePlaylist'] = 1;
-            $sendArray['playlistName'] = $_POST['Playlist'];
-            $sendArray['UserID'] = $_SESSION['UserID'];
-            sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
-        }
+	if(!empty($_POST['Playlist']))
+	{
+		$sendArray['deletePlaylist'] = 1;
+		$sendArray['playlistName'] = $_POST['Playlist'];
+		$sendArray['UserID'] = $_SESSION['UserID'];
+		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+	}
 
-    }
+}
 
 
 $lightSystemsoption = '';
@@ -429,7 +429,6 @@ $conn->close();
 
 
     </form>
-		<button type="button" id="btnEditlist" onClick="window.location.href='editShows.php'">Edit Shows</button>
     </div>
     </div>
 	
