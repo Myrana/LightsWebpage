@@ -52,7 +52,7 @@ if(isset($_REQUEST['Config']))
     }
 	
 	$playlistoption = '';
-$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where enabled = 1");
+$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
 if(mysqli_num_rows($results) > 0)
 {
     while($row = mysqli_fetch_array($results))
