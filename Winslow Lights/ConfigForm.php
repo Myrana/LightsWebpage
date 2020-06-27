@@ -45,6 +45,15 @@ if(isset($_REQUEST['Config']))
         //<option>$query_data['stripName']</option>
         $option .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
     }
+	
+	$playlistoption = '';
+$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where enabled = 1");
+if(mysqli_num_rows($results) > 0)
+{
+    while($row = mysqli_fetch_array($results))
+      $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
+
+}
 
     $conn->close();
 
@@ -141,18 +150,7 @@ if(isset($_REQUEST['Config']))
     });
 </script>
 	
-	<?php
-$playlistoption = '';
-$results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where enabled = 1");
-if(mysqli_num_rows($results) > 0)
-{
-    while($row = mysqli_fetch_array($results))
-      $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
-
-}
-
-
-?>
+	
 	
 	
 
@@ -221,6 +219,4 @@ if(mysqli_num_rows($results) > 0)
   </body>
 
 </html>
-<?php  $conn->close();
-
-?> 
+ 
