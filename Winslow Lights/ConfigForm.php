@@ -10,21 +10,8 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
-if (!empty($_POST)) 
+if (!empty($_POST))
 {
-
-    $motionChecked = 1;
-    if (empty($_POST['motionFeature']))
-      $motionChecked = 0;
-	
-	$motionDelayChecked = 1;
-    if (empty($_POST['motionDelay']))
-      $motionDelayChecked = 0;
-
-    $lightChecked = 1;
-    if (empty($_POST['lightFeature']))
-      $enabledChecked = 0;
-	
 }
 
 if(isset($_REQUEST['Config']))
@@ -34,15 +21,33 @@ if(isset($_REQUEST['Config']))
 
 	if ($conn->query($sql) === TRUE) {
   	echo "<h1>Your record was added to the database successfully.</h1>";
-} else {
-  echo "<h1>Error: " . $conn->error . "</h1>";
 }
 
-$conn->close();
 
-	
+    $displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
+    $option = '';
+    while($query_data = mysqli_fetch_array($displayStrip))
+    {
+        //echo $query_data['stripName'];
+        //<option>$query_data['stripName']</option>
+        $option .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
+    }
 
-}
+
+
+
+
+    $displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
+    $option = '';
+    while($query_data = mysqli_fetch_array($displayUsername))
+    {
+        //echo $query_data['stripName'];
+        //<option>$query_data['stripName']</option>
+        $option .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
+    }
+
+    $conn->close();
+
 
 ?>
 <!DOCTYPE html>
@@ -69,21 +74,7 @@ $conn->close();
 	<p><label for="ServerHostName">Server Host Name:</label><br />
 	  <input name="ServerHostName" type="text" id="ServerHostName" placeholder="50 characters or less" maxlength="50"></p>
 	
-<?php
-	
-	
 
-$displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
-$option = '';
-while($query_data = mysqli_fetch_array($displayStrip))
-{
-	//echo $query_data['stripName'];
-	//<option>$query_data['stripName']</option>
-	$option .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
-}
-	
-?>
-		
 	<p><label for="StripType">Strip Type:</label><br />
 	<select name="StripType">
 		<?php echo $option;?>
@@ -116,32 +107,13 @@ while($query_data = mysqli_fetch_array($displayStrip))
 	  <input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60">
 		</p>
 				  
-<?php
-	
-	
 
-$displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
-$option = '';
-while($query_data = mysqli_fetch_array($displayUsername))
-{
-	//echo $query_data['stripName'];
-	//<option>$query_data['stripName']</option>
-	$option .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
-}
-	
-?>
-		
 	<p><label for="userID">Light System User:</label><br />
 	<select name="userID">
 		<?php echo $option;?>
 		</select>	
 	</p>	
 	
-	<?php
-	
-	$conn->close();
-	
-	?>
 	</div>
 <div class="column">
 <div class="ColumnStyles">
