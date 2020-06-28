@@ -217,9 +217,8 @@ if(mysqli_num_rows($results) > 0)
 	
 	</div>
 	</div>
-			  
-</div>
-	<div class="column" style ="width: 25%"><div class="ColumnStyles">
+	<div class="ColumnStyles">
+	
 	<p><label for="lightFeature">Use a light sensor?</label>
 	
 	<input type="checkbox" id="lightFeature" value="1" /></p>
@@ -239,11 +238,19 @@ if(mysqli_num_rows($results) > 0)
 		</P>
 	
 	</div>
+			  
+</div>
+	</div>
+	<div class="column" style ="width: 25%"><div class="ColumnStyles">
+	<label>Start Time:</label> <br />
+		<input type="time" />
+	
+	</div>
 	
 </form>	
 	</div>
 			  
-</div>				  
+				  
 	
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
