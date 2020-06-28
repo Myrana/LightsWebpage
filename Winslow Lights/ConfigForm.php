@@ -97,7 +97,7 @@ if(mysqli_num_rows($results) > 0)
 <?php include("Nav.php");  ?>
 	  <h1>Config Page</h1>
 	<div class="column" style="width: 25%">
-		<div class="ColumnStyles">
+		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
 			<p><label for="userID">Light System:</label><br />
 			<select name="userID">
@@ -109,8 +109,8 @@ if(mysqli_num_rows($results) > 0)
 		
 		</div>
 	
-	</div>
-	          <div class="column" style="width: 25%"><form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	          <div class="column" style="width: 25%">
+				  <div class="ColumnStyles">
 	
 	<p><label for="LightSystemName">Light System Name:</label><br />
 	  <input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
@@ -159,6 +159,7 @@ if(mysqli_num_rows($results) > 0)
 	</p>	
 	
 	</div>
+		</div>		  
 <div class="column" style="width: 25%">
 <div class="ColumnStyles">
 	
