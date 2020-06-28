@@ -244,7 +244,12 @@ if(mysqli_num_rows($results) > 0)
 	<div class="column" style ="width: 25%"><div class="ColumnStyles">
 	<label>Start Time:</label> <br />
 		<input type="time" />
-	
+	<p>
+		
+	<label>End Time:</label> <br />
+		<input type="time" />
+		
+	</p>
 	</div>
 	
 </form>	
