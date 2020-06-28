@@ -104,6 +104,8 @@ if(mysqli_num_rows($results) > 0)
 			<?php echo $systemlistoption;?>
 			</select>	
 	</p>
+			<button type="submit" name="Config">Add Record</button> 
+			<button type="submit" name="Edit">Edit Record</button>
 		
 		</div>
 	
@@ -236,7 +238,7 @@ if(mysqli_num_rows($results) > 0)
 		</P>
 	
 	</div>
-	<button type="submit" name="Config">Add Record</button>
+	
 </form>	
 	</div>
 			  
