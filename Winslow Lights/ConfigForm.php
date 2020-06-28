@@ -12,16 +12,22 @@ if($_SESSION['authorized'] == 0)
 }
 
 
-if (!empty($_POST))
-{
-}
-
 
 if(isset($_REQUEST['Config']))
 {
-	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['motionFeature'] . "', '" . $_POST['motionDelay'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['lightFeature'] . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "')";
 
+    $motionChecked = 1;
+     if (empty($_POST['motionFeature']))
+       $motionChecked = 0;
 
+      $lightChecked = 1;
+     if (empty($_POST['lightFeature']))
+       $lightChecked = 0;
+
+    echo "rew";
+	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelay'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "')";
+
+    echo $sql;
 	if ($conn->query($sql) === TRUE)
     {
         echo "<h1>Your record was added to the database successfully.</h1>";
@@ -163,12 +169,12 @@ if(mysqli_num_rows($results) > 0)
 	
 <p><label for="motionFeature">Use a motion sensor?</label>
 	
-	<input type="checkbox" id="motionFeature" value="1" /></p>
+	<input type="checkbox" id="motionFeature" /></p>
 	
 	<div id="motionFields" style="display: none">
 	
 		<label>Motion Delay:</label><br />
-		<input type="number" id="motionDelay" name="motionDelay" min="10">
+		<input type="number" id="motionDelay" name="motionDelay" min="5" value="10">
 	<p>
 	<label for="motionPlaylist">Motion Playlist:</label>
 		<select id="PlayListId"  name="motionPlaylist">
