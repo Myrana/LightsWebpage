@@ -25,7 +25,7 @@ if(isset($_REQUEST['Config']))
        $lightChecked = 0;
 
     
-	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelayOff'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "')";
+	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio, timeFeatureStart, timeFeatureEnd, timePlaylist) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelayOff'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "', '" . $_POST['timePlaylist'] . "')";
 
    
 	if ($conn->query($sql) === TRUE)
@@ -243,13 +243,21 @@ if(mysqli_num_rows($results) > 0)
 	</div>
 	<div class="column" style ="width: 25%"><div class="ColumnStyles">
 	<label>Start Time:</label> <br />
-		<input type="time" />
+		<input type="time" id="startTime" name="startTime" />
 	<p>
 		
 	<label>End Time:</label> <br />
-		<input type="time" />
+		<input type="time" id="endTime" name="endTime" />
 		
 	</p>
+		<p>
+		
+			<label for="timePlaylist">Light Playlist:</label>
+		<select id="PlayListId"  name="timePlaylist">
+        <?php echo $playlistoption;?>
+        </select>
+		
+		</p>
 	</div>
 	
 </form>	
