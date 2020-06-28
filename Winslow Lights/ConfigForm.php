@@ -59,12 +59,21 @@ if(isset($_REQUEST['Config']))
         $users .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
     }
 	
-	$playlistoption = '';
+$playlistoption = '';
 $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
 if(mysqli_num_rows($results) > 0)
 {
     while($row = mysqli_fetch_array($results))
       $playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
+
+}
+
+$systemlistoption = '';
+$results = mysqli_query($conn,"SELECT ID, systemName FROM lightSystems");
+if(mysqli_num_rows($results) > 0)
+{
+    while($row = mysqli_fetch_array($results))
+      $systemlistoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
 
 }
 
@@ -87,7 +96,19 @@ if(mysqli_num_rows($results) > 0)
 <body>
 <?php include("Nav.php");  ?>
 	  <h1>Config Page</h1>
-	          <div class="column"><form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	<div class="column" style="width: 25%">
+		<div class="ColumnStyles">
+		
+			<p><label for="userID">Light System:</label><br />
+			<select name="userID">
+			<?php echo $systemlistoption;?>
+			</select>	
+	</p>
+		
+		</div>
+	
+	</div>
+	          <div class="column" style="width: 25%"><form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	
 	<p><label for="LightSystemName">Light System Name:</label><br />
 	  <input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
@@ -136,7 +157,7 @@ if(mysqli_num_rows($results) > 0)
 	</p>	
 	
 	</div>
-<div class="column">
+<div class="column" style="width: 25%">
 <div class="ColumnStyles">
 	
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -195,7 +216,7 @@ if(mysqli_num_rows($results) > 0)
 	</div>
 			  
 </div>
-	<div class="column"><div class="ColumnStyles">
+	<div class="column" style ="width: 25%"><div class="ColumnStyles">
 	<p><label for="lightFeature">Use a light sensor?</label>
 	
 	<input type="checkbox" id="lightFeature" value="1" /></p>
