@@ -25,7 +25,7 @@ else
 <meta charset="UTF-8">
 <title>Test page</title>
 <script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
-<link href="Styles.css" rel="stylesheet" type="text/css">	
+<link href="css/Styles.css" rel="stylesheet" type="text/css">	
 </head>
 
 <script>
