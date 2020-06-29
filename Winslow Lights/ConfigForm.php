@@ -257,12 +257,21 @@ if(mysqli_num_rows($results) > 0)
 	<input type="checkbox" id="timeFeature" /></p>
 		
 		<div id="timeFields" style="display: none;">
-	<label>Start Time:</label> <br />
-		<input type="time" id="startTime" name="startTime" />
-	<p>
-		
-	<label>End Time:</label> <br />
-		<input type="time" id="endTime" name="endTime" />
+	<input id="foo" value="7:40" type="text"/>
+		<input id="bar" value="13:54" type="text"/>
+		<script type="text/javascript">
+ //<![CDATA[
+$(document).ready(function(){
+	var clockTest1 = $("#foo").clickClock();
+ 	var clockTest2 = $("#bar").clickClock({
+		dimClock: 300,
+		thickClock: 30,
+		stepMinutes: 10
+	});
+});
+//]]>
+		</script>
+		<script type="text/javascript" src="script-clickclock.js"></script>
 		
 	</p>
 		<p>
