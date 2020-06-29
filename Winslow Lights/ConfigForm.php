@@ -27,9 +27,13 @@ if(isset($_REQUEST['Config']))
 	$timeChecked = 1;
      if (empty($_POST['timeFeature']))
        $timeChecked = 0;
+	
+	$gammaChecked = 1;
+     if (empty($_POST['gammaCorrect']))
+       $gammaChecked = 0;
 
     
-	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio, useTimeFeature timeFeatureStart, timeFeatureEnd, timePlaylist) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelayOff'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "',  '" . $timeChecked . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "', '" . $_POST['timePlaylist'] . "')";
+	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio, useTimeFeature timeFeatureStart, timeFeatureEnd, timePlaylist, useGammaCorrection) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelayOff'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "',  '" . $timeChecked . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "', '" . $_POST['timePlaylist'] . "', '". $gammaChecked ."')";
 
    
 	if ($conn->query($sql) === TRUE)
@@ -275,6 +279,12 @@ if(mysqli_num_rows($results) > 0)
 		
 		</p>
 			</div>
+	</div>
+	<div class="ColumnStyles">
+	
+		<label for="gammaCorrect">Gamma Correction?</label><br />
+		<input type="checkbox" id="gammaCorrect" name="gammaCorrect" />
+	
 	</div>
 	</form>
 	</div>
