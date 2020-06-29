@@ -396,7 +396,7 @@ $conn->close();
     <div class="column">
         <div class="ColumnStyles">
 
-<img src="Playlist-Manager.png" alt="Playlist Manager" width="100%" />
+<img src="Images/Playlist-Manager.png" alt="Playlist Manager" width="100%" />
 
 
 
