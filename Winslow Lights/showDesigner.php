@@ -92,7 +92,7 @@ include_once('CommonFunctions.php');
 <div class="column">
     <div class="ColumnStyles">
 		
-		<img src="Show-Designer.png" alt="Show Designer" width="100%" />
+		<img src="Images/Show-Designer.png" alt="Show Designer" width="100%" />
 
     <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>

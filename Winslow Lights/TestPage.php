@@ -264,8 +264,8 @@ $conn->close();
 <script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
 <link href="css/Styles.css" rel="stylesheet" type="text/css">
 	
-<script src='spectrum.js'></script>
-<link rel='stylesheet' href='spectrum.css' />
+<script src='js/spectrum.js'></script>
+<link rel='stylesheet' href='css/spectrum.css' />
 	
 </head>
 

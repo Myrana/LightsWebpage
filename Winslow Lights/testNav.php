@@ -1,7 +1,7 @@
 
 <?php include_once("CommonFunctions.php"); ?>
 
-<img src="winslowBanner.png" alt="Winslow's Illuminous LEDs" width="100%">
+<img src="Images/winslowBanner.png" alt="Winslow's Illuminous LEDs" width="100%">
 	<nav>
 	  <ul><a href="index.php" title="Home" ><i class="fas fa-home" style="color: #34eb86"></i></a></ul>
 	  <ul><a href="Gallery.php" title="Gallery" style="color: cornflowerblue"><i class="fas fa-images"></i></a></ul>
