@@ -84,6 +84,39 @@ if(mysqli_num_rows($results) > 0)
     $conn->close();
 
 ?>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#motionFeature").click(function () {
+            if ($(this).is(":checked")) {
+                $("#motionFields").show();
+            } else {
+                $("#motionFields").hide();
+            }
+        });
+    });
+	
+	$(function () {
+        $("#lightFeature").click(function () {
+            if ($(this).is(":checked")) {
+                $("#lightFields").show();
+            } else {
+                $("#lightFields").hide();
+            }
+        });
+    });
+	
+		$(function () {
+        $("#timeFeature").click(function () {
+            if ($(this).is(":checked")) {
+                $("#timeFields").show();
+            } else {
+                $("#timeFields").hide();
+            }
+        });
+    });
+</script>
 <!DOCTYPE html>
 <html>
   <head>
@@ -100,7 +133,7 @@ if(mysqli_num_rows($results) > 0)
 <body>
 <?php include("Nav.php");  ?>
 	  <h1>Config Page</h1>
-	<div class="column" style="width: 25%">
+	<div class="column" style="width: 33%">
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
 			<p><label for="userID">Light System:</label><br />
@@ -113,7 +146,7 @@ if(mysqli_num_rows($results) > 0)
 		
 		</div>
 	
-	          <div class="column" style="width: 25%">
+	          <div class="column" style="width: 33%">
 				  <div class="ColumnStyles">
 	
 	<p><label for="LightSystemName">Light System Name:</label><br />
@@ -164,46 +197,8 @@ if(mysqli_num_rows($results) > 0)
 	
 	</div>
 		</div>		  
-<div class="column" style="width: 25%">
+<div class="column" style="width: 33%">
 <div class="ColumnStyles">
-	
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $("#motionFeature").click(function () {
-            if ($(this).is(":checked")) {
-                $("#motionFields").show();
-            } else {
-                $("#motionFields").hide();
-            }
-        });
-    });
-	
-	$(function () {
-        $("#lightFeature").click(function () {
-            if ($(this).is(":checked")) {
-                $("#lightFields").show();
-            } else {
-                $("#lightFields").hide();
-            }
-        });
-    });
-	
-		$(function () {
-        $("#timeFeature").click(function () {
-            if ($(this).is(":checked")) {
-                $("#timeFields").show();
-            } else {
-                $("#timeFields").hide();
-            }
-        });
-    });
-</script>
-	
-	
-	
-	
-
 	
 <p><label for="motionFeature">Use a motion sensor?</label>
 	
@@ -254,14 +249,14 @@ if(mysqli_num_rows($results) > 0)
 	</div>
 			  
 </div>
-	</div>
-	<div class="column" style ="width: 25%"><div class="ColumnStyles">
+	
+	<div class="ColumnStyles">
 		
 		<p><label for="timeFeature">Use time of day?</label>
 	
 	<input type="checkbox" id="timeFeature" /></p>
 		
-		<div class="TimeFields" style="display: none;">
+		<div id="timeFields" style="display: none;">
 	<label>Start Time:</label> <br />
 		<input type="time" id="startTime" name="startTime" />
 	<p>
@@ -280,9 +275,11 @@ if(mysqli_num_rows($results) > 0)
 		</p>
 			</div>
 	</div>
-	
-</form>	
+	</form>	
 	</div>
+	
+
+	
 			  
 				  
 	
