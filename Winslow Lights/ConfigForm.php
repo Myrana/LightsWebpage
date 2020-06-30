@@ -120,7 +120,7 @@ if(mysqli_num_rows($results) > 0)
         });
     });
 	
-		$(function () {
+	$(function () {
         $("#timeFeature").click(function () {
             if ($(this).is(":checked")) {
                 $("#timeFields").show();
@@ -129,6 +129,8 @@ if(mysqli_num_rows($results) > 0)
             }
         });
     });
+	
+		
 </script>
 
 <!DOCTYPE html>
@@ -272,7 +274,7 @@ if(mysqli_num_rows($results) > 0)
 		<p><label for="timeFeature">Use time of day?</label>
 	
 	<input type="checkbox" id="timeFeature" /></p>
-	
+	<div id="timeFields" style="display: none">
 	<label>Start Time:</label> <br />
 		<input type="time" id="startTime" name="startTime" />
 	<p>
@@ -290,6 +292,7 @@ if(mysqli_num_rows($results) > 0)
 		
 		</p>
 	</div>
+		</div>
 	</form>
 	</div>
 	
