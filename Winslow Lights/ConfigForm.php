@@ -239,7 +239,7 @@ if(mysqli_num_rows($results) > 0)
 	
 	<p><label for="lightFeature">Use a light sensor?</label>
 	
-	<input type="checkbox" id="lightFeature" value="1" /></p>
+	<input type="checkbox" id="lightFeature" /></p>
 	
 	<div id="lightFields" style="display: none">
 	
