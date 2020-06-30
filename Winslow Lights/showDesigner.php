@@ -136,6 +136,8 @@ include_once('CommonFunctions.php');
     <input type="checkbox" name="clearStart">
         <label for="On">Clear on Finish</label>
     <input type="checkbox" name="clearFinish">
+     <label for="On">Gamma Correction</label>
+    <input type="checkbox" name="gammaCorrection">
    
         <label for="On">Power On</label>
     <input type="checkbox" name="powerOn" value="OFF">

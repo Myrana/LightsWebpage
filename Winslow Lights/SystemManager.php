@@ -183,7 +183,10 @@ if(isset($_REQUEST['LightShow']))
 
         if (!empty($_POST['clearFinish']))
             $sendArray['clearFinish'] = 1;
-
+            
+        if (!empty($_POST['gammaCorrection']))
+			$sendArray['gammaCorrection'] = 1;
+        
         if (!empty($_POST['powerOn']))
            $sendArray['powerOn'] = "OFF";
            
