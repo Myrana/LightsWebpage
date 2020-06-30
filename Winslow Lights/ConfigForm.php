@@ -26,10 +26,19 @@ if(isset($_REQUEST['Config']))
 	
 	$timeChecked = 1;
      if (empty($_POST['timeFeature']))
-       $timeChecked = 0;
+     {
+         $timeChecked = 0;
+         $startTime = "";
+         $endTime = "";
+     }
+    else
+    {
+        $startTime = $_POST['startTime'];
+        $endTime = $_POST['endTime'];
 
+    }
     
-	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio, useTimeFeature timeFeatureStart, timeFeatureEnd, timePlaylist, gamma) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelayOff'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "',  '" . $timeChecked . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "',  '" . $_POST['timePlaylist'] . "', '" . $_POST['gamma'] . "')";
+	$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType,stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, useMotionFeature, motionDelayOff, motionPlaylist, motionFeatureGpio, useLightFeature, lightPlaylist, lightFeatureGpio, useTimeFeature timeFeatureStart, timeFeatureEnd, timePlaylist, gamma) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $motionChecked . "', '" . $_POST['motionDelayOff'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $lightChecked . "', '" . $_POST['lightPlaylist'] . "', '" . $_POST['lightFeatureGPIO'] . "',  '" . $timeChecked . "', '" . $startTime . "', '" . $endTime . "',  '" . $_POST['timePlaylist'] . "', '" . $_POST['gamma'] . "')";
 
    
 	if ($conn->query($sql) === TRUE)
