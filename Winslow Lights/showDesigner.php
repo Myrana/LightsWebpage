@@ -132,11 +132,11 @@ include_once('CommonFunctions.php');
 </p>
 
 
-        <p><label for="On">Clear on Start</label>
+        <p><label for="On1">Clear on Start</label>
     <input type="checkbox" name="clearStart">
-        <label for="On">Clear on Finish</label>
+        <label for="On2">Clear on Finish</label>
     <input type="checkbox" name="clearFinish">
-     <label for="On">Gamma Correction</label>
+     <label for="On3">Gamma Correction</label>
     <input type="checkbox" name="gammaCorrection">
    
         <label for="On">Power On</label>
