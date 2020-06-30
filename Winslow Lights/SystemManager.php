@@ -2,7 +2,7 @@
 
 include('CommonFunctions.php');
 
-$_SESSION["Brightness"] = 20;
+$_SESSION["Brightness"] = 127;
 $_SESSION["LightSystemID"] = -1;
 $_SESSION["Delay"] = 10;
 $_SESSION["Minutes"] = 1;
