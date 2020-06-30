@@ -99,7 +99,7 @@ include_once('CommonFunctions.php');
 </p>
 
     <p><label for="colors">Colors:</label>
-		<input type="color"  Name="color_1" id="Color1" value ="#6512e0">
+		<input type="color"  Name="color_1" id="Color1" value ="#ff6500">
         <input type="color" Name="color_2" id="Color2" value="#906bfa">
         <input type="color" Name="color_3" id="Color3" value="#2c2367">
         <input type="color" Name="color_4" id="Color4" value="#ad5e8c"></p>
