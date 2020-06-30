@@ -39,6 +39,7 @@ if(isset($_REQUEST['Config']))
 	else 
 	{
   	echo "<h1>Error: " . $conn->error . "</h1>";
+	echo $sql;	
     }
 }
 
