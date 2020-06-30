@@ -274,7 +274,7 @@ if(mysqli_num_rows($results) > 0)
 	<input type="checkbox" id="timeFeature" /></p>
 		
 
-		<div class="timeFields" style="display: none;">
+		<div class="timeFields" style="display: none">
 	<label>Start Time:</label> <br />
 		<input type="time" id="startTime" name="startTime" />
 	<p>
