@@ -272,9 +272,7 @@ if(mysqli_num_rows($results) > 0)
 		<p><label for="timeFeature">Use time of day?</label>
 	
 	<input type="checkbox" id="timeFeature" /></p>
-		
-
-		<div class="timeFields" style="display: none">
+	
 	<label>Start Time:</label> <br />
 		<input type="time" id="startTime" name="startTime" />
 	<p>
@@ -285,13 +283,12 @@ if(mysqli_num_rows($results) > 0)
 	</p>
 		<p>
 		
-			<label for="timePlaylist">Light Playlist:</label>
+			<label for="timePlaylist">Time Playlist:</label>
 		<select id="PlayListId"  name="timePlaylist">
         <?php echo $playlistoption;?>
         </select>
 		
 		</p>
-			</div>
 	</div>
 	</form>
 	</div>
