@@ -11,7 +11,7 @@
 	  <ul><a href="SystemManager.php" title="System Manager"><i class="fas fa-network-wired" style="color: #cc33ff"></i></a></ul>
 	  <ul><a href="editShows.php" title="Edit Shows"><i class="fas fa-edit" style="color: orangered"></i></a></ul>	
 	  <ul><a href="productMarketing.php" title="ProductMarketing"><i class="fas fa-user-shield" style="color: khaki"></i></a></ul>	
-	  <ul style="float: right"><a href="Login.php" title="Login | Register"><i class="fas fa-unlock-alt" style="color: #ff0000"></i></a></ul>	
+	  <ul style="float: right"><a href="Login.php" title="Login | Register"><i class="fas fa-unlock-alt" style="color: #ff0000; margin-right: 20px"></i></a></ul>	
 </nav>
 
 

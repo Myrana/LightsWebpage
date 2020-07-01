@@ -149,6 +149,7 @@ if(mysqli_num_rows($results) > 0)
 <body>
 <?php include("Nav.php");  ?>
 	  <h1>Config Page</h1>
+	<div class="clearfix">
 	<div class="column" style="width: 33%">
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
@@ -295,6 +296,8 @@ if(mysqli_num_rows($results) > 0)
 		</div>
 	</form>
 	</div>
+		</div>
+	<?php include('Footer.php'); ?>
 	
 	
 	

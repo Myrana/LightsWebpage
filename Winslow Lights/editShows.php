@@ -9,7 +9,7 @@
 
 <body>
 	<?php include('Nav.php'); ?>
-	
+	<div class="clearfix">
 	<div class="column" style="margin-top: 15px;"><label for="dad">Dad's Test select</label>
 	<select id="dad" name="dad">
 	<option id="dadd" value = "dad">Have fun!</option>
@@ -22,5 +22,7 @@
 
     </div>
 	</div>
+</div>
 </body>
+<?php include('Footer.php'); ?>
 </html>

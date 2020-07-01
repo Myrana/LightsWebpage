@@ -367,7 +367,7 @@ $conn->close();
 
 </script>
 
-
+<div class="clearfix">
 <div class="column">
 	
 
@@ -432,6 +432,9 @@ $conn->close();
     </form>
     </div>
     </div>
+	</div>
+	<?php include('Footer.php'); ?>
+	
 	
 	
 </body>
