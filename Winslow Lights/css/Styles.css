@@ -79,19 +79,14 @@ div.desc {
   float: left;
   width: 24.99999%;
 }
-
-@media only screen and (max-width: 700px) {
-  .responsive {
-    width: 49.99999%;
-    margin: 6px 0;
-  }
+#login {
+    width: 25%;
+    margin-left: 35%;
+    box-shadow: 0px 6px 10px 0px #000;
+    -webkit-box-shadow: 0px 6px 10px 0px #000;
+	
 }
 
-@media only screen and (max-width: 500px) {
-  .responsive {
-    width: 100%;
-  }
-}
 
 .clearfix:after {
   content: "";
@@ -450,4 +445,31 @@ footer{
 
 input:disabled {
 	display: none;
+}
+#login p #Username {
+    width: 90%;
+}
+#login p #Password {
+    width: 90%;
+}
+
+@media (max-width: 741px){
+.nav {
+}
+.fas {
+    margin-right: -20px;
+
+
+}
+
+
+}
+
+@media (max-width: 547px){
+.fas {
+    margin-right: -25px;
+
+
+}
+
 }

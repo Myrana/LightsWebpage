@@ -42,11 +42,11 @@ else if(isset($_SESSION['authorized']))
 <?php include("Nav.php");  ?>
 	
 <h1>Home</h1>
-	<form name="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	<form name="login" id="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		<p><label>Username:</label> <br />
-			<input type="text" name="Username"></p>
+			<input type="text" name="Username" id="Username"></p>
 		<p><label>Password:</label> <br />
-			<input type="password" name="Password">
+			<input type="password" name="Password" id="Password">
 		</p>
 	<button type="submit" name="Login">Login</button>
 	</form>
