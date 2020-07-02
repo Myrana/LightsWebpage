@@ -12,43 +12,51 @@ if($_SESSION['authorized'] == 0)
 }
 
 
-
 if(isset($_REQUEST['Config']))
 {
 
-    $motionChecked = 1;
-     if (empty($_POST['motionFeature']))
-       $motionChecked = 0;
-
-      $lightChecked = 1;
-     if (empty($_POST['lightFeature']))
-       $lightChecked = 0;
-	
-	$timeChecked = 1;
-     if (empty($_POST['timeFeature']))
-     {
-         $timeChecked = 0;
-         $startTime = "0";
-         $endTime = "0";
-     }
-    else
-    {
-        $startTime = $_POST['startTime'];
-        $endTime = $_POST['endTime'];
-    }
-    
-	$sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "')";
-
-   
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "')";
 	if ($conn->query($sql) === TRUE)
     {
-        echo "<h1>Your record was added to the database successfully.</h1>";
+		 $systemId = $conn->insert_id;
+		 
+		 $sql = "";
+		 
+		 if (!empty($_POST['motionFeature']))
+		 {
+			$sql . "INSERT INTO lightSystemFeatures(featureId,lightSystemId VALUES('1','" . $$systemId . "','); ";
+
+		 }
+		  
+		 if (!empty($_POST['lightFeature']))
+		 {
+			$sql . "INSERT INTO lightSystemFeatures(featureId,lightSystemId VALUES('2','" . $$systemId . "','); ";
+		
+		 }
+
+		
+		 if (!empty($_POST['timeFeature']))
+		 {
+			$sql . "INSERT INTO lightSystemFeatures(featureId,lightSystemId VALUES('3','" . $$systemId . "','); ";
+		 }
+    
+    
+		if ($conn->query($sql) === TRUE)
+		{
+			echo "<h1>Your record was added to the database successfully.</h1>";
+		}
+		else
+		{
+			echo "<h1>Error: " . $conn->error . "</h1>";
+			echo $sql;	
+		}
     }
 	else 
 	{
-  	echo "<h1>Error: " . $conn->error . "</h1>";
-	echo $sql;	
+		echo "<h1>Error: " . $conn->error . "</h1>";
+		echo $sql;	
     }
+    
 }
 
 
