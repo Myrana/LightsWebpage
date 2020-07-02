@@ -20,26 +20,30 @@ if(isset($_REQUEST['Config']))
     {
 		 $systemId = $conn->insert_id;
 		 
-		 $sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff VALUES";
+		 $sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd) VALUES";
+		 
 		 
 		 if (!empty($_POST['motionFeature']))
 		 {
-			$sql . "('1','" . $$systemId . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "'),";
+			$sql .= "('1','" . $systemId . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
 
 		 }
 		  
 		 if (!empty($_POST['lightFeature']))
 		 {
-			$sql . "('2','" . $$systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "'),";
+			$sql .= ",('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
 		
 		 }
 
 		
 		 if (!empty($_POST['timeFeature']))
 		 {
-			$sql . "('3','" . $$systemId . "', '" . $_POST['timeFeatureGPIO'] . "', '" . $_POST['timePlaylist'] . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "');";
+			 //('3','71', '0','28', '0',', ''); 
+			 
+			$sql .= ",('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
 		 }
     
+		$sql .= ";";
     
 		if ($conn->query($sql) === TRUE)
 		{
@@ -230,7 +234,7 @@ if(mysqli_num_rows($results) > 0)
 <div class="ColumnStyles">	
 <p><label for="motionFeature">Use a motion sensor?</label>
 	
-	<input type="checkbox" id="motionFeature" /></p>
+	<input type="checkbox" id="motionFeature" name="motionFeature"/></p>
 	
 	<div id="motionFields" style="display: none">
 	
@@ -256,20 +260,20 @@ if(mysqli_num_rows($results) > 0)
 	</div>
 	<div class="ColumnStyles">
 	
-	<p><label for="lightFeature">Use a light sensor?</label>
+	<p><label for="OnlightFeature">Use a light sensor?</label>
 	
-	<input type="checkbox" id="lightFeature" /></p>
+	<input type="checkbox" id="lightFeature" name="lightFeature"/></p>
 	
 	<div id="lightFields" style="display: none">
 	
-		<label for="lightPlaylist">Light Playlist:</label>
+		<label for="OnlightPlaylist">Light Playlist:</label>
 		<select id="PlayListId"  name="lightPlaylist">
         <?php echo $playlistoption;?>
         </select>
 		
 		<P>
 		
-		<label for="lightFeatureGPIO">Motion GPIO Pin:</label><br />
+		<label for="OnlightFeatureGPIO">Motion GPIO Pin:</label><br />
 	  <input type="number" id="lightFeatureGPIO" name="lightFeatureGPIO" min="1" max="52" value="18">
 		
 		</P>
@@ -280,9 +284,9 @@ if(mysqli_num_rows($results) > 0)
 	
 	<div class="ColumnStyles">
 		
-		<p><label for="timeFeature">Use time of day?</label>
+		<p><label for="OntimeFeature">Use time of day?</label>
 	
-	<input type="checkbox" id="timeFeature" /></p>
+	<input type="checkbox" id="timeFeature" name="timeFeature"/></p>
 	<div id="timeFields" style="display: none">
 	<label>Start Time:</label> <br />
 		<input type="time" id="startTime" name="startTime" />
