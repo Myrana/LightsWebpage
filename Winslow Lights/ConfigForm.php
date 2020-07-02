@@ -20,24 +20,24 @@ if(isset($_REQUEST['Config']))
     {
 		 $systemId = $conn->insert_id;
 		 
-		 $sql = "";
+		 $sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff VALUES";
 		 
 		 if (!empty($_POST['motionFeature']))
 		 {
-			$sql . "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff VALUES('1','" . $$systemId . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "'); ";
+			$sql . "('1','" . $$systemId . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "'),";
 
 		 }
 		  
 		 if (!empty($_POST['lightFeature']))
 		 {
-			$sql . "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist VALUES('2','" . $$systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "'); ";
+			$sql . "('2','" . $$systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "'),";
 		
 		 }
 
 		
 		 if (!empty($_POST['timeFeature']))
 		 {
-			$sql . "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, timeFeatureStart, timeFeatureEnd VALUES('3','" . $$systemId . "', '" . $_POST['timeFeatureGPIO'] . "', '" . $_POST['timePlaylist'] . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "'); ";
+			$sql . "('3','" . $$systemId . "', '" . $_POST['timeFeatureGPIO'] . "', '" . $_POST['timePlaylist'] . "', '" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "');";
 		 }
     
     
