@@ -10,6 +10,7 @@ $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
 $_SESSION["ShowName"] = -1;
 $_SESSION["ChgBrightness"] = 20;
+$_SESSION["DesignerEditMode"] = 0;
 
 $conn = getDatabaseConnection();
 

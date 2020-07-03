@@ -3,7 +3,6 @@
 include_once('CommonFunctions.php');
 
 
-
 $conn = getDatabaseConnection();
 
 $lightShowsoption = '';
@@ -180,8 +179,16 @@ $conn->close();
     <input type="checkbox" name="powerOn" value="OFF">
         </p>
 
-        <p><button type="submit" name="LightShow">Send Show</button>
-			<button type="submit" name="ClearQueue">Clear Queue</button></p>
+<?php
+    if($_SESSION["DesignerEditMode"]  == 0)
+    {
+        echo '<p><button type="submit" name="LightShow">Send Show</button><button type="submit" name="ClearQueue">Clear Queue</button></p>';
+    }
+    else
+    {
+        echo '<p><button type="submit" name="SavePlayList">Save PlayList</button><button type="submit" name="CommitPlayList">Commit PlayList</button></p>';
+    }
+    ?>
 
     </div>
     </div>

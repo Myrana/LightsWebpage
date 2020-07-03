@@ -1,11 +1,13 @@
 <?php
 
 include_once('CommonFunctions.php');
-
+$_SESSION["DesignerEditMode"]  = 1;
+    
 $conn = getDatabaseConnection();
 
 $playlistoption = '';
 $playListScript = "";
+
 
 $results = mysqli_query($conn,"SELECT ID,userID,playlistName,showParms FROM userPlaylist where userID =" . $_SESSION['UserID'] . " or userID = 1");
 if(mysqli_num_rows($results) > 0)
@@ -105,6 +107,8 @@ $conn->close();
                 if(show.hasWidth)
                     width.value = minutes.value = playList.showParms[i].width;
 
+                brightness.value = playList.showParms[i].brightness;
+                
                 if(show.numColors > 0)
                 {
                     switch(show.numColors)
@@ -140,9 +144,6 @@ $conn->close();
                     }
 
                 }
-
-				//Now for the fun, lets set the controls based on the saved values.
-				brightness.value = playList.showParms[i].brightness;
 				break;
 			}
 		}
