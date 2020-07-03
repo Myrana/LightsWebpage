@@ -65,7 +65,6 @@ if(isset($_REQUEST['Config']))
 
 
 
-
     $displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
     $stripTypes = '';
     while($query_data = mysqli_fetch_array($displayStrip))
@@ -74,9 +73,6 @@ if(isset($_REQUEST['Config']))
         //<option>$query_data['stripName']</option>
         $stripTypes .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
     }
-
-
-
 
 
     $displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
@@ -97,16 +93,59 @@ if(mysqli_num_rows($results) > 0)
 
 }
 
+
 $systemlistoption = '';
-$results = mysqli_query($conn,"SELECT ID, systemName FROM lightSystems");
+$results = mysqli_query($conn,"SELECT *  FROM lightSystems");
 if(mysqli_num_rows($results) > 0)
 {
+    $lightSystemsScript = "let systemsMap = new Map();\r\n";
     while($row = mysqli_fetch_array($results))
-      $systemlistoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+    {
+        $lightSystemsScript .= "var system = new Object(); \r";
 
+        $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
+        $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
+        $lightSystemsScript .= "    system.stripType = '" . $row['stripType'] ."';\r";
+        $lightSystemsScript .= "    system.stripHeight = " . $row['stripHeight'] .";\r";
+        $lightSystemsScript .= "    system.stripWidth = " . $row['stripWidth'] .";\r";
+        $lightSystemsScript .= "    system.dma = " . $row['dma'] .";\r";
+        $lightSystemsScript .= "    system.gpio = " . $row['gpio'] .";\r";
+        $lightSystemsScript .= "    system.serverHostName = '" . $row['serverHostName'] ."';\r";
+        $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
+        $lightSystemsScript .= "    system.enabled = " . $row['enabled'] .";\r";
+        $lightSystemsScript .= "    system.userId = " . $row['userId'] .";\r";
+        $lightSystemsScript .= "    system.gamma = " . $row['gamma'] .";\r";
+
+        $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
+
+        $systemlistoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+
+    }
 }
 
-    $conn->close();
+
+
+
+$results = mysqli_query($conn,"SELECT * FROM lightSystemFeatures");
+if(mysqli_num_rows($results) > 0)
+{
+    $lightFeaturesScript = "let lightFeatureMap = new Map();\r\n";
+    while($row = mysqli_fetch_array($results))
+    {
+        $lightFeaturesScript .= "var lightFeature = new Object(); \r";
+
+       $lightFeaturesScript .= "    lightFeature.lightSystemId = " . $row['lightSystemId'] .";\r";
+       $lightFeaturesScript .= "    lightFeature.featureId = " . $row['featureId'] .";\r";
+       $lightFeaturesScript .= "    lightFeature.featureGpio = " . $row['featureGpio'] .";\r";
+       $lightFeaturesScript .= "    lightFeature.featurePlayList = " . $row['featurePlayList'] .";\r";
+       $lightFeaturesScript .= "    lightFeature.motionDelayOff = " . $row['motionDelayOff'] .";\r";
+       $lightFeaturesScript .= "    lightFeature.timeFeatureStart = '" . $row['timeFeatureStart'] ."';\r";
+       $lightFeaturesScript .= "    lightFeature.timeFeatureEnd = '" . $row['timeFeatureEnd'] ."';\r";
+       $lightFeaturesScript .= "    lightFeature.luxThreshHold = " . $row['luxThreshHold'] .";\r";
+       $lightFeaturesScript .= "lightFeatureMap.set(" .  $row['lightSystemId'] . ", lightFeature);\r";
+    }
+}
+$conn->close();
 
 ?>
 
@@ -145,6 +184,7 @@ if(mysqli_num_rows($results) > 0)
 		
 </script>
 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -160,13 +200,55 @@ if(mysqli_num_rows($results) > 0)
  
 <body>
 <?php include("Nav.php");  ?>
+
+<script>
+<?php echo $lightFeaturesScript;?>
+<?php echo $lightSystemsScript;?>
+
+function setLightSystemSettings()
+   {
+       var systemNameId = document.getElementById("LightSystem");
+       var lightSystemName = document.getElementById("LightSystemName");
+       var serverHostName = document.getElementById("ServerHostName");
+       var stripHeight = document.getElementById("StripHeight");
+       var stripWidth = document.getElementById("StripWidth");
+       var dma = document.getElementById("DMA");
+       var gpio = document.getElementById("GPIO");
+       var brightness = document.getElementById("Brightness");
+       var gamma = document.getElementById("gamma");
+       var stripType = document.getElementById("StripType");
+       var userID = document.getElementById("userID");
+
+
+       var index = parseInt(systemNameId.value);
+       var lightFeature = lightFeatureMap.get(index);
+       var system = systemsMap.get(index);
+
+       lightSystemName.value = system.systemName;
+       serverHostName.value = system.serverHostName;
+       stripHeight.value = system.stripHeight;
+       stripWidth.value = system.stripWidth;
+       dma.value = system.dma;
+       gpio.value = system.gpio;
+       brightness.value = system.brightness;
+       gamma.value = system.gamma;
+       stripType.value = system.stripType;
+       userID.value = system.userId;
+
+       //alert(system.systemName);
+
+   }
+
+
+</script>
+
 	  <h1>Config Page</h1>
 	<div class="clearfix">
 	<div class="column" style="width: 33%">
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
-			<p><label for="userID">Light System:</label><br />
-			<select name="userID">
+			<p><label for="onLightSystem">Light System:</label><br />
+			<select name="LightSystem" id="LightSystem" onChange="setLightSystemSettings();">
 			<?php echo $systemlistoption;?>
 			</select>	
 	</p>
@@ -186,7 +268,7 @@ if(mysqli_num_rows($results) > 0)
 	
 
 	<p><label for="StripType">Strip Type:</label><br />
-	<select name="StripType">
+	<select name="StripType" id="StripType">
 		<?php echo $stripTypes;?>
 		</select>	
 	</p>	
@@ -200,8 +282,8 @@ if(mysqli_num_rows($results) > 0)
 <p><label for="StripWidth">Strip Width:</label><br />
 	  <input type="number" id="StripWidth" name="StripWidth" min="1" value"10"></p>
 
-<p><label for="DMA">DMA:</label><br />
-	  <select name="DMA">
+<p><label for="onDMA">DMA:</label><br />
+	  <select name="DMA" id="DMA">
 		  <option value="5">5</option>
 		  <option value="10">10</option>
 		  <option value="12">12</option>
@@ -217,13 +299,13 @@ if(mysqli_num_rows($results) > 0)
 	  <input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60">
 		</p>
 					  
-	<p><label for="gamma">Gamma:</label><br />
-	  <input type="number" id="gamma" name="gamma" step=".1" value="0">
+	<p><label for="ongamma">Gamma:</label><br />
+<input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1">
 		</p>
 				  
 
 	<p><label for="userID">Light System User:</label><br />
-	<select name="userID">
+	<select name="userID" id="userID">
 		<?php echo $users;?>
 		</select>	
 	</p>	
