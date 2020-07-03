@@ -221,6 +221,9 @@ function setLightSystemSettings()
     var motionFeature = document.getElementById("motionFeature");
     var lightFeature = document.getElementById("lightFeature");
     var timeFeature = document.getElementById("timeFeature");
+	var motionDelay = document.getElementById("motionDelay");
+	var motionGpio = document.getElementById("motionFeatureGPIO");
+	var motionPlaylist = document.getElementById("motionPlaylist");
 
 
     var index = parseInt(systemNameId.value);
@@ -250,8 +253,10 @@ function setLightSystemSettings()
     switch(lightFeatureSettings.featureId)
     {
         case 1:
+			motionDelay.value = lightFeatureSettings.motionDelayOff;
+			motionGpio.value = lightFeatureSettings.motionFeatureGPIO;
+			motionPlaylist.value = lightFeatureSettings.motionPlaylist;
             motionFeature.click();
-            alert(1);
             break;
 
         case 2:
