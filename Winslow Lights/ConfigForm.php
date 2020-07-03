@@ -256,7 +256,7 @@ function setLightSystemSettings()
         {
             case 1:
                 motionDelay.value = lightFeatureSettings.motionDelayOff;
-                motionGpio.value = lightFeatureSettingsfeatureGpio;
+                motionGpio.value = lightFeatureSettings.featureGpio;
             	motionPlaylist.value = lightFeatureSettings.featurePlaylist;
                 motionFeature.click();
                 break;
