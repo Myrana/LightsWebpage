@@ -11,7 +11,7 @@ $conn->close();
 
 ?>
 
-<script typ
+
 
 <!doctype html>
 <html>
@@ -30,6 +30,16 @@ $conn->close();
 	<option id="dadd" value = "dad">Have fun!</option>
 	
 	</select>
+		
+		<p>
+		
+	<label for="dad2">Dad's Second Test select</label>
+	<select id="dad2" name="dad2">
+	<option id="dadd2" value = "dad2">Have fun Part 2!</option>
+	
+	</select>
+			
+		</p>
 	  
 	  
 	  </div>
