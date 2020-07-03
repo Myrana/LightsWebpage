@@ -63,7 +63,7 @@ if(isset($_REQUEST['Edit']))
 		if (!empty($_POST['luxFeature'])) 
 		{
 			if(!empty($features)) $features .= ",";
-			$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxTreshHold'] . "')";
+			$features .= "('4','" . $_POST['LightSystem'] . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
 		}
 		else
 		{
@@ -85,12 +85,12 @@ if(isset($_REQUEST['Edit']))
 		if(!empty($features))
 		{
 		 
-			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxTreshHold) VALUES";
+			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
 			$sql .= $features;
 			 
 			 
 			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxTreshHold);";
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
 
 			if ($conn->query($sql) === TRUE)
 				echo "<h1>Your record was Edited successfully.</h1>";
@@ -148,18 +148,18 @@ if(isset($_REQUEST['Config']))
 		if (!empty($_POST['luxFeature'])) 
 		{
 			if(!empty($features)) $features .= ",";
-			$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxTreshHold'] . "')";
+			$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
 		}
 
 		if(!empty($features))
 		{
 		 
-			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxTreshHold) VALUES";
+			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
 			$sql .= $features;
 			 
 			 
 			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThresHold = VALUES(luxTreshHold);";
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThresHold = VALUES(luxThreshHold);";
 
 			if ($conn->query($sql) === TRUE)
 				echo "<h1>Your record was added to the database successfully.</h1>";
@@ -385,7 +385,7 @@ function setLightSystemSettings()
     var timePlaylist = document.getElementById("timePlayListId");
     var startTime = document.getElementById("startTime");
     var endTime = document.getElementById("endTime");
-	var luxThreshold = document.getElementById("luxTreshHold");
+	var luxThreshold = document.getElementById("luxThreshHold");
 	var luxPlaylist = document.getElementById("luxPlaylistId");
 	
     var index = parseInt(systemNameId.value);
@@ -442,7 +442,7 @@ function setLightSystemSettings()
 					
 				case 4:
 					luxPlaylist.value = feature.featurePlayList;
-					luxThreshold.value = feature.luxTreshHold;
+					luxThreshold.value = feature.luxThreshHold;
 					luxFeature.click()
 					break;
 
@@ -607,7 +607,7 @@ function setLightSystemSettings()
 	<p><label for="OnluxFeature">Use lux?</label>
 		<input type="checkbox" id="luxFeature" name="luxFeature"/></p>
 		<div id="luxFields" style="display: none">
-		<input type="number" id="luxTreshHold" name="luxTreshHold" value="300">
+		<input type="number" id="luxThreshHold" name="luxThreshHold" value="300">
 		<p>
 		<label for="luxPlaylist">Lux Playlist:</label>
 			<select id="luxPlaylistId" name="luxPlaylist">
