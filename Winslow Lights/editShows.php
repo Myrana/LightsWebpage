@@ -4,7 +4,27 @@ include_once('CommonFunctions.php');
 
 $conn = getDatabaseConnection();
 
+$playlistoption = '';
+$playListScript = "";
 
+$results = mysqli_query($conn,"SELECT ID,userID,playlistName,showParms FROM userPlaylist where userID =" . $_SESSION['UserID'] . " or userID = 1");
+if(mysqli_num_rows($results) > 0)
+{
+	$playListScript = "let playListMap = new Map();\r";
+	while($row = mysqli_fetch_array($results))
+	{
+		$playListScript .= "var playList = new Object(); \r";
+
+        $playListScript .= "    playList.id = " . $row['ID'] .";\r";
+        $playListScript .= "    playList.userId = " . $row['userID'] .";\r";
+        $playListScript .= "    playList.playListName = '" . $row['playlistName'] ."';\r";
+        $playListScript .= "    playList.showParms = JSON.parse('" . $row['showParms'] . "');\r";       
+        $playListScript .= "    playListMap.set(" . $row['ID'] . ", playList);\r";
+		
+		$playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
+	}
+
+}
 
 
 $conn->close();
@@ -24,18 +44,91 @@ $conn->close();
 
 <body>
 	<?php include('Nav.php'); ?>
-	<div class="clearfix">
-	<div class="column" style="margin-top: 15px;"><label for="dad">Dad's Test select</label>
-	<select id="dad" name="dad">
-	<option id="dadd" value = "dad">Have fun!</option>
 	
+	<script>
+	<?php echo $playListScript;?>
+	
+	function setShowParms()
+	{
+		var playListId = document.getElementById("PlayList");
+		var showListControl = document.getElementById("ShowName");
+		var showControl = document.getElementById("ShowNameId");
+		var playListIndex = parseInt(playListId.value);
+		var playList = playListMap.get(playListIndex);
+	
+		var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
+        var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+        var minutes = document.getElementById("NumMinutesId");
+        var colorEvery = document.getElementById("ColorEveryId");
+        var brightness = document.getElementById("Brightness");
+        
+		var showIndex = parseInt(showListControl.value) - 1;	
+	    
+	    
+		for (i in playList.showParms)
+		{
+			if(i == showIndex)
+			{
+				
+				var show = showMap.get(parseInt(playList.showParms[i].show));
+				//set the control to proper show.
+				//next force the onchange event to fire to set the controls to 
+				//proper state for show.
+	    
+				showControl.value = show.id;
+				showControl.onchange();
+		
+				//Now for the fun, lets set the controls based on the saved values.
+				brightness.value = playList.showParms[i].brightness;
+				break;
+			}
+		}
+		
+	}
+	
+	function setPlayListSettings()
+	{
+		var playListId = document.getElementById("PlayList");
+		var showListControl = document.getElementById("ShowName");
+		var counter = 1;
+        
+		showListControl.options.length = 0;
+		playListIndex = parseInt(playListId.value);
+		var playList = playListMap.get(playListIndex);
+	
+		for (i in playList.showParms)
+		{
+			var option = document.createElement("option");
+			var showIndex = parseInt(playList.showParms[i].show);
+			var show = showMap.get(showIndex);
+			
+			option.text = show.showName;
+			option.value = counter;
+			counter = counter + 1;
+			showListControl.add(option); 
+			
+		}
+		
+		
+	}
+
+</script>
+
+	<div class="clearfix">
+	<div class="column" style="margin-top: 15px;"><label for="PlayList">Dad's Test select</label>
+	<select id="PlayList" name="PlayList" onchange="setPlayListSettings();">
+	<?php echo $playlistoption;?>
 	</select>
 		
 		<p>
 		
-	<label for="dad2">Dad's Second Test select</label>
-	<select id="dad2" name="dad2">
-	<option id="dadd2" value = "dad2">Have fun Part 2!</option>
+	<label for="ShowName">Dad's Second Test select</label>
+	<select id="ShowName" name="ShowName" onchange="setShowParms();">
+	
 	
 	</select>
 			
@@ -43,6 +136,8 @@ $conn->close();
 	  
 	  
 	  </div>
+	  
+	  
         <?php include('showDesigner.php'); ?>
 
     </div>

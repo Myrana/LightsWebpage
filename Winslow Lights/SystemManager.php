@@ -271,37 +271,7 @@ if(mysqli_num_rows($results) > 0)
 }
 
 
-$lightShowsoption = '';
-$_SESSION['lightShowsScript'] = '';
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
-if(mysqli_num_rows($results) > 0)
-{
-    $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
 
-    while($row = mysqli_fetch_array($results))
-    {
-        
-        $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
-
-
-        $_SESSION['lightShowsScript'] .= "var show = new Object(); \r";
-
-        $_SESSION['lightShowsScript'] .= "    show.id = " . $row['ID'] .";\r";
-        $_SESSION['lightShowsScript'] .= "    show.showName = '" . $row['showName'] ."';\r";
-        $_SESSION['lightShowsScript'] .= "    show.numColors = " . $row['numColors'] .";\r";
-        $_SESSION['lightShowsScript'] .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
-
-        $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
-
-
-
-
-    }
-
-}
 
 $playlistoption = '';
 $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userId =" . $_SESSION['UserID'] . " or userId =1");
