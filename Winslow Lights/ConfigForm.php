@@ -223,7 +223,7 @@ function setLightSystemSettings()
     var timeFeature = document.getElementById("timeFeature");
 	var motionDelay = document.getElementById("motionDelay");
 	var motionGpio = document.getElementById("motionFeatureGPIO");
-	var motionPlaylist = document.getElementById("motionPlaylist");
+	var motionPlaylist = document.getElementById("motionPlaylistId");
 
 
     var index = parseInt(systemNameId.value);
@@ -250,27 +250,28 @@ function setLightSystemSettings()
     if(timeFeature.checked == true)
         timeFeature.click();
 
-    switch(lightFeatureSettings.featureId)
+    if(lightFeatureSettings)
     {
-        case 1:
-			motionDelay.value = lightFeatureSettings.motionDelayOff;
-			motionGpio.value = lightFeatureSettings.motionFeatureGPIO;
-			motionPlaylist.value = lightFeatureSettings.motionPlaylist;
-            motionFeature.click();
-            break;
+        switch(lightFeatureSettings.featureId)
+        {
+            case 1:
+                motionDelay.value = lightFeatureSettings.motionDelayOff;
+                motionGpio.value = lightFeatureSettingsfeatureGpio;
+            	motionPlaylist.value = lightFeatureSettings.featurePlaylist;
+                motionFeature.click();
+                break;
 
-        case 2:
-            lightFeature.click();
-            alert(2);
-            break;
+            case 2:
+                lightFeature.click()
+                break;
 
-        case 3:
-            timeFeature.click();
-            alert(3);
-            break;
+            case 3:
+                timeFeature.click();
+                alert(3);
+                break;
 
+        }
     }
-
    //alert(system.systemName);
 
 }
