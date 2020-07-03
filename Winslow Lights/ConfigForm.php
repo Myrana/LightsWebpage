@@ -11,11 +11,28 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
+if(isset($_REQUEST['Edit']))
+{
+	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
+	"',stripHeight = '" . $_POST['StripHeight'] . "',stripWidth = '" . $_POST['StripWidth'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
+	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	if ($conn->query($sql) === TRUE)
+			echo "<h1>Your record was added to the database successfully.</h1>";
+	else
+	{
+		echo "<h1>Error: " . $conn->error . "</h1>";
+		echo $sql;	
+	}
+	
+}
+
 
 if(isset($_REQUEST['Config']))
 {
 
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma) VALUES('" . $_POST['LightSystemName'] . "','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . "','" . $GPIO = $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "')";
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma) VALUES('" . $_POST['LightSystemName'] . 
+		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . 
+		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "')";
 	if ($conn->query($sql) === TRUE)
     {
 		 $systemId = $conn->insert_id;
@@ -24,31 +41,20 @@ if(isset($_REQUEST['Config']))
 		 
 		 
 		 if (!empty($_POST['motionFeature']))
-		 {
 			$sql .= "('1','" . $systemId . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
-
-		 }
 		  
 		 if (!empty($_POST['lightFeature']))
-		 {
 			$sql .= ",('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
-		
-		 }
 
 		
 		 if (!empty($_POST['timeFeature']))
-		 {
-			 //('3','71', '0','28', '0',', ''); 
 			 
 			$sql .= ",('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
-		 }
     
 		$sql .= ";";
     
 		if ($conn->query($sql) === TRUE)
-		{
 			echo "<h1>Your record was added to the database successfully.</h1>";
-		}
 		else
 		{
 			echo "<h1>Error: " . $conn->error . "</h1>";
@@ -225,7 +231,11 @@ function setLightSystemSettings()
 	var motionGpio = document.getElementById("motionFeatureGPIO");
 	var motionPlaylist = document.getElementById("motionPlaylistId");
     var lightGpio = document.getElementById("lightFeatureGPIO");
-    var lightPlaylist = document.getElementById("lightPlaylistId");
+    var lightPlaylist = document.getElementById("lightPlayListId");
+    var timePlaylist = document.getElementById("timePlayListId");
+    var startTime = document.getElementById("startTime");
+    var endTime = document.getElementById("endTime");
+    
 
 
     var index = parseInt(systemNameId.value);
@@ -257,23 +267,24 @@ function setLightSystemSettings()
         switch(lightFeatureSettings.featureId)
         {
             case 1:
-               // motionDelay.value = lightFeatureSettings.motionDelayOff;
-              //  motionGpio.value = lightFeatureSettings.featureGpio;
-
-            //	motionPlaylist.value = lightFeatureSettings.featurePlayList;
+				motionDelay.value = lightFeatureSettings.motionDelayOff;
+                motionGpio.value = lightFeatureSettings.featureGpio;
+            	motionPlaylist.value = lightFeatureSettings.featurePlayList;
                 motionFeature.click();
                 break;
 
             case 2:
-             //   lightGpio.value = lightFeatureSettings.featureGpio;
-             ///   lightPlaylist.value = lightFeatureSettings.featurePlayList;
-
-                lightFeature.click()
+                lightGpio.value = lightFeatureSettings.featureGpio;               
+                lightPlaylist.value = lightFeatureSettings.featurePlayList;
+				lightFeature.click()
                 break;
 
             case 3:
+				timePlaylist.value = lightFeatureSettings.featurePlayList;
+				startTime.value    = lightFeatureSettings.timeFeatureStart;
+				endTime.value    = lightFeatureSettings.timeFeatureEnd;
                 timeFeature.click();
-                alert(3);
+                
                 break;
 
         }
@@ -367,7 +378,7 @@ function setLightSystemSettings()
 		<input type="number" id="motionDelay" name="motionDelayOff" min="5" value="10">
 	<p>
 	<label for="motionPlaylist">Motion Playlist:</label>
-		<select id="PlayListId"  name="motionPlaylist">
+		<select id="motionPlayListId"  name="motionPlaylist">
         <?php echo $playlistoption;?>
         </select>
 
@@ -392,7 +403,7 @@ function setLightSystemSettings()
 	<div id="lightFields" style="display: none">
 	
 		<label for="OnlightPlaylist">Light Playlist:</label>
-		<select id="PlayListId"  name="lightPlaylist">
+		<select id="lightPlayListId"  name="lightPlaylist">
         <?php echo $playlistoption;?>
         </select>
 		
@@ -424,7 +435,7 @@ function setLightSystemSettings()
 		<p>
 		
 			<label for="timePlaylist">Time Playlist:</label>
-		<select id="PlayListId"  name="timePlaylist">
+		<select id="timePlayListId"  name="timePlaylist">
         <?php echo $playlistoption;?>
         </select>
 		
