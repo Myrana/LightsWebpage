@@ -42,11 +42,18 @@ $conn->close();
 <link href="css/Styles.css" rel="stylesheet" type="text/css">	
 </head>
 
-<body>
+<body onLoad="onBodyLoad();">
 	<?php include('Nav.php'); ?>
 	
 	<script>
 	<?php echo $playListScript;?>
+	
+	function onBodyLoad()
+	{
+		setPlayListSettings();
+		setShowParms();
+		
+	}
 	
 	function setShowParms()
 	{
@@ -81,7 +88,7 @@ $conn->close();
 	    
 				showControl.value = show.id;
 				showControl.onchange();
-		
+			
 				//Now for the fun, lets set the controls based on the saved values.
 				brightness.value = playList.showParms[i].brightness;
 				break;
@@ -112,8 +119,8 @@ $conn->close();
 			showListControl.add(option); 
 			
 		}
-		
-		
+		//We now need to set the first shows parms. 
+		setShowParms();
 	}
 
 </script>
