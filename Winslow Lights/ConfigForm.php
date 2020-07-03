@@ -61,7 +61,7 @@ if(isset($_REQUEST['Edit']))
 
 		if(!empty($featureDelete))
 		{
-			$sql = "delete from lightSystemFeatures where featureId in (" . $featureDelete . ")";
+			$sql = "delete from lightSystemFeatures where featureId in (" . $featureDelete . ") and lightSystemId = " . $_POST['LightSystem'];
 			if ($conn->query($sql) === FALSE)
 			{
 				echo "<h1>Error: " . $conn->error . "</h1>";
