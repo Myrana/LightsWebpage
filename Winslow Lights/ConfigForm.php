@@ -17,7 +17,7 @@ if(isset($_REQUEST['Edit']))
 	"',stripHeight = '" . $_POST['StripHeight'] . "',stripWidth = '" . $_POST['StripWidth'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
 	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "' where ID = '" . $_POST['LightSystem'] . "';";
 	if ($conn->query($sql) === TRUE)
-			echo "<h1>Your record was added to the database successfully.</h1>";
+			echo "<h1>Your record was updated successfully.</h1>";
 	else
 	{
 		echo "<h1>Error: " . $conn->error . "</h1>";
@@ -136,19 +136,30 @@ $results = mysqli_query($conn,"SELECT * FROM lightSystemFeatures");
 if(mysqli_num_rows($results) > 0)
 {
     $lightFeaturesScript = "let lightFeatureMap = new Map();\r\n";
+    //$lightFeaturesScript .= "let lightFeatures = new Map();\r\n";
+    
     while($row = mysqli_fetch_array($results))
     {
-        $lightFeaturesScript .= "var lightFeature = new Object(); \r";
+		$lightFeaturesScript .= "var lightFeature = new Object(); \r";
 
-       $lightFeaturesScript .= "    lightFeature.lightSystemId = " . $row['lightSystemId'] .";\r";
-       $lightFeaturesScript .= "    lightFeature.featureId = " . $row['featureId'] .";\r";
-       $lightFeaturesScript .= "    lightFeature.featureGpio = " . $row['featureGpio'] .";\r";
-       $lightFeaturesScript .= "    lightFeature.featurePlayList = " . $row['featurePlayList'] .";\r";
-       $lightFeaturesScript .= "    lightFeature.motionDelayOff = " . $row['motionDelayOff'] .";\r";
-       $lightFeaturesScript .= "    lightFeature.timeFeatureStart = '" . $row['timeFeatureStart'] ."';\r";
-       $lightFeaturesScript .= "    lightFeature.timeFeatureEnd = '" . $row['timeFeatureEnd'] ."';\r";
-       $lightFeaturesScript .= "    lightFeature.luxThreshHold = " . $row['luxThreshHold'] .";\r";
-       $lightFeaturesScript .= "lightFeatureMap.set(" .  $row['lightSystemId'] . ", lightFeature);\r";
+		$lightFeaturesScript .= "    lightFeature.lightSystemId = " . $row['lightSystemId'] .";\r";
+		$lightFeaturesScript .= "    lightFeature.featureId = " . $row['featureId'] .";\r";
+		$lightFeaturesScript .= "    lightFeature.featureGpio = " . $row['featureGpio'] .";\r";
+		$lightFeaturesScript .= "    lightFeature.featurePlayList = " . $row['featurePlayList'] .";\r";
+		$lightFeaturesScript .= "    lightFeature.motionDelayOff = " . $row['motionDelayOff'] .";\r";
+		$lightFeaturesScript .= "    lightFeature.timeFeatureStart = '" . $row['timeFeatureStart'] ."';\r";
+		$lightFeaturesScript .= "    lightFeature.timeFeatureEnd = '" . $row['timeFeatureEnd'] ."';\r";
+		$lightFeaturesScript .= "    lightFeature.luxThreshHold = " . $row['luxThreshHold'] .";\r";
+
+		$lightFeaturesScript .= "if(!lightFeatureMap.has(" . $row['lightSystemId'] . "))\r";
+		$lightFeaturesScript .= "{\r";
+		$lightFeaturesScript .= "   var lightFeatures = new Map();\r";
+		$lightFeaturesScript .= "   lightFeatureMap.set(" . $row['lightSystemId'] . ", lightFeatures);\r";
+		$lightFeaturesScript .= "}\r";
+       
+        $lightFeaturesScript  .= "   lightFeatureMap.get(" . $row['lightSystemId'] . ").set(lightFeature.featureId,lightFeature);\r";
+       
+       //$lightFeaturesScript .= "lightFeatureMap.set(" .  $row['lightSystemId'] . ", lightFeature);\r";
     }
 }
 $conn->close();
@@ -235,11 +246,10 @@ function setLightSystemSettings()
     var timePlaylist = document.getElementById("timePlayListId");
     var startTime = document.getElementById("startTime");
     var endTime = document.getElementById("endTime");
-    
-
-
+	
     var index = parseInt(systemNameId.value);
     var lightFeatureSettings = lightFeatureMap.get(index);
+    
     var system = systemsMap.get(index);
 
     lightSystemName.value = system.systemName;
@@ -264,31 +274,35 @@ function setLightSystemSettings()
 
     if(lightFeatureSettings)
     {
-        switch(lightFeatureSettings.featureId)
-        {
-            case 1:
-				motionDelay.value = lightFeatureSettings.motionDelayOff;
-                motionGpio.value = lightFeatureSettings.featureGpio;
-            	motionPlaylist.value = lightFeatureSettings.featurePlayList;
-                motionFeature.click();
-                break;
+		for (let [featureId, feature] of lightFeatureSettings)
+		{
+			switch(featureId)
+			{
+				case 1:
+					motionDelay.value = feature.motionDelayOff;
+					motionGpio.value = feature.featureGpio;
+					motionPlaylist.value = feature.featurePlayList;
+					motionFeature.click();
+					break;
 
-            case 2:
-                lightGpio.value = lightFeatureSettings.featureGpio;               
-                lightPlaylist.value = lightFeatureSettings.featurePlayList;
-				lightFeature.click()
-                break;
+				case 2:
+					lightGpio.value = feature.featureGpio;               
+					lightPlaylist.value = feature.featurePlayList;
+					lightFeature.click()
+					break;
 
-            case 3:
-				timePlaylist.value = lightFeatureSettings.featurePlayList;
-				startTime.value    = lightFeatureSettings.timeFeatureStart;
-				endTime.value    = lightFeatureSettings.timeFeatureEnd;
-                timeFeature.click();
-                
-                break;
+				case 3:
+					timePlaylist.value = feature.featurePlayList;
+					startTime.value    = feature.timeFeatureStart;
+					endTime.value      = feature.timeFeatureEnd;
+					timeFeature.click();
+					
+					break;
 
-        }
+			}
+		}
     }
+    
    //alert(system.systemName);
 
 }
