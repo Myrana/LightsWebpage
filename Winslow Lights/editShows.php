@@ -88,6 +88,14 @@ $conn->close();
 	    
 				showControl.value = show.id;
 				showControl.onchange();
+
+                if(show.hasDelay)
+                    delay.value = playList.showParms[i].delay;
+
+                if(show.hasMinutes > 0)
+                    minutes.value = playList.showParms[i].minutes;
+                if(show.colorEvery > 0)
+                    colorEvery.value = minutes.value = playList.showParms[i].colorEvery;
 			
 				//Now for the fun, lets set the controls based on the saved values.
 				brightness.value = playList.showParms[i].brightness;
