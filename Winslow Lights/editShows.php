@@ -42,19 +42,24 @@ $conn->close();
 <link href="css/Styles.css" rel="stylesheet" type="text/css">	
 </head>
 
-<body onLoad="onBodyLoad();">
+<body onLoad="setPlayListSettings();">
 	<?php include('Nav.php'); ?>
 	
 	<script>
 	<?php echo $playListScript;?>
 	
-	function onBodyLoad()
-	{
-		setPlayListSettings();
-		setShowParms();
-		
-	}
-	
+
+    function componentToHex(c)
+    {
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    function rgbToHex(r, g, b)
+    {
+      return "#" + componentToHex(parseInt(r)) + componentToHex(parseInt(g)) + componentToHex(parseInt(b));
+    }
+
 	function setShowParms()
 	{
 		var playListId = document.getElementById("PlayList");
@@ -96,7 +101,46 @@ $conn->close();
                     minutes.value = playList.showParms[i].minutes;
                 if(show.colorEvery > 0)
                     colorEvery.value = minutes.value = playList.showParms[i].colorEvery;
-			
+
+                if(show.hasWidth)
+                    width.value = minutes.value = playList.showParms[i].width;
+
+                if(show.numColors > 0)
+                {
+                    switch(show.numColors)
+                    {
+                        case 1:
+                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            break;
+
+                        case 2:
+                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+
+                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            break;
+
+                        case 3:
+                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+
+                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+
+                            color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            break;
+
+                            case 4:
+                                color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+
+                                color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+
+                                color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+
+                                color4.value =  rgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                                break;
+
+                    }
+
+                }
+
 				//Now for the fun, lets set the controls based on the saved values.
 				brightness.value = playList.showParms[i].brightness;
 				break;

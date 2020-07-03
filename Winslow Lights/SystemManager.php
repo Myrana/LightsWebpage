@@ -179,6 +179,9 @@ if(isset($_REQUEST['LightShow']))
         if (!empty($_POST['clearStart']))
             $sendArray['clearStart'] = 1;
 
+        if (!empty($_POST['width']))
+            $sendArray['width'] = $_POST['width'];
+
         if (!empty($_POST['clearFinish']))
             $sendArray['clearFinish'] = 1;
             
