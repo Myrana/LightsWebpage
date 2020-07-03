@@ -1,3 +1,18 @@
+<?php
+
+include_once('CommonFunctions.php');
+
+$conn = getDatabaseConnection();
+
+
+
+
+$conn->close();
+
+?>
+
+<script typ
+
 <!doctype html>
 <html>
 <head>
