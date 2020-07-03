@@ -11,13 +11,57 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
+
+
 if(isset($_REQUEST['Edit']))
 {
+	
 	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
 	"',stripHeight = '" . $_POST['StripHeight'] . "',stripWidth = '" . $_POST['StripWidth'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
 	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "' where ID = '" . $_POST['LightSystem'] . "';";
 	if ($conn->query($sql) === TRUE)
-			echo "<h1>Your record was updated successfully.</h1>";
+	{
+		
+		$features = "";
+
+		if (!empty($_POST['motionFeature']))
+			$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
+
+		if (!empty($_POST['lightFeature']))
+		{
+			if(!empty($features)) $features .= ",";
+
+			$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
+
+		}
+
+		if (!empty($_POST['timeFeature'])) 
+		{
+			if(!empty($features)) $features .= ",";
+			$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
+		}
+
+		if(!empty($features))
+		{
+		 
+			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd) VALUES";
+			$sql .= $features;
+			 
+			 
+			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd);";
+
+			if ($conn->query($sql) === TRUE)
+				echo "<h1>Your record was Edited successfully.</h1>";
+			else
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $sql;	
+			}
+		}
+	
+		
+	}
 	else
 	{
 		echo "<h1>Error: " . $conn->error . "</h1>";
@@ -33,32 +77,47 @@ if(isset($_REQUEST['Config']))
     $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma) VALUES('" . $_POST['LightSystemName'] . 
 		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . 
 		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "')";
+	
 	if ($conn->query($sql) === TRUE)
     {
-		 $systemId = $conn->insert_id;
-		 
-		 $sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd) VALUES";
-		 
-		 
-		 if (!empty($_POST['motionFeature']))
-			$sql .= "('1','" . $systemId . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
-		  
-		 if (!empty($_POST['lightFeature']))
-			$sql .= ",('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
-
 		
-		 if (!empty($_POST['timeFeature']))
-			 
-			$sql .= ",('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
-    
-		$sql .= ";";
-    
-		if ($conn->query($sql) === TRUE)
-			echo "<h1>Your record was added to the database successfully.</h1>";
-		else
+		$features = "";
+		$systemId = $conn->insert_id;
+
+		if (!empty($_POST['motionFeature']))
+			$features = "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
+
+		if (!empty($_POST['lightFeature']))
 		{
-			echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
+			if(!empty($features)) $features .= ",";
+
+			$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
+
+		}
+
+		if (!empty($_POST['timeFeature'])) 
+		{
+			if(!empty($features)) $features .= ",";
+			$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
+		}
+
+		if(!empty($features))
+		{
+		 
+			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd) VALUES";
+			$sql .= $features;
+			 
+			 
+			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd);";
+
+			if ($conn->query($sql) === TRUE)
+				echo "<h1>Your record was added to the database successfully.</h1>";
+			else
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $sql;	
+			}
 		}
     }
 	else 
@@ -136,7 +195,6 @@ $results = mysqli_query($conn,"SELECT * FROM lightSystemFeatures");
 if(mysqli_num_rows($results) > 0)
 {
     $lightFeaturesScript = "let lightFeatureMap = new Map();\r\n";
-    //$lightFeaturesScript .= "let lightFeatures = new Map();\r\n";
     
     while($row = mysqli_fetch_array($results))
     {
@@ -158,8 +216,7 @@ if(mysqli_num_rows($results) > 0)
 		$lightFeaturesScript .= "}\r";
        
         $lightFeaturesScript  .= "   lightFeatureMap.get(" . $row['lightSystemId'] . ").set(lightFeature.featureId,lightFeature);\r";
-       
-       //$lightFeaturesScript .= "lightFeatureMap.set(" .  $row['lightSystemId'] . ", lightFeature);\r";
+      
     }
 }
 $conn->close();
@@ -303,7 +360,6 @@ function setLightSystemSettings()
 		}
     }
     
-   //alert(system.systemName);
 
 }
 
@@ -461,11 +517,6 @@ function setLightSystemSettings()
 		</div>
 	<?php include('Footer.php'); ?>
 	
-	
-	
-	
-			  
-				  
 	
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
