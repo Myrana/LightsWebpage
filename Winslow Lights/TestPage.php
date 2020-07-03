@@ -262,44 +262,16 @@ $conn->close();
 <meta charset="utf-8">
 <title>System Name Page</title>
 <script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
-<link href="Styles.css" rel="stylesheet" type="text/css">
+<link href="css/Styles.css" rel="stylesheet" type="text/css">
+	
+<script src='js/spectrum.js'></script>
+<link rel='stylesheet' href='css/spectrum.css' />
+	
 </head>
 
-<script>
-function includeHTML() {
-  var z, i, elmnt, file, xhttp;
-  /*loop through a collection of all HTML elements:*/
-  z = document.getElementsByTagName("*");
-  for (i = 0; i < z.length; i++) {
-    elmnt = z[i];
-    /*search for elements with a certain atrribute:*/
-    file = elmnt.getAttribute("w3-include-html");
-    if (file) {
-      /*make an HTTP request using the attribute value as the file name:*/
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          /*remove the attribute, and call this function once more:*/
-          elmnt.removeAttribute("w3-include-html");
-          includeHTML();
-        }
-      }
-      xhttp.open("GET", file, true);
-      xhttp.send();
-      /*exit the function:*/
-      return;
-    }
-  }
-};
-</script>
-<body>
-    <div w3-include-html="Nav.html"></div>
 
-<script>
-includeHTML();
-</script>
+<body>
+<?php include("Nav.php");  ?>
 
 
 
@@ -422,6 +394,8 @@ includeHTML();
         }
     }
 </script>
+	
+	
 
 <div class="column">
     <div class="ColumnStyles">
@@ -431,10 +405,19 @@ includeHTML();
     <?php echo $lightShowsoption;?></select>
 </p>
 
-    <p><input type="color"  Name="color_1" id="Color1"><br />
+    <p><input type="text"  Name="color_1" id="Color1" /><br />
         <input type="color" Name="color_2" id="Color2"><br />
         <input type="color" Name="color_3" id="Color3"><br />
         <input type="color" Name="color_4" id="Color4"><br /></p>
+		
+	<script>
+		$("#Color1").spectrum({
+	color: "Red",		
+    preferredFormat: "rgb",
+    showInput: true,
+		}); 
+		
+		</script>	
 
         <p><label for="Width">Width:</label><br />
 <input type="range" step="1" id="WidthId" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>">
@@ -544,16 +527,66 @@ brightnessSlider.oninput = function()
             </p>
 
         <p>
-        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
+        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>	
         <button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
         <button type="submit" name="btnPlaylist">Play</button>
         </p>
+		
 
         </form>
         </form>
     </form>
+	<button id="btnEditlist">Edit Shows</button>
     </div>
+	
     </div>
+	
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+	<form>
+	  <label>Playlist</label> <br />
+        <select id="PlayListId"  name="Playlist" size="7" onChange="setPlaylistName();">
+        <?php echo $playlistoption;?>
+        </select>
+	  
+	  </form>
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("btnEditlist");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+	
 </body>
+	<?php include("Footer.php"); ?>
 </html>
 
