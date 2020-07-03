@@ -224,6 +224,8 @@ function setLightSystemSettings()
 	var motionDelay = document.getElementById("motionDelay");
 	var motionGpio = document.getElementById("motionFeatureGPIO");
 	var motionPlaylist = document.getElementById("motionPlaylistId");
+    var lightGpio = document.getElementById("lightFeatureGPIO");
+    var lightPlaylist = document.getElementById("lightPlaylistId");
 
 
     var index = parseInt(systemNameId.value);
@@ -241,8 +243,8 @@ function setLightSystemSettings()
     stripType.value = system.stripType;
     userID.value = system.userId;
 
-    if(timeFeature.checked == true)
-        timeFeature.click();
+    if(motionFeature.checked == true)
+        motionFeature.click();
 
     if(lightFeature.checked == true)
         lightFeature.click();
@@ -255,13 +257,17 @@ function setLightSystemSettings()
         switch(lightFeatureSettings.featureId)
         {
             case 1:
-                motionDelay.value = lightFeatureSettings.motionDelayOff;
-                motionGpio.value = lightFeatureSettings.featureGpio;
-            	motionPlaylist.value = lightFeatureSettings.featurePlaylist;
+               // motionDelay.value = lightFeatureSettings.motionDelayOff;
+              //  motionGpio.value = lightFeatureSettings.featureGpio;
+
+            //	motionPlaylist.value = lightFeatureSettings.featurePlayList;
                 motionFeature.click();
                 break;
 
             case 2:
+             //   lightGpio.value = lightFeatureSettings.featureGpio;
+             ///   lightPlaylist.value = lightFeatureSettings.featurePlayList;
+
                 lightFeature.click()
                 break;
 
