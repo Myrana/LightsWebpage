@@ -61,14 +61,12 @@ if(isset($_REQUEST['Edit']))
 
 		if(!empty($featureDelete))
 		{
-				$sql = "delete from lightSystemFeatures where featureId in (" . $featureDelete . ")";
-				if ($conn->query($sql) === TRUE)
-					echo "<h1>Your record(s) were deleted successfully.</h1>";
-				else
-				{
-					echo "<h1>Error: " . $conn->error . "</h1>";
-					echo $sql;	
-				}
+			$sql = "delete from lightSystemFeatures where featureId in (" . $featureDelete . ")";
+			if ($conn->query($sql) === FALSE)
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $sql;	
+			}
 				
 		}
 		
@@ -91,8 +89,9 @@ if(isset($_REQUEST['Edit']))
 			}
 		}
 		
-		$sendArray["sysConfigChange"] = 1;
-		sendMQTT(getServerHostName($_POST['LightSystem'], json_encode($sendArray));
+		$sendArray["systemConfigChange"] = 1;
+		
+		sendMQTT(getServerHostName($_POST['LightSystem']), json_encode($sendArray));
 		
 	}
 	else
