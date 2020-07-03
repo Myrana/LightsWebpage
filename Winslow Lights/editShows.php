@@ -29,6 +29,7 @@ if(mysqli_num_rows($results) > 0)
 }
 
 
+
 $conn->close();
 
 ?>
@@ -51,15 +52,143 @@ $conn->close();
 	<?php echo $playListScript;?>
 	
 
-    function componentToHex(c)
-    {
-      var hex = c.toString(16);
-      return hex.length == 1 ? "0" + hex : hex;
-    }
+function rgbToHex(r, g, b)
+{
+  return "#" + ((1 << 24) + (parseInt(r) << 16) + (parseInt(g) << 8) + parseInt(b)).toString(16).slice(1);
+}
 
-    function rgbToHex(r, g, b)
+function hexToRgb(hex)
+{
+  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b){
+    return r + r + g + g + b + b;
+  });
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ?
     {
-      return "#" + componentToHex(parseInt(r)) + componentToHex(parseInt(g)) + componentToHex(parseInt(b));
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+    function SaveShowSettings()
+    {
+
+        var playListId = document.getElementById("PlayList");
+        var showListControl = document.getElementById("ShowName");
+        var showControl = document.getElementById("ShowNameId");
+        var playListIndex = parseInt(playListId.value);
+        var playList = playListMap.get(playListIndex);
+
+        var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
+        var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+        var minutes = document.getElementById("NumMinutesId");
+        var colorEvery = document.getElementById("ColorEveryId");
+        var brightness = document.getElementById("Brightness");
+
+        var showIndex = parseInt(showListControl.value) - 1;
+
+
+        for (i in playList.showParms)
+        {
+            if(i == showIndex)
+            {
+                var show = showMap.get(parseInt(playList.showParms[i].show));
+
+                 if(show.hasDelay)
+                     playList.showParms[i].delay = delay.value;
+
+                    if(show.hasMinutes > 0)
+                        playList.showParms[i].minutes = minutes.value;
+
+                    if(show.colorEvery > 0)
+                        playList.showParms[i].colorEvery = colorEvery.value;
+
+                    if(show.hasWidth)
+                        playList.showParms[i].width = width.value;
+
+                    brightness.value = playList.showParms[i].brightness;
+
+                    if(show.numColors > 0)
+                    {
+                        switch(show.numColors)
+                        {
+                            case 1:
+                                var cvtColor = hexToRgb(color1.value);
+                                playList.showParms[i].colors.color1.r = cvtColor.r;
+                                playList.showParms[i].colors.color1.g = cvtColor.g;
+                                playList.showParms[i].colors.color1.b = cvtColor.b;
+                              break;
+
+                            case 2:
+                                var cvtColor = hexToRgb(color1.value);
+                                playList.showParms[i].colors.color1.r = cvtColor.r;
+                                playList.showParms[i].colors.color1.g = cvtColor.g;
+                                playList.showParms[i].colors.color1.b = cvtColor.b;
+
+                                cvtColor = hexToRgb(color2.value);
+                                playList.showParms[i].colors.color2.r = cvtColor.r;
+                                playList.showParms[i].colors.color2.g = cvtColor.g;
+                                playList.showParms[i].colors.color2.b = cvtColor.b;
+
+                              break;
+
+                            case 3:
+                                var cvtColor = hexToRgb(color1.value);
+                                playList.showParms[i].colors.color1.r = cvtColor.r;
+                                playList.showParms[i].colors.color1.g = cvtColor.g;
+                                playList.showParms[i].colors.color1.b = cvtColor.b;
+
+                                cvtColor = hexToRgb(color2.value);
+                                playList.showParms[i].colors.color2.r = cvtColor.r;
+                                playList.showParms[i].colors.color2.g = cvtColor.g;
+                                playList.showParms[i].colors.color2.b = cvtColor.b;
+
+                                cvtColor = hexToRgb(color3.value);
+                                playList.showParms[i].colors.color3.r = cvtColor.r;
+                                playList.showParms[i].colors.color3.g = cvtColor.g;
+                                playList.showParms[i].colors.color3.b = cvtColor.b;
+                              break;
+
+                            case 4:
+                                var cvtColor = hexToRgb(color1.value);
+                                playList.showParms[i].colors.color1.r = cvtColor.r;
+                                playList.showParms[i].colors.color1.g = cvtColor.g;
+                                playList.showParms[i].colors.color1.b = cvtColor.b;
+
+                                cvtColor = hexToRgb(color2.value);
+                                playList.showParms[i].colors.color2.r = cvtColor.r;
+                                playList.showParms[i].colors.color2.g = cvtColor.g;
+                                playList.showParms[i].colors.color2.b = cvtColor.b;
+
+                                cvtColor = hexToRgb(color3.value);
+                                playList.showParms[i].colors.color3.r = cvtColor.r;
+                                playList.showParms[i].colors.color3.g = cvtColor.g;
+                                playList.showParms[i].colors.color3.b = cvtColor.b;
+
+                                cvtColor = hexToRgb(color4.value);
+                                playList.showParms[i].colors.color4.r = cvtColor.r;
+                                playList.showParms[i].colors.color4.g = cvtColor.g;
+                                playList.showParms[i].colors.color4.b = cvtColor.b;
+
+                            break;
+                        }
+
+                    }
+
+
+                break;
+
+            }
+        }
+
     }
 
 	function setShowParms()
@@ -102,13 +231,13 @@ $conn->close();
                 if(show.hasMinutes > 0)
                     minutes.value = playList.showParms[i].minutes;
                 if(show.colorEvery > 0)
-                    colorEvery.value = minutes.value = playList.showParms[i].colorEvery;
+                    colorEvery.value =  playList.showParms[i].colorEvery;
 
                 if(show.hasWidth)
-                    width.value = minutes.value = playList.showParms[i].width;
+                    width.value = playList.showParms[i].width;
 
                 brightness.value = playList.showParms[i].brightness;
-                
+
                 if(show.numColors > 0)
                 {
                     switch(show.numColors)
@@ -119,27 +248,21 @@ $conn->close();
 
                         case 2:
                             color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-
                             color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
                             break;
 
                         case 3:
                             color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-
                             color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-
                             color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
                             break;
 
-                            case 4:
-                                color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-
-                                color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-
-                                color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-
-                                color4.value =  rgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                                break;
+                        case 4:
+                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color4.value =  rgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            break;
 
                     }
 

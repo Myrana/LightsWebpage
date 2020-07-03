@@ -186,7 +186,7 @@ $conn->close();
     }
     else
     {
-        echo '<p><button type="submit" name="SavePlayList">Save PlayList</button><button type="submit" name="CommitPlayList">Commit PlayList</button></p>';
+        echo '<p><button onClick="SaveShowSettings();" name="SavePlayList">Save PlayList</button><button type="submit" name="CommitPlayList">Commit PlayList</button></p>';
     }
     ?>
 
