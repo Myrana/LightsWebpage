@@ -23,9 +23,16 @@ if(isset($_REQUEST['Edit']))
 	{
 		
 		$features = "";
+		$featureDelete = "";
 
 		if (!empty($_POST['motionFeature']))
+		{
 			$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
+		}
+		else
+		{
+			$featureDelete =  "1";
+		}
 
 		if (!empty($_POST['lightFeature']))
 		{
@@ -34,13 +41,37 @@ if(isset($_REQUEST['Edit']))
 			$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
 
 		}
+		else
+		{
+			if(!empty($featureDelete)) $featureDelete .=  ",";
+			$featureDelete .=  "2";
+		}
+		
 
 		if (!empty($_POST['timeFeature'])) 
 		{
 			if(!empty($features)) $features .= ",";
 			$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
 		}
+		else
+		{
+			if(!empty($featureDelete)) $featureDelete .=  ",";
+			$featureDelete .=  "3";
+		}
 
+		if(!empty($featureDelete))
+		{
+				$sql = "delete from lightSystemFeatures where featureId in (" . $featureDelete . ")";
+				if ($conn->query($sql) === TRUE)
+					echo "<h1>Your record(s) were deleted successfully.</h1>";
+				else
+				{
+					echo "<h1>Error: " . $conn->error . "</h1>";
+					echo $sql;	
+				}
+				
+		}
+		
 		if(!empty($features))
 		{
 		 
