@@ -65,24 +65,24 @@ if(isset($_REQUEST['Config']))
 
 
 
-    $displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
-    $stripTypes = '';
-    while($query_data = mysqli_fetch_array($displayStrip))
-    {
-        //echo $query_data['stripName'];
-        //<option>$query_data['stripName']</option>
-        $stripTypes .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
-    }
+$displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
+$stripTypes = '';
+while($query_data = mysqli_fetch_array($displayStrip))
+{
+    //echo $query_data['stripName'];
+    //<option>$query_data['stripName']</option>
+    $stripTypes .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
+}
 
 
-    $displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
-    $users = '';
-    while($query_data = mysqli_fetch_array($displayUsername))
-    {
-        //echo $query_data['stripName'];
-        //<option>$query_data['stripName']</option>
-        $users .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
-    }
+$displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
+$users = '';
+while($query_data = mysqli_fetch_array($displayUsername))
+{
+    //echo $query_data['stripName'];
+    //<option>$query_data['stripName']</option>
+    $users .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
+}
 	
 $playlistoption = '';
 $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
@@ -206,38 +206,69 @@ $conn->close();
 <?php echo $lightSystemsScript;?>
 
 function setLightSystemSettings()
-   {
-       var systemNameId = document.getElementById("LightSystem");
-       var lightSystemName = document.getElementById("LightSystemName");
-       var serverHostName = document.getElementById("ServerHostName");
-       var stripHeight = document.getElementById("StripHeight");
-       var stripWidth = document.getElementById("StripWidth");
-       var dma = document.getElementById("DMA");
-       var gpio = document.getElementById("GPIO");
-       var brightness = document.getElementById("Brightness");
-       var gamma = document.getElementById("gamma");
-       var stripType = document.getElementById("StripType");
-       var userID = document.getElementById("userID");
+{
+    var systemNameId = document.getElementById("LightSystem");
+    var lightSystemName = document.getElementById("LightSystemName");
+    var serverHostName = document.getElementById("ServerHostName");
+    var stripHeight = document.getElementById("StripHeight");
+    var stripWidth = document.getElementById("StripWidth");
+    var dma = document.getElementById("DMA");
+    var gpio = document.getElementById("GPIO");
+    var brightness = document.getElementById("Brightness");
+    var gamma = document.getElementById("gamma");
+    var stripType = document.getElementById("StripType");
+    var userID = document.getElementById("userID");
+    var motionFeature = document.getElementById("motionFeature");
+    var lightFeature = document.getElementById("lightFeature");
+    var timeFeature = document.getElementById("timeFeature");
 
 
-       var index = parseInt(systemNameId.value);
-       var lightFeature = lightFeatureMap.get(index);
-       var system = systemsMap.get(index);
+    var index = parseInt(systemNameId.value);
+    var lightFeatureSettings = lightFeatureMap.get(index);
+    var system = systemsMap.get(index);
 
-       lightSystemName.value = system.systemName;
-       serverHostName.value = system.serverHostName;
-       stripHeight.value = system.stripHeight;
-       stripWidth.value = system.stripWidth;
-       dma.value = system.dma;
-       gpio.value = system.gpio;
-       brightness.value = system.brightness;
-       gamma.value = system.gamma;
-       stripType.value = system.stripType;
-       userID.value = system.userId;
+    lightSystemName.value = system.systemName;
+    serverHostName.value = system.serverHostName;
+    stripHeight.value = system.stripHeight;
+    stripWidth.value = system.stripWidth;
+    dma.value = system.dma;
+    gpio.value = system.gpio;
+    brightness.value = system.brightness;
+    gamma.value = system.gamma;
+    stripType.value = system.stripType;
+    userID.value = system.userId;
 
-       //alert(system.systemName);
+    if(timeFeature.checked == true)
+        timeFeature.click();
 
-   }
+    if(lightFeature.checked == true)
+        lightFeature.click();
+
+    if(timeFeature.checked == true)
+        timeFeature.click();
+
+    switch(lightFeatureSettings.featureId)
+    {
+        case 1:
+            motionFeature.click();
+            alert(1);
+            break;
+
+        case 2:
+            lightFeature.click();
+            alert(2);
+            break;
+
+        case 3:
+            timeFeature.click();
+            alert(3);
+            break;
+
+    }
+
+   //alert(system.systemName);
+
+}
 
 
 </script>
