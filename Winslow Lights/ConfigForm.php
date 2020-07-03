@@ -90,7 +90,9 @@ if(isset($_REQUEST['Edit']))
 				echo $sql;	
 			}
 		}
-	
+		
+		$sendArray["sysConfigChange"] = 1;
+		sendMQTT(getServerHostName($_POST['LightSystem'], json_encode($sendArray));
 		
 	}
 	else
