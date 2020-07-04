@@ -169,15 +169,15 @@ $conn->close();
 </p>
 
 
-        <p><label for="On1" style="font-size: 10px">Clear start</label>
+        <p><label for="On1" style="font-size: 14px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">
-			<label for="On2" style="font-size: 10px">Clear finish</label>
+			<label for="On2" style="font-size: 14px">Clear finish</label>
     <input type="checkbox" name="clearFinish" id="clearFinish"></p>
     
-		<p><label for="On3" style="font-size: 10px">Gamma correction</label>
+		<p><label for="On3" style="font-size: 14px">Gamma correction</label>
 		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
    
-        <p><label for="On" style="font-size: 10px">Power on</label>
+        <p><label for="On" style="font-size: 14px">Power on</label>
     <input type="checkbox" name="powerOn" id="powerOn" value="OFF">
         </p>
 
