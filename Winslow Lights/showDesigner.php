@@ -191,11 +191,22 @@ $conn->close();
     else
     {
         echo '<p>
+
 			<button onClick="saveShowSettings();return false" name="SaveShow">Save Show Settings</button>
 			<button onClick="addShowSettings();return false" name="AddShow">Add Show Settings</button>
 			<button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show Settings</button>
 			<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Commit PlayList</button>
-        </p>';
+			
+			<p>
+            <label>New Playlist Name*</label> <br />
+            <input type="text" id="PlayListName" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
+            </p>
+
+			<p>
+			<button type="submit" name="btncreatePlayList" style="margin: 3px;">Create Playlist</button>
+			</p>';
+
+			
     }
     ?>
 
