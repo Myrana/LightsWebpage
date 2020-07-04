@@ -176,7 +176,7 @@ function hexToRgb(hex)
 		else
 		{
 			var json = '{"show": "' + show.id + '", "UserID": "' + userId + '"}';
-			parmIndex = playList.showParms.length;
+            parmIndex = playList.showParms.length;
 			playList.showParms[parmIndex] = JSON.parse(json);
 			playList.showParms[parmIndex].UserID = userId;
 		
@@ -185,10 +185,12 @@ function hexToRgb(hex)
 
         for (i in playList.showParms)
         {
+
 			if(show.id == playList.showParms[i].show)
             {
-				
-				let showParm =  playList.showParms[i];
+                alert(show.id);
+				var showParm =  playList.showParms[i];
+                alert("REW");
 				if(show.hasDelay)
 					showParm.delay = delay.value;
 			
@@ -278,10 +280,11 @@ function hexToRgb(hex)
 				showParm.clearFinish   = clearStart.checked;
 				showParm.gammaCorrection   = gammaCorrection.checked;	
 				showParm.powerOn = powerOn.checked;
-				setPlayListSettings();
-                showListControl.value = playList.showParms.length;
-                showControl.value = show.id;
-                setShowParms();
+
+                setPlayListSettings();
+                //showListControl.value = playList.showParms.length;
+                //showControl.value = show.id;
+                //setShowParms();
 
 				break;
 			}
