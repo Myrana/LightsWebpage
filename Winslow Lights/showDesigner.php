@@ -131,7 +131,7 @@ $conn->close();
 		
 		<img src="Images/Show-Designer.png" alt="Show Designer" width="100%" />
 
-    <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
+    <p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>
 </p>
 
@@ -144,7 +144,7 @@ $conn->close();
         <p><label for="Width">Width:</label>
 <input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
 
-<p><label for="ColorEvery">Color Every X Led:</label>
+<p><label for="ColorEvery">Color every x led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
 
@@ -157,7 +157,7 @@ $conn->close();
 
 
 
-    <p><label for="NumMinutes">Number Of Minutes:</label>
+    <p><label for="NumMinutes">Number of minutes:</label>
 <input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
 </p>
 
@@ -169,14 +169,15 @@ $conn->close();
 </p>
 
 
-        <p><label for="On1">Clear on Start</label>
+        <p><label for="On1" style="font-size: 10px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">
-        <label for="On2">Clear on Finish</label>
-    <input type="checkbox" name="clearFinish" id="clearFinish">
-     <label for="On3">Gamma Correction</label>
-    <input type="checkbox" name="gammaCorrection" id="gammaCorrection">
+			<label for="On2" style="font-size: 10px">Clear finish</label>
+    <input type="checkbox" name="clearFinish" id="clearFinish"></p>
+    
+		<p><label for="On3" style="font-size: 10px">Gamma correction</label>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
    
-        <label for="On">Power On</label>
+        <p><label for="On" style="font-size: 10px">Power on</label>
     <input type="checkbox" name="powerOn" id="powerOn" value="OFF">
         </p>
 
