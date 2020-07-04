@@ -15,7 +15,7 @@ if(isset($_REQUEST['Login']))
 	  $_SESSION['User'] = $_POST['Username'];
 	  $_SESSION['UserID'] = $query_data['ID'];
 	  $_SESSION['isAdmin'] = $query_data['isAdmin'];  
-	  echo "Hello, " . $_SESSION['User'];
+	  header('Location:lightShows.php');
 	}
 
 	$conn->close();
