@@ -190,18 +190,18 @@ $conn->close();
     }
     else
     {
-        echo '<p>
+        echo '<br>
 		<button onClick="addShowSettings();return false" name="AddShow">Add Show</button>
-		</p>
+		</br>
 		
-		<p>
+		<br>
 		<button onClick="saveShowSettings();return false" name="SaveShow">Save Show Settings</button>
 			<button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show Settings</button>
-		</p>
+		</br>
 		
-		<p>
+		<br>
 		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Commit PlayList</button>
-		</p>';
+		</br>';
 			
     }
     ?>
