@@ -1,6 +1,14 @@
 <?php
 
 include_once('CommonFunctions.php');
+
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: Registration.php");
+  exit();
+}
+
+
 $_SESSION["DesignerEditMode"]  = 1;
     
 $conn = getDatabaseConnection();

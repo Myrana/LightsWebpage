@@ -203,20 +203,6 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
-if(isset($_REQUEST['btnSavelist']))
-{
-	if(!empty($_POST['PlaylistName']))
-	{
-		$sendArray['savePlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['PlaylistName'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
-		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-		$query_data = mysqli_fetch_array($displayStrip);
-
-		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-	}
-
-}
 
 if(isset($_REQUEST['btnPlaylist']))
 {
@@ -231,19 +217,6 @@ if(isset($_REQUEST['btnPlaylist']))
 
 		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
 	}
-}
-
-if(isset($_REQUEST['btnDeletePlaylist']))
-{
-
-	if(!empty($_POST['Playlist']))
-	{
-		$sendArray['deletePlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['Playlist'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
-		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
-	}
-
 }
 
 
@@ -388,19 +361,10 @@ $conn->close();
     }
 </script>
 
-        <select id="PlayListId"  name="Playlist" onChange="setPlaylistName();">
-        <?php echo $playlistoption;?>
-        </select>
-        <p>
-            <label>New Playlist Name*</label> <br />
-            <input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
-            </p>
-
-        <p>
-        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
-        <button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
-        <button type="submit" name="btnPlaylist">Play</button>
-        </p>
+	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+	<p><button type="submit" name="btnPlaylist">Play</button></p>
+	<p><button onclick="location.href='/editShows.php'; return false" name="btnEditist">Editor</button></p>
+	
 
 
     </form>
