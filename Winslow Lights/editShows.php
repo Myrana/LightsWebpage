@@ -21,7 +21,7 @@ if(isset($_REQUEST['CommitPlayList']))
 {
 	if(!empty($_POST['jsonContainer']))
     {
-	    $sql = "update userPlaylist set showParms='" << $_POST['jsonContainer'] << "' where ID = " << $_POST['PlayList'];
+	    $sql = "update userPlaylist set showParms='" . $_POST['jsonContainer'] . "' where ID = " . $_POST['PlayList'];
 		if ($conn->query($sql) == FALSE)
         {
             echo "<h1>Error: " . $conn->error . "</h1>";
@@ -62,17 +62,6 @@ if(isset($_REQUEST['btnDeletePlayList']))
         
 	}
 	
-	
-			//$sendArray['deletePlaylist'] = 1;
-		//$sendArray['playlistName'] = $_POST['PlayList'];
-		//$sendArray['UserID'] = $_SESSION['UserID'];
-		
-		//$results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
-        //if(mysqli_num_rows($results) > 0)
-        //{
-          //  while($row = mysqli_fetch_array($results))
-            //    sendMQTT($row["serverHostName"], json_encode($sendArray));
-       // }
 
 }
 
@@ -81,8 +70,10 @@ $results = mysqli_query($conn,"SELECT ID,userID,playlistName,showParms FROM user
 if(mysqli_num_rows($results) > 0)
 {
 	$playListScript = "let playListMap = new Map();\r";
+	$playListScript .= "let userId = '" . $_SESSION['UserID'] . "';\r";
 	while($row = mysqli_fetch_array($results))
 	{
+	
 		$playListScript .= "var playList = new Object(); \r";
 
         $playListScript .= "    playList.id = " . $row['ID'] .";\r";
@@ -144,6 +135,145 @@ function hexToRgb(hex)
   } : null;
 }
 
+
+
+	function addShowSettings()
+	{
+		var playListId = document.getElementById("PlayList");
+		var showListControl = document.getElementById("ShowName");
+		var showControl = document.getElementById("ShowNameId");
+		
+		var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
+        var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+        var minutes = document.getElementById("NumMinutesId");
+        var colorEvery = document.getElementById("ColorEveryId");
+        var brightness = document.getElementById("Brightness");
+        var clearStart = document.getElementById("clearStart");
+        var clearFinish = document.getElementById("clearFinish");
+        var gammaCorrection = document.getElementById("gammaCorrection");
+        var powerOn = document.getElementById("powerOn");
+        
+        
+        var playListIndex = parseInt(playListId.value);
+        var playList = playListMap.get(playListIndex);
+        var showIndex = parseInt(showListControl.value) - 1;
+		
+		var show = showMap.get(parseInt(showControl.value));
+		
+		//Deal with new or empty playlist
+		if(playList.showParms.length == 0)
+		{
+			var json = '[{"show": "' + show.id + '", "UserID": "' + userId + '"}]';
+			playList.showParms = JSON.parse(json);
+			
+		}
+
+		
+        for (i in playList.showParms)
+        {
+			if(show.id == playList.showParms[i].show)
+            {
+				
+				let showParm =  playList.showParms[i];
+				if(show.hasDelay)
+					showParm.delay = delay.value;
+
+				if(show.hasMinutes > 0)
+					showParm.minutes = minutes.value;
+
+				if(show.colorEvery > 0)
+					showParm.colorEvery = colorEvery.value;
+
+				if(show.hasWidth)
+					showParm.width = width.value;
+
+
+				showParm.brightness = brightness.value;
+				
+				if(show.numColors > 0)
+				{
+					switch(show.numColors)
+					{
+						case 1:
+							var cvtColor = hexToRgb(color1.value);
+							showParm.colors.color1.r = cvtColor.r;
+							showParm.colors.color1.g = cvtColor.g;
+							showParm.colors.color1.b = cvtColor.b;
+						  break;
+
+						case 2:
+							var cvtColor = hexToRgb(color1.value);
+							showParm.colors.color1.r = cvtColor.r;
+							showParm.colors.color1.g = cvtColor.g;
+							showParm.colors.color1.b = cvtColor.b;
+
+							cvtColor = hexToRgb(color2.value);
+							showParm.colors.color2.r = cvtColor.r;
+							showParm.colors.color2.g = cvtColor.g;
+							showParm.colors.color2.b = cvtColor.b;
+
+						  break;
+
+						case 3:
+							var cvtColor = hexToRgb(color1.value);
+							showParm.colors.color1.r = cvtColor.r;
+							showParm.colors.color1.g = cvtColor.g;
+							showParm.colors.color1.b = cvtColor.b;
+
+							cvtColor = hexToRgb(color2.value);
+							showParm.colors.color2.r = cvtColor.r;
+							showParm.colors.color2.g = cvtColor.g;
+							showParm.colors.color2.b = cvtColor.b;
+
+							cvtColor = hexToRgb(color3.value);
+							showParm.colors.color3.r = cvtColor.r;
+							showParm.colors.color3.g = cvtColor.g;
+							showParm.colors.color3.b = cvtColor.b;
+						  break;
+
+						case 4:
+							var cvtColor = hexToRgb(color1.value);
+							showParm.colors.color1.r = cvtColor.r;
+							showParm.colors.color1.g = cvtColor.g;
+							showParm.colors.color1.b = cvtColor.b;
+
+							cvtColor = hexToRgb(color2.value);
+							showParm.colors.color2.r = cvtColor.r;
+							showParm.colors.color2.g = cvtColor.g;
+							showParm.colors.color2.b = cvtColor.b;
+
+							cvtColor = hexToRgb(color3.value);
+							showParm.colors.color3.r = cvtColor.r;
+							showParm.colors.color3.g = cvtColor.g;
+							showParm.colors.color3.b = cvtColor.b;
+
+							cvtColor = hexToRgb(color4.value);
+							showParm.colors.color4.r = cvtColor.r;
+							showParm.colors.color4.g = cvtColor.g;
+							showParm.colors.color4.b = cvtColor.b;
+
+						break;
+					}
+
+				}
+				showParm.clearStart = clearStart.checked;
+				showParm.clearFinish   = clearStart.checked;
+				showParm.gammaCorrection   = gammaCorrection.checked;	
+				showParm.powerOn = powerOn.checked;
+				setPlayListSettings();
+				break;
+			}
+			
+		}
+		
+		
+		
+		
+	}
 
 	function removeShowSettings()
     {
@@ -300,7 +430,7 @@ function hexToRgb(hex)
 					playList.showParms[i].clearStart = clearStart.checked;
 					playList.showParms[i].clearFinish   = clearStart.checked;
 					playList.showParms[i].gammaCorrection   = gammaCorrection.checked;	
-					playList.showParms[i].gammaCorrection = powerOn.checked;
+					playList.showParms[i].powerOn = powerOn.checked;
 					break;
 
             }
@@ -330,10 +460,8 @@ function hexToRgb(hex)
         var gammaCorrection = document.getElementById("gammaCorrection");
         var powerOn = document.getElementById("powerOn");
         
-        showControl.disabled = true;
-        
+       
 		var showIndex = parseInt(showListControl.value) - 1;	
-	    
 	    
 		for (i in playList.showParms)
 		{
