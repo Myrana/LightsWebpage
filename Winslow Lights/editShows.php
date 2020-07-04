@@ -55,8 +55,9 @@ $conn->close();
 <link href="css/Styles.css" rel="stylesheet" type="text/css">	
 </head>
 
+
 <body onLoad="setPlayListSettings();">
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<form>
 
 	<?php include('Nav.php'); ?>
 	
@@ -144,7 +145,8 @@ function hexToRgb(hex)
                     if(show.hasWidth)
                         playList.showParms[i].width = width.value;
 
-                    brightness.value = playList.showParms[i].brightness;
+
+                    playList.showParms[i].brightness = brightness.value;
 
                     if(show.numColors > 0)
                     {
@@ -360,6 +362,7 @@ function hexToRgb(hex)
 </div>
 
 </form>
+
 </body>
 <?php include('Footer.php'); ?>
 </html>
