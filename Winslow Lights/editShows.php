@@ -28,7 +28,17 @@ if(mysqli_num_rows($results) > 0)
 
 }
 
-
+    if(isset($_REQUEST['CommitPlayList']))
+    {
+        if(!empty($_POST['jsonContainer']))
+        {
+            echo $_POST['jsonContainer'];
+            $sendArray["playlistEditSave"] = 1;
+            $sendArray["PlayList"] = $_POST['PlayList'];
+            echo json_encode($sendArray);
+          //  sendMQTT(getServerHostName($_POST['LightSystem']), json_encode($sendArray));
+        }
+    }
 
 $conn->close();
 
@@ -46,6 +56,9 @@ $conn->close();
 </head>
 
 <body onLoad="setPlayListSettings();">
+
+ <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
 	<?php include('Nav.php'); ?>
 	
 	<script>
@@ -74,7 +87,25 @@ function hexToRgb(hex)
   } : null;
 }
 
-    function SaveShowSettings()
+    function commitShowSettings()
+    {
+
+        var jsonContainer = document.getElementById("jsonContainer");
+        var playListId = document.getElementById("PlayList");
+        var showListControl = document.getElementById("ShowName");
+        var showControl = document.getElementById("ShowNameId");
+        var playListIndex = parseInt(playListId.value);
+        var playList = playListMap.get(playListIndex);
+        alert(JSON.stringify(playList.showParms));
+        jsonContainer.value = JSON.stringify(playList.showParms);
+
+        //JSON.stringify(playList.showParms)
+       // btnCommitPlayList.submit();
+       // document.getElementById("myForm").submit();
+
+    }
+
+    function saveShowSettings()
     {
 
         var playListId = document.getElementById("PlayList");
@@ -320,12 +351,14 @@ function hexToRgb(hex)
 	  
 	  </div>
 	  
-	  
+         <input name="jsonContainer" type="text" id="jsonContainer" hidden></p>
         <?php include('showDesigner.php'); ?>
 
     </div>
 	</div>
 </div>
+
+</form>
 </body>
 <?php include('Footer.php'); ?>
 </html>
