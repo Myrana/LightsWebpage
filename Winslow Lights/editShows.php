@@ -96,7 +96,6 @@ function hexToRgb(hex)
         var showControl = document.getElementById("ShowNameId");
         var playListIndex = parseInt(playListId.value);
         var playList = playListMap.get(playListIndex);
-        alert(JSON.stringify(playList.showParms));
         jsonContainer.value = JSON.stringify(playList.showParms);
 
         //JSON.stringify(playList.showParms)
