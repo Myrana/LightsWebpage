@@ -95,20 +95,41 @@ function hexToRgb(hex)
   } : null;
 }
 
+
+	function removeShowSettings()
+    {
+		
+
+		var playListId = document.getElementById("PlayList");
+		var showListControl = document.getElementById("ShowName");
+        
+        var playListIndex = parseInt(playListId.value);
+        var playList = playListMap.get(playListIndex);
+        var showIndex = parseInt(showListControl.value) - 1;
+		
+        for (i in playList.showParms)
+        {
+			if(i == showIndex)
+            {
+				playList.showParms.splice(showIndex,1); 
+				break;
+			}
+			
+		}
+		
+		setPlayListSettings();
+	}
+	
     function commitShowSettings()
     {
 
         var jsonContainer = document.getElementById("jsonContainer");
         var playListId = document.getElementById("PlayList");
-        var showListControl = document.getElementById("ShowName");
-        var showControl = document.getElementById("ShowNameId");
         var playListIndex = parseInt(playListId.value);
         var playList = playListMap.get(playListIndex);
+       
         jsonContainer.value = JSON.stringify(playList.showParms);
 
-        //JSON.stringify(playList.showParms)
-       // btnCommitPlayList.submit();
-       // document.getElementById("myForm").submit();
 
     }
 
@@ -130,6 +151,11 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
+        var clearStart = document.getElementById("clearStart");
+        var clearFinish = document.getElementById("clearFinish");
+        var gammaCorrection = document.getElementById("gammaCorrection");
+        var powerOn = document.getElementById("powerOn");
+        
 
         var showIndex = parseInt(showListControl.value) - 1;
 
@@ -222,8 +248,11 @@ function hexToRgb(hex)
 
                     }
 
-
-                break;
+					playList.showParms[i].clearStart = clearStart.checked;
+					playList.showParms[i].clearFinish   = clearStart.checked;
+					playList.showParms[i].gammaCorrection   = gammaCorrection.checked;	
+					playList.showParms[i].gammaCorrection = powerOn.checked;
+					break;
 
             }
         }
@@ -247,6 +276,12 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
+        var clearStart = document.getElementById("clearStart");
+        var clearFinish = document.getElementById("clearFinish");
+        var gammaCorrection = document.getElementById("gammaCorrection");
+        var powerOn = document.getElementById("powerOn");
+        
+        showControl.disabled = true;
         
 		var showIndex = parseInt(showListControl.value) - 1;	
 	    
@@ -306,6 +341,14 @@ function hexToRgb(hex)
                     }
 
                 }
+                
+                //handle checkboxes
+                clearStart.checked = (playList.showParms[i].clearStart != undefined && playList.showParms[i].clearStart == 1) ? true : false;
+                clearFinish.checked = (playList.showParms[i].clearFinish != undefined && playList.showParms[i].clearFinish == 1) ? true : false;
+                gammaCorrection.checked = (playList.showParms[i].gammaCorrection != undefined && playList.showParms[i].gammaCorrection == 1) ? true : false;
+				powerOn.checked = (playList.showParms[i].powerOn != undefined && playList.showParms[i].powerOn == 1) ? true : false;
+				
+				
 				break;
 			}
 		}
@@ -343,14 +386,14 @@ function hexToRgb(hex)
 	<div class="clearfix">
 	<div class="column" style="margin-top: 15px;">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<label for="PlayList">Dad's Test select</label>
+		<label for="PlayList">Select Playlist</label>
 	<select id="PlayList" name="PlayList" onchange="setPlayListSettings();">
 	<?php echo $playlistoption;?>
 	</select>
 		
 		<p>
 		
-	<label for="ShowName">Dad's Second Test select</label>
+	<label for="ShowName">Select Show</label>
 	<select id="ShowName" name="ShowName" onchange="setShowParms();">
 	
 	

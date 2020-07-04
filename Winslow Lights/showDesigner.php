@@ -170,14 +170,14 @@ $conn->close();
 
 
         <p><label for="On1">Clear on Start</label>
-    <input type="checkbox" name="clearStart">
+    <input type="checkbox" name="clearStart" id="clearStart">
         <label for="On2">Clear on Finish</label>
-    <input type="checkbox" name="clearFinish">
+    <input type="checkbox" name="clearFinish" id="clearFinish">
      <label for="On3">Gamma Correction</label>
-    <input type="checkbox" name="gammaCorrection">
+    <input type="checkbox" name="gammaCorrection" id="gammaCorrection">
    
         <label for="On">Power On</label>
-    <input type="checkbox" name="powerOn" value="OFF">
+    <input type="checkbox" name="powerOn" id="powerOn" value="OFF">
         </p>
 
 <?php
@@ -187,7 +187,11 @@ $conn->close();
     }
     else
     {
-        echo '<p><button onClick="saveShowSettings();;return false" name="SavePlayList">Save PlayList</button><button type="submit" onClick="commitShowSettings();"  name="CommitPlayList" id="CommitPlayList">Commit PlayList</button></p>';
+        echo '<p>
+        <button onClick="saveShowSettings();return false" name="SaveShow">Save Show Settings</button>
+        <button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show Settings</button>
+        <button type="submit" onClick="commitShowSettings();" name="CommitPlayList" id="CommitPlayList">Commit PlayList</button>
+        </p>';
     }
     ?>
 
