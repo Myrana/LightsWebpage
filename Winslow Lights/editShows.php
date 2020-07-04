@@ -32,18 +32,11 @@ if(mysqli_num_rows($results) > 0)
     {
         if(!empty($_POST['jsonContainer']))
         {
-
+            echo $_POST['jsonContainer'];
             $sendArray["playlistEditSave"] = 1;
             $sendArray["PlayList"] = $_POST['PlayList'];
-            $sendArray["jsonContainer"] = $_POST['jsonContainer'];
-
-            $results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
-            if(mysqli_num_rows($results) > 0)
-            {
-                while($row = mysqli_fetch_array($results))
-                    sendMQTT($row["serverHostName"], json_encode($sendArray));
-            }
-
+            echo json_encode($sendArray);
+          //  sendMQTT(getServerHostName($_POST['LightSystem']), json_encode($sendArray));
         }
     }
 
@@ -102,8 +95,12 @@ function hexToRgb(hex)
         var showControl = document.getElementById("ShowNameId");
         var playListIndex = parseInt(playListId.value);
         var playList = playListMap.get(playListIndex);
-
+        alert(JSON.stringify(playList.showParms));
         jsonContainer.value = JSON.stringify(playList.showParms);
+
+        //JSON.stringify(playList.showParms)
+       // btnCommitPlayList.submit();
+       // document.getElementById("myForm").submit();
 
     }
 

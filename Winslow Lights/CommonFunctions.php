@@ -52,6 +52,7 @@ function getServerHostName($arg_1)
 		$row = mysqli_fetch_array($results);
 		$retVal = $row['serverHostName'];
 	}
+	
 	return $retVal;		
 }
 
