@@ -592,6 +592,10 @@ function hexToRgb(hex)
 		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
 		<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
 		</p>
+		
+		<p>
+		<button onclick="location.href='/lightShows.php'; return false" name="btnLightShows">Light Shows</button>	
+		</p>
 	  
 	  </div>
 	  
