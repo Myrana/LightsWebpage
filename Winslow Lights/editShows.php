@@ -165,11 +165,23 @@ function hexToRgb(hex)
 		var show = showMap.get(parseInt(showControl.value));
 		
 		//Deal with new or empty playlist
+		
 		if(playList.showParms.length == 0)
 		{
 			var json = '[{"show": "' + show.id + '", "UserID": "' + userId + '"}]';
+			
 			playList.showParms = JSON.parse(json);
 			
+		}
+		else
+		{
+			var parmIndex = 0;
+		
+			var json = '{"show": "' + show.id + '", "UserID": "' + userId + '"}';
+			parmIndex = playList.showParms.length;
+			playList.showParms[parmIndex] = JSON.parse(json);
+			playList.showParms[parmIndex].UserID = userId;
+		
 		}
 
 		
@@ -181,7 +193,7 @@ function hexToRgb(hex)
 				let showParm =  playList.showParms[i];
 				if(show.hasDelay)
 					showParm.delay = delay.value;
-
+			
 				if(show.hasMinutes > 0)
 					showParm.minutes = minutes.value;
 
@@ -196,65 +208,69 @@ function hexToRgb(hex)
 				
 				if(show.numColors > 0)
 				{
+					
 					switch(show.numColors)
 					{
 						case 1:
-							var cvtColor = hexToRgb(color1.value);
-							showParm.colors.color1.r = cvtColor.r;
-							showParm.colors.color1.g = cvtColor.g;
-							showParm.colors.color1.b = cvtColor.b;
+							var cvtColor = hexToRgb(color1.value);												
+							var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+							
+							var colors = JSON.parse(json);
+							
+							showParm["colors"] = colors;
+							
+							
+							
 						  break;
 
 						case 2:
+							
 							var cvtColor = hexToRgb(color1.value);
-							showParm.colors.color1.r = cvtColor.r;
-							showParm.colors.color1.g = cvtColor.g;
-							showParm.colors.color1.b = cvtColor.b;
-
+							var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+							
 							cvtColor = hexToRgb(color2.value);
-							showParm.colors.color2.r = cvtColor.r;
-							showParm.colors.color2.g = cvtColor.g;
-							showParm.colors.color2.b = cvtColor.b;
-
+							json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+							
+							var colors = JSON.parse(json);
+							
+							showParm["colors"] = colors;
+							
 						  break;
 
 						case 3:
+						
 							var cvtColor = hexToRgb(color1.value);
-							showParm.colors.color1.r = cvtColor.r;
-							showParm.colors.color1.g = cvtColor.g;
-							showParm.colors.color1.b = cvtColor.b;
-
+							var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+							
 							cvtColor = hexToRgb(color2.value);
-							showParm.colors.color2.r = cvtColor.r;
-							showParm.colors.color2.g = cvtColor.g;
-							showParm.colors.color2.b = cvtColor.b;
-
+							json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+							
 							cvtColor = hexToRgb(color3.value);
-							showParm.colors.color3.r = cvtColor.r;
-							showParm.colors.color3.g = cvtColor.g;
-							showParm.colors.color3.b = cvtColor.b;
+							json += '{"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+							
+							var colors = JSON.parse(json);
+							
+							showParm["colors"] = colors;
+
+							
 						  break;
 
 						case 4:
 							var cvtColor = hexToRgb(color1.value);
-							showParm.colors.color1.r = cvtColor.r;
-							showParm.colors.color1.g = cvtColor.g;
-							showParm.colors.color1.b = cvtColor.b;
-
+							var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+							
 							cvtColor = hexToRgb(color2.value);
-							showParm.colors.color2.r = cvtColor.r;
-							showParm.colors.color2.g = cvtColor.g;
-							showParm.colors.color2.b = cvtColor.b;
-
+							json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+							
 							cvtColor = hexToRgb(color3.value);
-							showParm.colors.color3.r = cvtColor.r;
-							showParm.colors.color3.g = cvtColor.g;
-							showParm.colors.color3.b = cvtColor.b;
-
+							json += '{"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+							
 							cvtColor = hexToRgb(color4.value);
-							showParm.colors.color4.r = cvtColor.r;
-							showParm.colors.color4.g = cvtColor.g;
-							showParm.colors.color4.b = cvtColor.b;
+							json += '{"color4": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+							
+							var colors = JSON.parse(json);
+							
+							showParm["colors"] = colors;
 
 						break;
 					}
@@ -265,6 +281,7 @@ function hexToRgb(hex)
 				showParm.gammaCorrection   = gammaCorrection.checked;	
 				showParm.powerOn = powerOn.checked;
 				setPlayListSettings();
+				
 				break;
 			}
 			
