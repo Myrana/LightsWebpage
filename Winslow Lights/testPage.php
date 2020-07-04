@@ -12,7 +12,7 @@ $conn = getDatabaseConnection();
 
 if($_SESSION['authorized'] == 0)
 {
-  header("Location: Registration.php");
+  header("Location: registration.php");
   exit();
 }
 
