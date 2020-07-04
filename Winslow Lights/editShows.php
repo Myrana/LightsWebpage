@@ -9,6 +9,66 @@ $playlistoption = '';
 $playListScript = "";
 
 
+if(isset($_REQUEST['CommitPlayList']))
+{
+	if(!empty($_POST['jsonContainer']))
+    {
+	    $sql = "update userPlaylist set showParms='" << $_POST['jsonContainer'] << "' where ID = " << $_POST['PlayList'];
+		if ($conn->query($sql) == FALSE)
+        {
+            echo "<h1>Error: " . $conn->error . "</h1>";
+			echo $sql;	
+        }
+	}
+   
+}
+
+
+if(isset($_REQUEST['btnCreatePlayList']))
+{
+	if(!empty($_POST['NewPlayListName']))
+    {
+	    $sql = "insert into userPlaylist(userID, playlistName, showParms) values(". $_SESSION['UserID'] . ",'" . $_POST['NewPlayListName'] . "','[]')" ;
+		
+		if ($conn->query($sql) == FALSE)
+        {
+            echo "<h1>Error: " . $conn->error . "</h1>";
+			echo $sql;	
+        }
+	}
+}
+
+
+if(isset($_REQUEST['btnDeletePlayList']))
+{
+	
+	if(!empty($_POST['PlayList']))
+    {
+		$sql = "delete from userPlaylist where userID = " . $_SESSION['UserID'] . " and ID = " . $_POST['PlayList'];
+		
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<h1>Error: " . $conn->error . "</h1>";
+			echo $sql;	
+        }
+        
+	}
+	
+	
+			//$sendArray['deletePlaylist'] = 1;
+		//$sendArray['playlistName'] = $_POST['PlayList'];
+		//$sendArray['UserID'] = $_SESSION['UserID'];
+		
+		//$results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
+        //if(mysqli_num_rows($results) > 0)
+        //{
+          //  while($row = mysqli_fetch_array($results))
+            //    sendMQTT($row["serverHostName"], json_encode($sendArray));
+       // }
+
+}
+
+
 $results = mysqli_query($conn,"SELECT ID,userID,playlistName,showParms FROM userPlaylist where userID =" . $_SESSION['UserID'] . " or userID = 1");
 if(mysqli_num_rows($results) > 0)
 {
@@ -26,64 +86,6 @@ if(mysqli_num_rows($results) > 0)
 		$playlistoption .="<option value = '".$row['ID']."'>".$row['playlistName']."</option>";
 	}
 
-}
-
-if(isset($_REQUEST['CommitPlayList']))
-{
-    if(!empty($_POST['jsonContainer']))
-    {
-        $sendArray["playlistEditSave"] = 1;
-        $sendArray["PlayList"] = $_POST['PlayList'];
-        $sendArray["jsonContainer"] = $_POST['jsonContainer'];
-
-        $results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
-        if(mysqli_num_rows($results) > 0)
-        {
-            while($row = mysqli_fetch_array($results))
-                sendMQTT($row["serverHostName"], json_encode($sendArray));
-        }
-
-    }
-}
-
-
-if(isset($_REQUEST['btnCreatePlayList']))
-{
-	if(!empty($_POST['NewPlayListName']))
-    {
-		$sendArray['createPlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['NewPlayListName'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
-		
-		$results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
-        if(mysqli_num_rows($results) > 0)
-        {
-            while($row = mysqli_fetch_array($results))
-                sendMQTT($row["serverHostName"], json_encode($sendArray));
-        }
-        
-	}
-}
-
-
-if(isset($_REQUEST['btnDeletePlayList']))
-{
-	
-	if(!empty($_POST['PlayList']))
-    {
-		$sendArray['deletePlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['PlayList'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
-		
-		$results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
-        if(mysqli_num_rows($results) > 0)
-        {
-            while($row = mysqli_fetch_array($results))
-                sendMQTT($row["serverHostName"], json_encode($sendArray));
-        }
-        
-        
-	}
 }
 
 
@@ -430,16 +432,13 @@ function hexToRgb(hex)
 	<?php echo $playlistoption;?>
 	</select>
 		
+		<p><label for="ShowName">Select Show</label><select id="ShowName" name="ShowName" onchange="setShowParms();"></select></p>
+		<p><label>New Playlist Name*</label> <br /><input type="text" id="NewPlayListName" name="NewPlayListName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%"></p>
+
 		<p>
-		
-	<label for="ShowName">Select Show</label>
-	<select id="ShowName" name="ShowName" onchange="setShowParms();">
-	
-	
-	</select>
-			
+		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
+		<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
 		</p>
-	  
 	  
 	  </div>
 	  
