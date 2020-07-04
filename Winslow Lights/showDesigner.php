@@ -199,11 +199,12 @@ $conn->close();
 			
 			<p>
             <label>New Playlist Name*</label> <br />
-            <input type="text" id="PlayListName" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
+            <input type="text" id="NewPlayListName" name="NewPlayListName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
             </p>
 
 			<p>
-			<button type="submit" name="btncreatePlayList" style="margin: 3px;">Create Playlist</button>
+			<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
+			<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
 			</p>';
 
 			

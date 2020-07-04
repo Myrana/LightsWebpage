@@ -32,12 +32,11 @@ if(isset($_REQUEST['CommitPlayList']))
 {
     if(!empty($_POST['jsonContainer']))
     {
-
         $sendArray["playlistEditSave"] = 1;
         $sendArray["PlayList"] = $_POST['PlayList'];
         $sendArray["jsonContainer"] = $_POST['jsonContainer'];
 
-        $results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
+        $results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
         if(mysqli_num_rows($results) > 0)
         {
             while($row = mysqli_fetch_array($results))
@@ -45,6 +44,46 @@ if(isset($_REQUEST['CommitPlayList']))
         }
 
     }
+}
+
+
+if(isset($_REQUEST['btnCreatePlayList']))
+{
+	if(!empty($_POST['NewPlayListName']))
+    {
+		$sendArray['createPlaylist'] = 1;
+		$sendArray['playlistName'] = $_POST['NewPlayListName'];
+		$sendArray['UserID'] = $_SESSION['UserID'];
+		
+		$results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
+        if(mysqli_num_rows($results) > 0)
+        {
+            while($row = mysqli_fetch_array($results))
+                sendMQTT($row["serverHostName"], json_encode($sendArray));
+        }
+        
+	}
+}
+
+
+if(isset($_REQUEST['btnDeletePlayList']))
+{
+	
+	if(!empty($_POST['PlayList']))
+    {
+		$sendArray['deletePlaylist'] = 1;
+		$sendArray['playlistName'] = $_POST['PlayList'];
+		$sendArray['UserID'] = $_SESSION['UserID'];
+		
+		$results = mysqli_query($conn,"SELECT ID,serverHostName from lightSystems WHERE enabled = 1 and masterDevice = 1");
+        if(mysqli_num_rows($results) > 0)
+        {
+            while($row = mysqli_fetch_array($results))
+                sendMQTT($row["serverHostName"], json_encode($sendArray));
+        }
+        
+        
+	}
 }
 
 
