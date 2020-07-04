@@ -1,5 +1,5 @@
 <?php
-include('CommonFunctions.php');
+include('commonFunctions.php');
 $status="";
 
     $con = getDatabaseConnection();
@@ -54,7 +54,7 @@ if(empty($_SESSION["shopping_cart"])) {
 
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 <div class="imagewrapper">
 <img src="Shop.png" alt="Shop" />	
 	</div>
@@ -94,5 +94,5 @@ mysqli_close($con);
 </div>
 	
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 	
 <h1>Home</h1>
 	<form>
@@ -22,6 +22,6 @@
 	
 	</form>
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>
 

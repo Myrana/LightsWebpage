@@ -1,6 +1,6 @@
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 
 $conn = getDatabaseConnection();

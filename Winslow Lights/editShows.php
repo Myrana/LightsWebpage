@@ -1,6 +1,6 @@
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 if($_SESSION['authorized'] == 0)
 {
@@ -107,7 +107,7 @@ $conn->close();
 <body onLoad="setPlayListSettings();">
 
 
-	<?php include('Nav.php'); ?>
+	<?php include('nav.php'); ?>
 	
 	<script>
 	<?php echo $playListScript;?>
@@ -609,5 +609,5 @@ function hexToRgb(hex)
 </form>
 
 </body>
-<?php include('Footer.php'); ?>
+<?php include('footer.php'); ?>
 </html>

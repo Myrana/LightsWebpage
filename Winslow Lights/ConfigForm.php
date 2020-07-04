@@ -1,6 +1,6 @@
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 $conn = getDatabaseConnection();
 
@@ -354,7 +354,7 @@ $conn->close();
   </head>
  
 <body onload="setLightSystemSettings();">
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 
 <script>
 <?php echo $lightFeaturesScript;?>
@@ -621,7 +621,7 @@ function setLightSystemSettings()
 	</form>
 	</div>
 		</div>
-	<?php include('Footer.php'); ?>
+	<?php include('footer.php'); ?>
 	
 	
 

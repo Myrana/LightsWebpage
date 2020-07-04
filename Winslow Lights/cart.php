@@ -1,7 +1,7 @@
 
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 $status="";
 if (isset($_POST['action']) && $_POST['action']=="remove"){
@@ -39,7 +39,7 @@ if (isset($_POST['action']) && $_POST['action']=="change"){
 </head>
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 	
 <img src="Images/shopping-cart.png" alt="shopping cart" />
 	
@@ -130,5 +130,5 @@ $total_price += ($product["price"]*$product["quantity"]);
 </div>
 	
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>

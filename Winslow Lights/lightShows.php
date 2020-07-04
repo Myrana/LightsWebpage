@@ -1,6 +1,6 @@
 <?php
 
-include('CommonFunctions.php');
+include('commonFunctions.php');
 
 $_SESSION["Brightness"] = 127;
 $_SESSION["LightSystemID"] = -1;
@@ -274,7 +274,7 @@ $conn->close();
 
 
 <body onload="initShowSystem();">
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 
 
 <script>
@@ -371,7 +371,7 @@ $conn->close();
     </div>
     </div>
 	</div>
-	<?php include('Footer.php'); ?>
+	<?php include('footer.php'); ?>
 	
 	
 	

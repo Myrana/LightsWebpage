@@ -1,5 +1,5 @@
 <?php
-include_once("CommonFunctions.php");
+include_once("commonFunctions.php");
 
 if(isset($_REQUEST['Login']))
 { 
@@ -39,7 +39,7 @@ else if(isset($_SESSION['authorized']))
 </head>
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 	
 <h1>Home</h1>
 	<form name="login" id="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -51,5 +51,5 @@ else if(isset($_SESSION['authorized']))
 	<button type="submit" name="Login">Login</button>
 	</form>
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>
