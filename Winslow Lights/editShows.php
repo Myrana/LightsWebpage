@@ -120,7 +120,7 @@ function hexToRgb(hex)
 		setPlayListSettings();
 	}
 	
-    function commitShowSettings()
+    function savePlayList()
     {
 
         var jsonContainer = document.getElementById("jsonContainer");
