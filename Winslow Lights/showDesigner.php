@@ -187,7 +187,7 @@ $conn->close();
     }
     else
     {
-        echo '<p><button onClick="saveShowSettings();;return false" name="SavePlayList">Save PlayList</button><button onClick="commitShowSettings();"  name="CommitPlayList" id="CommitPlayList">Commit PlayList</button></p>';
+        echo '<p><button onClick="saveShowSettings();;return false" name="SavePlayList">Save PlayList</button><button type="submit" onClick="commitShowSettings();"  name="CommitPlayList" id="CommitPlayList">Commit PlayList</button></p>';
     }
     ?>
 
