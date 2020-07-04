@@ -57,7 +57,7 @@ $conn->close();
 
 
 <body onLoad="setPlayListSettings();">
-<form>
+
 
 	<?php include('Nav.php'); ?>
 	
@@ -335,7 +335,7 @@ function hexToRgb(hex)
 
 	<div class="clearfix">
 	<div class="column" style="margin-top: 15px;">
-		
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		<label for="PlayList">Dad's Test select</label>
 	<select id="PlayList" name="PlayList" onchange="setPlayListSettings();">
 	<?php echo $playlistoption;?>
