@@ -27,7 +27,7 @@ if(isset($_REQUEST['Edit']))
 
 		if (!empty($_POST['motionFeature']))
 		{
-			$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
+			$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
 		}
 		else
 		{
@@ -38,7 +38,7 @@ if(isset($_REQUEST['Edit']))
 		{
 			if(!empty($features)) $features .= ",";
 
-			$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
+			$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
 
 		}
 		else
@@ -51,7 +51,7 @@ if(isset($_REQUEST['Edit']))
 		if (!empty($_POST['timeFeature'])) 
 		{
 			if(!empty($features)) $features .= ",";
-			$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
+			$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
 		}
 		else
 		{
