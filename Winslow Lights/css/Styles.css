@@ -452,14 +452,7 @@ input:disabled {
 #login p #Password {
     width: 90%;
 }
-input {
-    width: 95%;
-}
 
-input[type=number]{
-	width: 95%;
-	
-}
 
 
 
