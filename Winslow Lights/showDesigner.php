@@ -196,7 +196,7 @@ $conn->close();
 		</p>
 		
 		<p>
-		<button onClick="saveShowSettings();return false" name="SaveShow">Save Show</button>
+		<button onClick="saveShowSettings();return false" name="SaveShow">Store Changes</button>
 			<button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show</button>
 			
 		</p>';

@@ -5,9 +5,9 @@ include_once('commonFunctions.php');
 $conn = getDatabaseConnection();
 
 
-if($_SESSION['authorized'] == 0)
+if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
 {
-  header("Location: registration.php");
+  header("Location: lightShows.php");
   exit();
 }
 

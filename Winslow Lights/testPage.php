@@ -10,7 +10,7 @@ $_SESSION["Width"] = 1;
 
 $conn = getDatabaseConnection();
 
-if($_SESSION['authorized'] == 0)
+if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
 {
   header("Location: registration.php");
   exit();
