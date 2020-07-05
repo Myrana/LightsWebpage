@@ -1,6 +1,6 @@
 <?php
 
-include('CommonFunctions.php');
+include('commonFunctions.php');
 
 $_SESSION["Brightness"] = 127;
 $_SESSION["LightSystemID"] = -1;
@@ -10,12 +10,13 @@ $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
 $_SESSION["ShowName"] = -1;
 $_SESSION["ChgBrightness"] = 20;
+$_SESSION["DesignerEditMode"] = 0;
 
 $conn = getDatabaseConnection();
 
 if($_SESSION['authorized'] == 0)
 {
-  header("Location: Registration.php");
+  header("Location: registration.php");
   exit();
 }
 
@@ -170,7 +171,7 @@ if(isset($_REQUEST['LightShow']))
         if(!empty($_POST['Delay']))
             $sendArray['delay'] = $_SESSION["Delay"];
 
-        if(!empty($_POST['ShowName']))
+        if(!empty($_POST['Minutes']))
             $sendArray['minutes'] = $_SESSION["Minutes"];
 
         if(count($sendColors) > 0)
@@ -178,6 +179,9 @@ if(isset($_REQUEST['LightShow']))
         
         if (!empty($_POST['clearStart']))
             $sendArray['clearStart'] = 1;
+
+        if (!empty($_POST['width']))
+            $sendArray['width'] = $_POST['width'];
 
         if (!empty($_POST['clearFinish']))
             $sendArray['clearFinish'] = 1;
@@ -199,20 +203,6 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
-if(isset($_REQUEST['btnSavelist']))
-{
-	if(!empty($_POST['PlaylistName']))
-	{
-		$sendArray['savePlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['PlaylistName'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
-		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-		$query_data = mysqli_fetch_array($displayStrip);
-
-		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
-	}
-
-}
 
 if(isset($_REQUEST['btnPlaylist']))
 {
@@ -220,26 +210,13 @@ if(isset($_REQUEST['btnPlaylist']))
 	if(!empty($_POST['Playlist']))
 	{
 		$sendArray['playPlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['Playlist'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
+		$sendArray['playlistName'] = intval($_POST['Playlist']);
+		$sendArray['UserID'] = intval($_SESSION['UserID']);
 		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
 		$query_data = mysqli_fetch_array($displayStrip);
 
 		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
 	}
-}
-
-if(isset($_REQUEST['btnDeletePlaylist']))
-{
-
-	if(!empty($_POST['Playlist']))
-	{
-		$sendArray['deletePlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['Playlist'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
-		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
-	}
-
 }
 
 
@@ -271,37 +248,7 @@ if(mysqli_num_rows($results) > 0)
 }
 
 
-$lightShowsoption = '';
-$_SESSION['lightShowsScript'] = '';
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
-if(mysqli_num_rows($results) > 0)
-{
-    $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
 
-    while($row = mysqli_fetch_array($results))
-    {
-        
-        $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
-
-
-        $_SESSION['lightShowsScript'] .= "var show = new Object(); \r";
-
-        $_SESSION['lightShowsScript'] .= "    show.id = " . $row['ID'] .";\r";
-        $_SESSION['lightShowsScript'] .= "    show.showName = '" . $row['showName'] ."';\r";
-        $_SESSION['lightShowsScript'] .= "    show.numColors = " . $row['numColors'] .";\r";
-        $_SESSION['lightShowsScript'] .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
-        $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
-
-        $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
-
-
-
-
-    }
-
-}
 
 $playlistoption = '';
 $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist where userId =" . $_SESSION['UserID'] . " or userId =1");
@@ -327,7 +274,7 @@ $conn->close();
 
 
 <body onload="initShowSystem();">
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 
 
 <script>
@@ -414,26 +361,17 @@ $conn->close();
     }
 </script>
 
-        <select id="PlayListId"  name="Playlist" onChange="setPlaylistName();">
-        <?php echo $playlistoption;?>
-        </select>
-        <p>
-            <label>New Playlist Name*</label> <br />
-            <input type="text" id="PlayListNameId" name="PlaylistName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
-            </p>
-
-        <p>
-        <button type="submit" name="btnSavelist" style="margin: 3px;">Save Shows</button>
-        <button type="submit" name="btnDeletePlaylist" style="margin: 3px;">Delete Show</button>
-        <button type="submit" name="btnPlaylist">Play</button>
-        </p>
+	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+	<p><button type="submit" name="btnPlaylist">Play</button>
+	<button onclick="location.href='/editShows.php'; return false" name="btnEditist">Editor</button></p>
+	
 
 
     </form>
     </div>
     </div>
 	</div>
-	<?php include('Footer.php'); ?>
+	<?php include('footer.php'); ?>
 	
 	
 	

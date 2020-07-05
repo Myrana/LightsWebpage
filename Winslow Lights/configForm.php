@@ -1,13 +1,13 @@
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 $conn = getDatabaseConnection();
 
 
 if($_SESSION['authorized'] == 0)
 {
-  header("Location: Registration.php");
+  header("Location: registration.php");
   exit();
 }
 
@@ -27,7 +27,7 @@ if(isset($_REQUEST['Edit']))
 
 		if (!empty($_POST['motionFeature']))
 		{
-			$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
+			$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
 		}
 		else
 		{
@@ -38,7 +38,7 @@ if(isset($_REQUEST['Edit']))
 		{
 			if(!empty($features)) $features .= ",";
 
-			$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
+			$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
 
 		}
 		else
@@ -51,12 +51,24 @@ if(isset($_REQUEST['Edit']))
 		if (!empty($_POST['timeFeature'])) 
 		{
 			if(!empty($features)) $features .= ",";
-			$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
+			$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
 		}
 		else
 		{
 			if(!empty($featureDelete)) $featureDelete .=  ",";
 			$featureDelete .=  "3";
+		}
+		
+		
+		if (!empty($_POST['luxFeature'])) 
+		{
+			if(!empty($features)) $features .= ",";
+			$features .= "('4','" . $_POST['LightSystem'] . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
+		}
+		else
+		{
+			if(!empty($featureDelete)) $featureDelete .=  ",";
+			$featureDelete .=  "4";
 		}
 
 		if(!empty($featureDelete))
@@ -73,12 +85,12 @@ if(isset($_REQUEST['Edit']))
 		if(!empty($features))
 		{
 		 
-			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd) VALUES";
+			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
 			$sql .= $features;
 			 
 			 
 			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd);";
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
 
 			if ($conn->query($sql) === TRUE)
 				echo "<h1>Your record was Edited successfully.</h1>";
@@ -117,31 +129,37 @@ if(isset($_REQUEST['Config']))
 		$systemId = $conn->insert_id;
 
 		if (!empty($_POST['motionFeature']))
-			$features = "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0')";
+			$features = "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
 
 		if (!empty($_POST['lightFeature']))
 		{
 			if(!empty($features)) $features .= ",";
 
-			$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0')";
+			$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
 
 		}
 
 		if (!empty($_POST['timeFeature'])) 
 		{
 			if(!empty($features)) $features .= ",";
-			$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "')";
+			$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
+		}
+		
+		if (!empty($_POST['luxFeature'])) 
+		{
+			if(!empty($features)) $features .= ",";
+			$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
 		}
 
 		if(!empty($features))
 		{
 		 
-			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd) VALUES";
+			$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
 			$sql .= $features;
 			 
 			 
 			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd);";
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThresHold = VALUES(luxThreshHold);";
 
 			if ($conn->query($sql) === TRUE)
 				echo "<h1>Your record was added to the database successfully.</h1>";
@@ -309,6 +327,15 @@ $conn->close();
         });
     });
 	
+	$(function () {
+        $("#luxFeature").click(function () {
+            if ($(this).is(":checked")) {
+                $("#luxFields").show();
+            } else {
+                $("#luxFields").hide();
+            }
+        });
+    });
 		
 </script>
 
@@ -326,8 +353,8 @@ $conn->close();
 	<link href="css/Styles.css" rel="stylesheet" type="text/css">
   </head>
  
-<body>
-<?php include("Nav.php");  ?>
+<body onload="setLightSystemSettings();">
+<?php include("nav.php");  ?>
 
 <script>
 <?php echo $lightFeaturesScript;?>
@@ -349,6 +376,7 @@ function setLightSystemSettings()
     var motionFeature = document.getElementById("motionFeature");
     var lightFeature = document.getElementById("lightFeature");
     var timeFeature = document.getElementById("timeFeature");
+	var luxFeature = document.getElementById("luxFeature");
 	var motionDelay = document.getElementById("motionDelay");
 	var motionGpio = document.getElementById("motionFeatureGPIO");
 	var motionPlaylist = document.getElementById("motionPlaylistId");
@@ -357,6 +385,8 @@ function setLightSystemSettings()
     var timePlaylist = document.getElementById("timePlayListId");
     var startTime = document.getElementById("startTime");
     var endTime = document.getElementById("endTime");
+	var luxThreshold = document.getElementById("luxThreshHold");
+	var luxPlaylist = document.getElementById("luxPlaylistId");
 	
     var index = parseInt(systemNameId.value);
     var lightFeatureSettings = lightFeatureMap.get(index);
@@ -408,6 +438,12 @@ function setLightSystemSettings()
 					endTime.value      = feature.timeFeatureEnd;
 					timeFeature.click();
 					
+					break;
+					
+				case 4:
+					luxPlaylist.value = feature.featurePlayList;
+					luxThreshold.value = feature.luxThreshHold;
+					luxFeature.click()
 					break;
 
 			}
@@ -534,7 +570,7 @@ function setLightSystemSettings()
 		
 		<P>
 		
-		<label for="OnlightFeatureGPIO">Motion GPIO Pin:</label><br />
+		<label for="OnlightFeatureGPIO">Light GPIO Pin:</label><br />
 	  <input type="number" id="lightFeatureGPIO" name="lightFeatureGPIO" min="1" max="52" value="18">
 		
 		</P>
@@ -567,10 +603,25 @@ function setLightSystemSettings()
 		</p>
 	</div>
 		</div>
+	<div class="ColumnStyles">
+	<p><label for="OnluxFeature">Use lux?</label>
+		<input type="checkbox" id="luxFeature" name="luxFeature"/></p>
+		<div id="luxFields" style="display: none">
+		<input type="number" id="luxThreshHold" name="luxThreshHold" value="300">
+		<p>
+		<label for="luxPlaylist">Lux Playlist:</label>
+			<select id="luxPlaylistId" name="luxPlaylist">
+			<?php echo $playlistoption;?>
+			</select>
+		</p>	
+		</div>
+		
+	
+	</div>
 	</form>
 	</div>
 		</div>
-	<?php include('Footer.php'); ?>
+	<?php include('footer.php'); ?>
 	
 	
 

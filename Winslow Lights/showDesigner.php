@@ -1,13 +1,50 @@
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
+
+$conn = getDatabaseConnection();
+
+$lightShowsoption = '';
+$_SESSION['lightShowsScript'] = '';
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
+if(mysqli_num_rows($results) > 0)
+{
+    $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
+
+    while($row = mysqli_fetch_array($results))
+    {
+        
+        $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
+
+
+        $_SESSION['lightShowsScript'] .= "var show = new Object(); \r";
+
+        $_SESSION['lightShowsScript'] .= "    show.id = " . $row['ID'] .";\r";
+        $_SESSION['lightShowsScript'] .= "    show.showName = '" . $row['showName'] ."';\r";
+        $_SESSION['lightShowsScript'] .= "    show.numColors = " . $row['numColors'] .";\r";
+        $_SESSION['lightShowsScript'] .= "    show.hasDelay = " . $row['hasDelay'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
+        $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
+
+        $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
+
+
+
+
+    }
+
+}
+
+$conn->close();
 
 ?>
 
 <script>
 
     <?php echo $_SESSION['lightShowsScript'];?>
+
 
     function setShowSettings()
     {
@@ -94,7 +131,7 @@ include_once('CommonFunctions.php');
 		
 		<img src="Images/Show-Designer.png" alt="Show Designer" width="100%" />
 
-    <p><label for="ShowName">Show Name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
+    <p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>
 </p>
 
@@ -107,7 +144,7 @@ include_once('CommonFunctions.php');
         <p><label for="Width">Width:</label>
 <input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
 
-<p><label for="ColorEvery">Color Every X Led:</label>
+<p><label for="ColorEvery">Color every x led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
 
@@ -120,7 +157,7 @@ include_once('CommonFunctions.php');
 
 
 
-    <p><label for="NumMinutes">Number Of Minutes:</label>
+    <p><label for="NumMinutes">Number of minutes:</label>
 <input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
 </p>
 
@@ -132,19 +169,41 @@ include_once('CommonFunctions.php');
 </p>
 
 
-        <p><label for="On1">Clear on Start</label>
-    <input type="checkbox" name="clearStart">
-        <label for="On2">Clear on Finish</label>
-    <input type="checkbox" name="clearFinish">
-     <label for="On3">Gamma Correction</label>
-    <input type="checkbox" name="gammaCorrection">
+        <p><label for="On1" style="font-size: 14px">Clear start</label>
+    <input type="checkbox" name="clearStart" id="clearStart">
+			<label for="On2" style="font-size: 14px">Clear finish</label>
+    <input type="checkbox" name="clearFinish" id="clearFinish"></p>
+    
+		<p><label for="On3" style="font-size: 14px">Gamma correction</label>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
    
-        <label for="On">Power On</label>
-    <input type="checkbox" name="powerOn" value="OFF">
+        <p><label for="On" style="font-size: 14px">Power on</label>
+    <input type="checkbox" name="powerOn" id="powerOn" value="OFF">
         </p>
 
-        <p><button type="submit" name="LightShow">Send Show</button>
-			<button type="submit" name="ClearQueue">Clear Queue</button></p>
+<?php
+    if($_SESSION["DesignerEditMode"]  == 0)
+    {
+        echo '<p>
+			<button type="submit" name="LightShow">Send Show</button>
+			<button type="submit" name="ClearQueue">Clear Queue</button>
+        </p>';
+    }
+    else
+    {
+        echo '<p>
+		<button onClick="addShowSettings();return false" name="AddShow">Add Show</button>
+		</p>
+		
+		<p>
+		<button onClick="saveShowSettings();return false" name="SaveShow">Save Show</button>
+			<button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show</button>
+			
+		</p>';
+
+			
+    }
+    ?>
 
     </div>
     </div>

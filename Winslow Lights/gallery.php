@@ -1,6 +1,6 @@
 <?PHP
 
-   include_once('CommonFunctions.php');
+   include_once('commonFunctions.php');
 
     $photoGallery = "";
 	$videoGallery = "";
@@ -45,7 +45,7 @@
 </head>
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 <div class="column" style="width: 50%">
 
 <?php echo $photoGallery ?>
@@ -57,5 +57,5 @@
 		</div>
 
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>

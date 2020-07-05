@@ -1,5 +1,5 @@
 <?php
-include_once("CommonFunctions.php");
+include_once("commonFunctions.php");
 
 if(isset($_REQUEST['Login']))
 { 
@@ -15,7 +15,7 @@ if(isset($_REQUEST['Login']))
 	  $_SESSION['User'] = $_POST['Username'];
 	  $_SESSION['UserID'] = $query_data['ID'];
 	  $_SESSION['isAdmin'] = $query_data['isAdmin'];  
-	  echo "Hello, " . $_SESSION['User'];
+	  header('Location:lightShows.php');
 	}
 
 	$conn->close();
@@ -39,7 +39,7 @@ else if(isset($_SESSION['authorized']))
 </head>
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 	
 <h1>Home</h1>
 	<form name="login" id="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -51,5 +51,5 @@ else if(isset($_SESSION['authorized']))
 	<button type="submit" name="Login">Login</button>
 	</form>
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>

@@ -3,13 +3,13 @@
 
 <?php  
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 $conn = getDatabaseConnection();
 
 if($_SESSION['authorized'] == 0)
 {
-  header("Location: Registration.php");
+  header("Location: registration.php");
   exit();
 }
 
@@ -85,7 +85,7 @@ $conn->close();
 
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
   	
 	  <h1>Product Media</h1>
 <form name="productMedia" method="post" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -116,5 +116,5 @@ $conn->close();
 <button type="submit" name="Submit">Add Media</button>
 </form>
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>

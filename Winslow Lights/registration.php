@@ -1,6 +1,6 @@
 <?php  
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 if (!empty($_POST)) 
 {
@@ -45,7 +45,7 @@ if (!empty($_POST))
 
 <body>
 
-  <?php include("Nav.php");  ?>
+  <?php include("nav.php");  ?>
 	  <h1>Registration Page</h1>
 <form name="Registraition" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	
@@ -74,5 +74,5 @@ if (!empty($_POST))
 <button type="submit" name="Submit">Add User</button>
 </form>
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>

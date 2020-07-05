@@ -1,6 +1,6 @@
 <?php
 
-include_once('CommonFunctions.php');
+include_once('commonFunctions.php');
 
 $_SESSION["Brightness"] = 20;
 $_SESSION["LightSystemID"] = -1;
@@ -12,7 +12,7 @@ $conn = getDatabaseConnection();
 
 if($_SESSION['authorized'] == 0)
 {
-  header("Location: Registration.php");
+  header("Location: registration.php");
   exit();
 }
 
@@ -271,7 +271,7 @@ $conn->close();
 
 
 <body>
-<?php include("Nav.php");  ?>
+<?php include("nav.php");  ?>
 
 
 
@@ -587,6 +587,6 @@ window.onclick = function(event) {
 </script>
 	
 </body>
-	<?php include("Footer.php"); ?>
+	<?php include("footer.php"); ?>
 </html>
 
