@@ -104,7 +104,7 @@ $conn->close();
 </head>
 
 
-<body onLoad="bodyLoad();">
+<body onLoad="setPlayListSettings();">
 
 
 	<?php include('nav.php'); ?>
@@ -135,12 +135,7 @@ function hexToRgb(hex)
   } : null;
 }
 
-    function bodyLoad()
-    {
-        setPlayListSettings()
-        setShowParms();
 
-    }
 
 	function addShowSettings()
 	{
@@ -229,7 +224,6 @@ function hexToRgb(hex)
 
                     cvtColor = hexToRgb(color2.value);
                     json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
-                    //alert(json);
                     var colors = JSON.parse(json);
 
                     playList.showParms[parmIndex].colors = colors;
@@ -277,9 +271,10 @@ function hexToRgb(hex)
         playList.showParms[parmIndex].clearFinish   = (clearFinish.checked) ? 1 : 0;
         playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
         playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
-        //setShowParms.value = setShowParms.length;
+
      //   alert("DDD");
         setPlayListSettings();
+       // setShowParms.value = setShowParms.length;
         //setShowParms();
 
     }
@@ -306,7 +301,7 @@ function hexToRgb(hex)
 
 
 		setPlayListSettings();
-        showListControl.value = showListControl.lenght;
+       //showListControl.value = showListControl.lenght;
 	}
 	
     function savePlayList()
@@ -567,6 +562,7 @@ function hexToRgb(hex)
 			showListControl.add(option); 
 			
 		}
+        setShowParms();
 
   }
 
