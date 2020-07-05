@@ -274,8 +274,8 @@ function hexToRgb(hex)
 
      //   alert("DDD");
         setPlayListSettings();
-       // setShowParms.value = setShowParms.length;
-        //setShowParms();
+      //  setShowParms.selectedIndex = parmIndex;
+        setShowParms();
 
     }
 	function removeShowSettings()
