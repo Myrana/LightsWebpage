@@ -590,6 +590,9 @@ function hexToRgb(hex)
 		<p>
 		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
 		<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
+		<p>
+		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>
+		</p>
 		</p>
 		
 		<p>

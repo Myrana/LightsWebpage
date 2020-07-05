@@ -196,12 +196,9 @@ $conn->close();
 		</p>
 		
 		<p>
-		<button onClick="saveShowSettings();return false" name="SaveShow">Save Show Settings</button>
-			<button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show Settings</button>
-		</p>
-		
-		<p>
-		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Commit PlayList</button>
+		<button onClick="saveShowSettings();return false" name="SaveShow">Save Show</button>
+			<button onClick="removeShowSettings();return false" name="RemoveShow">Remove Show</button>
+			
 		</p>';
 
 			
