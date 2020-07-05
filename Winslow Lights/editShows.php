@@ -212,7 +212,7 @@ function hexToRgb(hex)
             {
                 case 1:
                     var cvtColor = hexToRgb(color1.value);
-                    var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+                    var json = '{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
 
                     var colors = JSON.parse(json);
 
@@ -229,7 +229,7 @@ function hexToRgb(hex)
 
                     cvtColor = hexToRgb(color2.value);
                     json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
-
+                    alert(json);
                     var colors = JSON.parse(json);
 
                     playList.showParms[parmIndex].colors = colors;
@@ -369,16 +369,22 @@ function hexToRgb(hex)
 
 
                     playList.showParms[i].brightness = brightness.value;
-
+                alert(JSON.stringify(playList.showParms[i].colors));
+                alert(playList.showParms[i].colors.color1.r);
                     if(show.numColors > 0)
                     {
+
                         switch(show.numColors)
                         {
                             case 1:
                                 var cvtColor = hexToRgb(color1.value);
+                                alert(cvtColor.r);
                                 playList.showParms[i].colors.color1.r = cvtColor.r;
+                                alert(2);
                                 playList.showParms[i].colors.color1.g = cvtColor.g;
+                                alert(3);
                                 playList.showParms[i].colors.color1.b = cvtColor.b;
+                                alert(4);
                               break;
 
                             case 2:
@@ -437,10 +443,11 @@ function hexToRgb(hex)
 
                     }
 
-					playList.showParms[i].clearStart = clearStart.checked;
-					playList.showParms[i].clearFinish   = clearStart.checked;
-					playList.showParms[i].gammaCorrection   = gammaCorrection.checked;	
-					playList.showParms[i].powerOn = powerOn.checked;
+
+                    playList.showParms[i].clearStart = (clearStart.checked) ? 1 : 0;
+                    playList.showParms[i].clearFinish   = (clearFinish.checked) ? 1 : 0;
+                    playList.showParms[i].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
+                    playList.showParms[i].powerOn = (powerOn.checked) ? 1 : 0;
 					break;
 
             }
