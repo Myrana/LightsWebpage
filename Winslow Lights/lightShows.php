@@ -171,7 +171,7 @@ if(isset($_REQUEST['LightShow']))
         if(!empty($_POST['Delay']))
             $sendArray['delay'] = $_SESSION["Delay"];
 
-        if(!empty($_POST['ShowName']))
+        if(!empty($_POST['Minutes']))
             $sendArray['minutes'] = $_SESSION["Minutes"];
 
         if(count($sendColors) > 0)
@@ -210,8 +210,8 @@ if(isset($_REQUEST['btnPlaylist']))
 	if(!empty($_POST['Playlist']))
 	{
 		$sendArray['playPlaylist'] = 1;
-		$sendArray['playlistName'] = $_POST['Playlist'];
-		$sendArray['UserID'] = $_SESSION['UserID'];
+		$sendArray['playlistName'] = intval($_POST['Playlist']);
+		$sendArray['UserID'] = intval($_SESSION['UserID']);
 		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
 		$query_data = mysqli_fetch_array($displayStrip);
 

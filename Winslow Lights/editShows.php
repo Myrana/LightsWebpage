@@ -164,10 +164,9 @@ function hexToRgb(hex)
 		
 		var show = showMap.get(parseInt(showControl.value));
         var parmIndex = 0;
-       // var showParm;
+
 		//Deal with new or empty playlist
 
-       // alert(playList.showParms.length);
 		if(playList.showParms.length == 0)
 		{
 			var json = '[{"show": "' + show.id + '", "UserID": "' + userId + '"}]';
@@ -272,10 +271,19 @@ function hexToRgb(hex)
         playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
         playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
 
-     //   alert("DDD");
-        setPlayListSettings();
-      //  setShowParms.selectedIndex = parmIndex;
-        setShowParms();
+
+        var option = document.createElement("option");
+     
+        option.text = show.showName;
+        option.value = showListControl.length + 1;
+        showListControl.add(option);
+
+       // setPlayListSettings();
+
+       // setShowParms();
+        showListControl.selectedIndex = showListControl.length - 1;
+        //showListControl.click();
+       // setShowParms();
 
     }
 	function removeShowSettings()
@@ -301,7 +309,7 @@ function hexToRgb(hex)
 
 
 		setPlayListSettings();
-       //showListControl.value = showListControl.lenght;
+
 	}
 	
     function savePlayList()
