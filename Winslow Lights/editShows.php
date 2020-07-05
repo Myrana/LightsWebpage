@@ -546,7 +546,7 @@ function hexToRgb(hex)
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var counter = 1;
-        alert(playListId.value);
+      //  alert(playListId.value);
 		showListControl.options.length = 0;
 		playListIndex = parseInt(playListId.value);
 		var playList = playListMap.get(playListIndex);
