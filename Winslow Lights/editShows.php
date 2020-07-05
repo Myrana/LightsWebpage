@@ -164,8 +164,10 @@ function hexToRgb(hex)
 		
 		var show = showMap.get(parseInt(showControl.value));
         var parmIndex = 0;
+       // var showParm;
 		//Deal with new or empty playlist
-		
+
+       // alert(playList.showParms.length);
 		if(playList.showParms.length == 0)
 		{
 			var json = '[{"show": "' + show.id + '", "UserID": "' + userId + '"}]';
@@ -175,127 +177,104 @@ function hexToRgb(hex)
 		}
 		else
 		{
+
 			var json = '{"show": "' + show.id + '", "UserID": "' + userId + '"}';
+
             parmIndex = playList.showParms.length;
 			playList.showParms[parmIndex] = JSON.parse(json);
 			playList.showParms[parmIndex].UserID = userId;
-		
+
 		}
 
+        playList.showParms[parmIndex].brightness = brightness.value;
 
-        for (i in playList.showParms)
+        if(show.hasDelay)
+            playList.showParms[parmIndex].delay = delay.value;
+
+        if(show.hasMinutes > 0)
+            playList.showParms[parmIndex].minutes = minutes.value;
+
+        if(show.colorEvery > 0)
+            playList.showParms[parmIndex].colorEvery = colorEvery.value;
+
+        if(show.hasWidth)
+            playList.showParms[parmIndex].width = width.value;
+
+        if(show.numColors > 0)
         {
 
-			if(show.id == playList.showParms[i].show)
+            switch(show.numColors)
             {
-                alert(show.id);
-				var showParm =  playList.showParms[i];
-                alert("REW");
-				if(show.hasDelay)
-					showParm.delay = delay.value;
-			
-				if(show.hasMinutes > 0)
-					showParm.minutes = minutes.value;
+                case 1:
+                    var cvtColor = hexToRgb(color1.value);
+                    var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
 
-				if(show.colorEvery > 0)
-					showParm.colorEvery = colorEvery.value;
+                    var colors = JSON.parse(json);
 
-				if(show.hasWidth)
-					showParm.width = width.value;
+                    playList.showParms[parmIndex].colors = colors;
 
 
-				showParm.brightness = brightness.value;
-				
-				if(show.numColors > 0)
-				{
-					
-					switch(show.numColors)
-					{
-						case 1:
-							var cvtColor = hexToRgb(color1.value);												
-							var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
-							
-							var colors = JSON.parse(json);
-							
-							showParm["colors"] = colors;
-							
-							
-							
-						  break;
 
-						case 2:
+                  break;
 
-                        	var cvtColor = hexToRgb(color1.value);
-							var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                case 2:
 
-							cvtColor = hexToRgb(color2.value);
-							json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+                    var cvtColor = hexToRgb(color1.value);
+                    var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
 
-							var colors = JSON.parse(json);
+                    cvtColor = hexToRgb(color2.value);
+                    json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
 
-							showParm["colors"] = colors;
-							
-						  break;
+                    var colors = JSON.parse(json);
 
-						case 3:
-                            var cvtColor = hexToRgb(color1.value);
-                            var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                    playList.showParms[parmIndex].colors = colors;
 
-                            cvtColor = hexToRgb(color2.value);
-                            json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                  break;
 
-                            cvtColor = hexToRgb(color3.value);
-                            json += '{"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+                case 3:
+                    var cvtColor = hexToRgb(color1.value);
+                    var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
 
-                            var colors = JSON.parse(json);
+                    cvtColor = hexToRgb(color2.value);
+                    json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
 
-                            showParm["colors"] = colors;
-							
-						  break;
+                    cvtColor = hexToRgb(color3.value);
+                    json += '{"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
 
-						case 4:
-                            var cvtColor = hexToRgb(color1.value);
-                            var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                    var colors = JSON.parse(json);
 
-                            cvtColor = hexToRgb(color2.value);
-                            json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                    playList.showParms[parmIndex].colors = colors;
 
-                            cvtColor = hexToRgb(color3.value);
-                            json += '{"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                  break;
 
-                            cvtColor = hexToRgb(color4.value);
-                            json += '{"color4": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+                case 4:
+                    var cvtColor = hexToRgb(color1.value);
+                    var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
 
-                            var colors = JSON.parse(json);
+                    cvtColor = hexToRgb(color2.value);
+                    json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
 
-                            showParm["colors"] = colors;
+                    cvtColor = hexToRgb(color3.value);
+                    json += '{"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+
+                    cvtColor = hexToRgb(color4.value);
+                    json += '{"color4": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
+
+                    var colors = JSON.parse(json);
+
+                   playList.showParms[parmIndex].colors = colors;
 
 
-						break;
-					}
+            }
 
-				}
+        }
+        playList.showParms[parmIndex].clearStart = (clearStart.checked) ? 1 : 0;
+        playList.showParms[parmIndex].clearFinish   = (clearFinish.checked) ? 1 : 0;
+        playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
+        playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
+        //setPlayListSettings();
 
-				showParm.clearStart = clearStart.checked;
-				showParm.clearFinish   = clearStart.checked;
-				showParm.gammaCorrection   = gammaCorrection.checked;	
-				showParm.powerOn = powerOn.checked;
-
-                setPlayListSettings();
-                //showListControl.value = playList.showParms.length;
-                //showControl.value = show.id;
-                //setShowParms();
-
-				break;
-			}
-			
-		}
-		
-		
-		
-		
-	}
-
+    }
 	function removeShowSettings()
     {
 		
@@ -317,7 +296,7 @@ function hexToRgb(hex)
 			
 		}
 		
-		setPlayListSettings();
+//		setPlayListSettings();
 	}
 	
     function savePlayList()
@@ -546,7 +525,7 @@ function hexToRgb(hex)
                 gammaCorrection.checked = (playList.showParms[i].gammaCorrection != undefined && playList.showParms[i].gammaCorrection == 1) ? true : false;
 				powerOn.checked = (playList.showParms[i].powerOn != undefined && playList.showParms[i].powerOn == 1) ? true : false;
 				
-				
+
 				break;
 			}
 		}
@@ -558,10 +537,11 @@ function hexToRgb(hex)
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var counter = 1;
-        
+        alert(playListId.value);
 		showListControl.options.length = 0;
 		playListIndex = parseInt(playListId.value);
 		var playList = playListMap.get(playListIndex);
+        alert(playList);
 	
 		for (i in playList.showParms)
 		{
