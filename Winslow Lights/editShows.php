@@ -277,6 +277,7 @@ function hexToRgb(hex)
         playList.showParms[parmIndex].clearFinish   = (clearFinish.checked) ? 1 : 0;
         playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
         playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
+        //setShowParms.value = setShowParms.length;
      //   alert("DDD");
         setPlayListSettings();
         //setShowParms();
@@ -564,7 +565,7 @@ function hexToRgb(hex)
 			showListControl.add(option); 
 			
 		}
-		//We now need to set the first shows parms.
+
   }
 
 </script>
