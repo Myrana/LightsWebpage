@@ -587,15 +587,15 @@ function hexToRgb(hex)
 		<p><label for="ShowName">Select Show</label><select id="ShowName" name="ShowName" onchange="setShowParms();"></select></p>
 		<p><label>New Playlist Name*</label> <br /><input type="text" id="NewPlayListName" name="NewPlayListName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%"></p>
 
-		<p>
+		<p style="margin-bottom: -14px;">
 		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
 		<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
-		<p>
+		<p style="margin-left: 3px">
 		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>
 		</p>
 		</p>
 		
-		<p>
+		<p style="margin-top: -12px; margin-left: 3px">
 		<button onclick="location.href='/lightShows.php'; return false" name="btnLightShows">Light Shows</button>	
 		</p>
 	  

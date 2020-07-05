@@ -452,6 +452,10 @@ input:disabled {
 #login p #Password {
     width: 90%;
 }
+input {
+    width: 95%;
+}
+
 
 @media (max-width: 741px){
 .nav {

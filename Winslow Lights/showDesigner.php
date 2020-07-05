@@ -191,7 +191,7 @@ $conn->close();
     }
     else
     {
-        echo '<p>
+        echo '<p style="margin-bottom: -14px;">
 		<button onClick="addShowSettings();return false" name="AddShow">Add Show</button>
 		</p>
 		
