@@ -104,7 +104,7 @@ $conn->close();
 </head>
 
 
-<body onLoad="setPlayListSettings();">
+<body onLoad="bodyLoad();">
 
 
 	<?php include('nav.php'); ?>
@@ -135,7 +135,12 @@ function hexToRgb(hex)
   } : null;
 }
 
+    function bodyLoad()
+    {
+        setPlayListSettings()
+        setShowParms();
 
+    }
 
 	function addShowSettings()
 	{
@@ -272,7 +277,9 @@ function hexToRgb(hex)
         playList.showParms[parmIndex].clearFinish   = (clearFinish.checked) ? 1 : 0;
         playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
         playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
-        //setPlayListSettings();
+     //   alert("DDD");
+        setPlayListSettings();
+        //setShowParms();
 
     }
 	function removeShowSettings()
@@ -295,8 +302,10 @@ function hexToRgb(hex)
 			}
 			
 		}
-		
-//		setPlayListSettings();
+
+
+		setPlayListSettings();
+        showListControl.value = showListControl.lenght;
 	}
 	
     function savePlayList()
@@ -541,7 +550,7 @@ function hexToRgb(hex)
 		showListControl.options.length = 0;
 		playListIndex = parseInt(playListId.value);
 		var playList = playListMap.get(playListIndex);
-        alert(playList);
+       // alert(playList);
 	
 		for (i in playList.showParms)
 		{
@@ -555,9 +564,8 @@ function hexToRgb(hex)
 			showListControl.add(option); 
 			
 		}
-		//We now need to set the first shows parms. 
-		setShowParms();
-	}
+		//We now need to set the first shows parms.
+  }
 
 </script>
 
