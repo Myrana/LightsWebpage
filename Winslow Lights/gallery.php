@@ -46,15 +46,18 @@
 
 <body>
 <?php include("nav.php");  ?>
-<div class="column" style="width: 50%">
+	
+<div class="clearfix">
+<div class="column" style="width: 50%; margin-top: 15px;">
 
 <?php echo $photoGallery ?>
 	</div>
 	
-	<div class="column" style="width: 50%">
+	<div class="column" style="width: 50%; margin-top: 15px;">
 		
 	<?php echo $videoGallery ?>
 		</div>
+			</div>
 
 </body>
 	<?php include("footer.php"); ?>
