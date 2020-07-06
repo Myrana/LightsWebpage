@@ -16,11 +16,6 @@ $conn = getDatabaseConnection();
 $playlistoption = '';
 $playListScript = "";
 
-if(!empty($_POST['allUsersPlaylist']))
-{
-	$_SESSION['UserID']= '1';
-}
-
 
 
 if(isset($_REQUEST['CommitPlayList']))
@@ -42,7 +37,13 @@ if(isset($_REQUEST['btnCreatePlayList']))
 {
 	if(!empty($_POST['NewPlayListName']))
     {
-	    $sql = "insert into userPlaylist(userID, playlistName, showParms) values(". $_SESSION['UserID'] . ",'" . $_POST['NewPlayListName'] . "','[]')" ;
+		$sendUserId =  $_SESSION['UserID'];
+		if(!empty($_POST['allUsersPlaylist']))
+		{
+       			$sendUserID = '1';
+		}
+
+	    $sql = "insert into userPlaylist(userID, playlistName, showParms) values(". $sendUserId . ",'" . $_POST['NewPlayListName'] . "','[]')" ;
 		
 		if ($conn->query($sql) == FALSE)
         {
