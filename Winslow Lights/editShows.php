@@ -225,10 +225,10 @@ function hexToRgb(hex)
 
                 case 2:
                     var cvtColor = hexToRgb(color1.value);
-                    var json = '{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
+                    var json = '[{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}},';
 
                     cvtColor = hexToRgb(color2.value);
-                    json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+                    json += '{"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}]';
                     var colors = JSON.parse(json);
                     playList.showParms[parmIndex].colors = colors;
 
@@ -395,7 +395,6 @@ function hexToRgb(hex)
                             case 2:
 								var cvtColor = hexToRgb(color1.value);
 								
-								
                                 playList.showParms[i].colors[0].color1.r = cvtColor.r;
                                 playList.showParms[i].colors[0].color1.g = cvtColor.g;
                                 playList.showParms[i].colors[0].color1.b = cvtColor.b;
@@ -405,7 +404,6 @@ function hexToRgb(hex)
                                 playList.showParms[i].colors[1].color2.r = cvtColor.r;
                                 playList.showParms[i].colors[1].color2.g = cvtColor.g;
                                 playList.showParms[i].colors[1].color2.b = cvtColor.b;
-                                
                              
 
                               break;
@@ -533,21 +531,22 @@ function hexToRgb(hex)
                             break;
 
                         case 2:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color1.value =  rgbToHex(playList.showParms[i].colors[0].color1.r, playList.showParms[i].colors[0].color1.g, playList.showParms[i].colors[0].color1.b);
+                            color2.value =  rgbToHex(playList.showParms[i].colors[1].color2.r, playList.showParms[i].colors[1].color2.g, playList.showParms[i].colors[1].color2.b);
                             break;
 
                         case 3:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color1.value =  rgbToHex(playList.showParms[i].colors[0].color1.r, playList.showParms[i].colors[0].color1.g, playList.showParms[i].colors[0].color1.b);
+                            color2.value =  rgbToHex(playList.showParms[i].colors[1].color2.r, playList.showParms[i].colors[1].color2.g, playList.showParms[i].colors[1].color2.b);
+                            color3.value =  rgbToHex(playList.showParms[i].colors[2].color3.r, playList.showParms[i].colors[2].color3.g, playList.showParms[i].colors[2].color3.b);
+
                             break;
 
                         case 4:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color4.value =  rgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color1.value =  rgbToHex(playList.showParms[i].colors[0].color1.r, playList.showParms[i].colors[0].color1.g, playList.showParms[i].colors[0].color1.b);
+                            color2.value =  rgbToHex(playList.showParms[i].colors[1].color2.r, playList.showParms[i].colors[1].color2.g, playList.showParms[i].colors[1].color2.b);
+                            color3.value =  rgbToHex(playList.showParms[i].colors[2].color3.r, playList.showParms[i].colors[2].color3.g, playList.showParms[i].colors[2].color3.b);
+                            color4.value =  rgbToHex(playList.showParms[i].colors[3].color4.r, playList.showParms[i].colors[3].color4.g, playList.showParms[i].colors[3].color4.b);
                             break;
 
                     }
