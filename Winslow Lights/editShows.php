@@ -16,6 +16,12 @@ $conn = getDatabaseConnection();
 $playlistoption = '';
 $playListScript = "";
 
+if(!empty($_POST['allUsersPlaylist']))
+{
+	$_SESSION['UserID']= '1';
+}
+
+
 
 if(isset($_REQUEST['CommitPlayList']))
 {
@@ -590,9 +596,17 @@ function hexToRgb(hex)
 		<p style="margin-bottom: -14px;">
 		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
 		<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
+		</p>
+			
 		<p style="margin-left: 3px">
 		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>
 		</p>
+		
+		<p style="margin-top: -10px">
+		
+			<label for="allUserPlaylist">All users can use</label>
+			<input type="checkbox" id="allUsersPlaylist" name="allUsersPlaylist" />
+		
 		</p>
 		
 		<p style="margin-top: -12px; margin-left: 3px">
