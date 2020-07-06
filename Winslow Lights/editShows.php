@@ -37,13 +37,13 @@ if(isset($_REQUEST['btnCreatePlayList']))
 {
 	if(!empty($_POST['NewPlayListName']))
     {
-		$sendUserId =  $_SESSION['UserID'];
+		$sendUserID =  $_SESSION['UserID'];
 		if(!empty($_POST['allUsersPlaylist']))
 		{
        			$sendUserID = '1';
 		}
 
-	    $sql = "insert into userPlaylist(userID, playlistName, showParms) values(". $sendUserId . ",'" . $_POST['NewPlayListName'] . "','[]')" ;
+	    $sql = "insert into userPlaylist(userID, playlistName, showParms) values(". $sendUserID . ",'" . $_POST['NewPlayListName'] . "','[]')" ;
 		
 		if ($conn->query($sql) == FALSE)
         {
