@@ -601,11 +601,7 @@ function hexToRgb(hex)
 			
 		<p style="margin-left: 3px">
 		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>
-		</p>
-		
-		<p style="margin-top: -10px">
-		
-			<label for="allUserPlaylist">All users can use</label>
+			<label for="allUserPlaylist" style="margin-left: 3px">All users can use</label>
 			<input type="checkbox" id="allUsersPlaylist" name="allUsersPlaylist" />
 		
 		</p>
