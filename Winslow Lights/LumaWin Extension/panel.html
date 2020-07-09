@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Viewer Page</title>
+    <link rel="stylesheet" href="viewer.css" type="text/css"></head>
+    <body>
+        <div id="app" class="full-height"></div>
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+      <script src="https://localhost.rig.twitch.tv:3000/twitch-ext.js"></script>
+      
+        <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+        <h2 style="text-align:center; font-weight:800; font-family:Impact, Charcoal, sans-serif;">LumaWin Lights</h2>
+        <p style = "font-style: italic;">Please add your inputs:</p>
+        <p><label for="color">Color Pickers</label></p>
+        <p>
+        <input type="color"  Name="color_1" id="Color1" value ="#ff6500">
+        <input type="color" Name="color_2" id="Color2" value="#906bfa">
+        <input type="color" Name="color_3" id="Color3" value="#2c2367">
+        <input type="color" Name="color_4" id="Color4" value="#ad5e8c">
+        </p>
+       
+    <p><label for="Width">Width:</label>
+<input type="number" id="WidthId" name="Width" min="1" max="300"></p>
+<p><label for="ColorEvery">Color every x led:</label>
+<input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300">
+</p>
+<p><label for="Delay">Delay:</label>
+<input type="number" id="DelayId" name="Delay" min="1" max="100000">
+</p>
+
+
+
+    <p><label for="NumMinutes">Number of minutes:</label>
+<input type="number" id="NumMinutesId" name="Minutes" min="1" placeholder="5">
+</p>
+
+
+
+
+<p><label for="Brightness">Brightness:</label>
+    <input type="number" id="Brightness" name="Brightness" min="1" max="255">
+</p>
+
+<p><label for="On3" style="font-size: 14px">Gamma correction</label>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" value ="1"></p>
+
+    <script src="viewer.js"></script></body>
+</html>
