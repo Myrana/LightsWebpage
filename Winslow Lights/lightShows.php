@@ -214,7 +214,6 @@ if(isset($_REQUEST['btnPlaylist']))
 		$sendArray['UserID'] = intval($_SESSION['UserID']);
 		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
 		$query_data = mysqli_fetch_array($displayStrip);
-
 		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
 	}
 }
