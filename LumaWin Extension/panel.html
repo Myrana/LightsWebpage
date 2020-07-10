@@ -21,6 +21,7 @@
             
             <label for="shows">which show shall we play:</label>
   <select id="ShowNameId" name="ShowName" >
+    <option value="0">--- Please Select a Show ---</option>  
    <option value = '16'>Display Color</option>
    <option value = '3'>Theater Chase</option>
    <option value = '4'>Theater Chase Rainbow</option>
@@ -58,24 +59,30 @@
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300">
 </p>
 <p><label for="Delay">Delay:</label>
-<input type="number" id="DelayId" name="Delay" min="1" max="100000" placeholder="100">
+<input type="number" id="DelayId" name="Delay" min="1" max="100000" value="100">
 </p>
 
 
 
     <p><label for="NumMinutes">Number of minutes:</label>
-<input type="number" id="NumMinutesId" name="Minutes" min="1" placeholder="5">
+<input type="number" id="NumMinutesId" name="Minutes" min="1" value="5">
 </p>
 
 
 
 
 <p><label for="Brightness">Brightness:</label>
-    <input type="number" id="Brightness" name="Brightness" min="1" max="255" placeholder='127'>
+    <input type="number" id="Brightness" name="Brightness" min="1" max="255" value='127'>
 </p>
 
 <p><label for="On3" style="font-size: 14px">Gamma correction</label>
 		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" value ="1" checked></p>
+
+<P>
+
+    <button type="submit" name="btnSendShow">Send Show</button>
+
+</P>
 
 
   
