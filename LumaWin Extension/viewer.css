@@ -31,3 +31,15 @@ label {
 p {
     margin-top: -11px;
 }
+.column {
+    width: 50%;
+    float: left;
+}
+
+select {
+    width: 90%;
+}
+
+input[type=number] {
+    width: 70%;
+}
