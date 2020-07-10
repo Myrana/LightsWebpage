@@ -5,9 +5,9 @@
   "certificateExceptions": [],
   "extensionViews": [
     {
-      "channelId": "129011284",
+      "channelId": "546623929",
       "configurationAnchor": "panel",
-      "displayChannelName": "snowleopard__x",
+      "displayChannelName": "lumawin",
       "features": {
         "isBitsEnabled": false,
         "isChatEnabled": false,
@@ -17,11 +17,11 @@
         "width": 1280,
         "height": 720
       },
-      "id": "2",
+      "id": "1",
       "isPopout": false,
-      "label": "",
+      "label": "LumaWin",
       "linked": true,
-      "linkedUserId": "265737932",
+      "linkedUserId": "546623929",
       "orientation": "Portrait",
       "type": "panel",
       "viewerType": "Logged-In Viewer"
@@ -30,20 +30,20 @@
   "manifest": {
     "anchor": "panel",
     "assetUrls": [],
-    "authorName": "SnowLeopard__x",
+    "authorName": "LumaWin",
     "bitsEnabled": false,
     "canInstall": true,
     "configUrl": "https://localhost:8080/config.html",
     "configurationLocation": "none",
-    "description": "",
+    "description": "LumaWin Lighting System used to control LED Strips",
     "eulaTosUrl": "",
     "hasChatSupport": false,
     "iconUrl": "",
     "iconUrls": {},
-    "id": "3adbvmfgafboqc77d0vo805xwt57nl",
+    "id": "tugb191yihmq33b1es8wq8ajqs3qa1",
     "installationCount": -42,
     "liveConfigUrl": "",
-    "name": "LumaWinLight",
+    "name": "LumaWin-LightSystem",
     "panelHeight": 300,
     "privacyPolicyUrl": "",
     "requestIdentityLink": false,
@@ -52,10 +52,10 @@
     "sku": "",
     "state": "Testing",
     "subscriptionsSupportLevel": "none",
-    "summary": "",
-    "supportEmail": "mandy.winslow@comcast.net",
+    "summary": "LumaWin Lighting System used to control LED Strips",
+    "supportEmail": "robertwinslow@comcast.net",
     "vendorCode": "",
-    "version": "0.0.1",
+    "version": "0.02",
     "viewerSummary": "",
     "viewerUrl": "https://localhost:8080/panel.html",
     "viewerUrls": {
@@ -91,7 +91,7 @@
     "whitelistedPanelUrls": []
   },
   "frontendCommand": "",
-  "frontendFolderName": "C:\\Users\\Myrana\\Desktop\\twitchthing",
-  "name": "LumaWinLight",
+  "frontendFolderName": "/home/hellweek/code/LightsWebpage/LumaWin Extension",
+  "name": "LumaWin-LightSystem",
   "version": 2
 }

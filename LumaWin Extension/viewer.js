@@ -4,9 +4,9 @@ var tuid = "";
 var twitch = window.Twitch.ext;
 
 function setAuth(token) {
-  Object.keys(requests).forEach((req) => {
+  Object.keys(token).forEach((req) => {
       twitch.rig.log('Setting auth headers');
-      requests[req].headers = { 'Authorization': 'Bearer ' + token }
+      token[req].headers = { 'Authorization': 'Bearer ' + token }
   });
 }
 
@@ -40,3 +40,8 @@ $(function() {
       updateBlock(getRandomColor());
     });
 });
+
+
+
+
+
