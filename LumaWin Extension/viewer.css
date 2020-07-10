@@ -43,3 +43,7 @@ select {
 input[type=number] {
     width: 70%;
 }
+
+input[type=color]:disabled{
+    display: none;
+}
