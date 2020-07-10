@@ -443,9 +443,14 @@ footer{
 	margin: 15px;
 }
 
-input:disabled {
-	display: none;
+input[type=color]:disabled{
+    display: none;
 }
+
+input[type=number] {
+    width: 25%;
+}
+
 #login p #Username {
     width: 90%;
 }
