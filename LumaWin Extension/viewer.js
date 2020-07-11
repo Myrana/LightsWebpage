@@ -46,11 +46,11 @@ twitch.rig.log('user-' + auth.userId + '-token ' + auth.token);
 
   
     setAuth(token);
-    $.ajax(requests.get);
+ //   $.ajax(requests.get);
 });
 
 function updateBlock(hex) {
-    twitch.rig.log('Updating block color');
+    //twitch.rig.log('Updating block color');
     $('#color').css('background-color', hex);
 }
 
@@ -83,13 +83,17 @@ $(function() {
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
 	var gammaCorrection = document.getElementById("gammaCorrection");
+        var clearStart =  document.getElementById("clearStart");
+        var clearFinish =  document.getElementById("clearFinish");
 	
         
         var index = parseInt(showNameId.value);     
         requests.set.url =  'https://lumawin.com:8080/lumawinTwitch/runshow';
            
         requests.set.url += '?show=' +index;
-         if(showMap.get(index).numColors >= 1)
+	requests.set.url += '&brightness=' + brightness.value;
+	
+        if(showMap.get(index).numColors >= 1)
            requests.set.url += '&color1=' + encodeURIComponent(color1.value);
        
         if(showMap.get(index).numColors >= 2)
@@ -116,9 +120,14 @@ $(function() {
 
 	if(gammaCorrection.checked)
           requests.set.url += '&gammacorrection=1';
+          
+          
+        if(clearStart.checked)
+          requests.set.url += '&clearstart=1';
+        
+     	if(clearFinish.checked)
+          requests.set.url += '&clearfinish=1';
                   
-	requests.set.url += '&brightness=' + brightness.value;
-
         
         twitch.rig.log('*******:' + requests.set.url);
         
