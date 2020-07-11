@@ -1,7 +1,7 @@
 {
   "allowHttpBackend": false,
-  "backendCommand": "",
-  "backendFolderName": "",
+  "backendCommand": "node backend -c \"tugb191yihmq33b1es8wq8ajqs3qa1\" -s \"/bwZV8evr5xkgYv2ukuuKDk5fC/ePZd2ESKWEZQ4lQo=\" -o \"546623929\"",
+  "backendFolderName": "server",
   "certificateExceptions": [],
   "extensionViews": [
     {

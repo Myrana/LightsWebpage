@@ -171,7 +171,6 @@ var show = new Object();
   show.colorEvery = 0;
     showMap.set(19, show);
 
-
 $(function() {
 
     // when we click the cycle button
