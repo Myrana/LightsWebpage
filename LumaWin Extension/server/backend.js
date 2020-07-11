@@ -160,15 +160,104 @@ function verifyAndDecode(header) {
   throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
+function hexToRgb(hex) {
+    var bigint = parseInt(hex.replace('#',''), 16);
+    console.log(bigint);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+
+    return r + "," + g + "," + b;
+}
+
 function colorCycleHandler(req) {
   // Verify all requests.
   console.log(`****************** colorCycleHandler ***************************`);
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  //list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x"); POSTPROCESS ON COLOR FROM WEB
 
   console.log(req.url.query);
+  
+  var JSONObj;
+  var colorRGB;
+  var onecolor = true;
+  JSONObj = '[{"show":"' + req.url.query.show + '"';
+  if(req.url.query.color1 || req.url.query.color2 || req.url.query.color3 || req.url.query.color4)
+  {
+  
+  	 //"colors": [{"color1": {"b": 211, "g": 0, "r": 255}}, {"color2": {"b": 107, "g": 250, "r": 109}}]
+	 //"colors":[{"color1": {"r":255,"g":101,"b":0},{"color2": {"r":144,"g":107,"b":250}}],"brightness":"127","gammacorrection": 1,"delay":"100","minutes":"5"}]
+
+	
+	  console.log("Bob-" + hexToRgb(req.url.query.color1));
+
+
+  	if(req.url.query.color1) 
+  	{
+   	       colorRGB =  hexToRgb(req.url.query.color1);
+   	       
+  		JSONObj += ',"colors":[{"color1": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  	}
+ 
+  	if(req.url.query.color2) 
+  	{
+   	       colorRGB =  hexToRgb(req.url.query.color2);
+   	       
+  		JSONObj += ',{"color2": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  	}
+  	
+  	  if(req.url.query.color3) 
+  	    	{
+   	       colorRGB =  hexToRgb(req.url.query.color3);
+   	       
+  		JSONObj += ',{"color3": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  	}
+
+
+  	  if(req.url.query.color4) 
+  	{
+   	       colorRGB =  hexToRgb(req.url.query.color4);
+   	       
+  		JSONObj += ',{"color4": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  	}
+  	
+  	JSONObj += ']';
+  	
+
+  }
+  
+  
+  JSONObj += ',"brightness":"' + req.url.query.brightness + '"';
+  
+  if(req.url.query.gammacorrection)
+    JSONObj += ',"gammacorrection": 1'; 
+    
+    if(req.url.query.colorevery)
+     JSONObj += ',"colorevery":"' + req.url.query.colorevery  + '"'; 
+
+    if(req.url.query.width) 
+  	JSONObj += ',"width":"' + req.url.query.width + '"';
+
+    if(req.url.query.delay) 
+  	JSONObj += ',"delay":"' + req.url.query.delay + '"';
+  	
+   if(req.url.query.minutes) 
+  	JSONObj += ',"minutes":"' + req.url.query.minutes + '"';
+
+  JSONObj += '}]';
+  console.log(JSONObj);
+
+  var j = JSON.parse(JSONObj);
+
+//  if(req.url.query.clearstart)
+  //  JSONObj += ',{"clearstart": 1}'; 
+
+//  if(req.url.query.clearfinish)
+  //  JSONObj += ',{"clearfinish": 1}'; 
+  
+
+  
   // Store the color for the channel.
   let currentColor = channelColors[channelId] || initialColor;
 

@@ -25,6 +25,7 @@ function createRequest(type, method) {
 }
 
 
+
 function setAuth(token) {
     Object.keys(requests).forEach((req) => {
         twitch.rig.log('Setting auth headers');
@@ -84,7 +85,8 @@ $(function() {
 	var gammaCorrection = document.getElementById("gammaCorrection");
 	
         
-        var index = parseInt(showNameId.value);         
+        var index = parseInt(showNameId.value);     
+        requests.set.url =  'https://lumawin.com:8080/lumawinTwitch/runshow';
            
         requests.set.url += '?show=' +index;
          if(showMap.get(index).numColors >= 1)
