@@ -218,12 +218,12 @@ function colorCycleHandler(req) {
   	JSONObj += ',"minutes":"' + req.url.query.minutes + '"';
 
     if(req.url.query.clearstart) 
-  	JSONObj += ',"clearStart":"' + req.url.query.clearstart + '"';
+  	JSONObj += ',"clearStart":' + req.url.query.clearstart;
   	
    if(req.url.query.clearfinish) 
-  	JSONObj += ',"clearfinish":"' + req.url.query.clearfinish + '"';
+  	JSONObj += ',"clearFinish":' + req.url.query.clearfinish;
 
-if(req.url.query.color1) 
+  if(req.url.query.color1) 
   	{
    	       colorRGB =  hexToRgb(req.url.query.color1);       
   		JSONObj += ',"colors":{"color1": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}';
