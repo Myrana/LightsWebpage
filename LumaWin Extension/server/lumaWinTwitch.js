@@ -25,6 +25,8 @@ const ext = require('commander');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const mqtt = require('mqtt');
+const mysql = require('mysql');
+
 
 const mqttClient = mqtt.connect('mqtt://Romoserver.local', {clientId:"TwitchPanel"});
 
@@ -34,6 +36,24 @@ mqttClient.on('connect', () => {
     });    
 
 mqttClient.on("error",function(error){ console.log("Can't connect"+error)});
+
+
+
+
+var mySqlCon = mysql.createConnection({
+  host: "Romoserver.local",
+  user: "hellweek",
+  password: "covert69guess",
+  database: "LedLightSystem"
+});
+
+mySqlCon.connect(function(err) {
+  if (err) throw err;
+  console.log("MySQL Server Is Connected!");
+});
+
+
+
 
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
@@ -180,13 +200,17 @@ function hexToRgb(hex) {
     return r + "," + g + "," + b;
 }
 
+//U4qhxbLMEhM5gY0T3Sy4v
+//U546623929
+//Channel:129011284 user: U129011284 from snow on snow
+//Channel:546623929 user: U4qhxbLMEhM5gY0T3Sy4v snow on luma
+
+
 function colorCycleHandler(req) {
   // Verify all requests.
   console.log(`****************** colorCycleHandler ***************************`);
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
- console.log('Channel:');
  
   console.log(req.url.query);
   
@@ -257,8 +281,32 @@ function colorCycleHandler(req) {
   }
 
   JSONObj += '}';
+  
+ console.log('Check Channel:' + channelId + ' user: ' + opaqueUserId );
 
-  mqttClient.publish("BenchPi.local/TwitchBot", JSONObj); 
+ mySqlCon.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "` + channelId + `"`, function (err, result, fields) 
+	{
+
+
+	    if (err) throw err;
+	    if(result.length && result[0].enabled == 1)
+	    {
+		mqttQueue = result[0].mqttQueue;
+		console.log('Sending to: ' + mqttQueue + ' for Channel:' + channelId + ' user: ' + opaqueUserId);
+
+		 console.log(mqttQueue);
+		 mqttClient.publish(mqttQueue, JSONObj);
+	    }
+	    else
+	    {
+		    console.log(`* ${target} Light System is currently Not Running!`);
+		    client.say(target, `${context.username}, sorry, light System is currently Not Running!.  Speak to channel operator!`);
+	    }
+	    
+    });
+	    
+
+
 
 /*REW debugging  
   console.log(JSONObj);
