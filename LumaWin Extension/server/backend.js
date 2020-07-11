@@ -24,6 +24,17 @@ const color = require('color');
 const ext = require('commander');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
+const mqtt = require('mqtt');
+
+const mqttClient = mqtt.connect('mqtt://Romoserver.local', {clientId:"TwitchPanel"});
+
+mqttClient.on('connect', () => {
+	console.log('MQTT Is Connected!');
+   	
+    });    
+
+mqttClient.on("error",function(error){ console.log("Can't connect"+error)});
+
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
 // by default.  Do not use this in production.
@@ -162,7 +173,6 @@ function verifyAndDecode(header) {
 
 function hexToRgb(hex) {
     var bigint = parseInt(hex.replace('#',''), 16);
-    console.log(bigint);
     var r = (bigint >> 16) & 255;
     var g = (bigint >> 8) & 255;
     var b = bigint & 255;
@@ -177,41 +187,33 @@ function colorCycleHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
 
-  console.log(req.url.query);
+  //console.log(req.url.query);
   
   var JSONObj;
   var colorRGB;
   var onecolor = true;
-  JSONObj = '[{"show":"' + req.url.query.show + '"';
+  JSONObj = '{"show":"' + req.url.query.show + '"';
   if(req.url.query.color1 || req.url.query.color2 || req.url.query.color3 || req.url.query.color4)
   {
-  
-  	 //"colors": [{"color1": {"b": 211, "g": 0, "r": 255}}, {"color2": {"b": 107, "g": 250, "r": 109}}]
-	 //"colors":[{"color1": {"r":255,"g":101,"b":0},{"color2": {"r":144,"g":107,"b":250}}],"brightness":"127","gammacorrection": 1,"delay":"100","minutes":"5"}]
-
-	
-	  console.log("Bob-" + hexToRgb(req.url.query.color1));
-
-
-  	if(req.url.query.color1) 
+ 
+ 	if(req.url.query.color1) 
   	{
-   	       colorRGB =  hexToRgb(req.url.query.color1);
-   	       
-  		JSONObj += ',"colors":[{"color1": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+   	       colorRGB =  hexToRgb(req.url.query.color1);       
+  		JSONObj += ',"colors":{"color1": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}';
   	}
  
   	if(req.url.query.color2) 
   	{
    	       colorRGB =  hexToRgb(req.url.query.color2);
    	       
-  		JSONObj += ',{"color2": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  		JSONObj += ',"color2": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + "}";
   	}
   	
   	  if(req.url.query.color3) 
   	    	{
    	       colorRGB =  hexToRgb(req.url.query.color3);
    	       
-  		JSONObj += ',{"color3": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  		JSONObj += ',"color3": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + "}";
   	}
 
 
@@ -219,10 +221,10 @@ function colorCycleHandler(req) {
   	{
    	       colorRGB =  hexToRgb(req.url.query.color4);
    	       
-  		JSONObj += ',{"color4": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}}';
+  		JSONObj += ',"color4": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + "}";
   	}
   	
-  	JSONObj += ']';
+  	JSONObj += "}";
   	
 
   }
@@ -231,10 +233,10 @@ function colorCycleHandler(req) {
   JSONObj += ',"brightness":"' + req.url.query.brightness + '"';
   
   if(req.url.query.gammacorrection)
-    JSONObj += ',"gammacorrection": 1'; 
+    JSONObj += ',"gammaCorrection": 1'; 
     
     if(req.url.query.colorevery)
-     JSONObj += ',"colorevery":"' + req.url.query.colorevery  + '"'; 
+     JSONObj += ',"colorEvery":"' + req.url.query.colorevery  + '"'; 
 
     if(req.url.query.width) 
   	JSONObj += ',"width":"' + req.url.query.width + '"';
@@ -245,17 +247,20 @@ function colorCycleHandler(req) {
    if(req.url.query.minutes) 
   	JSONObj += ',"minutes":"' + req.url.query.minutes + '"';
 
-  JSONObj += '}]';
-  console.log(JSONObj);
+  JSONObj += '}';
 
+  mqttClient.publish("BenchPi.local/TwitchBot", JSONObj); 
+
+/*REW debugging  
+  console.log(JSONObj);
   var j = JSON.parse(JSONObj);
 
-//  if(req.url.query.clearstart)
-  //  JSONObj += ',{"clearstart": 1}'; 
+  if(req.url.query.clearstart)
+    JSONObj += ',{"clearstart": 1}'; 
 
-//  if(req.url.query.clearfinish)
-  //  JSONObj += ',{"clearfinish": 1}'; 
-  
+  if(req.url.query.clearfinish)
+    JSONObj += ',{"clearfinish": 1}'; 
+  */
 
   
   // Store the color for the channel.
@@ -366,3 +371,10 @@ function userIsInCooldown(opaqueUserId) {
   userCooldowns[opaqueUserId] = now + userCooldownMs;
   return false;
 }
+
+
+
+
+
+
+
