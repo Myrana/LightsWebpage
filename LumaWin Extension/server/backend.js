@@ -186,7 +186,8 @@ function colorCycleHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-
+ console.log('Channel:');
+ 
   console.log(req.url.query);
   
   var JSONObj;
@@ -302,6 +303,7 @@ function colorQueryHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   // Get the color for the channel from the payload and return it.
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  
   const currentColor = color(channelColors[channelId] || initialColor).hex();
   verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
   return currentColor;
