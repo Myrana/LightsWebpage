@@ -25,17 +25,6 @@ function createRequest(type, method) {
 }
 
 
-function createRequestPost(type, method) {
-
-    return {
-        type: type,
-        url: 'https://lumawin.com:8080/lumawinTwitch/' + method + '?show=1&color1=0xff6377',
-        success: updateBlock,
-        error: logError
-
-    }
-}
-
 function setAuth(token) {
     Object.keys(requests).forEach((req) => {
         twitch.rig.log('Setting auth headers');
@@ -79,9 +68,57 @@ $(function() {
     // when we click the cycle button
     $('#btnSendShow').click(function() {
         if(!token) { return twitch.rig.log('Not authorized'); }
-        twitch.rig.log('Requesting a color cycle');
-        requests.set.url += '?show=1&color1=0xff6777';
-        twitch.rig.log('rew-' + requests.set.url);
+        twitch.rig.log('Requesting To Play A Show');
+
+	var showNameId = document.getElementById("ShowNameId");
+        
+	var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
+        var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+        var minutes = document.getElementById("NumMinutesId");
+        var colorEvery = document.getElementById("ColorEveryId");
+        var brightness = document.getElementById("Brightness");
+	var gammaCorrection = document.getElementById("gammaCorrection");
+	
+        
+        var index = parseInt(showNameId.value);         
+           
+        requests.set.url += '?show=' +index;
+         if(showMap.get(index).numColors >= 1)
+           requests.set.url += '&color1=' + encodeURIComponent(color1.value);
+       
+        if(showMap.get(index).numColors >= 2)
+       
+	    requests.set.url += '&color2=' + encodeURIComponent(color2.value);
+       
+        if(showMap.get(index).numColors >= 3)
+           requests.set.url += '&color3=' + encodeURIComponent(color3.value);
+	
+        if(showMap.get(index).numColors == 4)
+           requests.set.url += '&color4=' + encodeURIComponent(color4.value);
+           
+        if(showMap.get(index).hasWidth == 1)
+           requests.set.url += '&width=' + width.value;
+       
+        if(showMap.get(index).hasMinutes == 1)
+           requests.set.url += '&minutes=' + minutes.value;
+       
+        if(showMap.get(index).hasDelay == 1)
+           requests.set.url += '&delay=' + delay.value;
+           
+        if(showMap.get(index).colorEvery == 1)
+	 requests.set.url += '&colorevery=' + colorEvery.value;
+
+	if(gammaCorrection.checked)
+          requests.set.url += '&gammacorrection=1';
+                  
+	requests.set.url += '&brightness=' + brightness.value;
+
+        
+        twitch.rig.log('*******:' + requests.set.url);
         
         $.ajax(requests.set);
     });
@@ -92,3 +129,25 @@ $(function() {
         updateBlock(color);
     });
 });
+
+
+
+/*
+
+        var clearStart =  document.getElementById("clearStart");
+        var clearFinish =  document.getElementById("clearFinish");
+	var powerOn = document.getElementById("powerOn");
+        
+
+     
+	if(clearStart.checked())
+          qryString += '&clearstart=1';
+        
+     	if(clearFinish.checked())
+          qryString += '&clearfinish=1';
+
+         
+         if(powerOn.checked())
+           qryString += '&poweron=1';
+*/
+

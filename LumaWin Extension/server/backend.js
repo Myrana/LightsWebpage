@@ -166,8 +166,9 @@ function colorCycleHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  
-  console.log(req.url.query.color1);
+  //list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x"); POSTPROCESS ON COLOR FROM WEB
+
+  console.log(req.url.query);
   // Store the color for the channel.
   let currentColor = channelColors[channelId] || initialColor;
 
