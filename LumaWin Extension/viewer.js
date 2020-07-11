@@ -7,17 +7,32 @@ var twitch = window.Twitch.ext;
 
 // create the request options for our Twitch API calls
 var requests = {
-    set: createRequest('POST', 'cycle'),
+    set: createRequest('POST', 'runshow'),
     get: createRequest('GET', 'query')
 };
+
+
 
 function createRequest(type, method) {
 
     return {
         type: type,
-        url: 'https://lumawin.com:8080/color/' + method,
+        url: 'https://lumawin.com:8080/lumawinTwitch/' + method,
         success: updateBlock,
         error: logError
+
+    }
+}
+
+
+function createRequestPost(type, method) {
+
+    return {
+        type: type,
+        url: 'https://lumawin.com:8080/lumawinTwitch/' + method + '?show=1&color1=0xff6377',
+        success: updateBlock,
+        error: logError
+
     }
 }
 
@@ -65,6 +80,9 @@ $(function() {
     $('#btnSendShow').click(function() {
         if(!token) { return twitch.rig.log('Not authorized'); }
         twitch.rig.log('Requesting a color cycle');
+        requests.set.url += '?show=1&color1=0xff6777';
+        twitch.rig.log('rew-' + requests.set.url);
+        
         $.ajax(requests.set);
     });
 

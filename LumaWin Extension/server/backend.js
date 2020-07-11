@@ -1,3 +1,5 @@
+//node backend -c "tugb191yihmq33b1es8wq8ajqs3qa1" -s "/bwZV8evr5xkgYv2ukuuKDk5fC/ePZd2ESKWEZQ4lQo=" -o "546623929"
+
 /**
  *    Copyright 2018 Amazon.com, Inc. or its affiliates
  *
@@ -99,14 +101,14 @@ const server = new Hapi.Server(serverOptions);
   // Handle a viewer request to cycle the color.
   server.route({
     method: 'POST',
-    path: '/color/cycle',
+    path: '/lumawinTwitch/runshow',
     handler: colorCycleHandler,
   });
 
   // Handle a new viewer requesting the color.
   server.route({
     method: 'GET',
-    path: '/color/query',
+    path: '/lumawinTwitch/query',
     handler: colorQueryHandler,
   });
 
@@ -160,9 +162,12 @@ function verifyAndDecode(header) {
 
 function colorCycleHandler(req) {
   // Verify all requests.
+  console.log(`****************** colorCycleHandler ***************************`);
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
+  
+  console.log(req.url.query.color1);
   // Store the color for the channel.
   let currentColor = channelColors[channelId] || initialColor;
 
@@ -186,8 +191,10 @@ function colorCycleHandler(req) {
 
 function colorQueryHandler(req) {
   // Verify all requests.
+  
+   console.log(`****************** colorQueryHandler ***************************`);
+    
   const payload = verifyAndDecode(req.headers.authorization);
-
   // Get the color for the channel from the payload and return it.
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const currentColor = color(channelColors[channelId] || initialColor).hex();
