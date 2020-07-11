@@ -59,8 +59,8 @@ if(isset($_REQUEST['btnDeletePlayList']))
 	
 	if(!empty($_POST['PlayList']))
     {
-		$sql = "delete from userPlaylist where userID = " . $_SESSION['UserID'] . " and ID = " . $_POST['PlayList'];
-		
+		$sql = "delete from userPlaylist where ID = " . $_POST['PlayList'];
+		echo $sql;
         if ($conn->query($sql) == FALSE)
         {
             echo "<h1>Error: " . $conn->error . "</h1>";
@@ -163,6 +163,7 @@ function hexToRgb(hex)
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
         var powerOn = document.getElementById("powerOn");
+		
         
         
         var playListIndex = parseInt(playListId.value);
@@ -275,6 +276,7 @@ function hexToRgb(hex)
         playList.showParms[parmIndex].clearFinish   = (clearFinish.checked) ? 1 : 0;
         playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
         playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
+		
 
 
         var option = document.createElement("option");
@@ -611,9 +613,9 @@ function hexToRgb(hex)
 		</p>
 			
 		<p style="margin-left: 3px">
-		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>
-			<label for="allUserPlaylist" style="margin-left: 3px">All users can use</label>
 			<input type="checkbox" id="allUsersPlaylist" name="allUsersPlaylist" />
+			<label for="allUserPlaylist" style="margin-left: 3px">All users can use</label>
+		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>	
 		
 		</p>
 		
