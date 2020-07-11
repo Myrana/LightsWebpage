@@ -18,8 +18,6 @@
   
         <h2 style="text-align:center; font-weight:800; font-family:Impact, Charcoal, sans-serif;">LumaWin Lights</h2>
         <div class="column">
-            
-            <label for="shows">which show shall we play:</label>
   <select id="ShowNameId" name="ShowName" >
     <option value="0">Select a Show</option>  
    <option value = '16'>Display Color</option>
@@ -42,7 +40,7 @@
    <option value = '1'>Blink</option>
    <option value = '19'>Pulse Overlay</option>
   </select>
-        <br /> 
+        <br /> <br />
        
         <input type="color"  Name="color_1" id="Color1" value ="#ff6500">
         <input type="color" Name="color_2" id="Color2" value="#906bfa">
@@ -54,13 +52,13 @@
 		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" value ="1" checked></p>
             
 <p><label for="On1" style="font-size: 14px">Clear start</label>
-    <input type="checkbox" name="clearStart" id="clearStart">
-			<label for="On2" style="font-size: 14px">Clear finish</label>
+    <input type="checkbox" name="clearStart" id="clearStart"></p>
+			<p><label for="On2" style="font-size: 14px">Clear finish</label>
     <input type="checkbox" name="clearFinish" id="clearFinish"></p>
               
         <button type="button" id="btnSendShow" name="btnSendShow">Send Show</button>
         </div>
-        <p style = "font-style: italic;">Please add your inputs:</p>
+        <p style = "font-style: italic;">Define show inputs:</p>
         <div class="column">
             <div class="column">
         
@@ -69,7 +67,7 @@
        
     <p><label for="Width">Width:</label>
 <input type="number" id="WidthId" name="Width" min="1" max="300"></p>
-<p><label for="ColorEvery">Color every x led:</label>
+<p><label for="ColorEvery">X led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300">
 </p>
 <p><label for="Delay">Delay:</label>
@@ -81,8 +79,8 @@
 
 <div class="column">
     
-    <p><label for="NumMinutes">Number of minutes:</label>
-<input type="number" id="NumMinutesId" name="Minutes" min="1" value="5">
+    <p><label for="NumMinutes">Minutes:</label>
+<input type="number" id="NumMinutesId" name="Minutes" min="1" max="3" value="1">
 </p>
     
 <p><label for="Brightness">Brightness:</label>
