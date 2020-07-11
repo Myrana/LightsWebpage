@@ -187,7 +187,7 @@ function colorCycleHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
 
-  //console.log(req.url.query);
+  console.log(req.url.query);
   
   var JSONObj;
   var colorRGB;
@@ -196,7 +196,33 @@ function colorCycleHandler(req) {
   if(req.url.query.color1 || req.url.query.color2 || req.url.query.color3 || req.url.query.color4)
   {
  
- 	if(req.url.query.color1) 
+ 	
+  
+  
+  JSONObj += ',"brightness":"' + req.url.query.brightness + '"';
+  
+  if(req.url.query.gammacorrection)
+    JSONObj += ',"gammaCorrection": 1'; 
+    
+    if(req.url.query.colorevery)
+     JSONObj += ',"colorEvery":"' + req.url.query.colorevery  + '"'; 
+
+    if(req.url.query.width) 
+  	JSONObj += ',"width":"' + req.url.query.width + '"';
+
+    if(req.url.query.delay) 
+  	JSONObj += ',"delay":"' + req.url.query.delay + '"';
+  	
+   if(req.url.query.minutes) 
+  	JSONObj += ',"minutes":"' + req.url.query.minutes + '"';
+
+    if(req.url.query.clearstart) 
+  	JSONObj += ',"clearStart":"' + req.url.query.clearstart + '"';
+  	
+   if(req.url.query.clearfinish) 
+  	JSONObj += ',"clearfinish":"' + req.url.query.clearfinish + '"';
+
+if(req.url.query.color1) 
   	{
    	       colorRGB =  hexToRgb(req.url.query.color1);       
   		JSONObj += ',"colors":{"color1": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}';
@@ -228,24 +254,6 @@ function colorCycleHandler(req) {
   	
 
   }
-  
-  
-  JSONObj += ',"brightness":"' + req.url.query.brightness + '"';
-  
-  if(req.url.query.gammacorrection)
-    JSONObj += ',"gammaCorrection": 1'; 
-    
-    if(req.url.query.colorevery)
-     JSONObj += ',"colorEvery":"' + req.url.query.colorevery  + '"'; 
-
-    if(req.url.query.width) 
-  	JSONObj += ',"width":"' + req.url.query.width + '"';
-
-    if(req.url.query.delay) 
-  	JSONObj += ',"delay":"' + req.url.query.delay + '"';
-  	
-   if(req.url.query.minutes) 
-  	JSONObj += ',"minutes":"' + req.url.query.minutes + '"';
 
   JSONObj += '}';
 
@@ -271,6 +279,7 @@ function colorCycleHandler(req) {
     throw Boom.tooManyRequests(STRINGS.cooldown);
   }
 
+/*
   // Rotate the color as if on a color wheel.
   verboseLog(STRINGS.cyclingColor, channelId, opaqueUserId);
   currentColor = color(currentColor).rotate(colorWheelRotation).hex();
@@ -280,8 +289,9 @@ function colorCycleHandler(req) {
 
   // Broadcast the color change to all other extension instances on this channel.
   attemptColorBroadcast(channelId);
-
-  return currentColor;
+*/
+  return 1;
+  
 }
 
 function colorQueryHandler(req) {
@@ -303,7 +313,7 @@ function attemptColorBroadcast(channelId) {
   const cooldown = channelCooldowns[channelId];
   if (!cooldown || cooldown.time < now) {
     // It is.
-    sendColorBroadcast(channelId);
+   // sendColorBroadcast(channelId);
     channelCooldowns[channelId] = { time: now + channelCooldownMs };
   } else if (!cooldown.trigger) {
     // It isn't; schedule a delayed broadcast if we haven't already done so.
@@ -319,6 +329,7 @@ function sendColorBroadcast(channelId) {
     'Authorization': bearerPrefix + makeServerToken(channelId),
   };
 
+/*
   // Create the POST body for the Twitch API request.
   const currentColor = color(channelColors[channelId] || initialColor).hex();
   const body = JSON.stringify({
@@ -343,6 +354,7 @@ function sendColorBroadcast(channelId) {
         verboseLog(STRINGS.pubsubResponse, channelId, res.statusCode);
       }
     });
+    */
 }
 
 // Create and return a JWT for use by this service.
