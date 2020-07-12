@@ -1,8 +1,13 @@
 // Define configuration options
 const opts = {
+  options: { debug: true },
+	connection: {
+		reconnect: true,
+		secure: true
+	},
   identity: {
-    username: "lumawin",
-    password: "ukw4ezwxkpblqtd18kazulky7mnm26"
+    username: "<USER>",
+    password: "<password>"
   },
   channels: [
     "lumawin",
@@ -16,7 +21,10 @@ const mqtt = require('mqtt');
 const mysql = require('mysql');
 var mqttQueue = "";
 
-const mqttClient = mqtt.connect('mqtt://Romoserver.local', {clientId:"BenchPiTwitter"});
+
+var clientId = `Twitch:` + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+console.log(clientId);
+const mqttClient = mqtt.connect('mqtt://Romoserver.local', {clientId:"${clientId}"});
 
 
 mqttClient.on('connect', () => {
@@ -29,10 +37,10 @@ mqttClient.on("error",function(error){ console.log("Can't connect"+error)});
 
 
 var mySqlCon = mysql.createConnection({
-  host: "Romoserver.local",
-  user: "hellweek",
-  password: "covert69guess",
-  database: "LedLightSystem"
+  host: "<DBSERVER>",
+  user: "<USER>",
+  password: "<PWD>",
+  database: "DB"
 });
 
 mySqlCon.connect(function(err) {
@@ -47,13 +55,14 @@ const client = new tmi.client(opts);
 
 // Register our event handlers (defined below)
 client.on('message', onMessageHandler);
+client.on('join', onJoinedHandler);
 client.on('connected', onConnectedHandler);
 
 // Connect to Twitch:
 client.connect();
 
 // Called every time a message comes in
-function onMessageHandler (target, context, msg, self) 
+function onMessageHandler (channel, user, msg, self) 
 {
   if (self) { return; } // Ignore messages from the bot
 
@@ -62,12 +71,12 @@ function onMessageHandler (target, context, msg, self)
   var allowSend = 0;
   
   
-  console.log(`${context.username}, checking light system subscriber Accesss!`);
+  console.log(`${user.username}, checking light system subscriber Accesss!`);
   var subscriber = false;
-  if(context.badges.subscriber != undefined || context.badges.broadcaster != undefined || context.badges.moderator != undefined)
+  if(user.badges != null && (user.badges.subscriber != null || user.badges.broadcaster != null || user.badges.moderator != null))
   	subscriber = true;
   
-  	mySqlCon.query(`SELECT ID,enabled FROM twitchUsers where twitchUser = "${context.username}"`, function (err, result, fields) 
+  	mySqlCon.query(`SELECT ID,enabled FROM twitchUsers where twitchUser = "${user.username}"`, function (err, result, fields) 
 	{
 
 	if (err) throw err;
@@ -77,7 +86,7 @@ function onMessageHandler (target, context, msg, self)
 		if(result.length != 0)
 		  id = result[0].ID;
 		
-		var sql = `insert into twitchUsers(ID,twitchUser,enabled) values( ${id},"${context.username}",${subscriber}) ON DUPLICATE KEY UPDATE enabled = VALUES(enabled)`;
+		var sql = `insert into twitchUsers(ID,twitchUser,enabled) values( ${id},"${user.username}",${subscriber}) ON DUPLICATE KEY UPDATE enabled = VALUES(enabled)`;
 		
 				mySqlCon.query(sql, function (err, result, fields) 
 	{
@@ -96,12 +105,12 @@ function onMessageHandler (target, context, msg, self)
 	
   
   if(subscriber == false)
-  	console.log(`${context.username}, is not a subscriber, limited access to LightSystem!`);		
+  	console.log(`${user.username}, is not a subscriber, limited access to LightSystem!`);		
   	
   if (commandName.split(' ')[0] === '!lumawin')
   {
   
-	mySqlCon.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "${target}"`, function (err, result, fields) 
+	mySqlCon.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "${channel}"`, function (err, result, fields) 
 	{
 
 	    if (err) throw err;
@@ -109,7 +118,7 @@ function onMessageHandler (target, context, msg, self)
 	    {
 		allowSend = result[0].allowAllTwitchUsers;
 		mqttQueue = result[0].mqttQueue;
-		    mySqlCon.query(`SELECT enabled FROM twitchUsers where twitchUser = "${context.username}"`, function (err, result, fields) {
+		    mySqlCon.query(`SELECT enabled FROM twitchUsers where twitchUser = "${user.username}"`, function (err, result, fields) {
 	       
 	        if (err) throw err;
 	    	if(result.length && result[0].enabled == 1)
@@ -122,14 +131,14 @@ function onMessageHandler (target, context, msg, self)
 	    }
 	    else
 	    {
-		    console.log(`* ${target} Light System is currently Not Running!`);
-		    client.say(target, `${context.username}, sorry, light System is currently Not Running!.  Speak to channel operator!`);
+		    console.log(`* ${channel} Light System is currently Not Running!`);
+		    client.say(target, `${user.username}, sorry, light System is currently Not Running!.  Speak to channel operator!`);
 	    }
 	    
 		if(allowSend == 1)
 		 {
 			mqttClient.publish(mqttQueue, commandName);   
-			console.log(`* Executed ${commandName} channel: ${target} user: ${context.username} `);
+			console.log(`* Executed ${commandName} channel: ${channel} user: ${user.username} `);
 
 		 }
 		 else
@@ -144,18 +153,40 @@ function onMessageHandler (target, context, msg, self)
   }
   else if(commandName.split(' ')[0] === '!help')
   {
-  	client.say(target, `${context.username}, sorry, light System help is still under construction!  Speak to channel operator!`);
+  	client.say(target, `${user.username}, sorry, light System help is still under construction!  Speak to channel operator!`);
   
   }
 else if(commandName.split(' ')[0] === '!colors')
   {
-        client.say(target, `${context.username}, here is a website you can try! https://www.color-hex.com`);
+        client.say(target, `${user.username}, here is a website you can try! https://www.color-hex.com`);
   
   }
   
   
  
 }
+
+
+function dehash(channel) 
+{
+	return channel.replace(/^#/, '');
+}
+
+function capitalize(n) {
+	return n[0].toUpperCase() +  n.substr(1);
+}
+
+// Called every time the bot connects to Twitch chat
+function onJoinedHandler (channel, username) 
+{
+  if(username == client.getUsername()) 
+  {
+  
+
+  }
+
+}
+
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) 

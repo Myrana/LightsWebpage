@@ -187,6 +187,10 @@ $(function() {
         var width = document.getElementById("WidthId");
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
+        var gammaCorrection = document.getElementById("gammaCorrection");
+        var clearStart =  document.getElementById("clearStart");
+        var clearFinish =  document.getElementById("clearFinish");
+	
 
         color1.setAttribute('disabled', true);
         color2.setAttribute('disabled', true);
@@ -195,22 +199,28 @@ $(function() {
         delay.setAttribute('disabled', true);
         width.setAttribute('disabled', true);
         minutes.setAttribute('disabled', true);
-		colorEvery.setAttribute('disabled', true);
+        
+       /* gammaCorrection.checked = false;
+        clearStart.checked = false;
+        clearFinish.checked = false;
+	*/
+        
+	colorEvery.setAttribute('disabled', true);
 		
-        if(showMap.get(index).hasWidth == 1)
+        if(showMap.get(index).hasWidth === 1)
         {
             width.setAttribute('disabled', false);
             width.disabled = false;
 
         }
 
-        if(showMap.get(index).hasMinutes == 1)
+        if(showMap.get(index).hasMinutes === 1)
         {
             minutes.setAttribute('disabled', false);
             minutes.disabled = false;
         }
 
-        if(showMap.get(index).hasDelay == 1)
+        if(showMap.get(index).hasDelay === 1)
         {
             delay.setAttribute('disabled', false);
             delay.disabled = false;
@@ -235,14 +245,14 @@ $(function() {
             color3.disabled = false;
         }
 
-        if(showMap.get(index).numColors == 4)
+        if(showMap.get(index).numColors === 4)
         {
             color4.setAttribute('disabled', false);
             color4.disabled = false;
         }
         
         
-        if(showMap.get(index).colorEvery == 1)
+        if(showMap.get(index).colorEvery === 1)
         {
             colorEvery.setAttribute('disabled', false);
             colorEvery.disabled = false;
@@ -277,20 +287,20 @@ $(function() {
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		
-        if(showMap.get(index).hasWidth == 1)
+        if(showMap.get(index).hasWidth === 1)
         {
             width.setAttribute('disabled', false);
             width.disabled = false;
 
         }
 
-        if(showMap.get(index).hasMinutes == 1)
+        if(showMap.get(index).hasMinutes === 1)
         {
             minutes.setAttribute('disabled', false);
             minutes.disabled = false;
         }
 
-        if(showMap.get(index).hasDelay == 1)
+        if(showMap.get(index).hasDelay === 1)
         {
             delay.setAttribute('disabled', false);
             delay.disabled = false;
@@ -315,14 +325,14 @@ $(function() {
             color3.disabled = false;
         }
 
-        if(showMap.get(index).numColors == 4)
+        if(showMap.get(index).numColors === 4)
         {
             color4.setAttribute('disabled', false);
             color4.disabled = false;
         }
         
         
-        if(showMap.get(index).colorEvery == 1)
+        if(showMap.get(index).colorEvery === 1)
         {
             colorEvery.setAttribute('disabled', false);
             colorEvery.disabled = false;

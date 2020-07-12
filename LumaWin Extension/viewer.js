@@ -37,17 +37,19 @@ twitch.onContext(function(context) {
     twitch.rig.log(context);
 });
 
+
+//Here is where we want to send them a payload, at some point, just not now.
+//for now we will just comment out the get call as it is not needed.
 twitch.onAuthorized(function(auth) {
     // save our credentials
 twitch.rig.log('user-' + auth.userId + '-token ' + auth.token);
     token = auth.token;
     tuid = auth.userId;
 
-
-  
     setAuth(token);
- //   $.ajax(requests.get);
+   // $.ajax(requests.get);
 });
+
 
 function updateBlock(hex) {
     //twitch.rig.log('Updating block color');
@@ -103,19 +105,19 @@ $(function() {
         if(showMap.get(index).numColors >= 3)
            requests.set.url += '&color3=' + encodeURIComponent(color3.value);
 	
-        if(showMap.get(index).numColors == 4)
+        if(showMap.get(index).numColors === 4)
            requests.set.url += '&color4=' + encodeURIComponent(color4.value);
            
-        if(showMap.get(index).hasWidth == 1)
+        if(showMap.get(index).hasWidth === 1)
            requests.set.url += '&width=' + width.value;
        
-        if(showMap.get(index).hasMinutes == 1)
+        if(showMap.get(index).hasMinutes === 1)
            requests.set.url += '&minutes=' + minutes.value;
        
-        if(showMap.get(index).hasDelay == 1)
+        if(showMap.get(index).hasDelay === 1)
            requests.set.url += '&delay=' + delay.value;
            
-        if(showMap.get(index).colorEvery == 1)
+        if(showMap.get(index).colorEvery === 1)
 	 requests.set.url += '&colorevery=' + colorEvery.value;
 
 	if(gammaCorrection.checked)
@@ -128,13 +130,14 @@ $(function() {
      	if(clearFinish.checked)
           requests.set.url += '&clearfinish=1';
                   
+      
         
         twitch.rig.log('*******:' + requests.set.url);
         
         $.ajax(requests.set);
     });
 
-    // listen for incoming broadcast message from our EBS
+    // listen for incoming broadcast message from our EBS Where we will process the recieved message.
     twitch.listen('broadcast', function (target, contentType, color) {
         twitch.rig.log('Received broadcast color');
         updateBlock(color);
@@ -145,19 +148,6 @@ $(function() {
 
 /*
 
-        var clearStart =  document.getElementById("clearStart");
-        var clearFinish =  document.getElementById("clearFinish");
-	var powerOn = document.getElementById("powerOn");
-        
-
-     
-	if(clearStart.checked())
-          qryString += '&clearstart=1';
-        
-     	if(clearFinish.checked())
-          qryString += '&clearfinish=1';
-
-         
          if(powerOn.checked())
            qryString += '&poweron=1';
 */
