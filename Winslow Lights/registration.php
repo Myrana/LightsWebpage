@@ -39,7 +39,7 @@ if (!empty($_POST))
 <head>
 <meta charset="UTF-8">
 <title>Registration Page</title>
-<script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
+<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
 <link href="css/Styles.css" rel="stylesheet" type="text/css">
 </head>
 

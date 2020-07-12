@@ -295,7 +295,7 @@ $conn->close();
 
 ?>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(function () {
         $("#motionFeature").click(function () {
@@ -349,7 +349,7 @@ $conn->close();
     <title>Config Page</title>
     <!-- Bootstrap -->
 	<link href="../css/bootstrap-4.4.1.css" rel="stylesheet">
-	<script src="https://kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>	
+	<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>	
 	<link href="css/Styles.css" rel="stylesheet" type="text/css">
   </head>
  
