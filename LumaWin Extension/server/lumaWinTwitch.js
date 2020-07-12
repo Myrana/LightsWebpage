@@ -58,21 +58,21 @@ mySqlCon.connect(function(err) {
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
 // by default.  Do not use this in production.
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // Use verbose logging during development.  Set this to false for production.
 const verboseLogging = true;
 const verboseLog = verboseLogging ? console.log.bind(console) : () => { };
 
 // Service state variables
-const initialColor = color('#6441A4');      // super important; bleedPurple, etc.
+//const initialColor = color('#6441A4');      // super important; bleedPurple, etc.
 const serverTokenDurationSec = 30;          // our tokens for pubsub expire after 30 seconds
 const userCooldownMs = 1000;                // maximum input rate per user to prevent bot abuse
 const userCooldownClearIntervalMs = 60000;  // interval to reset our tracking object
 const channelCooldownMs = 1000;             // maximum broadcast rate per channel
 const bearerPrefix = 'Bearer ';             // HTTP authorization headers have this prefix
-const colorWheelRotation = 30;
-const channelColors = {};
+//const colorWheelRotation = 30;
+//const channelColors = {};
 const channelCooldowns = {};                // rate limit compliance
 let userCooldowns = {};                     // spam prevention
 
@@ -133,14 +133,14 @@ const server = new Hapi.Server(serverOptions);
   server.route({
     method: 'POST',
     path: '/lumawinTwitch/runshow',
-    handler: colorCycleHandler,
+    handler: showRequestHandler,
   });
 
   // Handle a new viewer requesting the color.
   server.route({
     method: 'GET',
     path: '/lumawinTwitch/query',
-    handler: colorQueryHandler,
+    handler: registerConnectionHandler,
   });
 
   // Start the server.
@@ -206,23 +206,18 @@ function hexToRgb(hex) {
 //Channel:546623929 user: U4qhxbLMEhM5gY0T3Sy4v snow on luma
 
 
-function colorCycleHandler(req) {
+function showRequestHandler(req) {
   // Verify all requests.
   console.log(`****************** colorCycleHandler ***************************`);
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
  
   console.log(req.url.query);
-  
+//  console.log(req);
   var JSONObj;
   var colorRGB;
   var onecolor = true;
   JSONObj = '{"show":"' + req.url.query.show + '"';
-  if(req.url.query.color1 || req.url.query.color2 || req.url.query.color3 || req.url.query.color4)
-  {
- 
- 	
-  
   
   JSONObj += ',"brightness":"' + req.url.query.brightness + '"';
   
@@ -247,6 +242,12 @@ function colorCycleHandler(req) {
    if(req.url.query.clearfinish) 
   	JSONObj += ',"clearFinish":' + req.url.query.clearfinish;
 
+  
+  
+  if(req.url.query.color1 || req.url.query.color2 || req.url.query.color3 || req.url.query.color4)
+  {
+ 
+ 	
   if(req.url.query.color1) 
   	{
    	       colorRGB =  hexToRgb(req.url.query.color1);       
@@ -321,7 +322,7 @@ function colorCycleHandler(req) {
 
   
   // Store the color for the channel.
-  let currentColor = channelColors[channelId] || initialColor;
+ // let currentColor = channelColors[channelId] || initialColor;
 
   // Bot abuse prevention:  don't allow a user to spam the button.
   if (userIsInCooldown(opaqueUserId)) {
@@ -343,7 +344,7 @@ function colorCycleHandler(req) {
   
 }
 
-function colorQueryHandler(req) {
+function registerConnectionHandler(req) {
   // Verify all requests.
   
    console.log(`****************** colorQueryHandler ***************************`);
@@ -352,9 +353,9 @@ function colorQueryHandler(req) {
   // Get the color for the channel from the payload and return it.
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   
-  const currentColor = color(channelColors[channelId] || initialColor).hex();
-  verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
-  return currentColor;
+//  const currentColor = color(channelColors[channelId] || initialColor).hex();
+ // verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
+  return 12;
 }
 
 function attemptColorBroadcast(channelId) {

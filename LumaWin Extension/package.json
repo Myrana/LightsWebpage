@@ -22,6 +22,10 @@
     "inert": "^5.1.0",
     "jsonwebtoken": "^8.2.0",
     "request": "^2.85.0",
-    "selfsigned": "^1.10.2"
+    "selfsigned": "^1.10.2",
+    "mqtt": "^4.1.0",
+    "mysql": "^2.18.1",
+    "sscanf": "^0.8.0"
+    
   }
 }
