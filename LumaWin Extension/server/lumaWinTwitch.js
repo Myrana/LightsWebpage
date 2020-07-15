@@ -199,10 +199,20 @@ function hexToRgb(hex) {
 function showRequestHandler(req) {
   // Verify all requests.
   console.log(`****************** colorCycleHandler ***************************`);
+
+
+
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
  
   console.log(req.url.query);
+  
+  // Bot abuse prevention:  don't allow a user to spam the button.
+  if (userIsInCooldown(opaqueUserId)) {
+    throw Boom.tooManyRequests(STRINGS.cooldown);
+  }
+
+
 //  console.log(req);
   var JSONObj;
   var colorRGB;
@@ -277,6 +287,8 @@ function showRequestHandler(req) {
 
 pool.getConnection(function(err, connection) 
 {
+
+ 
   // Use the connection 
   if(!connection)
   {
@@ -327,10 +339,7 @@ pool.getConnection(function(err, connection)
   // Store the color for the channel.
  // let currentColor = channelColors[channelId] || initialColor;
 
-  // Bot abuse prevention:  don't allow a user to spam the button.
-  if (userIsInCooldown(opaqueUserId)) {
-    throw Boom.tooManyRequests(STRINGS.cooldown);
-  }
+  
 
 /*
   // Rotate the color as if on a color wheel.
