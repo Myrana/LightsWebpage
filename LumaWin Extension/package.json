@@ -1,5 +1,5 @@
 {
-  "name": "extension-LimaWinLights",
+  "name": "extension-LumaWinLights",
   "version": "1.0.0",
   "description": "Extension to control LumaWin Systems via Twitch",
   "main": "index.js",

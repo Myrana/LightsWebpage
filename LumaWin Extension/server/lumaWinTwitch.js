@@ -25,11 +25,9 @@ const ext = require('commander');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const mqtt = require('mqtt');
-const mysql = require('mysql');
 
 
 const mqttClient = mqtt.connect('mqtt://Romoserver.local', {clientId:"TwitchPanel"});
-
 mqttClient.on('connect', () => {
 	console.log('MQTT Is Connected!');
    	
@@ -38,22 +36,14 @@ mqttClient.on('connect', () => {
 mqttClient.on("error",function(error){ console.log("Can't connect"+error)});
 
 
-
-
-var mySqlCon = mysql.createConnection({
-  host: "Romoserver.local",
-  user: "hellweek",
-  password: "covert69guess",
-  database: "LedLightSystem"
-});
-
-mySqlCon.connect(function(err) {
-  if (err) throw err;
-  console.log("MySQL Server Is Connected!");
-});
-
-
-
+var mysql = require('mysql');
+var pool  = mysql.createPool({
+	  host: "Romoserver.local",
+	  user: "hellweek",
+	  password: "covert69guess",
+	  database: "LedLightSystem"
+	});
+ 
 
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
@@ -283,29 +273,42 @@ function showRequestHandler(req) {
 
   JSONObj += '}';
   
- console.log('Check Channel:' + channelId + ' user: ' + opaqueUserId );
+ console.log('*Check Channel:' + channelId + ' user: ' + opaqueUserId );
 
- mySqlCon.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "` + channelId + `"`, function (err, result, fields) 
-	{
-
-
-	    if (err) throw err;
-	    if(result.length && result[0].enabled == 1)
+pool.getConnection(function(err, connection) 
+{
+  // Use the connection 
+  if(!connection)
+  {
+  	console.log("*** No connection Object Created.  Is SQL Server Running. ***");
+  	return;
+  }
+  
+  connection.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "` + channelId + `"`, function (error, results, fields) 
+  {
+    if(!error)
+    {
+	    if(results.length && results[0].enabled == 1)
 	    {
-		mqttQueue = result[0].mqttQueue;
+		mqttQueue = results[0].mqttQueue;
 		console.log('Sending to: ' + mqttQueue + ' for Channel:' + channelId + ' user: ' + opaqueUserId);
-
-		 console.log(mqttQueue);
 		 mqttClient.publish(mqttQueue, JSONObj);
 	    }
 	    else
 	    {
 		    console.log(`* ${target} Light System is currently Not Running!`);
-		    client.say(target, `${context.username}, sorry, light System is currently Not Running!.  Speak to channel operator!`);
 	    }
-	    
-    });
-	    
+    }
+    else
+    {
+    	console.log("*** Error: " + error);
+    }
+    
+    // And done with the connection. 
+    connection.release();
+ 
+  });
+});
 
 
 
