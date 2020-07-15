@@ -447,6 +447,10 @@ input[type=color]:disabled{
     display: none;
 }
 
+input[type="color"] {
+    width: 18%;
+}
+
 input[type=number] {
     width: 25%;
 }

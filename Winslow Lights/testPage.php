@@ -478,7 +478,7 @@ $conn->close();
         <p><label for="Width">Width:</label>
 <input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
 
-<p><label for="ColorEvery">Color every x led:</label>
+<p><label for="ColorEvery">X led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
 </div>
@@ -491,7 +491,7 @@ $conn->close();
 
 
 
-    <p><label for="NumMinutes">Number of minutes:</label>
+    <p><label for="NumMinutes">Minutes:</label>
 <input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
 </p>
 
