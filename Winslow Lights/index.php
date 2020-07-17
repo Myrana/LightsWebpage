@@ -12,7 +12,7 @@
 <?php include("nav.php");  ?>
 	
 <h1>Home</h1>
-<!--	<form>
+<form>
 	
 		<p>Welcome to Winslow's Illuminous LEDs a powerful at home accent lightning company powered by raspberry pis.</p>
 		
@@ -21,8 +21,8 @@
 		</p>
 	
 	</form>
-	-->
-	<div class="timeline">
+	
+	<!--<div class="timeline">
   <div class="container left">
     <div class="content">
       <h2>2017</h2>
@@ -82,8 +82,8 @@
 			
 			</div>
 			
-		</div>
-	</div>
+		</div>-->
+<!--	</div>-->
 	
 </body>
 	<?php include("footer.php"); ?>
