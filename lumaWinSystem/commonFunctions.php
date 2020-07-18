@@ -27,12 +27,27 @@ $_SESSION['servername'] = "romoserver.local";
 $_SESSION['username'] = "hellweek";
 $_SESSION['password'] = "covert69guess";
 $_SESSION['dbName'] = "LedLightSystem";
+$_SESSION['dbNameLumaWin'] = "lumaWin";
 
 
 function getDatabaseConnection()
 {
 	// Create connection
 	$conn = new mysqli($_SESSION['servername'], $_SESSION['username'], $_SESSION['password'] , $_SESSION['dbName']);
+	// Check connection
+	if ($conn->connect_error) 
+	{
+	  die("Connection failed: " . $conn->connect_error);
+	} 
+	
+	return $conn;
+}
+
+
+function getDatabaseConnectionLumaWin()
+{
+	// Create connection
+	$conn = new mysqli($_SESSION['servername'], $_SESSION['username'], $_SESSION['password'] , $_SESSION['dbNameLumaWin']);
 	// Check connection
 	if ($conn->connect_error) 
 	{

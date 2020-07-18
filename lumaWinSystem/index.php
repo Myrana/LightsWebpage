@@ -1,4 +1,30 @@
 
+<?php
+
+include_once('commonFunctions.php');
+
+$conn = getDatabaseConnectionLumaWin();
+
+
+$left = "";
+$right = "";
+
+$results = mysqli_query($conn,"SELECT * FROM lumaWinHistory");
+if(mysqli_num_rows($results) > 0)
+{
+    while($row = mysqli_fetch_array($results))
+    {
+		
+	}
+	
+}
+
+$conn->close();
+
+
+?>
+
+
 <!doctype html>
 <html>
 <head>
