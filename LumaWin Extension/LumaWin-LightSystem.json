@@ -27,8 +27,6 @@
       "viewerType": "Logged-In Viewer"
     }
   ],
-  "frontendCommand": "",
-  "frontendFolderName": "/home/hellweek/code/LightsWebpage/LumaWin Extension",
   "manifest": {
     "anchor": "panel",
     "assetUrls": [],
@@ -36,7 +34,7 @@
     "bitsEnabled": false,
     "canInstall": true,
     "configUrl": "https://localhost:8080/config.html",
-    "configurationLocation": "none",
+    "configurationLocation": "hosted",
     "description": "Hello,\nLumaWin Extensions is only useful if you have LumaWin Light Systems Installed.  Information as to how you can build a LumaWin System can be found on our channel.  Please feel free to wander over to our channel as most times you can see a live demo of the Extension.  It does a nice job of showing the capabilities of this system.  \n\nThe user interface is simple and self explanatory.  Simply pick one of different shows, or combine shows to create different effects, provide the details that become enabled, such as minutes to run, delays, colors. We hope you do check us out, and learn more about the exciting features we will be providing in future updates.\n\n",
     "eulaTosUrl": "",
     "hasChatSupport": false,
@@ -63,26 +61,28 @@
     "summary": "LumaWin Lighting System used to control LED Strips",
     "supportEmail": "robertwinslow@comcast.net",
     "vendorCode": "",
-    "version": "0.03",
+    "version": "0.05",
     "viewerSummary": "LumaWin Extension allows you to control the LumWin Light System From Twitch.",
     "viewerUrl": "https://localhost:8080/panel.html",
     "viewerUrls": {
       "panel": "https://localhost:8080/panel.html"
     },
     "views": {
-      "config": {
-        "canLinkExternalContent": false,
-        "viewerUrl": "https://localhost:8080/config.html"
-      },
       "panel": {
-        "canLinkExternalContent": false,
+        "viewerUrl": "https://localhost:8080/panel.html",
         "height": 350,
-        "viewerUrl": "https://localhost:8080/panel.html"
+        "canLinkExternalContent": false
+      },
+      "config": {
+        "viewerUrl": "https://localhost:8080/config.html",
+        "canLinkExternalContent": false
       }
     },
     "whitelistedConfigUrls": [],
     "whitelistedPanelUrls": []
   },
+  "frontendCommand": "",
+  "frontendFolderName": "/home/hellweek/code/LightsWebpage/LumaWin Extension",
   "name": "LumaWin-LightSystem",
   "version": 2
 }

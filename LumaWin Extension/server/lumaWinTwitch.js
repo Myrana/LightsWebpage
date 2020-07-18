@@ -57,7 +57,7 @@ const verboseLog = verboseLogging ? console.log.bind(console) : () => { };
 // Service state variables
 //const initialColor = color('#6441A4');      // super important; bleedPurple, etc.
 const serverTokenDurationSec = 30;          // our tokens for pubsub expire after 30 seconds
-const userCooldownMs = 60000;                // maximum input rate per user to prevent bot abuse
+const userCooldownMs = 10000;                // maximum input rate per user to prevent bot abuse
 const userCooldownClearIntervalMs = 600000;  // interval to reset our tracking object
 const channelCooldownMs = 1000;             // maximum broadcast rate per channel
 const bearerPrefix = 'Bearer ';             // HTTP authorization headers have this prefix

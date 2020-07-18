@@ -11,14 +11,15 @@ if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
   exit();
 }
 
-$twitchSupport =  '0';
-		if(!empty($_POST['twitchSupport']))
-		{
-       			$sendUserID = '1';
-		}
+		
 
 if(isset($_REQUEST['Edit']))
 {
+	$twitchSupport =  '0';
+	if(!empty($_POST['twitchSupport']))
+	{
+			$twitchSupport = '1';
+	}
 	
 	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
 	"',stripHeight = '" . $_POST['StripHeight'] . "',stripWidth = '" . $_POST['StripWidth'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
@@ -121,6 +122,13 @@ if(isset($_REQUEST['Edit']))
 
 if(isset($_REQUEST['Config']))
 {
+
+	$twitchSupport =  '0';
+	if(!empty($_POST['twitchSupport']))
+	{
+			$twitchSupport = '1';
+	}
+
 
     $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
 		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . 
@@ -415,10 +423,8 @@ function setLightSystemSettings()
     userID.value = system.userId;
 	mqttRetries.value = system.mqttRetries;
 	mqttRetryDelay.value = system.mqttRetryDelay;
-
-    if(twitchSupport.checked == true)
-        twitchSupport.checked = true;
-	
+    twitchSupport.checked = system.twitchSupport;
+    
 	if(motionFeature.checked == true)
         motionFeature.click();
 
@@ -552,7 +558,7 @@ function setLightSystemSettings()
 		
 		<p>
 		
-			<label for="mqttRetryDelay" id="mqttRetryDelay" name="mqttRetryDelay">MQTT Retry Delay:</label> <br />
+			<label for="mqttRetryDelay">MQTT Retry Delay:</label> <br />
 			<input type="number" id="mqttRetryDelay" name="mqttRetryDelay" value="2500" />
 			
 		</p>
