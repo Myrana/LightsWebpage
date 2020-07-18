@@ -362,8 +362,8 @@ $conn->close();
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Config Page</title>
-    <!-- Bootstrap -->
-	<link href="../css/bootstrap-4.4.1.css" rel="stylesheet">
+    
+	
 	<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>	
 	<link href="css/Styles.css" rel="stylesheet" type="text/css">
   </head>
@@ -670,14 +670,6 @@ function setLightSystemSettings()
 		</div>
 	<?php include('footer.php'); ?>
 	
-	
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-	<script src="../js/jquery-3.4.1.min.js"></script>
-
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="../js/popper.min.js"></script> 
-	<script src="../js/bootstrap-4.4.1.js"></script>
   </body>
 
 </html>
