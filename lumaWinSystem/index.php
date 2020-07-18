@@ -5,7 +5,7 @@ if(isset($_REQUEST['Login']))
 { 
 	$conn = getDatabaseConnection();
 	$_SESSION['authorized'] = 0;
-	$qry = "SELECT ID,isAdmin FROM registrationTable WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
+	$qry = "SELECT ID,isAdmin FROM lumaUsers WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
 	
 	$row = mysqli_query($conn, $qry);
 	if(mysqli_num_rows($row) == 1)

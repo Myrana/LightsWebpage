@@ -16,7 +16,7 @@ if (!empty($_POST))
 
 	//$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType) VALUES('" . '$lightSystemName' . "','" . '$serverHostName' . "', 257)";
 
-	$sql = "INSERT INTO registrationTable(username, password, email, phonenumber, twitter) VALUES('" . $_POST['username'] . "','" . $_POST['password'] . "', '" . $_POST['email'] . "','" . $_POST['phonenumber'] . "','" . $_POST['twitter'] . "')";
+	$sql = "INSERT INTO lumaUsers(username, password, email, phonenumber, twitter) VALUES('" . $_POST['username'] . "','" . $_POST['password'] . "', '" . $_POST['email'] . "','" . $_POST['phonenumber'] . "','" . $_POST['twitter'] . "')";
 
 
 	if ($conn->query($sql) === TRUE) {
