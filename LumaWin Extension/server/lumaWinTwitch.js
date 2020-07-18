@@ -57,8 +57,8 @@ const verboseLog = verboseLogging ? console.log.bind(console) : () => { };
 // Service state variables
 //const initialColor = color('#6441A4');      // super important; bleedPurple, etc.
 const serverTokenDurationSec = 30;          // our tokens for pubsub expire after 30 seconds
-const userCooldownMs = 1000;                // maximum input rate per user to prevent bot abuse
-const userCooldownClearIntervalMs = 60000;  // interval to reset our tracking object
+const userCooldownMs = 60000;                // maximum input rate per user to prevent bot abuse
+const userCooldownClearIntervalMs = 600000;  // interval to reset our tracking object
 const channelCooldownMs = 1000;             // maximum broadcast rate per channel
 const bearerPrefix = 'Bearer ';             // HTTP authorization headers have this prefix
 //const colorWheelRotation = 30;
@@ -198,7 +198,7 @@ function hexToRgb(hex) {
 
 function showRequestHandler(req) {
   // Verify all requests.
-  console.log(`****************** colorCycleHandler ***************************`);
+  console.log(`****************** showRequestHandler ***************************`);
 
 
 
@@ -208,7 +208,9 @@ function showRequestHandler(req) {
   console.log(req.url.query);
   
   // Bot abuse prevention:  don't allow a user to spam the button.
-  if (userIsInCooldown(opaqueUserId)) {
+  if (userIsInCooldown(opaqueUserId)) 
+  {
+    console.log('*To many requests from Channel:' + channelId + ' user: ' + opaqueUserId );
     throw Boom.tooManyRequests(STRINGS.cooldown);
   }
 
@@ -359,7 +361,7 @@ pool.getConnection(function(err, connection)
 function registerConnectionHandler(req) {
   // Verify all requests.
   
-   console.log(`****************** colorQueryHandler ***************************`);
+   console.log(`****************** registerConnectionHandler ***************************`);
     
   const payload = verifyAndDecode(req.headers.authorization);
   // Get the color for the channel from the payload and return it.
