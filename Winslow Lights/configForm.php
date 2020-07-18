@@ -11,14 +11,18 @@ if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
   exit();
 }
 
-
+$twitchSupport =  '0';
+		if(!empty($_POST['twitchSupport']))
+		{
+       			$sendUserID = '1';
+		}
 
 if(isset($_REQUEST['Edit']))
 {
 	
 	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
 	"',stripHeight = '" . $_POST['StripHeight'] . "',stripWidth = '" . $_POST['StripWidth'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
-	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
 	if ($conn->query($sql) === TRUE)
 	{
 		
@@ -118,9 +122,9 @@ if(isset($_REQUEST['Edit']))
 if(isset($_REQUEST['Config']))
 {
 
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma) VALUES('" . $_POST['LightSystemName'] . 
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
 		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . 
-		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "')";
+		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "','" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
 	
 	if ($conn->query($sql) === TRUE)
     {
@@ -252,6 +256,9 @@ if(mysqli_num_rows($results) > 0)
         $lightSystemsScript .= "    system.enabled = " . $row['enabled'] .";\r";
         $lightSystemsScript .= "    system.userId = " . $row['userId'] .";\r";
         $lightSystemsScript .= "    system.gamma = " . $row['gamma'] .";\r";
+		$lightSystemsScript .= "    system.twitchSupport = " . $row['twitchSupport'] .";\r";
+		$lightSystemsScript .= "    system.mqttRetries = " . $row['mqttRetries'] .";\r";
+		$lightSystemsScript .= "    system.mqttRetryDelay = " . $row['mqttRetryDelay'] .";\r";
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
@@ -506,7 +513,8 @@ function setLightSystemSettings()
 
 
 </p>
-
+<div class="clearfix">
+	<div class="column" style="width: 50%">
 <p><label for="GPIO">GPIO Pin:</label><br />
 	  <input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></p>
 	
@@ -517,16 +525,40 @@ function setLightSystemSettings()
 	<p><label for="ongamma">Gamma:</label><br />
 <input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1">
 		</p>
-				  
+	
+</div>
+
+	<div class="column" style="width: 50%">
+		<p>
+			<label for="twitchSupport">Twitch Support</label>
+			<input type="checkbox" id="twitchSupport" name="twitchSupport" />
+			</p>
+		
+		<p>
+		
+			<label for="mqttRetries">MQTT Retries:</label> <br />
+			<input type="number" id="mqttRetries" name="mqttRetries" value="2000" />
+		
+		</p>
+		
+		<p>
+		
+			<label for="mqttRetryDelay" id="mqttRetryDelay" name="mqttRetryDelay">MQTT Retry Delay:</label> <br />
+			<input type="number" id="mqttRetryDelay" name="mqttRetryDelay" value="2500" />
+			
+		</p>
+	
+	</div>
+	
+</div>		
 
 	<p><label for="userID">Light System User:</label><br />
 	<select name="userID" id="userID">
 		<?php echo $users;?>
 		</select>	
 	</p>	
-	
-	</div>
-		</div>		  
+			</div>
+				</div>		  
 <div class="column" style="width: 33%">
 <div class="ColumnStyles">	
 <p><label for="motionFeature">Use a motion sensor?</label>
