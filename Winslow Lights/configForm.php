@@ -394,6 +394,9 @@ function setLightSystemSettings()
     var endTime = document.getElementById("endTime");
 	var luxThreshold = document.getElementById("luxThreshHold");
 	var luxPlaylist = document.getElementById("luxPlaylistId");
+	var twitchSupport = document.getElementById("twitchSupport");
+	var mqttRetries = document.getElementById("mqttRetries");
+	var mqttRetryDelay = document.getElementById("mqttRetryDelay");
 	
     var index = parseInt(systemNameId.value);
     var lightFeatureSettings = lightFeatureMap.get(index);
@@ -410,8 +413,13 @@ function setLightSystemSettings()
     gamma.value = system.gamma;
     stripType.value = system.stripType;
     userID.value = system.userId;
+	mqttRetries.value = system.mqttRetries;
+	mqttRetryDelay.value = system.mqttRetryDelay;
 
-    if(motionFeature.checked == true)
+    if(twitchSupport.checked == true)
+        twitchSupport.checked = true;
+	
+	if(motionFeature.checked == true)
         motionFeature.click();
 
     if(lightFeature.checked == true)
@@ -419,6 +427,7 @@ function setLightSystemSettings()
 
     if(timeFeature.checked == true)
         timeFeature.click();
+	
 
     if(lightFeatureSettings)
     {
