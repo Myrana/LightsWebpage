@@ -13,7 +13,7 @@ $_SESSION["DesignerEditMode"]  = 1;
     
 $conn = getDatabaseConnection();
 
-$playlistoption = '';
+$playlistoption = "";
 $playListScript = "";
 
 

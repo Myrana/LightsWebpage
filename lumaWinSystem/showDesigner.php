@@ -175,7 +175,7 @@ $conn->close();
     <input type="checkbox" name="clearFinish" id="clearFinish"></p>
     
 		<p><label for="On3" style="font-size: 14px">Gamma correction</label>
-		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" checked></p>
    
         <p><label for="On" style="font-size: 14px">Power on</label>
     <input type="checkbox" name="powerOn" id="powerOn" value="OFF">

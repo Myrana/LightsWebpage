@@ -224,7 +224,7 @@ while($query_data = mysqli_fetch_array($displayStrip))
 }
 
 
-$displayUsername = mysqli_query($conn,"SELECT ID, username FROM registrationTable ");
+$displayUsername = mysqli_query($conn,"SELECT ID, username FROM lumaUsers ");
 $users = '';
 while($query_data = mysqli_fetch_array($displayUsername))
 {
