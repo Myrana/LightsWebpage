@@ -620,7 +620,7 @@ function hexToRgb(hex)
 		</p>
 		
 		<p style="margin-top: -12px; margin-left: 3px">
-		<button onclick="location.href='/lightShows.php'; return false" name="btnLightShows">Light Shows</button>	
+		<button onclick="location.href='lightShows.php'; return false" name="btnLightShows">Light Shows</button>	
 		</p>
 	  
 	  </div>

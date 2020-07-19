@@ -362,7 +362,7 @@ $conn->close();
 
 	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
 	<p><button type="submit" name="btnPlaylist">Play</button>
-	<button onclick="location.href='/editShows.php'; return false" name="btnEditist">Editor</button></p>
+	<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button></p>
 	
 
 

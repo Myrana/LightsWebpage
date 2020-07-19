@@ -171,7 +171,7 @@ if(isset($_REQUEST['Config']))
 			 
 			 
 			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThresHold = VALUES(luxThreshHold);";
+			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
 
 			if ($conn->query($sql) === TRUE)
 				echo "<h1>Your record was added to the database successfully.</h1>";
