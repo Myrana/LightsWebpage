@@ -11,7 +11,23 @@ if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
   exit();
 }
 
-		
+
+if(isset($_REQUEST['Status']))
+{
+	$rcv_message = "";
+	$statusmsg = "";
+	requestSystemInfo(getServerHostName($_POST['LightSystem']));
+	if(!empty($rcv_message) )
+		{
+		echo $statusmsg."RCVD|" . $rcv_message;	
+		}
+	else
+		{
+		echo $statusmsg."TIMEDOUT"; 	
+		}		
+
+}
+
 
 if(isset($_REQUEST['Edit']))
 {
@@ -491,6 +507,7 @@ function setLightSystemSettings()
 			<button type="submit" name="Config">Add Record</button> 
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
+			<button type="submit" name="Status">Status Of LightSystem</button> 
 		
 		</div>
 	

@@ -73,3 +73,78 @@ function killUserSession()
 	header("Location: index.php");
 	exit();
 }
+
+
+function read_topic($arg_1) 
+{
+	$client = new Mosquitto\Client();
+	$client->onConnect('connect');
+//	$client->onDisconnect('disconnect');
+	$client->onSubscribe('subscribe');
+	$client->onMessage('message');
+	$client->connect('romoserver.local', 1883, 5);
+
+	$queue = $arg_1 . '/SystemStatus';
+	$client->subscribe($queue,1);
+	
+	$date1 = time();
+	$GLOBALS['rcv_message'] = '';
+	
+	while (true) 
+	{
+			$client->loop();
+			$date2 = time();
+			
+			if (($date2 - $date1) > 20) break;
+			if(!empty($GLOBALS['rcv_message'])) break;
+	}
+	 
+	$client->disconnect();
+	unset($client);						
+} 
+
+
+/*****************************************************************
+ * Call back functions for MQTT library
+ * ***************************************************************/					
+function connect($r) 
+{
+	
+		if($r == 0) echo "{$r}-CONX-OK|";
+		if($r == 1) echo "{$r}-Connection refused (unacceptable protocol version)|";
+		if($r == 2) echo "{$r}-Connection refused (identifier rejected)|";
+		if($r == 3) echo "{$r}-Connection refused (broker unavailable )|";        
+}
+ 
+function publish() {
+        global $client;
+        echo "Mesage published:";
+}
+ 
+function disconnect() {
+        echo "Disconnected|";
+}
+
+
+function subscribe() 
+{
+	    //**Store the status to a global variable - debug purposes 
+		$GLOBALS['statusmsg'] = $GLOBALS['statusmsg'] . "SUB-OK|";
+}
+
+function message($message) 
+{
+	    //**Store the status to a global variable - debug purposes
+		$GLOBALS['statusmsg']  = "RX-OK|";
+		
+		//**Store the received message to a global variable
+		$GLOBALS['rcv_message'] =  $message->payload;
+}
+
+function requestSystemInfo($arg_1)
+{
+	$sendArray["systemInfo"] = 1;		
+	sendMQTT($arg_1, json_encode($sendArray));	
+	read_topic($arg_1);
+}
+
