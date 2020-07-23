@@ -544,7 +544,7 @@ function setLightSystemSettings()
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
 			<button type="submit" name="Status">Status Of LightSystem</button> 
-			<div class='systemStyles' style="display: none;">
+			<div class='systemStyles'>
 			<?php echo $systemStatus; ?>
 			</div>
 			
