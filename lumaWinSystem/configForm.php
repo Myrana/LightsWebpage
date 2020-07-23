@@ -542,7 +542,9 @@ function setLightSystemSettings()
     {
 
         $systemInfo = json_decode($rcv_message);
+		echo "System name:";
         echo $systemInfo->{'systemName'};
+		echo "<br />";
         echo $systemInfo->{'showsInQueue'};
         echo $systemInfo->{'systemTemp'};
         if($systemInfo->{'showsInQueue'} > 0)
