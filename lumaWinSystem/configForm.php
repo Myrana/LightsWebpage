@@ -12,31 +12,6 @@ if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
 }
 
 
-/*if(isset($_REQUEST['Status']))
-{
-	$rcv_message = "";
-	$statusmsg = "";
-	requestSystemInfo(getServerHostName($_POST['LightSystem']));
-	if(!empty($rcv_message) )
-    {
-
-        $systemInfo = json_decode($rcv_message);
-        echo $systemInfo->{'systemName'};
-        echo $systemInfo->{'showsInQueue'};
-        echo $systemInfo->{'systemTemp'};
-        if($systemInfo->{'showsInQueue'} > 0)
-        {
-            echo $systemInfo->{'runningShow'};
-        }
-
-    }
-    else
-    {
-        echo $statusmsg."TIMEDOUT";
-    }
-
-}*/
-
 
 if(isset($_REQUEST['Edit']))
 {
@@ -243,8 +218,6 @@ $displayStrip = mysqli_query($conn,"SELECT ID, stripName FROM lStripType");
 $stripTypes = '';
 while($query_data = mysqli_fetch_array($displayStrip))
 {
-    //echo $query_data['stripName'];
-    //<option>$query_data['stripName']</option>
     $stripTypes .="<option value = '".$query_data['ID']."'>".$query_data['stripName']."</option>";
 }
 
@@ -253,8 +226,6 @@ $displayUsername = mysqli_query($conn,"SELECT ID, username FROM lumaUsers ");
 $users = '';
 while($query_data = mysqli_fetch_array($displayUsername))
 {
-    //echo $query_data['stripName'];
-    //<option>$query_data['stripName']</option>
     $users .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
 }
 	
@@ -331,6 +302,39 @@ if(mysqli_num_rows($results) > 0)
       
     }
 }
+
+
+
+if(isset($_REQUEST['Status']))
+{
+	$systemStatus = "";
+	$rcv_message = "";
+	$statusmsg = "";
+	requestSystemInfo(getServerHostName($_POST['LightSystem']));
+	if(!empty($rcv_message) )
+    {
+
+        $systemInfo = json_decode($rcv_message);
+		
+		$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
+		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";
+		$systemStatus .= "System Temp:" . $systemInfo->{'systemTemp'} . "<br />";
+		if($systemInfo->{'showsInQueue'} > 0)
+        {
+			$systemStatus .= "Running Show:" . $systemInfo->{'runningShow'} . "<br />";
+        }
+
+		
+    }
+    else
+    {
+        echo $statusmsg."TIMEDOUT";
+    }
+
+} 
+
+$systemStatus .= "</div></div></div></div>";
+
 $conn->close();
 
 ?>
@@ -513,6 +517,7 @@ function setLightSystemSettings()
 }
 
 
+
 </script>
 
 	  <h1>Config Page</h1>
@@ -529,66 +534,27 @@ function setLightSystemSettings()
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
 			<button type="submit" id="Status" name="Status">Status Of LightSystem</button> 
+			<div id='LoginModal' class='Loginmodal'><div class='Loginmodal-content'><span class='close'>&times;</span>
+		    <div class='column'><div class='ColumnStyles'>
+			<?php echo $systemStatus; ?>
 		
 			<!--<div class="systemInfo">-->
 				
-<?php 
-	if(isset($_REQUEST['Status']))
-{
-	$rcv_message = "";
-	$statusmsg = "";
-	requestSystemInfo(getServerHostName($_POST['LightSystem']));
-	if(!empty($rcv_message) )
-    {
-
-        $systemInfo = json_decode($rcv_message);
-		
-		echo "<div id='LoginModal' class='Loginmodal'><div class='Loginmodal-content'><span class='close'>&times;</span>";
-		echo "<div class='column'><div class='ColumnStyles'>";
-		
-		echo "System name:";
-        echo $systemInfo->{'systemName'};
-		echo "<br />";
-		
-		echo "Shows in queue:";
-        echo $systemInfo->{'showsInQueue'};
-		echo "< br />";
-		
-		echo "System Tempature:";
-        echo $systemInfo->{'systemTemp'};
-        
-		echo "</div></div></div></div>";
-		
-		if($systemInfo->{'showsInQueue'} > 0)
-        {
-            echo $systemInfo->{'runningShow'};
-        }
-
-    }
-    else
-    {
-        echo $statusmsg."TIMEDOUT";
-    }
-
-} 
-?>
 			
 			<script>
+
 var btn = document.getElementById("Status");
 var modal = document.getElementById("LoginModal");
-
 btn.onclick = function() 
 {
-
-//	alert("1");
-	
   modal.style.display = "block";
-   //alert("3");
+  
 }
 
 // When the user clicks on <span> (x), close the modal
 var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
+	
   modal.style.display = "none";
 }
 
@@ -596,6 +562,7 @@ span.onclick = function() {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
+	  
     modal.style.display = "none";
   }
 }
