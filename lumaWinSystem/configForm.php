@@ -575,14 +575,15 @@ function setLightSystemSettings()
 			
 			<script>
 var btn = document.getElementById("Status");
+var modal = document.getElementById("LoginModal");
 
 btn.onclick = function() 
 {
-	var modal = document.getElementById("LoginModal");
-	alert("1");
+
+//	alert("1");
 	
-  // modal.style.display = "block";
-   alert("3");
+  modal.style.display = "block";
+   //alert("3");
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -598,7 +599,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-alert("6");
+//alert("6");
 </script>	
 				
 <!--			</div>-->
