@@ -376,6 +376,18 @@ $conn->close();
             }
         });
     });
+	
+$(".show").click(function () {
+    $('.hide').toggle();
+    $(this).toggle();
+    $('.systemInfo').eq(0).toggle();
+});
+
+$('.hide').click(function () {
+    $('.show').toggle();
+    $(this).toggle();
+    $('.systemInfo').eq(0).toggle();
+});
 		
 </script>
 
@@ -518,6 +530,36 @@ function setLightSystemSettings()
 			<button type="submit" name="Delete">Delete Record</button>
 			<button type="submit" name="Status">Status Of LightSystem</button> 
 		
+			<div class="systemInfo">
+				
+<?php 
+	if(isset($_REQUEST['Status']))
+{
+	$rcv_message = "";
+	$statusmsg = "";
+	requestSystemInfo(getServerHostName($_POST['LightSystem']));
+	if(!empty($rcv_message) )
+    {
+
+        $systemInfo = json_decode($rcv_message);
+        echo $systemInfo->{'systemName'};
+        echo $systemInfo->{'showsInQueue'};
+        echo $systemInfo->{'systemTemp'};
+        if($systemInfo->{'showsInQueue'} > 0)
+        {
+            echo $systemInfo->{'runningShow'};
+        }
+
+    }
+    else
+    {
+        echo $statusmsg."TIMEDOUT";
+    }
+
+} ?>
+			
+			</div>
+			
 		</div>
 	
 	          <div class="column" style="width: 33%">
