@@ -304,18 +304,22 @@ if(mysqli_num_rows($results) > 0)
 }
 
 
-
+$systemStatus = "";
 if(isset($_REQUEST['Status']))
 {
-	$systemStatus = "";
+	
 	$rcv_message = "";
 	$statusmsg = "";
 	requestSystemInfo(getServerHostName($_POST['LightSystem']));
 	if(!empty($rcv_message) )
     {
-
+	
+			
         $systemInfo = json_decode($rcv_message);
 		
+		$systemStatus .= "<div class='systemStyles'>";
+		
+				
 		$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
 		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";
 		$systemStatus .= "System Temp:" . $systemInfo->{'systemTemp'} . "<br />";
@@ -324,7 +328,7 @@ if(isset($_REQUEST['Status']))
 			$systemStatus .= "Running Show:" . $systemInfo->{'runningShow'} . "<br />";
         }
 
-		
+		$systemStatus .= "</div>";
     }
     else
     {
@@ -544,15 +548,8 @@ function setLightSystemSettings()
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
 			<button type="submit" name="Status">Status Of LightSystem</button> 
-			<div class='systemStyles'>
+			
 			<?php echo $systemStatus; ?>
-			</div>
-			
-				
-			
-			
-				
-
 			
 		</div>
 	
