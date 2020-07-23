@@ -12,7 +12,7 @@ if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
 }
 
 
-if(isset($_REQUEST['Status']))
+/*if(isset($_REQUEST['Status']))
 {
 	$rcv_message = "";
 	$statusmsg = "";
@@ -35,7 +35,7 @@ if(isset($_REQUEST['Status']))
         echo $statusmsg."TIMEDOUT";
     }
 
-}
+}*/
 
 
 if(isset($_REQUEST['Edit']))
