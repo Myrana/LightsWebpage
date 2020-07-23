@@ -542,12 +542,24 @@ function setLightSystemSettings()
     {
 
         $systemInfo = json_decode($rcv_message);
+		
+		echo "<div id='LoginModal' class='Loginmodal'><div class='Loginmodal-content'><span class='close'>&times;</span>";
+		echo "<div class='column'><div class='ColumnStyles'>";
+		
 		echo "System name:";
         echo $systemInfo->{'systemName'};
 		echo "<br />";
+		
+		echo "Shows in queue:";
         echo $systemInfo->{'showsInQueue'};
+		echo "< br />";
+		
+		echo "System Tempature:";
         echo $systemInfo->{'systemTemp'};
-        if($systemInfo->{'showsInQueue'} > 0)
+        
+		echo "</div></div></div></div>";
+		
+		if($systemInfo->{'showsInQueue'} > 0)
         {
             echo $systemInfo->{'runningShow'};
         }
@@ -560,6 +572,34 @@ function setLightSystemSettings()
 
 } ?>
 			
+			<script>
+// Get the modal
+var modal = document.getElementById("LoginModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("Status");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>	
+				
 			</div>
 			
 		</div>
