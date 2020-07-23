@@ -307,17 +307,15 @@ if(mysqli_num_rows($results) > 0)
 $systemStatus = "";
 if(isset($_REQUEST['Status']))
 {
-	
 	$rcv_message = "";
 	$statusmsg = "";
 	requestSystemInfo(getServerHostName($_POST['LightSystem']));
 	if(!empty($rcv_message) )
     {
-	
 			
         $systemInfo = json_decode($rcv_message);
 		
-		$systemStatus .= "<div class='systemStyles'>";
+		$systemStatus .= "<div id='systemStyles' class='systemStyles'>";
 		
 				
 		$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
@@ -383,29 +381,6 @@ $conn->close();
         });
     });
 	
-$(".show").click(function () {
-    $('.hide').toggle();
-    $(this).toggle();
-    $('.systemInfo').eq(0).toggle();
-});
-
-$('.hide').click(function () {
-    $('.show').toggle();
-    $(this).toggle();
-    $('.systemInfo').eq(0).toggle();
-});
-	
-$(".show").click(function () {
-    $('.hide').toggle();
-    $(this).toggle();
-    $('.systemStyles').eq(0).toggle();
-});
-
-$('.hide').click(function () {
-    $('.show').toggle();
-    $(this).toggle();
-    $('.systemStyles').eq(0).toggle();
-});
 		
 </script>
 
@@ -423,14 +398,14 @@ $('.hide').click(function () {
 	<link href="css/Styles.css" rel="stylesheet" type="text/css">
   </head>
  
-<body onload="setLightSystemSettings();">
+<body onload="setLightSystemSettings(true);">
 <?php include("nav.php");  ?>
 
 <script>
 <?php echo $lightFeaturesScript;?>
 <?php echo $lightSystemsScript;?>
 
-function setLightSystemSettings()
+function setLightSystemSettings(fromPost)
 {
     var systemNameId = document.getElementById("LightSystem");
     var lightSystemName = document.getElementById("LightSystemName");
@@ -460,7 +435,11 @@ function setLightSystemSettings()
 	var twitchSupport = document.getElementById("twitchSupport");
 	var mqttRetries = document.getElementById("mqttRetries");
 	var mqttRetryDelay = document.getElementById("mqttRetryDelay");
+	var systemStyles = document.getElementById("systemStyles");
 	
+	if(systemStyles && !fromPost)
+		systemStyles.style.display = "none";
+		
     var index = parseInt(systemNameId.value);
     var lightFeatureSettings = lightFeatureMap.get(index);
     
@@ -540,7 +519,7 @@ function setLightSystemSettings()
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
 			<p><label for="onLightSystem">Light System:</label><br />
-			<select name="LightSystem" id="LightSystem" onChange="setLightSystemSettings();">
+			<select name="LightSystem" id="LightSystem" onChange="setLightSystemSettings(false);">
 			<?php echo $systemlistoption;?>
 			</select>	
 	</p>
