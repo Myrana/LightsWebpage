@@ -333,8 +333,6 @@ if(isset($_REQUEST['Status']))
 
 } 
 
-$systemStatus .= "</div></div></div></div>";
-
 $conn->close();
 
 ?>
@@ -534,42 +532,15 @@ function setLightSystemSettings()
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
 			<button type="submit" id="Status" name="Status">Status Of LightSystem</button> 
-			<div id='LoginModal' class='Loginmodal'><div class='Loginmodal-content'><span class='close'>&times;</span>
-		    <div class='column'><div class='ColumnStyles'>
+			<div class='ColumnStyles'>
 			<?php echo $systemStatus; ?>
-		
-			<!--<div class="systemInfo">-->
+			</div>
+			
 				
 			
-			<script>
-
-var btn = document.getElementById("Status");
-var modal = document.getElementById("LoginModal");
-btn.onclick = function() 
-{
-  modal.style.display = "block";
-  
-}
-
-// When the user clicks on <span> (x), close the modal
-var span = document.getElementsByClassName("close")[0];
-span.onclick = function() {
-	
-  modal.style.display = "none";
-}
-
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-	  
-    modal.style.display = "none";
-  }
-}
-//alert("6");
-</script>	
+			
 				
-<!--			</div>-->
+
 			
 		</div>
 	
