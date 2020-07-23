@@ -528,9 +528,9 @@ function setLightSystemSettings()
 			<button type="submit" name="Config">Add Record</button> 
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
-			<button type="submit" name="Status">Status Of LightSystem</button> 
+			<button type="submit" id="Status" name="Status">Status Of LightSystem</button> 
 		
-			<div class="systemInfo">
+			<!--<div class="systemInfo">-->
 				
 <?php 
 	if(isset($_REQUEST['Status']))
@@ -570,27 +570,27 @@ function setLightSystemSettings()
         echo $statusmsg."TIMEDOUT";
     }
 
-} ?>
+} 
+?>
 			
 			<script>
-// Get the modal
-var modal = document.getElementById("LoginModal");
-
-// Get the button that opens the modal
 var btn = document.getElementById("Status");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
+btn.onclick = function() 
+{
+	var modal = document.getElementById("LoginModal");
+	alert("1");
+	
+  // modal.style.display = "block";
+   alert("3");
 }
 
 // When the user clicks on <span> (x), close the modal
+var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
   modal.style.display = "none";
 }
+
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -598,9 +598,10 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+alert("6");
 </script>	
 				
-			</div>
+<!--			</div>-->
 			
 		</div>
 	
