@@ -390,6 +390,18 @@ $('.hide').click(function () {
     $(this).toggle();
     $('.systemInfo').eq(0).toggle();
 });
+	
+$(".show").click(function () {
+    $('.hide').toggle();
+    $(this).toggle();
+    $('.systemStyles').eq(0).toggle();
+});
+
+$('.hide').click(function () {
+    $('.show').toggle();
+    $(this).toggle();
+    $('.systemStyles').eq(0).toggle();
+});
 		
 </script>
 
@@ -531,8 +543,8 @@ function setLightSystemSettings()
 			<button type="submit" name="Config">Add Record</button> 
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" name="Delete">Delete Record</button>
-			<button type="submit" id="Status" name="Status">Status Of LightSystem</button> 
-			<div class='ColumnStyles'>
+			<button type="submit" name="Status">Status Of LightSystem</button> 
+			<div class='systemStyles' style="display: none;">
 			<?php echo $systemStatus; ?>
 			</div>
 			
