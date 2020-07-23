@@ -18,13 +18,22 @@ if(isset($_REQUEST['Status']))
 	$statusmsg = "";
 	requestSystemInfo(getServerHostName($_POST['LightSystem']));
 	if(!empty($rcv_message) )
-		{
-		echo $statusmsg."RCVD|" . $rcv_message;	
-		}
-	else
-		{
-		echo $statusmsg."TIMEDOUT"; 	
-		}		
+    {
+
+        $systemInfo = json_decode($rcv_message);
+        echo $systemInfo->{'systemName'};
+        echo $systemInfo->{'showsInQueue'};
+        echo $systemInfo->{'systemTemp'};
+        if($systemInfo->{'showsInQueue'} > 0)
+        {
+            echo $systemInfo->{'runningShow'};
+        }
+
+    }
+    else
+    {
+        echo $statusmsg."TIMEDOUT";
+    }
 
 }
 

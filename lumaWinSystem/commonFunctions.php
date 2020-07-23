@@ -110,10 +110,10 @@ function read_topic($arg_1)
 function connect($r) 
 {
 	
-		if($r == 0) echo "{$r}-CONX-OK|";
+	/*	if($r == 0) echo "{$r}-CONX-OK|";
 		if($r == 1) echo "{$r}-Connection refused (unacceptable protocol version)|";
 		if($r == 2) echo "{$r}-Connection refused (identifier rejected)|";
-		if($r == 3) echo "{$r}-Connection refused (broker unavailable )|";        
+		if($r == 3) echo "{$r}-Connection refused (broker unavailable )|";      */
 }
  
 function publish() {

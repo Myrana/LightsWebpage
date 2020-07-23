@@ -1,4 +1,4 @@
-   var showMap = new Map();
+let showMap = new Map();
 var show = new Object(); 
     show.id = 16;
     show.showName = 'Display Color';
@@ -75,27 +75,27 @@ var show = new Object();
     show.id = 8;
     show.showName = 'Half n Half';
     show.numColors = 2;
-    show.hasDelay = 1;
+    show.hasDelay = 0;
   show.hasWidth = 0;
-  show.hasMinutes = 1;
+  show.hasMinutes = 0;
   show.colorEvery = 0;
     showMap.set(8, show);
 var show = new Object(); 
     show.id = 13;
     show.showName = 'Color 1/3 ';
     show.numColors = 3;
-    show.hasDelay = 1;
+    show.hasDelay = 0;
   show.hasWidth = 0;
-  show.hasMinutes = 1;
+  show.hasMinutes = 0;
   show.colorEvery = 0;
     showMap.set(13, show);
 var show = new Object(); 
     show.id = 14;
     show.showName = 'Color 1/4';
     show.numColors = 4;
-    show.hasDelay = 1;
+    show.hasDelay = 0;
   show.hasWidth = 0;
-  show.hasMinutes = 1;
+  show.hasMinutes = 0;
   show.colorEvery = 0;
     showMap.set(14, show);
 var show = new Object(); 
@@ -170,7 +170,16 @@ var show = new Object();
   show.hasMinutes = 1;
   show.colorEvery = 0;
     showMap.set(19, show);
-
+var show = new Object(); 
+    show.id = 20;
+    show.showName = 'Scanner';
+    show.numColors = 1;
+    show.hasDelay = 1;
+  show.hasWidth = 1;
+  show.hasMinutes = 1;
+  show.colorEvery = 0;
+  showMap.set(20, show);
+    
 $(function() {
 
     // when we click the cycle button
