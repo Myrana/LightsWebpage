@@ -335,9 +335,9 @@ if(isset($_REQUEST['Status']))
         $systemStatus .= "Free Ram:" . $systemInfo->{'freeRam'} . "<br />";
 		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";*/
 		
-		$systemStatus .= "<tr>" . "<td>System Name</td>" . "<td>" . $systemInfo->{'systemName'} . "</td></tr>";
-		$systemStatus .= "<tr>" . "<td>System Temp</td>" . "<td>" . $systemInfo->{'systemTemp'} . "</td></tr>";
-		$systemStatus .= "<tr>" . "<td>Uptime</td>" . "<td>" . $systemInfo->{'uptime'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Name</td>" . "<td>" . $systemInfo->{'systemName'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Temp</td>" . "<td>" . $systemInfo->{'systemTemp'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Up</td>" . "<td>" . $systemInfo->{'uptime'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Load</td>" . "<td>" . $systemInfo->{'load'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Total Ram</td>" . "<td>" . $systemInfo->{'totalRam'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Free Ram</td>" . "<td>" . $systemInfo->{'freeRam'} . "</td></tr>";
