@@ -369,7 +369,7 @@ function registerConnectionHandler(req) {
   
 //  const currentColor = color(channelColors[channelId] || initialColor).hex();
  // verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
-  return 12;
+  return "hello";
 }
 
 function attemptColorBroadcast(channelId) {

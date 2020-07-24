@@ -47,13 +47,14 @@ twitch.rig.log('user-' + auth.userId + '-token ' + auth.token);
     tuid = auth.userId;
 
     setAuth(token);
-   // $.ajax(requests.get);
+    $.ajax(requests.get);
 });
 
 
 function updateBlock(hex) {
     //twitch.rig.log('Updating block color');
     $('#color').css('background-color', hex);
+    twitch.rig.log(hex);
 }
 
 function logError(_, error, status) {

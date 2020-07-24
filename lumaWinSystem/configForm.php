@@ -523,6 +523,22 @@ function setLightSystemSettings(fromPost)
 
 }
 
+function confirmDelete()
+{
+	  
+  var systemNameId = document.getElementById("LightSystem");
+    	
+  var index = parseInt(systemNameId.value);
+    
+  var system = systemsMap.get(index);
+    
+  var retVal = confirm("Are you sure you want to delete? " + system.systemName);
+  if (retVal)
+      return false;
+  else
+    return false;
+	
+} 
 
 
 </script>
@@ -539,7 +555,7 @@ function setLightSystemSettings(fromPost)
 	</p>
 			<button type="submit" name="Config">Add Record</button> 
 			<button type="submit" name="Edit">Edit Record</button>
-			<button type="submit" name="Delete">Delete Record</button>
+			<button type="submit" onclick="return confirmDelete();" name="Delete">Delete Record</button>
 			<button type="submit" name="Status">Status Of LightSystem</button> 
 			
 			<?php echo $systemStatus; ?>
