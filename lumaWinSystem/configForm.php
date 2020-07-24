@@ -324,7 +324,7 @@ if(isset($_REQUEST['Status']))
 			
         $systemInfo = json_decode($rcv_message);
 		
-		$systemStatus .= "<div id='systemStyles' class='systemStyles'><table style='width:100%'>";
+		$systemStatus .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";
 		
 				
 		/*$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
