@@ -341,7 +341,7 @@ if(isset($_REQUEST['Status']))
 		$systemStatus .= "<tr>" . "<td>Load</td>" . "<td>" . $systemInfo->{'load'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Total Ram</td>" . "<td>" . $systemInfo->{'totalRam'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Free Ram</td>" . "<td>" . $systemInfo->{'freeRam'} . "</td></tr>";
-		$systemStatus .= "<tr>" . "<td>Shows In Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>In Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
 		
 		
 
