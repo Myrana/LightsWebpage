@@ -3,7 +3,6 @@
 include('commonFunctions.php');
 
 $_SESSION["Brightness"] = 127;
-$_SESSION["LightSystemID"] = -1;
 $_SESSION["Delay"] = 10;
 $_SESSION["Minutes"] = 1;
 $_SESSION["Width"] = 1;
@@ -21,11 +20,13 @@ if($_SESSION['authorized'] == 0)
 }
 
 
+
 if(!empty($_REQUEST))
 {
     $sendArray['UserID'] = $_SESSION['UserID'];
     if(!empty($_POST['SystemName']))
         $_SESSION["LightSystemID"]  = $_POST['SystemName'];
+
 
     if(!empty($_POST['Brightness']))
         $_SESSION["Brightness"] = $_POST['Brightness'];
@@ -238,8 +239,9 @@ if(mysqli_num_rows($results) > 0)
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
+		
         if($row['ID'] == $_SESSION["LightSystemID"] )
-            $lightSystemsoption .="<option value = '".$row['ID']."' selected='selected'>".$row['systemName']."</option>";
+            $lightSystemsoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
         else
             $lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
 
