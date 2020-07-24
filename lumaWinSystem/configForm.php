@@ -324,23 +324,33 @@ if(isset($_REQUEST['Status']))
 			
         $systemInfo = json_decode($rcv_message);
 		
-		$systemStatus .= "<div id='systemStyles' class='systemStyles'>";
+		$systemStatus .= "<div id='systemStyles' class='systemStyles'><table style='width:100%'>";
 		
 				
-		$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
+		/*$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
         $systemStatus .= "System Temp:" . $systemInfo->{'systemTemp'} . "<br />";
         $systemStatus .= "Uptime:" . $systemInfo->{'uptime'} . "<br />";
         $systemStatus .= "Load:" . $systemInfo->{'load'} . "<br />";
         $systemStatus .= "Total Ram:" . $systemInfo->{'totalRam'} . "<br />";
         $systemStatus .= "Free Ram:" . $systemInfo->{'freeRam'} . "<br />";
-		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";
+		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";*/
+		
+		$systemStatus .= "<tr>" . "<td>System Name</td>" . "<td>" . $systemInfo->{'systemName'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>System Temp</td>" . "<td>" . $systemInfo->{'systemTemp'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Uptime</td>" . "<td>" . $systemInfo->{'uptime'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Load</td>" . "<td>" . $systemInfo->{'load'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Total Ram</td>" . "<td>" . $systemInfo->{'totalRam'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Free Ram</td>" . "<td>" . $systemInfo->{'freeRam'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Shows In Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
+		
+		
 
 		if($systemInfo->{'showsInQueue'} > 0)
         {
 			$systemStatus .= "Running Show:" . $systemInfo->{'runningShow'} . "<br />";
         }
 
-		$systemStatus .= "</div>";
+		$systemStatus .= "</table></div>";
     }
     else
     {
