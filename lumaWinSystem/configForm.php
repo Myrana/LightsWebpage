@@ -326,25 +326,15 @@ if(isset($_REQUEST['Status']))
 		
 		$systemStatus .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";
 		
-				
-		/*$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
-        $systemStatus .= "System Temp:" . $systemInfo->{'systemTemp'} . "<br />";
-        $systemStatus .= "Uptime:" . $systemInfo->{'uptime'} . "<br />";
-        $systemStatus .= "Load:" . $systemInfo->{'load'} . "<br />";
-        $systemStatus .= "Total Ram:" . $systemInfo->{'totalRam'} . "<br />";
-        $systemStatus .= "Free Ram:" . $systemInfo->{'freeRam'} . "<br />";
-		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";*/
 		
 		$systemStatus .= "<tr>" . "<td>Name</td>" . "<td>" . $systemInfo->{'systemName'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Temp</td>" . "<td>" . $systemInfo->{'systemTemp'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Up</td>" . "<td>" . $systemInfo->{'uptime'} . "</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Load</td>" . "<td>" . $systemInfo->{'load'} . "</td></tr>";
-		$systemStatus .= "<tr>" . "<td>Total Ram</td>" . "<td>" . $systemInfo->{'totalRam'} . "</td></tr>";
-		$systemStatus .= "<tr>" . "<td>Free Ram</td>" . "<td>" . $systemInfo->{'freeRam'} . "</td></tr>";
-		$systemStatus .= "<tr>" . "<td>In Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Total</td>" . "<td>" . $systemInfo->{'totalRam'} . "Ram</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Free</td>" . "<td>" . $systemInfo->{'freeRam'} . " Ram</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
 		
-		
-
 		if($systemInfo->{'showsInQueue'} > 0)
         {
 			$systemStatus .= "<tr>" . "<td>Show</td>" . "<td>" . $systemInfo->{'runningShow'} . "</td></tr>";
@@ -575,11 +565,10 @@ function setLightSystemSettings(fromPost)
 
 
 
-<p><label for="StripHeight">Strip Height:</label><br />
-	  <input type="number" id="StripHeight" name="StripHeight" min="1" value="1"></p>
-
-<p><label for="StripWidth">Strip Width:</label><br />
-	  <input type="number" id="StripWidth" name="StripWidth" min="1" value"10"></p>
+<p><label for="StripHeight">Strip Height:</label>
+	  <input type="number" id="StripHeight" name="StripHeight" min="1" value="1">
+<label for="StripWidth">Strip Width:</label>
+	  <input type="number" id="StripWidth" name="StripWidth" min="1" value"10"> </p>
 
 <p><label for="onDMA">DMA:</label><br />
 	  <select name="DMA" id="DMA">
