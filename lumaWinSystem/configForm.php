@@ -566,9 +566,9 @@ function setLightSystemSettings(fromPost)
 
 
 <p><label for="StripHeight">Strip Height:</label>
-	  <input type="number" id="StripHeight" name="StripHeight" min="1" value="1">
+	  <input type="number" id="StripHeight" name="StripHeight" min="1" value="1" style="width:15%">
 <label for="StripWidth">Strip Width:</label>
-	  <input type="number" id="StripWidth" name="StripWidth" min="1" value"10"> </p>
+	  <input type="number" id="StripWidth" name="StripWidth" min="1" value"10" style="width:15%"> </p>
 
 <p><label for="onDMA">DMA:</label><br />
 	  <select name="DMA" id="DMA">
