@@ -347,7 +347,7 @@ if(isset($_REQUEST['Status']))
 
 		if($systemInfo->{'showsInQueue'} > 0)
         {
-			$systemStatus .= "Running Show:" . $systemInfo->{'runningShow'} . "<br />";
+			$systemStatus .= "<tr>" . "<td>Running Show</td>" . "<td>" . $systemInfo->{'runningShow'} . "</td></tr>";
         }
 
 		$systemStatus .= "</table></div>";
