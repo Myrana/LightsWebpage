@@ -4,6 +4,12 @@ include_once('commonFunctions.php');
 
 $conn = getDatabaseConnection();
 
+if(!empty($_REQUEST))
+{
+    if(!empty($_POST['LightSystem']))
+        $_SESSION["LightSystemID"]  = $_POST['LightSystem'];
+
+}
 
 if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
 {
@@ -266,7 +272,10 @@ if(mysqli_num_rows($results) > 0)
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
-        $systemlistoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+        if($row['ID'] == $_SESSION["LightSystemID"])
+            $systemlistoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
+        else
+            $systemlistoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
 
     }
 }
@@ -319,8 +328,13 @@ if(isset($_REQUEST['Status']))
 		
 				
 		$systemStatus .= "System Name:" . $systemInfo->{'systemName'} . "<br />";
+        $systemStatus .= "System Temp:" . $systemInfo->{'systemTemp'} . "<br />";
+        $systemStatus .= "Uptime:" . $systemInfo->{'uptime'} . "<br />";
+        $systemStatus .= "Load:" . $systemInfo->{'load'} . "<br />";
+        $systemStatus .= "Total Ram:" . $systemInfo->{'totalRam'} . "<br />";
+        $systemStatus .= "Free Ram:" . $systemInfo->{'freeRam'} . "<br />";
 		$systemStatus .= "Shows In Queue:" . $systemInfo->{'showsInQueue'} . "<br />";
-		$systemStatus .= "System Temp:" . $systemInfo->{'systemTemp'} . "<br />";
+
 		if($systemInfo->{'showsInQueue'} > 0)
         {
 			$systemStatus .= "Running Show:" . $systemInfo->{'runningShow'} . "<br />";
