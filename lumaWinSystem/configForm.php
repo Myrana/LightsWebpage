@@ -28,7 +28,7 @@ if(isset($_REQUEST['Edit']))
 	}
 	
 	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
-	"',stripHeight = '" . $_POST['StripHeight'] . "',stripWidth = '" . $_POST['StripWidth'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
+	"',stripColumns = '" . $_POST['StripColumns'] . "',stripRows = '" . $_POST['StripRows'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
 	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
 	if ($conn->query($sql) === TRUE)
 	{
@@ -136,8 +136,8 @@ if(isset($_REQUEST['Config']))
 	}
 
 
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio, brightness, enabled, userId, gamma, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
-		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripHeight'] . "','" . $_POST['StripWidth'] . "','" . $_POST['DMA'] . 
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripColumns, stripRows, dma, gpio, brightness, enabled, userId, gamma, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
+		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripColumns'] . "','" . $_POST['StripRows'] . "','" . $_POST['DMA'] . 
 		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "','" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
 	
 	if ($conn->query($sql) === TRUE)
@@ -257,8 +257,8 @@ if(mysqli_num_rows($results) > 0)
         $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
         $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
         $lightSystemsScript .= "    system.stripType = '" . $row['stripType'] ."';\r";
-        $lightSystemsScript .= "    system.stripHeight = " . $row['stripHeight'] .";\r";
-        $lightSystemsScript .= "    system.stripWidth = " . $row['stripWidth'] .";\r";
+        $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
+        $lightSystemsScript .= "    system.stripRows = " . $row['stripRows'] .";\r";
         $lightSystemsScript .= "    system.dma = " . $row['dma'] .";\r";
         $lightSystemsScript .= "    system.gpio = " . $row['gpio'] .";\r";
         $lightSystemsScript .= "    system.serverHostName = '" . $row['serverHostName'] ."';\r";
@@ -427,8 +427,8 @@ function setLightSystemSettings(fromPost)
     var systemNameId = document.getElementById("LightSystem");
     var lightSystemName = document.getElementById("LightSystemName");
     var serverHostName = document.getElementById("ServerHostName");
-    var stripHeight = document.getElementById("StripHeight");
-    var stripWidth = document.getElementById("StripWidth");
+    var stripColumns = document.getElementById("StripColumns");
+    var stripRows = document.getElementById("StripRows");
     var dma = document.getElementById("DMA");
     var gpio = document.getElementById("GPIO");
     var brightness = document.getElementById("Brightness");
@@ -464,8 +464,8 @@ function setLightSystemSettings(fromPost)
 
     lightSystemName.value = system.systemName;
     serverHostName.value = system.serverHostName;
-    stripHeight.value = system.stripHeight;
-    stripWidth.value = system.stripWidth;
+    stripColumns.value = system.stripColumns;
+    stripRows.value = system.stripRows;
     dma.value = system.dma;
     gpio.value = system.gpio;
     brightness.value = system.brightness;
@@ -584,10 +584,10 @@ function confirmDelete()
 
 
 
-<p><label for="StripHeight">Strip Height:</label>
-	  <input type="number" id="StripHeight" name="StripHeight" min="1" value="1" style="width:15%">
-<label for="StripWidth">Strip Width:</label>
-	  <input type="number" id="StripWidth" name="StripWidth" min="1" value"10" style="width:15%"> </p>
+<label for="StripRows">Strip rows:</label>
+	  <input type="number" id="StripRows" name="StripRows" min="1" value"10" style="width:15%"> </p>
+<p><label for="StripColumns">Strip Columns:</label>
+	  <input type="number" id="StripColumns" name="StripColumns" min="1" value="1" style="width:15%">
 
 <p><label for="onDMA">DMA:</label><br />
 	  <select name="DMA" id="DMA">
