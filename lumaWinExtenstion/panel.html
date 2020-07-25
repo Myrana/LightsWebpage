@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+
+
+<html>
+    <head>
+        <title>Viewer Page</title>
+    <link rel="stylesheet" href="viewer.css" type="text/css"></head>
+    <body >
+        <div id="app" class="full-height"></div>
+        <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+      
+      <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
+      <script src="showJava.js" type="text/javascript"></script>
+  
+  
+
+  
+        <h2 style="text-align:center; font-weight:800; font-family:Impact, Charcoal, sans-serif;">LumaWin Lights</h2>
+        <div class="column">
+  <select id="ShowNameId" name="ShowName" >
+	  
+     <option value="0">Select a Show</option><option value = '16'>Display Color</option><option value = '3'>Theater Chase</option><option value = '4'>Theater Chase Rainbow</option><option value = '10'>Rainbow Cycle</option><option value = '11'>Neorand</option><option value = '15'>Tri-Color Chaser</option><option value = '9'>Rainbow</option><option value = '12'>Flame</option><option value = '8'>Half n Half</option><option value = '13'>Color 1/3 </option><option value = '14'>Color 1/4</option><option value = '17'>Color Every</option><option value = '2'>Chaser</option><option value = '5'>Color 3 Reverse</option><option value = '6'>Cylon</option><option value = '7'>Color Wipe</option><option value = '18'>Twinkle Overlay</option><option value = '1'>Blink</option><option value = '19'>Pulse Overlay</option><option value = '20'>Scanner</option></select>
+  </select>
+        <br /> <br />
+       
+        <input type="color"  Name="color_1" id="Color1" value ="#ff6500">
+        <input type="color" Name="color_2" id="Color2" value="#906bfa">
+        <input type="color" Name="color_3" id="Color3" value="#2c2367">
+        <input type="color" Name="color_4" id="Color4" value="#ad5e8c">
+        
+        <br />
+            <p style="margin-top: 2px;"><label for="On3" style="font-size: 14px">Gamma correction</label>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" value ="1" checked></p>
+            
+<p><label for="On1" style="font-size: 14px">Clear start</label>
+    <input type="checkbox" name="clearStart" id="clearStart"></p>
+			<p><label for="On2" style="font-size: 14px">Clear finish</label>
+    <input type="checkbox" name="clearFinish" id="clearFinish"></p>
+              
+        <button type="button" id="btnSendShow" name="btnSendShow">Send Show</button>
+        </div>
+        <p style = "font-style: italic;">Show inputs:</p>
+        <div class="column">
+            <div class="column">
+        
+        
+     
+       
+    <p><label for="Width">Width:</label>
+<input type="number" id="WidthId" name="Width" min="1" max="300"></p>
+<p><label for="ColorEvery">X led:</label>
+<input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300">
+</p>
+<p><label for="Delay">Delay:</label>
+<input type="number" id="DelayId" name="Delay" min="1" max="100000" value="100">
+</p>
+
+</div>
+
+
+<div class="column">
+    
+    <p><label for="NumMinutes">Minutes:</label>
+<input type="number" id="NumMinutesId" name="Minutes" min="1" max="3" value="1">
+</p>
+    
+<p><label for="Brightness">Brightness:</label>
+    <input type="number" id="Brightness" name="Brightness" min="1" max="255" value='127'>
+</p>
+
+        
+
+</div>
+</div>
+
+  
+
+
+    <script src="viewer.js"></script></body>
+</html>
+
+  
