@@ -1,6 +1,6 @@
 <?php include_once("commonFunctions.php"); ?>
 
-<img src="Images/winslowBanner.png" alt="LumaWin LED Systems" width="100%">
+<center><img src="Images/winslowBanner.png" alt="LumaWin LED Systems"></center>
 	<nav>
 	  <ul><a href="registration.php" title="Registration"><i class="fas fa-user-plus" style="color: #ffff00"></i></a></ul>  
 	  <ul><a href="configForm.php" title="Configuration"><i class="fas fa-cogs" style="color: #ff3399"></i></a></ul>
