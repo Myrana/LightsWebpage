@@ -53,7 +53,7 @@ twitch.rig.log('user-' + auth.userId + '-token ' + auth.token);
 
 function updateBlock(hex) {
     //twitch.rig.log('Updating block color');
-    $('#color').css('background-color', hex);
+  //  $('#color').css('background-color', hex);
     twitch.rig.log(hex);
 }
 
@@ -139,7 +139,8 @@ $(function() {
     });
 
     // listen for incoming broadcast message from our EBS Where we will process the recieved message.
-    twitch.listen('broadcast', function (target, contentType, color) {
+    twitch.listen('broadcast', function (target, contentType, color) 
+    {
         twitch.rig.log('Received broadcast color');
         updateBlock(color);
     });

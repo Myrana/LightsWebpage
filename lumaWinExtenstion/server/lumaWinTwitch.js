@@ -55,14 +55,12 @@ const verboseLogging = true;
 const verboseLog = verboseLogging ? console.log.bind(console) : () => { };
 
 // Service state variables
-//const initialColor = color('#6441A4');      // super important; bleedPurple, etc.
+
 const serverTokenDurationSec = 30;          // our tokens for pubsub expire after 30 seconds
 const userCooldownMs = 10000;                // maximum input rate per user to prevent bot abuse
 const userCooldownClearIntervalMs = 600000;  // interval to reset our tracking object
 const channelCooldownMs = 1000;             // maximum broadcast rate per channel
 const bearerPrefix = 'Bearer ';             // HTTP authorization headers have this prefix
-//const colorWheelRotation = 30;
-//const channelColors = {};
 const channelCooldowns = {};                // rate limit compliance
 let userCooldowns = {};                     // spam prevention
 
@@ -70,10 +68,14 @@ const STRINGS = {
   secretEnv: usingValue('secret'),
   clientIdEnv: usingValue('client-id'),
   ownerIdEnv: usingValue('owner-id'),
+  hostEnv : usingValue('host'),
+  portEnv : usingValue('port'),
   serverStarted: 'Server running at %s',
   secretMissing: missingValue('secret', 'EXT_SECRET'),
   clientIdMissing: missingValue('client ID', 'EXT_CLIENT_ID'),
   ownerIdMissing: missingValue('owner ID', 'EXT_OWNER_ID'),
+  hostMissing: missingValue('host','EXT_HOST'),
+  portMissing: missingValue('port','EXT_PORT'),
   messageSendError: 'Error sending message to channel %s: %s',
   pubsubResponse: 'Message to c:%s returned %s',
   cyclingColor: 'Cycling color for c:%s on behalf of u:%s',
@@ -89,15 +91,19 @@ ext.
   option('-s, --secret <secret>', 'Extension secret').
   option('-c, --client-id <client_id>', 'Extension client ID').
   option('-o, --owner-id <owner_id>', 'Extension owner ID').
+  option('-h, --host <host>', 'Host or ip address').
+  option('-p, --port <port>', 'Port to listen on').
   parse(process.argv);
 
 const ownerId = getOption('ownerId', 'EXT_OWNER_ID');
 const secret = Buffer.from(getOption('secret', 'EXT_SECRET'), 'base64');
 const clientId = getOption('clientId', 'EXT_CLIENT_ID');
+const host = getOption('host', 'EXT_HOST');
+const port = getOption('port', 'EXT_PORT');
 
 const serverOptions = {
-  host: '192.168.1.3',
-  port: 8080,
+  host: host,
+  port: port,
   routes: {
     cors: {
       origin: ['*'],
@@ -287,41 +293,41 @@ function showRequestHandler(req) {
   
  console.log('*Check Channel:' + channelId + ' user: ' + opaqueUserId );
 
-pool.getConnection(function(err, connection) 
-{
+	pool.getConnection(function(err, connection) 
+	{
 
- 
-  // Use the connection 
-  if(!connection)
-  {
-  	console.log("*** No connection Object Created.  Is SQL Server Running. ***");
-  	return;
-  }
-  
-  connection.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "` + channelId + `"`, function (error, results, fields) 
-  {
-    if(!error)
-    {
-	    if(results.length && results[0].enabled == 1)
-	    {
-		mqttQueue = results[0].mqttQueue;
-		console.log('Sending to: ' + mqttQueue + ' for Channel:' + channelId + ' user: ' + opaqueUserId);
-		 mqttClient.publish(mqttQueue, JSONObj);
-	    }
-	    else
-	    {
-		    console.log(`* ${target} Light System is currently Not Running!`);
-	    }
-    }
-    else
-    {
-    	console.log("*** Error: " + error);
-    }
-    
-    // And done with the connection. 
-    connection.release();
- 
-  });
+	 
+	  // Use the connection 
+	  if(!connection)
+	  {
+		console.log("*** No connection Object Created.  Is SQL Server Running. ***");
+		return;
+	  }
+	  
+	  connection.query(`SELECT enabled,mqttQueue,allowAllTwitchUsers FROM twitchChannels where channel = "` + channelId + `"`, function (error, results, fields) 
+	  {
+		if(!error)
+		{
+			if(results.length && results[0].enabled == 1)
+			{
+			mqttQueue = results[0].mqttQueue;
+			console.log('Sending to: ' + mqttQueue + ' for Channel:' + channelId + ' user: ' + opaqueUserId);
+			 mqttClient.publish(mqttQueue, JSONObj);
+			}
+			else
+			{
+				console.log(`* ${target} Light System is currently Not Running!`);
+			}
+		}
+		else
+		{
+			console.log("*** Error: " + error);
+		}
+		
+		// And done with the connection. 
+		connection.release();
+	 
+	  });
 });
 
 
@@ -361,16 +367,63 @@ pool.getConnection(function(err, connection)
 function registerConnectionHandler(req) {
   // Verify all requests.
   
+  
    console.log(`****************** registerConnectionHandler ***************************`);
     
   const payload = verifyAndDecode(req.headers.authorization);
   // Get the color for the channel from the payload and return it.
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   
+//  const results = await pool.query(`SELECT  * from lightShows where enabled = 1`);
+ // console.log(results);
+  
+  
+
+  
+ /* pool.getConnection(function(err, connection) 
+	{
+
+	 
+	  // Use the connection 
+	  if(!connection)
+	  {
+		console.log("*** No connection Object Created.  Is SQL Server Running. ***");
+		return;
+	  }
+	  
+	  connection.query(`SELECT  * from lightShows where enabled = 1`, function (error, results, fields) 
+	  {
+		if(!error)
+		{
+			if(results.length)
+			{
+				console.log("we go data");
+				ack = JSON.stringify(results);
+				
+			}
+			else
+			{
+				console.log(`Error bucko`);
+			}
+		}
+		else
+		{
+			console.log("*** Error: " + error);
+		}
+		
+		connection.release();
+	 
+	  });	
+	  });	
+  
 //  const currentColor = color(channelColors[channelId] || initialColor).hex();
  // verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
-  return "hello";
+ */
+ 
+  return "";
 }
+
+
 
 function attemptColorBroadcast(channelId) {
   // Check the cool-down to determine if it's okay to send now.

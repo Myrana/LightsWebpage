@@ -335,10 +335,13 @@ if(isset($_REQUEST['Status']))
 		$systemStatus .= "<tr>" . "<td>Free</td>" . "<td>" . $systemInfo->{'freeRam'} . " Ram</td></tr>";
 		$systemStatus .= "<tr>" . "<td>Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
 		
+		
 		if($systemInfo->{'showsInQueue'} > 0)
         {
 			$systemStatus .= "<tr>" . "<td>Show</td>" . "<td>" . $systemInfo->{'runningShow'} . "</td></tr>";
         }
+
+		$systemStatus .= "<tr>" . "<td>Alerts</td>" . "<td>" . $systemInfo->{'alerts'} . "</td></tr>";
 
 		$systemStatus .= "</table></div>";
     }
