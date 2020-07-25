@@ -14,8 +14,11 @@ if(mysqli_num_rows($results) > 0)
 
     while($row = mysqli_fetch_array($results))
     {
-        
-        $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
+		//echo $_SESSION["ShowName"];
+        if($_SESSION["ShowName"] != $row['ID'])
+			$lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
+		else
+			$lightShowsoption .="<option value = '".$row['ID']."' selected>".$row['showName']."</option>";
 
 
         $_SESSION['lightShowsScript'] .= "var show = new Object(); \r";

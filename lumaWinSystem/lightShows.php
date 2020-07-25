@@ -7,7 +7,6 @@ $_SESSION["Delay"] = 10;
 $_SESSION["Minutes"] = 1;
 $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
-$_SESSION["ShowName"] = -1;
 $_SESSION["ChgBrightness"] = 20;
 $_SESSION["DesignerEditMode"] = 0;
 
@@ -222,7 +221,7 @@ if(isset($_REQUEST['btnPlaylist']))
 
 $lightSystemsoption = '';
 $lightSystemsScript = '';
-    $results = mysqli_query($conn,"SELECT ID, systemName, stripHeight, stripWidth, brightness FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
+    $results = mysqli_query($conn,"SELECT ID, systemName, stripRows, stripColumns, brightness FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
 if(mysqli_num_rows($results) > 0)
 {
 
@@ -233,8 +232,8 @@ if(mysqli_num_rows($results) > 0)
 
         $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
         $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
-        $lightSystemsScript .= "    system.stripHeight = " . $row['stripHeight'] .";\r";
-        $lightSystemsScript .= "    system.stripWidth = " . $row['stripWidth'] .";\r";
+        $lightSystemsScript .= "    system.stripRows = " . $row['stripRows'] .";\r";
+        $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
         $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
@@ -296,7 +295,7 @@ $conn->close();
         var chgBrightnessId = document.getElementById("ChgBrightnessId");
 
         var index = parseInt(systemNameId.value);
-        var numLeds = systemsMap.get(index).stripWidth * systemsMap.get(index).stripHeight;
+        var numLeds = systemsMap.get(index).stripRows * systemsMap.get(index).stripColumns;
 
         if(widthId.value > numLeds)
         {
