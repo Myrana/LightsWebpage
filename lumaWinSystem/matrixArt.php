@@ -144,6 +144,9 @@ function getId()
         <div class="ColumnStyles">
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
+			<input type="color" id="baseColor" name="baseColor" value="#ADD8E6" />
+			<input type="checkbox" id="reset" name="reset" /><label>reset</label>
+			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 		<?php echo $matrixHTML; ?>
 		
 		</div>
