@@ -115,7 +115,11 @@ background-color: red;
 
 <?php echo $lightSystemsScript;?>
    
-function getId(){alert(this.event.target.id)}
+function getId()
+{	
+	var pixel = document.getElementById(this.event.target.id);
+	pixel.style.background = 'red';
+}
 
 
 </script>
@@ -131,7 +135,7 @@ function getId(){alert(this.event.target.id)}
         <?php echo $lightSystemsoption;?>
         </select>       
     </p>
-	<p><button type="submit" name="btnWorkMatrix">Play</button>
+	<p><button type="submit" name="btnWorkMatrix">Create Art!</button>
 
     </div>
 
@@ -143,14 +147,7 @@ function getId(){alert(this.event.target.id)}
 		<?php echo $matrixHTML; ?>
 		
 		</div>
-		<table>
-		<TR>
-			<TD>
-				<a class="btnMatrix" href="#"><i class="ion-ios-arrow-down"></i></a>
-			</TD>
-		</TR>
-		</table>
-
+		
     </form>
     </div>
     </div>
