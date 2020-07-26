@@ -64,6 +64,7 @@ function sendMQTT($arg_1, $arg_2)
 	$client->loop();
 	$mid = $client->publish($arg_1, $arg_2);
 	$client->loop();
+	$client->loop();
 }
 
 function killUserSession()
