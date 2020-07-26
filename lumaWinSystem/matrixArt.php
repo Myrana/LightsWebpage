@@ -136,6 +136,7 @@ function getId()
         </select>       
     </p>
 	<p><button type="submit" name="btnWorkMatrix">Create Art!</button>
+	<p><button type="submit" onClick='storeMatrix()' name="btnDisplayArt" >Display Art!</button>
 
     </div>
 
