@@ -214,6 +214,7 @@ divMatrix.addEventListener('mousedown', e => {
 
 
 divMatrix.addEventListener('mousemove', e => {
+	 e.preventDefault();
 
 	if(isDrawing)
 	{
