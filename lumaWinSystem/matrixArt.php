@@ -59,7 +59,7 @@ if(isset($_REQUEST['btnWorkMatrix']))
 					{
 					
 						$pos = $currentPos - $ledColumn;
-						$matrixHTML .= "<span id='" . $pos  . "'  onClick='setToBaseColor()' class='pixel'></span>";		
+						$matrixHTML .= "<span id='" . $pos  . "' class='pixel'></span>";		
 	//					echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $pos;
 						
 					}
@@ -212,8 +212,22 @@ let isDrawing = false;
 const divMatrix = document.getElementById('divMatrix');
 
 divMatrix.addEventListener('mousedown', e => {
-	
-  isDrawing = true;
+
+                           switch(e.which)
+                           {
+                           case 1:
+                                isDrawing = true;
+                           break;
+
+                           case 2:
+                           setColor();
+                           break
+
+                           case 3:
+                            setToBaseColor();
+                           break;
+                           }
+
   
 });
 
