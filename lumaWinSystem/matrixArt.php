@@ -208,7 +208,7 @@ const divMatrix = document.getElementById('divMatrix');
 
 divMatrix.addEventListener('mousedown', e => {
 	
-  isDrawing = !isDrawing;
+  isDrawing = true;
   
 });
 
@@ -225,7 +225,8 @@ divMatrix.addEventListener('mousemove', e => {
 
 divMatrix.addEventListener('mouseup', e => {
 
-	alert("mouseup");
+	isDrawing = false;
+	
 });
 
 
