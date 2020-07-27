@@ -5,7 +5,7 @@
 nav {
     display: block;
     background: rgb(205,202,251);
-	background: radial-gradient(circle, rgba(205,202,251,1) 0%, rgba(135,7,111,1) 48%, rgba(236,134,91,1) 89%);
+	background: linear-gradient(59deg, rgba(34,193,195,1) 29%, rgba(253,187,45,1) 61%);
     position: relative;
     -webkit-box-shadow: 0px 6px 10px 0px #000;
 	box-shadow: 0px 6px 10px 0px #000;
