@@ -23,7 +23,6 @@ if(!empty($_REQUEST))
 $matrixHTML = "";
 if(isset($_REQUEST['btnWorkMatrix']))
 {
-	
 	$results = mysqli_query($conn,"SELECT ID, systemName, stripRows, stripColumns, brightness FROM lightSystems WHERE enabled = 1 and ID =" . $_POST['SystemName']);
 	if(mysqli_num_rows($results) > 0)
 	{
@@ -35,6 +34,7 @@ if(isset($_REQUEST['btnWorkMatrix']))
 			 $ledRows = $ledColumns;
 			 $ledColumns = 1;
 		}
+		
 		
 		$currentPos = 0;
 		
@@ -48,15 +48,16 @@ if(isset($_REQUEST['btnWorkMatrix']))
 				
 					if(($ledRow % 2) != 0)
 					{
+						
 						$currentPos += 1;
-						$matrixHTML .= "<span id='" . $currentPos  . "' onClick='getId()' class='pixel'></span>";		
+						$matrixHTML .= "<span id='" . $currentPos  . "'  onClick='setToBaseColor()' class='pixel'></span>";		
 //						echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $currentPos;
 					}
 					else
 					{
 					
 						$pos = $currentPos - $ledColumn;
-						$matrixHTML .= "<span id='" . $pos  . "' onClick='getId()' class='pixel'></span>";		
+						$matrixHTML .= "<span id='" . $pos  . "'  onClick='setToBaseColor()' class='pixel'></span>";		
 	//					echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $pos;
 						
 					}
@@ -70,6 +71,7 @@ if(isset($_REQUEST['btnWorkMatrix']))
 			
 	}
 	
+	
 }
 
 
@@ -80,6 +82,7 @@ if(isset($_REQUEST['btnDisplayArt']))
 		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), $_POST['matrixData']);
 	}	
 }
+
 
 $lightSystemsoption = '';
 $lightSystemsScript = '';
@@ -157,21 +160,93 @@ background-color: red;
 <?php include("nav.php");  ?>
 
 
+<div class="clearfix">
+<div class="column">
+	
+
+    <form method="post" name="frmMatrix" id="frmMatrix" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<img src="System-Control.png" alt="System Control" width="100%" />
+    <p><label for="SystemName">System Name:</label><br />
+    <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
+        <?php echo $lightSystemsoption;?>
+        </select>       
+    </p>
+	<p><button type="submit" name="btnWorkMatrix">Create Art!</button>
+	<p><button type="submit" onClick="storeMatrix()" name="btnDisplayArt" >Display Art!</button>
+
+    </div>
+
+
+    <div class="column">
+        <div class="ColumnStyles">
+		<div style="text-align:center">
+		  <h1>Matrix Art!</h1>
+			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#1E90FF" />
+			<input type="checkbox" id="reset" name="reset" /><label>reset</label>
+			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
+			<input type="text" id="matrixData" name="matrixData" hidden />
+			<div id="divMatrix" name="divMatrix">
+		<p></p><?php echo $matrixHTML; ?></P>
+		</div>
+		</div>
+		
+    </div>
+    </div>
+	</div>
+	<?php include('footer.php'); ?>
+
 <script>
+
+
+
 
 <?php echo $lightSystemsScript;?>
    
-function getId()
+
+let isDrawing = false;
+const divMatrix = document.getElementById('divMatrix');
+
+divMatrix.addEventListener('mousedown', e => {
+	
+  isDrawing = !isDrawing;
+  
+});
+
+
+divMatrix.addEventListener('mousemove', e => {
+
+	if(isDrawing)
+	{
+	
+		setColor();
+	}
+});
+
+
+
+
+function setColor()
 {	
 	var pixel = document.getElementById(this.event.target.id);
-	var color = document.getElementById('colorSelect');
+	if(pixel.id != "divMatrix")
+	{
+		var color = document.getElementById('colorSelect');
+		pixel.style.background = color.value;
+
+	}
+}
+
+function setToBaseColor()
+{	
+	isDrawing = false;
+	var pixel = document.getElementById(this.event.target.id);
+	var color = document.getElementById('baseColor');
 	pixel.style.background = color.value;
 
 }
 
 function setMatrixColors()
 {
-	
 	var pixel;
 	var systemNameId = document.getElementById("SystemNameId");
 	var baseColor = document.getElementById("baseColor");
@@ -193,6 +268,7 @@ function setMatrixColors()
 	}
 
 }
+
 function componentFromStr(numStr, percent) {
     var num = Math.max(0, parseInt(numStr, 10));
     return percent ?
@@ -206,7 +282,7 @@ function rgbToHex(rgb) {
         r = componentFromStr(result[1], result[2]);
         g = componentFromStr(result[3], result[4]);
         b = componentFromStr(result[5], result[6]);
-
+		
         hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
     return hex;
@@ -225,7 +301,7 @@ function storeMatrix()
     var ledNum = 0;
     var currentPos = 0;
     
-    var matrixJson = '{"show": "23","gammaCorrection": 1, "pixles": {';
+    var matrixJson = '{"show": "23","gammaCorrection": 1, "brightness":"70", "pixles": {';
     
 	for(var row = 0; row < system.stripRows; row++)
     {
@@ -272,42 +348,10 @@ function storeMatrix()
 
 </script>
 
-<div class="clearfix">
-<div class="column">
+
 	
-
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<img src="System-Control.png" alt="System Control" width="100%" />
-    <p><label for="SystemName">System Name:</label><br />
-    <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
-        <?php echo $lightSystemsoption;?>
-        </select>       
-    </p>
-	<p><button type="submit" name="btnWorkMatrix">Create Art!</button>
-	<p><button type="submit" onClick="storeMatrix()" name="btnDisplayArt" >Display Art!</button>
-
-    </div>
-
-
-    <div class="column">
-        <div class="ColumnStyles">
-		<div style="text-align:center">
-		  <h1>Matrix Art!</h1>
-			<input type="color" id="baseColor" name="baseColor" value="#1E90FF" />
-			<input type="checkbox" id="reset" name="reset" /><label>reset</label>
-			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
-			<input type="text" id="matrixData" name="matrixData" hidden />
-		<p></p><?php echo $matrixHTML; ?></P>
-		
-		</div>
-		
-    </form>
-    </div>
-    </div>
-	</div>
-	<?php include('footer.php'); ?>
-	
-	
+	 </form>
+   
 	
 </body>
 </html>
