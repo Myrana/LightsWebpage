@@ -185,9 +185,9 @@ background-color: red;
         <div class="ColumnStyles">
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
+			<label>Base Color</label>
 			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#1E90FF" />
-			<input type="checkbox" id="reset" name="reset" /><label>reset</label>
-			<input type="checkbox" id="singlePixel" name="singlePixel" /><label>single pixel</label>
+			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
 			<div id="divMatrix" name="divMatrix">
@@ -212,21 +212,21 @@ let isDrawing = false;
 const divMatrix = document.getElementById('divMatrix');
 
 divMatrix.addEventListener('mousedown', e => {
+	e.preventDefault();	 
+	switch(e.which)
+	{
+		case 1:
+		isDrawing = true;
+		break;
 
-                           switch(e.which)
-                           {
-                           case 1:
-                                isDrawing = true;
-                           break;
+		case 2:
+		setToBaseColor();                          
+		break;
 
-                           case 2:
-                           setColor();
-                           break
-
-                           case 3:
-                            setToBaseColor();
-                           break;
-                           }
+		case 3:
+		setColor();	   
+		break;
+	}
 
   
 });
