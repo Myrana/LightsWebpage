@@ -187,6 +187,7 @@ background-color: red;
 		  <h1>Matrix Art!</h1>
 			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#1E90FF" />
 			<input type="checkbox" id="reset" name="reset" /><label>reset</label>
+			<input type="checkbox" id="singlePixel" name="singlePixel" /><label>single pixel</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
 			<div id="divMatrix" name="divMatrix">
