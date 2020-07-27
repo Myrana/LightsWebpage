@@ -38,26 +38,26 @@ if(isset($_REQUEST['btnWorkMatrix']))
 		
 		$currentPos = 0;
 		
-		$val = 0;
 		for($ledRow = 0; $ledRow < $ledRows; $ledRow++)
 		{
-			if(($ledRow % 2) != 0)
+			if(($ledRow % 2) == 0)
 				$currentPos += $ledColumns ;
 					
 			for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
 			{
 				
-					if(($ledRow % 2) == 0)
+					if(($ledRow % 2) != 0)
 					{
 						$currentPos += 1;
 						$matrixHTML .= "<span id='" . $currentPos  . "' onClick='getId()' class='pixel'></span>";		
-						
+//						echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $currentPos;
 					}
 					else
 					{
 					
 						$pos = $currentPos - $ledColumn;
 						$matrixHTML .= "<span id='" . $pos  . "' onClick='getId()' class='pixel'></span>";		
+	//					echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $pos;
 						
 					}
 
@@ -166,7 +166,7 @@ function getId()
 	var pixel = document.getElementById(this.event.target.id);
 	var color = document.getElementById('colorSelect');
 	pixel.style.background = color.value;
-	
+
 }
 
 function setMatrixColors()
@@ -181,7 +181,7 @@ function setMatrixColors()
     
     for(var row = 0; row < system.stripRows; row++)
     {
-		
+				
 		for(var column = 0; column < system.stripColumns ; column++)
 		{
 			ledNum += 1;
@@ -223,17 +223,36 @@ function storeMatrix()
     var system = systemsMap.get(index);
     var numLeds = system.stripRows * system.stripColumns;
     var ledNum = 0;
+    var currentPos = 0;
     
     var matrixJson = '{"show": "23","gammaCorrection": 1, "pixles": {';
     
 	for(var row = 0; row < system.stripRows; row++)
     {
+		if((row % 2) == 0)
+			currentPos += system.stripColumns;
+	
 		for(var column = 0; column < system.stripColumns; column++)
 		{
-			ledNum += 1;
-			pixel = document.getElementById(ledNum);
-			matrixJson += '"' + ledNum + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
+	
+			if((row % 2) != 0)
+			{
+				currentPos += 1;
+				pixel = document.getElementById(currentPos);
+				matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
 			
+				
+			}
+			else
+			{
+			
+				var pos = currentPos - column;
+				pixel = document.getElementById(pos);
+				matrixJson += '"' + pos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
+
+				
+			}
+					
 			if(column != (system.stripColumns - 1))
 				matrixJson += ",";
 			
