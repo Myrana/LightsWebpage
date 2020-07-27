@@ -223,6 +223,12 @@ divMatrix.addEventListener('mousemove', e => {
 });
 
 
+divMatrix.addEventListener('mouseup', e => {
+
+	alert("mouseup");
+});
+
+
 
 
 function setColor()
