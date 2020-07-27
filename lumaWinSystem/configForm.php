@@ -246,7 +246,7 @@ if(mysqli_num_rows($results) > 0)
 
 
 $systemlistoption = '';
-$results = mysqli_query($conn,"SELECT *  FROM lightSystems");
+$results = mysqli_query($conn,"SELECT ID,systemName,serverHostName,userId, ls.enabled,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1;");
 if(mysqli_num_rows($results) > 0)
 {
     $lightSystemsScript = "let systemsMap = new Map();\r\n";
@@ -266,7 +266,7 @@ if(mysqli_num_rows($results) > 0)
         $lightSystemsScript .= "    system.enabled = " . $row['enabled'] .";\r";
         $lightSystemsScript .= "    system.userId = " . $row['userId'] .";\r";
         $lightSystemsScript .= "    system.gamma = " . $row['gamma'] .";\r";
-		$lightSystemsScript .= "    system.twitchSupport = " . $row['twitchSupport'] .";\r";
+		$lightSystemsScript .= "    system.twitchSupport = " . $row['TwitchSupport'] .";\r";
 		$lightSystemsScript .= "    system.mqttRetries = " . $row['mqttRetries'] .";\r";
 		$lightSystemsScript .= "    system.mqttRetryDelay = " . $row['mqttRetryDelay'] .";\r";
 
@@ -419,11 +419,14 @@ $conn->close();
 <?php include("nav.php");  ?>
 
 <script>
+
+
 <?php echo $lightFeaturesScript;?>
 <?php echo $lightSystemsScript;?>
 
 function setLightSystemSettings(fromPost)
 {
+
     var systemNameId = document.getElementById("LightSystem");
     var lightSystemName = document.getElementById("LightSystemName");
     var serverHostName = document.getElementById("ServerHostName");

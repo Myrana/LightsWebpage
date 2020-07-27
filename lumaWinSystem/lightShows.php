@@ -221,7 +221,9 @@ if(isset($_REQUEST['btnPlaylist']))
 
 $lightSystemsoption = '';
 $lightSystemsScript = '';
-    $results = mysqli_query($conn,"SELECT ID, systemName, stripRows, stripColumns, brightness FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
+$sql = "SELECT ID,systemName,serverHostName,userID,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1 and (userId = " . $_SESSION['UserID'] . " or userId = 1)";
+
+$results = mysqli_query($conn, $sql);
 if(mysqli_num_rows($results) > 0)
 {
 
@@ -238,7 +240,7 @@ if(mysqli_num_rows($results) > 0)
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
-		
+
         if($row['ID'] == $_SESSION["LightSystemID"] )
             $lightSystemsoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
         else

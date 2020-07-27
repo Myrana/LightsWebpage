@@ -23,7 +23,9 @@ if(!empty($_REQUEST))
 $matrixHTML = "";
 if(isset($_REQUEST['btnWorkMatrix']))
 {
-	$results = mysqli_query($conn,"SELECT ID, systemName, stripRows, stripColumns, brightness FROM lightSystems WHERE enabled = 1 and ID =" . $_POST['SystemName']);
+    $sql = "SELECT ID,systemName,serverHostName,userID,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1 and ID = " . $_SESSION['LightSystemID'];
+   
+	$results = mysqli_query($conn, $sql);
 	if(mysqli_num_rows($results) > 0)
 	{
 		$row = mysqli_fetch_array($results);
@@ -87,7 +89,9 @@ if(isset($_REQUEST['btnDisplayArt']))
 $lightSystemsoption = '';
 $lightSystemsScript = '';
 
-$results = mysqli_query($conn,"SELECT * FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
+$sql = "SELECT ID,systemName,serverHostName,userID,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1 and (userId = " . $_SESSION['UserID'] . " or userId = 1)";
+
+$results = mysqli_query($conn, $sql);
 if(mysqli_num_rows($results) > 0)
 {
 
