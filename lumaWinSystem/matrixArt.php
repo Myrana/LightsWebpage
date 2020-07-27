@@ -28,7 +28,6 @@ if(isset($_REQUEST['btnWorkMatrix']))
 	if(mysqli_num_rows($results) > 0)
 	{
 		$row = mysqli_fetch_array($results);
-		$ledNumber = 0;
 		$ledRows = $row['stripRows'];
 		$ledColumns = $row['stripColumns'];
 		if($ledRows == 1)
@@ -37,26 +36,47 @@ if(isset($_REQUEST['btnWorkMatrix']))
 			 $ledColumns = 1;
 		}
 		
+		$currentPos = 0;
+		
+		$val = 0;
 		for($ledRow = 0; $ledRow < $ledRows; $ledRow++)
 		{
+			if(($ledRow % 2) != 0)
+				$currentPos += $ledColumns ;
+					
 			for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
 			{
-				$ledNumber += 1;
-				$matrixHTML .= "<span id='" . $ledNumber . "' onClick='getId()' class='pixel'></span>";			
 				
-			}	
+					if(($ledRow % 2) == 0)
+					{
+						$currentPos += 1;
+						$matrixHTML .= "<span id='" . $currentPos  . "' onClick='getId()' class='pixel'></span>";		
+						
+					}
+					else
+					{
+					
+						$pos = $currentPos - $ledColumn;
+						$matrixHTML .= "<span id='" . $pos  . "' onClick='getId()' class='pixel'></span>";		
+						
+					}
+
+				
+			}
 			$matrixHTML .= "<br>";
+
 		}
 		
+			
 	}
 	
 }
+
 
 if(isset($_REQUEST['btnDisplayArt']))
 {
 	if(!empty($_POST['matrixData']))
 	{
-		
 		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), $_POST['matrixData']);
 	}	
 }
@@ -64,7 +84,7 @@ if(isset($_REQUEST['btnDisplayArt']))
 $lightSystemsoption = '';
 $lightSystemsScript = '';
 
-$results = mysqli_query($conn,"SELECT ID, systemName, stripRows, stripColumns, brightness FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
+$results = mysqli_query($conn,"SELECT * FROM lightSystems WHERE enabled = 1 and userId =" . $_SESSION['UserID'] . " or userId =1");
 if(mysqli_num_rows($results) > 0)
 {
 
@@ -107,7 +127,7 @@ $conn->close();
 .pixel {
   height: 25px;
   width: 25px;
-  background-color: #ADD8E6;
+  background-color: #1E90FF;
   border-radius: 50%;
   display: inline-block;
   
@@ -145,7 +165,6 @@ function getId()
 {	
 	var pixel = document.getElementById(this.event.target.id);
 	var color = document.getElementById('colorSelect');
-	
 	pixel.style.background = color.value;
 	
 }
@@ -160,10 +179,10 @@ function setMatrixColors()
     var system = systemsMap.get(index);
     var ledNum = 0;
     
-    for(var row = 1; row < system.stripRows; row++)
+    for(var row = 0; row < system.stripRows; row++)
     {
 		
-		for(var column = 0; row < system.stripColumns; column++)
+		for(var column = 0; column < system.stripColumns ; column++)
 		{
 			ledNum += 1;
 			pixel = document.getElementById(ledNum);
@@ -200,36 +219,37 @@ function storeMatrix()
 	var matrixData = document.getElementById("matrixData");
 	
     var index = parseInt(systemNameId.value);
+
     var system = systemsMap.get(index);
     var numLeds = system.stripRows * system.stripColumns;
     var ledNum = 0;
-    var colNum = 0;
     
-    var matrixJson = '{"show": "23","pixles": {';
-	  
-	for(var row = 1; row <= system.stripRows; row++)
+    var matrixJson = '{"show": "23","gammaCorrection": 1, "pixles": {';
+    
+	for(var row = 0; row < system.stripRows; row++)
     {
-	  
 		for(var column = 0; column < system.stripColumns; column++)
 		{
 			ledNum += 1;
 			pixel = document.getElementById(ledNum);
 			matrixJson += '"' + ledNum + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
+			
 			if(column != (system.stripColumns - 1))
 				matrixJson += ",";
-		
+			
 		}
 		
-		if(row != system.stripRows)
-			matrixJson += ",";	
+		if(row != system.stripRows - 1)
+			matrixJson += ",";
+		
 	}
-
+    
 	matrixJson += '}}';
-	
 	matrixData.value = matrixJson;
 		
 	
 }
+
 
 </script>
 
@@ -254,7 +274,7 @@ function storeMatrix()
         <div class="ColumnStyles">
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
-			<input type="color" id="baseColor" name="baseColor" value="#ADD8E6" />
+			<input type="color" id="baseColor" name="baseColor" value="#1E90FF" />
 			<input type="checkbox" id="reset" name="reset" /><label>reset</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
