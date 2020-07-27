@@ -14,11 +14,8 @@ if(mysqli_num_rows($results) > 0)
 
     while($row = mysqli_fetch_array($results))
     {
-		//echo $_SESSION["ShowName"];
-        if($_SESSION["ShowName"] != $row['ID'])
-			$lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
-		else
-			$lightShowsoption .="<option value = '".$row['ID']."' selected>".$row['showName']."</option>";
+        
+        $lightShowsoption .="<option value = '".$row['ID']."'>".$row['showName']."</option>";
 
 
         $_SESSION['lightShowsScript'] .= "var show = new Object(); \r";
@@ -137,7 +134,8 @@ $conn->close();
     <p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
     <?php echo $lightShowsoption;?></select>
 </p>
-
+		<div class="clearfix">
+<div style="width: 50%; float: left;">
     <p><label for="colors">Colors:</label>
 		<input type="color"  Name="color_1" id="Color1" value ="#ff6500">
         <input type="color" Name="color_2" id="Color2" value="#906bfa">
@@ -147,20 +145,20 @@ $conn->close();
         <p><label for="Width">Width:</label>
 <input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
 
-<p><label for="ColorEvery">Color every x led:</label>
+<p><label for="ColorEvery">X led:</label>
 <input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
 </p>
+</div>
 
 
-
-
+<div style="width: 50%; float: left;">
         <p><label for="Delay">Delay:</label>
 <input type="number" id="DelayId" name="Delay" min="1" max="100000" value="<?php echo $_SESSION["Delay"];?>">
 </p>
 
 
 
-    <p><label for="NumMinutes">Number of minutes:</label>
+    <p><label for="NumMinutes">Minutes:</label>
 <input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
 </p>
 
@@ -170,19 +168,16 @@ $conn->close();
 <p><label for="Brightness">Brightness:</label>
     <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="255">
 </p>
-
+</div>
+	</div>
 
         <p><label for="On1" style="font-size: 14px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">
 			<label for="On2" style="font-size: 14px">Clear finish</label>
-    <input type="checkbox" name="clearFinish" id="clearFinish"></p>
+    <input type="checkbox" name="clearFinish" id="clearFinish">
     
-		<p><label for="On3" style="font-size: 14px">Gamma correction</label>
-		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" checked></p>
-   
-        <p><label for="On" style="font-size: 14px">Power on</label>
-    <input type="checkbox" name="powerOn" id="powerOn" value="OFF">
-        </p>
+		<label for="On3" style="font-size: 14px">Gamma correction</label>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
 
 <?php
     if($_SESSION["DesignerEditMode"]  == 0)

@@ -456,7 +456,7 @@ input[type=color]:disabled{
 }
 
 input[type="color"] {
-    width: 18%;
+    width: 50px;
 }
 
 input[type="number"] {
