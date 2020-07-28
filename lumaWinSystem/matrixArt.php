@@ -212,7 +212,11 @@ let isDrawing = false;
 const divMatrix = document.getElementById('divMatrix');
 
 divMatrix.addEventListener('mousedown', e => {
-	e.preventDefault();	 
+	e.stopPropagation();
+    e.preventDefault();
+
+	
+	
 	switch(e.which)
 	{
 		case 1:
@@ -233,8 +237,9 @@ divMatrix.addEventListener('mousedown', e => {
 
 
 divMatrix.addEventListener('mousemove', e => {
-	 e.preventDefault();
-
+	 e.stopPropagation();
+     e.preventDefault();
+	
 	if(isDrawing)
 	{
 	
@@ -244,7 +249,8 @@ divMatrix.addEventListener('mousemove', e => {
 
 
 divMatrix.addEventListener('mouseup', e => {
-
+    e.stopPropagation();
+    e.preventDefault();
 	isDrawing = false;
 	
 });
@@ -267,6 +273,7 @@ function setToBaseColor()
 {	
 	isDrawing = false;
 	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id == "divMatrix") return;
 	var color = document.getElementById('baseColor');
 	pixel.style.background = color.value;
 
