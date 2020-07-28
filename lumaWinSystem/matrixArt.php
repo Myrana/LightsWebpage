@@ -190,7 +190,7 @@ background-color: red;
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
-			<div id="divMatrix" name="divMatrix">
+			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix">
 		<p></p><?php echo $matrixHTML; ?></P>
 		</div>
 		</div>
@@ -258,14 +258,26 @@ divMatrix.addEventListener('mouseup', e => {
 
 
 
+
 function setColor()
 {	
 	var pixel = document.getElementById(this.event.target.id);
 	if(pixel.id != "divMatrix")
 	{
+		
+		//var baseColor = document.getElementById('baseColor');
 		var color = document.getElementById('colorSelect');
-		pixel.style.background = color.value;
+		
+		//if(getColorHex(pixel.style.backgroundColor) == baseColor.value)
+		//{
+			pixel.style.backgroundColor = color.value;
+		//}
+		//else
+		//{
 
+			//pixel.style.backgroundColor = baseColor.value;
+		//}
+		
 	}
 }
 
@@ -301,6 +313,18 @@ function setMatrixColors()
 		}	
 	}
 
+}
+
+function getColorHex(color){
+    var hex;
+    if(color.indexOf('#')>-1){
+        //for IE
+        hex = color;
+    } else {
+        var rgb = color.match(/\d+/g);
+        hex = '#'+ ('0' + parseInt(rgb[0], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2);
+    }
+    return hex;
 }
 
 function componentFromStr(numStr, percent) {
