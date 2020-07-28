@@ -126,14 +126,14 @@ $conn->close();
 </script>
 
 
-<div class="column">
+<div class="column" style="width: 75%">
     <div class="ColumnStyles">
 		
-		<img src="Images/Show-Designer.png" alt="Show Designer" width="100%" />
+		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
-    <p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();">
+    <center><p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();" style="width: 25%">
     <?php echo $lightShowsoption;?></select>
-</p>
+</p></center>
 		<div class="clearfix">
 <div style="width: 50%; float: left;">
     <p><label for="colors">Colors:</label>
@@ -171,13 +171,13 @@ $conn->close();
 </div>
 	</div>
 
-        <p><label for="On1" style="font-size: 14px">Clear start</label>
+        <center><p><label for="On1" style="font-size: 14px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">
 			<label for="On2" style="font-size: 14px">Clear finish</label>
     <input type="checkbox" name="clearFinish" id="clearFinish">
     
 		<label for="On3" style="font-size: 14px">Gamma correction</label>
-		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p></center>
 
 <?php
     if($_SESSION["DesignerEditMode"]  == 0)

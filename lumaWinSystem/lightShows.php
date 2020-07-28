@@ -317,11 +317,11 @@ $conn->close();
 </script>
 
 <div class="clearfix">
-<div class="column">
+<div class="column" style="width: 25%">
 	
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<img src="System-Control.png" alt="System Control" width="100%" />
+		<center><img src="System-Control.png" alt="System Control"/></center>
     <p><label for="SystemName">System Name:</label><br />
     <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
         <?php echo $lightSystemsoption;?>
@@ -333,9 +333,28 @@ $conn->close();
     </p>
         <label for="On">On</label>
     <input type="checkbox" name="lights"  value="ON" checked><button type="submit" name="Power">Power</button>
+		<p>
+		
+			<script>
+
+		function setPlaylistName()
+		{
+			var playlistName = document.getElementById("PlayListNameId");
+			var playListId = document.getElementById("PlayListId");
+			var selectedText = playListId.options[playListId.selectedIndex].text;
+			playlistName.value = selectedText;
 
 
-    </div>
+		}
+		</script>
+	<label>Playlist</label>
+	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+	<p><button type="submit" name="btnPlaylist">Play</button>
+	<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button></p>
+			
+		</p>
+		
+	</div>
 
 
 
@@ -343,36 +362,9 @@ $conn->close();
 
 <?php include_once('showDesigner.php'); ?>
 
-    <div class="column">
-        <div class="ColumnStyles">
-
-<img src="Images/Playlist-Manager.png" alt="Playlist Manager" width="100%" />
-
-
-
-<script>
-
-    function setPlaylistName()
-    {
-        var playlistName = document.getElementById("PlayListNameId");
-        var playListId = document.getElementById("PlayListId");
-        var selectedText = playListId.options[playListId.selectedIndex].text;
-        playlistName.value = selectedText;
-
-
-    }
-</script>
-
-	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
-	<p><button type="submit" name="btnPlaylist">Play</button>
-	<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button></p>
-	
-
-
-    </form>
-    </div>
-    </div>
-	</div>
+ </form>
+    
+    
 	<?php include('footer.php'); ?>
 	
 	
