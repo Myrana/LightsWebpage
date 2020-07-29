@@ -27,9 +27,15 @@ if(isset($_REQUEST['Edit']))
 			$twitchSupport = '1';
 	}
 	
-	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
-	"',stripColumns = '" . $_POST['StripColumns'] . "',stripRows = '" . $_POST['StripRows'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
-	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='1',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	
+	$channelsql= "";
+	$systemId = $conn->insert_id;
+	$channelsql= "update lightsSystemsChannel set channelId = '1', lightSystemId = '".$systemId ."', stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
+	$_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', , enabled='1' ;"; 
+
+	
+	
 	if ($conn->query($sql) === TRUE)
 	{
 		
@@ -136,9 +142,13 @@ if(isset($_REQUEST['Config']))
 	}
 
 
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripColumns, stripRows, dma, gpio, brightness, enabled, userId, gamma, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
-		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripColumns'] . "','" . $_POST['StripRows'] . "','" . $_POST['DMA'] . 
-		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "','" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
+		"','" . $_POST['ServerHostName'] . "', '1', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
+	
+	$channelsql = "";
+	$systemId = $conn->insert_id;
+	
+	$channelsql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId. "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '1')";
 	
 	if ($conn->query($sql) === TRUE)
     {
@@ -186,6 +196,14 @@ if(isset($_REQUEST['Config']))
 				echo "<h1>Error: " . $conn->error . "</h1>";
 				echo $sql;	
 			}
+			
+			if ($conn->query($channelsql) === TRUE)
+				echo "<h1>Your record was added to the database successfully.</h1>";
+			else
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $channelsql;	
+			}
 		}
     }
 	else 
@@ -193,6 +211,9 @@ if(isset($_REQUEST['Config']))
 		echo "<h1>Error: " . $conn->error . "</h1>";
 		echo $sql;	
     }
+	
+	
+	
     
 }
 
@@ -211,6 +232,16 @@ if(isset($_REQUEST['Delete']))
 	
 	if ($conn->query($sql) === TRUE)
 		echo "<h1>Your features record was deleted from lightSystemFeatures database successfully.</h1>";
+	else
+		{
+			echo "<h1>Error: " . $conn->error . "</h1>";
+			echo $sql;	
+		}
+	
+	$sql = "DELETE FROM lightSystemChannels WHERE lightSystemId =" .$_POST['LightSystem'];
+	
+	if ($conn->query($sql) === TRUE)
+		echo "<h1>Your features record was deleted from lightSystemChannels database successfully.</h1>";
 	else
 		{
 			echo "<h1>Error: " . $conn->error . "</h1>";

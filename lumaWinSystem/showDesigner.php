@@ -7,7 +7,7 @@ $conn = getDatabaseConnection();
 
 $lightShowsoption = '';
 $_SESSION['lightShowsScript'] = '';
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery FROM lightShows WHERE enabled = 1 order by showOrder asc");
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
     $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
@@ -29,6 +29,7 @@ if(mysqli_num_rows($results) > 0)
         $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
+		$_SESSION['lightShowsScript'] .= "  show.isMatrix = " . $row['isMatrix'] .";\r";
 
         $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
 
@@ -63,6 +64,7 @@ $conn->close();
         var width = document.getElementById("WidthId");
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
+		var isMatrix = document.getElementById("isMatrix");
 
         color1.setAttribute('disabled', true);
         color2.setAttribute('disabled', true);
@@ -72,6 +74,7 @@ $conn->close();
         width.setAttribute('disabled', true);
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
+		isMatrix.setAttribute('disabled', true);
 		
         if(showMap.get(index).hasWidth == 1)
         {
@@ -123,13 +126,21 @@ $conn->close();
             colorEvery.setAttribute('disabled', false);
             colorEvery.disabled = false;
         }
+		
+		
+		if(showMap.get(index).isMatrix == 1)
+        {
+            isMatrix.setAttribute('disabled', false);
+            isMatrix.disabled = false;
+
+        }
         
     }
 </script>
 
 
 <div class="column" style="width: 75%">
-    <div class="ColumnStyles">
+    <div class="ColumnStyles" style="width: 30%">
 		
 		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
@@ -173,13 +184,19 @@ $conn->close();
 </div>
 	</div>
 
-        <center><p><label for="On1" style="font-size: 14px">Clear start</label>
+        <center>
+			
+			<p><input type="text" name="isMatrix" id="isMatrix" placeholder="Scrolling text" /></p>
+			
+			
+			<p><label for="On1" style="font-size: 14px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">
 			<label for="On2" style="font-size: 14px">Clear finish</label>
     <input type="checkbox" name="clearFinish" id="clearFinish">
     
 		<label for="On3" style="font-size: 14px">Gamma correction</label>
-		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p></center>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
+		</center>
 
 <?php
     if($_SESSION["DesignerEditMode"]  == 0)
