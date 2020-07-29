@@ -139,7 +139,10 @@ if(isset($_REQUEST['Config']))
     $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
 		"','" . $_POST['ServerHostName'] . "', '1', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
 	
-	$channelsql = "INSERT INTO lightSystemChannel(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId. "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['Gamma'] ."', '1')";
+	$channelsql = "";
+	$systemId = $conn->insert_id;
+	
+	$channelsql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId. "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['Gamma'] ."', '1')";
 	
 	if ($conn->query($sql) === TRUE)
     {
@@ -187,6 +190,14 @@ if(isset($_REQUEST['Config']))
 				echo "<h1>Error: " . $conn->error . "</h1>";
 				echo $sql;	
 			}
+			
+			if ($conn->query($channelsql) === TRUE)
+				echo "<h1>Your record was added to the database successfully.</h1>";
+			else
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $channelsql;	
+			}
 		}
     }
 	else 
@@ -194,6 +205,9 @@ if(isset($_REQUEST['Config']))
 		echo "<h1>Error: " . $conn->error . "</h1>";
 		echo $sql;	
     }
+	
+	
+	
     
 }
 
