@@ -159,6 +159,7 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
+		var matrix = document.getElementById("isMatrix");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -197,6 +198,9 @@ function hexToRgb(hex)
 
         if(show.hasDelay)
             playList.showParms[parmIndex].delay = delay.value;
+		
+		if(show.isMatrix)
+			playList.showParms[parmIndex].matrix = matrix.value;
 
         if(show.hasMinutes > 0)
             playList.showParms[parmIndex].minutes = minutes.value;
@@ -347,6 +351,7 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
+		var matrix = document.getElementById("isMatrix");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -365,6 +370,9 @@ function hexToRgb(hex)
 
                  if(show.hasDelay)
                      playList.showParms[i].delay = delay.value;
+				
+				if(show.isMatrix)
+					playList.showParms[i].matrix = matrix.value;
 
                     if(show.hasMinutes > 0)
                         playList.showParms[i].minutes = minutes.value;
@@ -488,6 +496,7 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
+		var matrix = document.getElementById("isMatrix");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -511,6 +520,9 @@ function hexToRgb(hex)
 
                 if(show.hasDelay)
                     delay.value = playList.showParms[i].delay;
+				
+				if(show.isMatrix)
+					matrix.value = playList.showParms[i].matrix;
 
                 if(show.hasMinutes > 0)
                     minutes.value = playList.showParms[i].minutes;
