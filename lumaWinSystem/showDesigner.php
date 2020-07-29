@@ -150,38 +150,49 @@ $conn->close();
 </p></center>
 		<div class="clearfix">
 <div style="width: 50%; float: left;">
-    <p><label for="colors">Colors:</label>
-		<input type="color"  Name="color_1" id="Color1" value ="#ff6500">
-        <input type="color" Name="color_2" id="Color2" value="#906bfa">
-        <input type="color" Name="color_3" id="Color3" value="#2c2367">
-        <input type="color" Name="color_4" id="Color4" value="#ad5e8c"></p>
+	<table>
+    	<tr>
+			<td><label for="colors">Colors:</label></td>
+			
+			<td><input type="color"  Name="color_1" id="Color1" value ="#ff6500">
+        	<input type="color" Name="color_2" id="Color2" value="#906bfa">
+        	<input type="color" Name="color_3" id="Color3" value="#2c2367">
+        	<input type="color" Name="color_4" id="Color4" value="#ad5e8c"></td>
+		</tr>
 
-        <p><label for="Width">Width:</label>
-<input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></p>
+        <tr>
+			<td><label for="Width">Width:</label></td>
+			<td><input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></td>
+		</tr>
 
-<p><label for="ColorEvery">X led:</label>
-<input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>">
-</p>
+		<tr>
+			<td><label for="ColorEvery">X led:</label></td>
+			<td><input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>"></td>
+		</tr>
+	</table>
 </div>
 
 
 <div style="width: 50%; float: left;">
-        <p><label for="Delay">Delay:</label>
-<input type="number" id="DelayId" name="Delay" min="1" max="100000" value="<?php echo $_SESSION["Delay"];?>">
-</p>
+	<table>
+        <tr>
+			<td><label for="Delay">Delay:</label></td>
+			<td><input type="number" id="DelayId" name="Delay" min="1" max="100000" value="<?php echo $_SESSION["Delay"];?>"></td>
+		</tr>
 
 
 
-    <p><label for="NumMinutes">Minutes:</label>
-<input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>">
-</p>
+    	<tr>
+			<td><label for="NumMinutes">Minutes:</label></td>
+			<td><input type="number" id="NumMinutesId" name="Minutes" min="1" value="<?php echo $_SESSION["Minutes"];?>"></td>
+		</tr>
 
 
-
-
-<p><label for="Brightness">Brightness:</label>
-    <input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="255">
-</p>
+		<tr>
+			<td><label for="Brightness">Brightness:</label></td>
+    		<td><input type="number" value="<?php echo $_SESSION["Brightness"];?>" id="Brightness" name="Brightness" min="1" max="255"></td>
+		</tr>
+	</table>
 </div>
 	</div>
 
