@@ -143,7 +143,7 @@ $conn->close();
 <div class="column" style="width: 75%">
     <div class="ColumnStyles" style="width: 30%">
 		
-		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
+		<center><img src="Images/Show-Designer.png" alt="Show Designer" style="width: 100%"/></center>
 
     <center><p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();" style="width: 25%">
     <?php echo $lightShowsoption;?></select>

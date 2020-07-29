@@ -325,7 +325,7 @@ $conn->close();
 	
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<center><img src="System-Control.png" alt="System Control"/></center>
+		<center><img src="System-Control.png" alt="System Control" style="width: 100%"/></center>
     <p><label for="SystemName">System Name:</label><br />
     <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
         <?php echo $lightSystemsoption;?>
