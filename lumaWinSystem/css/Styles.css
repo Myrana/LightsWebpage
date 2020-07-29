@@ -621,6 +621,10 @@ input[type="text"] {
   .right {
   left: 0%;
   }
+
+.column {
+    width: 100%;
 }
 
 
+}

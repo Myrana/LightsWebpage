@@ -132,8 +132,8 @@ $conn->close();
 
 <style>
 .pixel {
-  height: 25px;
-  width: 25px;
+  height: 15px;
+  width: 15px;
   background-color: #1E90FF;
   border-radius: 50%;
   display: inline-block;
@@ -181,7 +181,7 @@ background-color: red;
     </div>
 
 
-    <div class="column">
+    <div class="column" style="width: 70%">
         <div class="ColumnStyles">
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
