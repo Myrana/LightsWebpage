@@ -159,14 +159,12 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
-		var matrix = document.getElementById("isMatrix");
 		var text = document.getElementById("hasText");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
-        var powerOn = document.getElementById("powerOn");
+
 		
-        
         
         var playListIndex = parseInt(playListId.value);
         var playList = playListMap.get(playListIndex);
@@ -199,14 +197,11 @@ function hexToRgb(hex)
 
         if(show.hasDelay)
             playList.showParms[parmIndex].delay = delay.value;
-		
-		if(show.isMatrix)
-			playList.showParms[parmIndex].matrix = matrix.value;
-		
+				
 		if(show.hasText)
 			playList.showParms[parmIndex].text = text.value;
-
-        if(show.hasMinutes > 0)
+		
+		if(show.hasMinutes > 0)
             playList.showParms[parmIndex].minutes = minutes.value;
 
         if(show.colorEvery > 0)
@@ -215,9 +210,9 @@ function hexToRgb(hex)
         if(show.hasWidth)
             playList.showParms[parmIndex].width = width.value;
 
+		
         if(show.numColors > 0)
         {
-
 
             switch(show.numColors)
             {
@@ -281,13 +276,12 @@ function hexToRgb(hex)
             }
 
         }
+
         playList.showParms[parmIndex].clearStart = (clearStart.checked) ? 1 : 0;
         playList.showParms[parmIndex].clearFinish   = (clearFinish.checked) ? 1 : 0;
         playList.showParms[parmIndex].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
-        playList.showParms[parmIndex].powerOn = (powerOn.checked) ? 1 : 0;
-		
 
-
+	
         var option = document.createElement("option");
      
         option.text = show.showName;
@@ -355,12 +349,10 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
-		var matrix = document.getElementById("isMatrix");
 		var text = document.getElementById("hasText");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
-        var powerOn = document.getElementById("powerOn");
         
 
         var showIndex = parseInt(showListControl.value) - 1;
@@ -376,9 +368,7 @@ function hexToRgb(hex)
                  if(show.hasDelay)
                      playList.showParms[i].delay = delay.value;
 				
-				if(show.isMatrix)
-					playList.showParms[i].matrix = matrix.value;
-				
+		
 				if(show.hasText)
 					playList.showParms[i].text = text.value;
 
@@ -479,7 +469,6 @@ function hexToRgb(hex)
                     playList.showParms[i].clearStart = (clearStart.checked) ? 1 : 0;
                     playList.showParms[i].clearFinish   = (clearFinish.checked) ? 1 : 0;
                     playList.showParms[i].gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
-                    playList.showParms[i].powerOn = (powerOn.checked) ? 1 : 0;
 					break;
 
             }
@@ -504,12 +493,10 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
-		var matrix = document.getElementById("isMatrix");
 		var text = document.getElementById("hasText");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
-        var powerOn = document.getElementById("powerOn");
         
        
 		var showIndex = parseInt(showListControl.value) - 1;	
@@ -529,9 +516,6 @@ function hexToRgb(hex)
 
                 if(show.hasDelay)
                     delay.value = playList.showParms[i].delay;
-				
-				if(show.isMatrix)
-					matrix.value = playList.showParms[i].matrix;
 				
 				if(show.hasText)
 					text.value = playList.showParms[i].text;
@@ -581,7 +565,6 @@ function hexToRgb(hex)
                 clearStart.checked = (playList.showParms[i].clearStart != undefined && playList.showParms[i].clearStart == 1) ? true : false;
                 clearFinish.checked = (playList.showParms[i].clearFinish != undefined && playList.showParms[i].clearFinish == 1) ? true : false;
                 gammaCorrection.checked = (playList.showParms[i].gammaCorrection != undefined && playList.showParms[i].gammaCorrection == 1) ? true : false;
-				powerOn.checked = (playList.showParms[i].powerOn != undefined && playList.showParms[i].powerOn == 1) ? true : false;
 				
 
 				break;
