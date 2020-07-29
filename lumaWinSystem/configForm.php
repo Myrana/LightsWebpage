@@ -136,9 +136,10 @@ if(isset($_REQUEST['Config']))
 	}
 
 
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripColumns, stripRows, dma, gpio, brightness, enabled, userId, gamma, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
-		"','" . $_POST['ServerHostName'] . "', '" . $_POST['StripType'] . "','" . $_POST['StripColumns'] . "','" . $_POST['StripRows'] . "','" . $_POST['DMA'] . 
-		"','" . $_POST['GPIO'] . "','" . $_POST['Brightness'] . "', '1', '" . $_POST['userID'] . "', '" . $_POST['gamma'] . "','" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
+		"','" . $_POST['ServerHostName'] . "', '1', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
+	
+	$channelsql = "INSERT INTO lightSystemChannel(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId. "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['Gamma'] ."', '1')";
 	
 	if ($conn->query($sql) === TRUE)
     {
