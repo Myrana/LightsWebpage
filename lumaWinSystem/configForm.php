@@ -27,9 +27,13 @@ if(isset($_REQUEST['Edit']))
 			$twitchSupport = '1';
 	}
 	
-	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "',stripType = '" . $_POST['StripType'] .
-	"',stripColumns = '" . $_POST['StripColumns'] . "',stripRows = '" . $_POST['StripRows'] . "',dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
-	$_POST['Brightness'] . "', enabled='1',userId= '" . $_POST['userID'] . "', gamma = '" . $_POST['gamma'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='1',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	
+	$channelsql= "";
+	$systemId = $conn->insert_id;
+	$channelsql= "update lightsSystemsChannel set channelId = '1', lightSystemId = '".$systemId ."', stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" .
+	$_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', , enabled='1' ;"; 
+
 	
 	
 	if ($conn->query($sql) === TRUE)
@@ -228,6 +232,16 @@ if(isset($_REQUEST['Delete']))
 	
 	if ($conn->query($sql) === TRUE)
 		echo "<h1>Your features record was deleted from lightSystemFeatures database successfully.</h1>";
+	else
+		{
+			echo "<h1>Error: " . $conn->error . "</h1>";
+			echo $sql;	
+		}
+	
+	$sql = "DELETE FROM lightSystemChannels WHERE lightSystemId =" .$_POST['LightSystem'];
+	
+	if ($conn->query($sql) === TRUE)
+		echo "<h1>Your features record was deleted from lightSystemChannels database successfully.</h1>";
 	else
 		{
 			echo "<h1>Error: " . $conn->error . "</h1>";
