@@ -7,7 +7,7 @@ $conn = getDatabaseConnection();
 
 $lightShowsoption = '';
 $_SESSION['lightShowsScript'] = '';
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix FROM lightShows WHERE enabled = 1 order by showOrder asc");
+$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix, hasText FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
     $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
@@ -28,6 +28,7 @@ if(mysqli_num_rows($results) > 0)
         $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
 		$_SESSION['lightShowsScript'] .= "  show.isMatrix = " . $row['isMatrix'] .";\r";
+		$_SESSION['lightShowsScript'] .= "  show.hasText = " . $row['hasText'] .";\r";
 
         $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
 
@@ -63,6 +64,7 @@ $conn->close();
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var isMatrix = document.getElementById("isMatrix");
+		var hasText = document.getElementById("hasText");
 
         color1.setAttribute('disabled', true);
         color2.setAttribute('disabled', true);
@@ -73,6 +75,7 @@ $conn->close();
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		isMatrix.setAttribute('disabled', true);
+		hasText.setAttribute('disabled', true);
 		
         if(showMap.get(index).hasWidth == 1)
         {
@@ -132,6 +135,13 @@ $conn->close();
             isMatrix.disabled = false;
 
         }
+		
+		if(showMap.get(index).hasText == 1)
+        {
+            hasText.setAttribute('disabled', false);
+            hasText.disabled = false;
+
+        }
         
     }
 </script>
@@ -184,7 +194,7 @@ $conn->close();
 
         <center>
 			
-			<p><input type="text" name="isMatrix" id="isMatrix" placeholder="Scrolling text" /></p>
+			<p><input type="text" name="hasText" id="hasText" placeholder="Scrolling text" /></p>
 			
 			
 			<p><label for="On1" style="font-size: 14px">Clear start</label>
