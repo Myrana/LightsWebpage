@@ -194,6 +194,10 @@ if(isset($_REQUEST['LightShow']))
            
         if (!empty($_POST['ColorEvery']))
            $sendArray['colorEvery'] = $_SESSION["ColorEvery"];
+           
+        if(!empty($_POST['hasText']))
+			$sendArray['matrixText'] = $_POST['hasText'];
+        
 
     }
     //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;

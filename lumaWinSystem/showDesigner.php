@@ -65,7 +65,6 @@ $conn->close();
         var width = document.getElementById("WidthId");
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
-		var isMatrix = document.getElementById("isMatrix");
 		var hasText = document.getElementById("hasText");
 
         color1.setAttribute('disabled', true);
@@ -76,7 +75,6 @@ $conn->close();
         width.setAttribute('disabled', true);
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
-		isMatrix.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
 		
         if(showMap.get(index).hasWidth == 1)
@@ -130,13 +128,6 @@ $conn->close();
             colorEvery.disabled = false;
         }
 		
-		
-		if(showMap.get(index).isMatrix == 1)
-        {
-            isMatrix.setAttribute('disabled', false);
-            isMatrix.disabled = false;
-
-        }
 		
 		if(showMap.get(index).hasText == 1)
         {
