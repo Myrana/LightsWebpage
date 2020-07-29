@@ -460,7 +460,7 @@ input[type="color"] {
 }
 
 input[type="number"] {
-    width: 25%;
+    width: 75%;
 }
 
 input[type="text"] {
