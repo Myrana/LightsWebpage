@@ -351,12 +351,12 @@ function rgbToHex(rgb) {
     if ( (result = rgbRegex.exec(rgb)) ) {
 			
 		
-        g = componentFromStr(result[1], result[2]);
-        r = componentFromStr(result[3], result[4]);
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
         b = componentFromStr(result[5], result[6]);
 		
-        //hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        hex = rgbToWebHex(r,g,b);
+        hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        //hex = rgbToWebHex(r,g,b);
         
     }
     return hex;
