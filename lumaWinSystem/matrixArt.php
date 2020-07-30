@@ -72,8 +72,11 @@ if(isset($_REQUEST['btnWorkMatrix']))
 			}
 			else
 			{
-				$currentPos += 1;
-				$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
+				for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
+				{
+					$currentPos += 1;
+					$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
+				}
 				
 			}
 			$matrixHTML .= "<br>";
@@ -419,6 +422,22 @@ function storeMatrix()
 				
 			}
 		}
+		else
+		{
+			
+			for(var column = 0; column < system.stripColumns; column++)
+			{
+				
+				currentPos += 1;
+				pixel = document.getElementById(currentPos);
+				matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
+				
+				if(column != (system.stripColumns - 1))
+					matrixJson += ",";
+					
+			}
+			
+		}
 		
 		if(row != system.stripRows - 1)
 			matrixJson += ",";
@@ -428,7 +447,7 @@ function storeMatrix()
 	matrixJson += '}}';
 	matrixData.value = matrixJson;
 		
-	
+	//alert(matrixJson);
 }
 
 
