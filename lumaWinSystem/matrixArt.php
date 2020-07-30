@@ -31,53 +31,17 @@ if(isset($_REQUEST['btnWorkMatrix']))
 		$row = mysqli_fetch_array($results);
 		$ledRows = $row['stripRows'];
 		$ledColumns = $row['stripColumns'];
-		if($ledRows == 1)
-		{
-			 $ledRows = $ledColumns;
-			 $ledColumns = 1;
-		}
 		
 		
 		$currentPos = 0;
-		$matrixDir = $row['matrixDirection'];
 		
 		for($ledRow = 0; $ledRow < $ledRows; $ledRow++)
 		{
-			if($matrixDir == 1)
+			
+			for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
 			{
-				if(($ledRow % 2) == 0)
-					$currentPos += $ledColumns ;
-						
-				for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
-				{
-					
-						if(($ledRow % 2) != 0)
-						{
-							
-							$currentPos += 1;
-							$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
-	//						echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $currentPos;
-						}
-						else
-						{
-						
-							$pos = $currentPos - $ledColumn;
-							$matrixHTML .= "<span id='" . $pos  . "' class='pixel'></span>";		
-		//					echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $pos;
-							
-						}
-
-					
-				}
-			}
-			else
-			{
-				for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
-				{
-					$currentPos += 1;
-					$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
-				}
-				
+				$currentPos += 1;
+				$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
 			}
 			$matrixHTML .= "<br>";
 
@@ -362,8 +326,8 @@ function rgbToHex(rgb) {
     if ( (result = rgbRegex.exec(rgb)) ) {
 			
 		
-        g = componentFromStr(result[1], result[2]);
-        r = componentFromStr(result[3], result[4]);
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
         b = componentFromStr(result[5], result[6]);
 		
         hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
@@ -382,62 +346,26 @@ function storeMatrix()
     var index = parseInt(systemNameId.value);
 
     var system = systemsMap.get(index);
-    var numLeds = system.stripRows * system.stripColumns;
-    var ledNum = 0;
     var currentPos = 0;
     
     var matrixJson = '{"show": "23","gammaCorrection": 1, "brightness":"70", "pixles": {';
     
 	for(var row = 0; row < system.stripRows; row++)
     {
-		if(system.matrixDir === 1)
-		{
-			if((row % 2) == 0)
-				currentPos += system.stripColumns;
 		
-			for(var column = 0; column < system.stripColumns; column++)
-			{
-		
-				if((row % 2) != 0)
-				{
-					currentPos += 1;
-					pixel = document.getElementById(currentPos);
-					matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
-				
-					
-				}
-				else
-				{
-				
-					var pos = currentPos - column;
-					pixel = document.getElementById(pos);
-					matrixJson += '"' + pos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
-
-					
-				}
-					
 			
-				if(column != (system.stripColumns - 1))
-					matrixJson += ",";
-				
-			}
-		}
-		else
+		for(var column = 0; column < system.stripColumns; column++)
 		{
 			
-			for(var column = 0; column < system.stripColumns; column++)
-			{
-				
-				currentPos += 1;
-				pixel = document.getElementById(currentPos);
-				matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
-				
-				if(column != (system.stripColumns - 1))
-					matrixJson += ",";
-					
-			}
+			currentPos += 1;
+			pixel = document.getElementById(currentPos);
+			matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
 			
+			if(column != (system.stripColumns - 1))
+				matrixJson += ",";
+				
 		}
+			
 		
 		if(row != system.stripRows - 1)
 			matrixJson += ",";
