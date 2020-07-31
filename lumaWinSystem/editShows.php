@@ -602,7 +602,7 @@ function hexToRgb(hex)
 </script>
 
 	<div class="clearfix">
-	<div class="column" style="width: 25%;">
+	<div class="column twenty-five">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		<label for="PlayList">Select Playlist</label>
 	<select id="PlayList" name="PlayList" onchange="setPlayListSettings();">
