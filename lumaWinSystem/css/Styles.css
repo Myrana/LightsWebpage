@@ -459,12 +459,20 @@ footer{
 	margin: 15px;
 }
 
+.systemControlPic {
+	width: 100%;
+}
+
 @media screen and (max-width: 800px) {
   .column {
     width: 100%;
   }
 	.ColumnStyles {
 		width: 97%;
+	}
+	
+	.systemControlPic {
+		width: auto;
 	}
 }
 
