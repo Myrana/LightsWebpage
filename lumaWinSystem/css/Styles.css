@@ -459,20 +459,12 @@ footer{
 	margin: 15px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .column {
     width: 100%;
   }
 	.ColumnStyles {
-		width: 100%;
-	}
-	
-@media screen and (max-width: 800px){
-	 .column {
-    width: 100%;
-  }
-	.ColumnStyles {
-		width: 100%;
+		width: 97%;
 	}
 }
 
@@ -495,6 +487,8 @@ input[type="color"] {
 input[type="number"] {
     width: 75%;
 }
+
+
 
 input[type="text"] {
 	width: 90%;
@@ -658,5 +652,6 @@ input[type="text"] {
 .column {
     width: 100%;
 }
+
 
 }
