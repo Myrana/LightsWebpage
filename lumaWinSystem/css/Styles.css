@@ -466,6 +466,15 @@ footer{
 	.ColumnStyles {
 		width: 100%;
 	}
+	
+@media screen and (max-width: 800px){
+	 .column {
+    width: 100%;
+  }
+	.ColumnStyles {
+		width: 100%;
+	}
+}
 
 .systemStyles {
 	background: linear-gradient(27deg, rgba(238,174,202,0.8) 0%, rgba(148,187,233,0.8) 100%);
@@ -649,6 +658,5 @@ input[type="text"] {
 .column {
     width: 100%;
 }
-
 
 }
