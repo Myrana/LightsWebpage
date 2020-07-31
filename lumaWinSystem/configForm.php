@@ -436,17 +436,10 @@ $conn->close();
 
 
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Config Page</title>
-    
-	
-	<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>	
-	<link href="css/Styles.css" rel="stylesheet" type="text/css">
-  </head>
+<?php 
+$title = 'Config Form';
+include('header.php'); 
+?>
  
 <body onload="setLightSystemSettings(true);">
 <?php include("nav.php");  ?>

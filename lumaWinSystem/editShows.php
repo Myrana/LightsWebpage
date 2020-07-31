@@ -102,13 +102,10 @@ $conn->close();
 
 
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Edit Shows</title>
-<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
-<link href="css/Styles.css" rel="stylesheet" type="text/css">	
-</head>
+<?php 
+$title = 'Edit Shows';
+include('header.php'); 
+?>
 
 
 <body onLoad="setPlayListSettings();">

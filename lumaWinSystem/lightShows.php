@@ -270,13 +270,9 @@ $conn->close();
 ?>
 
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>System Name Page</title>
-<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
-<link href="css/Styles.css" rel="stylesheet" type="text/css">
-</head>
+<?php 
+include('header.php'); 
+?>
 
 
 <body onload="initShowSystem();">
