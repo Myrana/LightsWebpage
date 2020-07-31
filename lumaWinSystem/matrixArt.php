@@ -31,40 +31,17 @@ if(isset($_REQUEST['btnWorkMatrix']))
 		$row = mysqli_fetch_array($results);
 		$ledRows = $row['stripRows'];
 		$ledColumns = $row['stripColumns'];
-		if($ledRows == 1)
-		{
-			 $ledRows = $ledColumns;
-			 $ledColumns = 1;
-		}
 		
 		
 		$currentPos = 0;
 		
 		for($ledRow = 0; $ledRow < $ledRows; $ledRow++)
 		{
-			if(($ledRow % 2) == 0)
-				$currentPos += $ledColumns ;
-					
+			
 			for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
 			{
-				
-					if(($ledRow % 2) != 0)
-					{
-						
-						$currentPos += 1;
-						$matrixHTML .= "<span id='" . $currentPos  . "'  onClick='setToBaseColor()' class='pixel'></span>";		
-//						echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $currentPos;
-					}
-					else
-					{
-					
-						$pos = $currentPos - $ledColumn;
-						$matrixHTML .= "<span id='" . $pos  . "' class='pixel'></span>";		
-	//					echo "Row: " . $ledRow . " col: " . $ledColumn . " Pos: " . $pos;
-						
-					}
-
-				
+				$currentPos += 1;
+				$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
 			}
 			$matrixHTML .= "<br>";
 
@@ -105,6 +82,7 @@ if(mysqli_num_rows($results) > 0)
         $lightSystemsScript .= "    system.stripRows = " . $row['stripRows'] .";\r";
         $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
         $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
+        $lightSystemsScript .= "    system.matrixDir = " . $row['matrixDirection'] .";\r";
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
@@ -134,7 +112,7 @@ $conn->close();
 .pixel {
   height: 15px;
   width: 15px;
-  background-color: #1E90FF;
+  background-color: #000000;
   border-radius: 50%;
   display: inline-block;
   
@@ -186,7 +164,7 @@ background-color: red;
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
-			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#1E90FF" />
+			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000" />
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
@@ -333,9 +311,6 @@ function componentToHex(c) {
   return hex.length == 1 ? "0" + hex : hex;
 }
 
-function rgbToWebHex(r, g, b) {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
 
 function componentFromStr(numStr, percent) {
     var num = Math.max(0, parseInt(numStr, 10));
@@ -351,12 +326,12 @@ function rgbToHex(rgb) {
     if ( (result = rgbRegex.exec(rgb)) ) {
 			
 		
-        g = componentFromStr(result[1], result[2]);
-        r = componentFromStr(result[3], result[4]);
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
         b = componentFromStr(result[5], result[6]);
 		
-        //hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        hex = rgbToWebHex(r,g,b);
+        hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        //hex = rgbToWebHex(r,g,b);
         
     }
     return hex;
@@ -371,52 +346,36 @@ function storeMatrix()
     var index = parseInt(systemNameId.value);
 
     var system = systemsMap.get(index);
-    var numLeds = system.stripRows * system.stripColumns;
-    var ledNum = 0;
     var currentPos = 0;
     
     var matrixJson = '{"show": "23","gammaCorrection": 1, "brightness":"70", "pixles": {';
     
 	for(var row = 0; row < system.stripRows; row++)
     {
-		if((row % 2) == 0)
-			currentPos += system.stripColumns;
-	
+		
+			
 		for(var column = 0; column < system.stripColumns; column++)
 		{
-	
-			if((row % 2) != 0)
-			{
-				currentPos += 1;
-				pixel = document.getElementById(currentPos);
-				matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
 			
-				
-			}
-			else
-			{
+			currentPos += 1;
+			pixel = document.getElementById(currentPos);
+			matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
 			
-				var pos = currentPos - column;
-				pixel = document.getElementById(pos);
-				matrixJson += '"' + pos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
-
-				
-			}
-					
 			if(column != (system.stripColumns - 1))
 				matrixJson += ",";
-			
+				
 		}
+			
 		
 		if(row != system.stripRows - 1)
 			matrixJson += ",";
 		
 	}
-    
+	
 	matrixJson += '}}';
 	matrixData.value = matrixJson;
 		
-	
+	//alert(matrixJson);
 }
 
 
