@@ -582,7 +582,7 @@ function confirmDelete()
 
 	  <h1>Config Page</h1>
 	<div class="clearfix">
-	<div class="column" style="width: 33%">
+	<div class="column thirty-three">
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
 			<p><label for="onLightSystem">Light System:</label><br />
@@ -599,7 +599,7 @@ function confirmDelete()
 			
 		</div>
 	
-	          <div class="column" style="width: 33%">
+	          <div class="column thirty-three">
 				  <div class="ColumnStyles">
 	
 	<p><label for="LightSystemName">Light System Name:</label><br />
@@ -678,7 +678,7 @@ function confirmDelete()
 	</p>	
 			</div>
 				</div>		  
-<div class="column" style="width: 33%">
+<div class="column thirty-three">
 <div class="ColumnStyles">	
 <p><label for="motionFeature">Use a motion sensor?</label>
 	
