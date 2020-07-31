@@ -303,7 +303,7 @@ if(mysqli_num_rows($results) > 0)
 
 
 $systemlistoption = '';
-$results = mysqli_query($conn,"SELECT ID,systemName,serverHostName,userId, ls.enabled,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1;");
+$results = mysqli_query($conn,"SELECT ID,systemName,serverHostName,userId, ls.enabled as systemEnable,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1;");
 if(mysqli_num_rows($results) > 0)
 {
     $lightSystemsScript = "let systemsMap = new Map();\r\n";
@@ -325,10 +325,10 @@ if(mysqli_num_rows($results) > 0)
         $lightSystemsScript .= "    system.gamma = " . $row['gamma'] .";\r";
 		$lightSystemsScript .= "    system.twitchSupport = " . $row['TwitchSupport'] .";\r";
 		$lightSystemsScript .= "    system.mqttRetries = " . $row['mqttRetries'] .";\r";
-		$lightSystemsScript .= "    system.mqttRetryDelay = " . $row['mqttRetryDelay'] .";\r";
-		/*$lightSystemsScript .= "    system.twitchMqttQueue = " . $row['twitchMqttQueue'] .";\r";
-		$lightSystemsScript .= "    system.systemEnabled = " . $row['systemEnabled'] .";\r";
-		$lightSystemsScript .= "    system.channelEnabled = " . $row['channelEnabled'] .";\r";*/
+		$lightSystemsScript .= "    system.mqttRetryDelay = " . $row['mqttRetryDelay']   .";\r";
+		$lightSystemsScript .= "    system.twitchMqttQueue = '" . $row['twitchMqttQueue'] ."';\r";
+		$lightSystemsScript .= "    system.systemEnabled = " . $row['systemEnable'] .";\r";
+		$lightSystemsScript .= "    system.channelEnabled = " . $row['enabled'] .";\r";
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
