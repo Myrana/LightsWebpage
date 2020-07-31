@@ -202,11 +202,11 @@ divMatrix.addEventListener('mousedown', e => {
 		break;
 
 		case 2:
-		setToBaseColor();                          
+		setColor();	                             
 		break;
 
 		case 3:
-		setColor();	   
+		setToBaseColor();
 		break;
 	}
 
