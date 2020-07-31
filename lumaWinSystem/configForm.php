@@ -27,11 +27,23 @@ if(isset($_REQUEST['Edit']))
 			$twitchSupport = '1';
 	}
 	
-	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='1',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "' where ID = '" . $_POST['LightSystem'] . "';";
+	$systemEnabled =  '0';
+	if(!empty($_POST['systemEnabled']))
+	{
+			$systemEnabled = '1';
+	}
+	
+	$channelEnabled =  '0';
+	if(!empty($_POST['channelEnabled']))
+	{
+			$channelEnabled = '1';
+	}
+	
+	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='" . $systemEnabled . "',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "', twitchMqttQueue = '" . $_POST['twitchMqttQueue'] ."'  where ID = '" . $_POST['LightSystem'] . "';";
 	if ($conn->query($sql) === TRUE)
 	{
 		$sql= "";
-		$sql= "update lightSystemChannels set stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" . $_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', enabled='1' where channelId = '1' and lightSystemId = '". $_POST['LightSystem'] . "';"; 
+		$sql= "update lightSystemChannels set stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" . $_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', enabled='" . $channelEnabled . "' where channelId = '1' and lightSystemId = '". $_POST['LightSystem'] . "';"; 
 
 		
 		if ($conn->query($sql) === TRUE)
@@ -143,17 +155,29 @@ if(isset($_REQUEST['Config']))
 	{
 			$twitchSupport = '1';
 	}
+	
+	$systemEnabled =  '0';
+	if(!empty($_POST['systemEnabled']))
+	{
+			$systemEnabled = '1';
+	}
+	
+	$channelEnabled =  '0';
+	if(!empty($_POST['channelEnabled']))
+	{
+			$channelEnabled = '1';
+	}
 
 
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay) VALUES('" . $_POST['LightSystemName'] . 
-		"','" . $_POST['ServerHostName'] . "', '1', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "')";
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay, twitchMqttQueue) VALUES('" . $_POST['LightSystemName'] . 
+		"','" . $_POST['ServerHostName'] . "', '" . $systemEnabled . "', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "', '" . $_POST['twitchMqttQueue'] . "')";
 	
 	if ($conn->query($sql) === TRUE)
     {
 		$sql = "";
 		$systemId = $conn->insert_id;
 		
-		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId . "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '1')";
+		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('" . $channelEnabled . "', '". $systemId . "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '" . $channelEnabled . "')";
 		
 		if ($conn->query($sql) === TRUE)
 		{
@@ -302,6 +326,9 @@ if(mysqli_num_rows($results) > 0)
 		$lightSystemsScript .= "    system.twitchSupport = " . $row['TwitchSupport'] .";\r";
 		$lightSystemsScript .= "    system.mqttRetries = " . $row['mqttRetries'] .";\r";
 		$lightSystemsScript .= "    system.mqttRetryDelay = " . $row['mqttRetryDelay'] .";\r";
+		/*$lightSystemsScript .= "    system.twitchMqttQueue = " . $row['twitchMqttQueue'] .";\r";
+		$lightSystemsScript .= "    system.systemEnabled = " . $row['systemEnabled'] .";\r";
+		$lightSystemsScript .= "    system.channelEnabled = " . $row['channelEnabled'] .";\r";*/
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
@@ -481,6 +508,9 @@ function setLightSystemSettings(fromPost)
 	var twitchSupport = document.getElementById("twitchSupport");
 	var mqttRetries = document.getElementById("mqttRetries");
 	var mqttRetryDelay = document.getElementById("mqttRetryDelay");
+	var twitchMqttQueue = document.getElementById("twitchMqttQueue");
+	var systemEnabled = document.getElementById("systemEnabled");
+	var channelEnabled = document.getElementById("channelEnabled")
 	var systemStyles = document.getElementById("systemStyles");
 	
 	if(systemStyles && !fromPost)
@@ -503,7 +533,10 @@ function setLightSystemSettings(fromPost)
     userID.value = system.userId;
 	mqttRetries.value = system.mqttRetries;
 	mqttRetryDelay.value = system.mqttRetryDelay;
+	twitchMqttQueue.value = system.twitchMqttQueue;
     twitchSupport.checked = system.twitchSupport;
+	systemEnabled.checked = system.systemEnabled;
+	channelEnabled.checked = system.channelEnabled;
     
 	if(motionFeature.checked == true)
         motionFeature.click();
@@ -602,9 +635,47 @@ function confirmDelete()
 	
 	<p><label for="ServerHostName">Server Host Name:</label><br />
 	  <input name="ServerHostName" type="text" id="ServerHostName" placeholder="50 characters or less" maxlength="50"></p>
-	
 
-	<p><label for="StripType">Strip Type:</label><br />
+		<p>
+			<label for="enabled">Enabled</label>
+			<input type="checkbox" id="systemEnabled" name="systemEnabled" />
+			
+			<label for="twitchSupport">Twitch Support</label>
+			<input type="checkbox" id="twitchSupport" name="twitchSupport" />
+			</p>
+		
+		<p>
+		
+			<label for="mqttRetries">MQTT Retries:</label> <br />
+			<input type="number" id="mqttRetries" name="mqttRetries" value="2000" />
+		
+		</p>
+		
+		<p>
+		
+			<label for="mqttRetryDelay">MQTT Retry Delay:</label> <br />
+			<input type="number" id="mqttRetryDelay" name="mqttRetryDelay" value="2500" />
+			
+		</p>
+		
+		<p>
+		
+			<label for="twitchMqttQueue">MQTT Queue:</label> <br />
+			<input type="text" id="twitchMqttQueue" name="twitchMqttQueue" placeholder="Queue name here" />
+			
+			
+		</p>
+					 
+		<p><label for="userID">Light System User:</label><br />
+	<select name="userID" id="userID">
+		<?php echo $users;?>
+		</select>	
+	</p>
+	
+	</div>
+		<div class="ColumnStyles">
+		
+			<p><label for="StripType">Strip Type:</label><br />
 	<select name="StripType" id="StripType">
 		<?php echo $stripTypes;?>
 		</select>	
@@ -627,8 +698,7 @@ function confirmDelete()
 
 
 </p>
-<div class="clearfix">
-	<div class="column" style="width: 50%">
+
 <p><label for="GPIO">GPIO Pin:</label><br />
 	  <input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></p>
 	
@@ -640,39 +710,17 @@ function confirmDelete()
 <input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1">
 		</p>
 	
-</div>
-
-	<div class="column" style="width: 50%">
-		<p>
-			<label for="twitchSupport">Twitch Support</label>
-			<input type="checkbox" id="twitchSupport" name="twitchSupport" />
-			</p>
+	<p>
+				  
+		<label for="enabled">Enabled</label>
+			<input type="checkbox" id="channelEnabled" name="channelEnabled" />
 		
-		<p>
-		
-			<label for="mqttRetries">MQTT Retries:</label> <br />
-			<input type="number" id="mqttRetries" name="mqttRetries" value="2000" />
-		
-		</p>
-		
-		<p>
-		
-			<label for="mqttRetryDelay">MQTT Retry Delay:</label> <br />
-			<input type="number" id="mqttRetryDelay" name="mqttRetryDelay" value="2500" />
-			
-		</p>
-	
-	</div>
-	
-</div>		
-
-	<p><label for="userID">Light System User:</label><br />
-	<select name="userID" id="userID">
-		<?php echo $users;?>
-		</select>	
-	</p>	
+	</p>
+				  
+		</div>
 			</div>
-				</div>		  
+			
+			  
 <div class="column thirty-three">
 <div class="ColumnStyles">	
 <p><label for="motionFeature">Use a motion sensor?</label>
