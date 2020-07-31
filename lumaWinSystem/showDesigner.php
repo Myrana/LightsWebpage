@@ -140,8 +140,8 @@ $conn->close();
 </script>
 
 
-<div class="column" style="width: 75%">
-    <div class="ColumnStyles" style="width: 30%">
+<div class="column seventy-five">
+    <div class="ColumnStyles">
 		
 		<center><img src="Images/Show-Designer.png" alt="Show Designer" style="width: 100%"/></center>
 

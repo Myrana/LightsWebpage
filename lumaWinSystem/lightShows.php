@@ -321,7 +321,8 @@ $conn->close();
 </script>
 
 <div class="clearfix">
-<div class="column" style="width: 25%">
+<div class="column twenty-five">
+	
 	
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -359,6 +360,7 @@ $conn->close();
 		</p>
 		
 	</div>
+		
 
 
 

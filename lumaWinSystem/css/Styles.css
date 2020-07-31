@@ -433,15 +433,36 @@ footer{
 
 
 .column {
-    width: 30%;
     float: left;
 }
+
+.thirty-three {
+	width: 33%;
+}
+
+.fifty {
+	width: 50%;
+}
+
+.twenty-five {
+	width: 25%;
+}
+
+.seventy-five {
+	width: 75%;
+}
+
 .ColumnStyles {
 	background-color: white;
 	padding: 10px;
 	box-shadow: 0px 6px 10px 0px #000;
 	margin: 15px;
 }
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
 
 .systemStyles {
 	background: linear-gradient(27deg, rgba(238,174,202,0.8) 0%, rgba(148,187,233,0.8) 100%);
