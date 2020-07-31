@@ -31,9 +31,8 @@ if(isset($_REQUEST['Edit']))
 	if ($conn->query($sql) === TRUE)
 	{
 		$sql= "";
-		$sql= "update lightsSystemsChannels set channelId = '1', lightSystemId = '".$systemId ."', stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" . $_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', enabled='1' ;"; 
+		$sql= "update lightSystemChannels set stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" . $_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', enabled='1' where channelId = '1' and lightSystemId = '". $_POST['LightSystem'] . "';"; 
 
-		
 		
 		if ($conn->query($sql) === TRUE)
 		{
@@ -154,7 +153,7 @@ if(isset($_REQUEST['Config']))
 		$sql = "";
 		$systemId = $conn->insert_id;
 		
-		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId. "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '1')";
+		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('1', '". $systemId . "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '1')";
 		
 		if ($conn->query($sql) === TRUE)
 		{
@@ -199,14 +198,6 @@ if(isset($_REQUEST['Config']))
 				{
 					echo "<h1>Error: " . $conn->error . "</h1>";
 					echo $sql;	
-				}
-				
-				if ($conn->query($channelsql) === TRUE)
-					echo "<h1>Your record was added to the database successfully.</h1>";
-				else
-				{
-					echo "<h1>Error: " . $conn->error . "</h1>";
-					echo $channelsql;	
 				}
 			}
 		}
