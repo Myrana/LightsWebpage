@@ -505,24 +505,15 @@ input[type="text"] {
 
 
 @media (max-width: 741px){
-.nav {
-}
-.fas {
-    margin-right: -20px;
 
-
-}
 
 
 }
 
 @media (max-width: 547px){
-.fas {
-    margin-right: -25px;
 
-
-}
-
+	
+	
 }
 
 /* The actual timeline (the vertical ruler) */
