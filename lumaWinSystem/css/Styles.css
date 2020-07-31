@@ -463,6 +463,9 @@ footer{
   .column {
     width: 100%;
   }
+	.ColumnStyles {
+		width: 100%;
+	}
 
 .systemStyles {
 	background: linear-gradient(27deg, rgba(238,174,202,0.8) 0%, rgba(148,187,233,0.8) 100%);

@@ -141,7 +141,7 @@ $conn->close();
 
 
 <div class="column seventy-five">
-    <div class="ColumnStyles" style="width: 40%">
+    <div class="ColumnStyles fifty">
 		
 		<center><img src="Images/Show-Designer.png" alt="Show Designer" style="width: 100%"/></center>
 
