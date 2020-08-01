@@ -16,7 +16,6 @@ if(!empty($_REQUEST))
     $sendArray['UserID'] = $_SESSION['UserID'];
     if(!empty($_POST['SystemName']))
         $_SESSION["LightSystemID"]  = $_POST['SystemName'];
-
 }
 
 
@@ -30,9 +29,7 @@ if(isset($_REQUEST['btnWorkMatrix']))
 	{
 		$row = mysqli_fetch_array($results);
 		$ledRows = $row['stripRows'];
-		$ledColumns = $row['stripColumns'];
-		
-		
+		$ledColumns = $row['stripColumns'];	
 		$currentPos = 0;
 		
 		for($ledRow = 0; $ledRow < $ledRows; $ledRow++)
@@ -46,11 +43,7 @@ if(isset($_REQUEST['btnWorkMatrix']))
 			$matrixHTML .= "<br>";
 
 		}
-		
-			
 	}
-	
-	
 }
 
 
@@ -86,8 +79,6 @@ if(mysqli_num_rows($results) > 0)
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
-		
-		//echo $row['stripRows'] * $row['stripColumns'];
         if($row['ID'] == $_SESSION["LightSystemID"] )
             $lightSystemsoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
         else
@@ -131,13 +122,9 @@ background-color: red;
 
 <?php 
 	if(!empty($_REQUEST) && !isset($_REQUEST['btnDisplayArt']))
-	{
 		echo '<body onload="setMatrixColors();" >';
-	}
 	else
-	{
 		echo '<body>';
-	}
 	
 ?>
 
@@ -163,7 +150,7 @@ background-color: red;
 
 
     <div class="column" style="width: 70%">
-        <div class="ColumnStyles">
+        <div id="divArt" class="ColumnStyles">
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
@@ -179,7 +166,6 @@ background-color: red;
     </div>
     </div>
 	</div>
-	<?php include('footer.php'); ?>
 
 <script>
 
@@ -191,6 +177,12 @@ background-color: red;
 
 let mode = 0;
 const divMatrix = document.getElementById('divMatrix');
+
+divMatrix.addEventListener('mouseleave', e => {
+  
+  	mode = 0;
+	
+});
 
 divMatrix.addEventListener('mousedown', e => {
 	e.stopPropagation();
@@ -205,18 +197,15 @@ divMatrix.addEventListener('mousedown', e => {
 		break;
 
 		case 2:
-		mode = 0;
-		captureColor();	
-//		setColor();	                             
+			mode = 0;
+			captureColor();	
 		break;
 
 		case 3:
 			mode = 2;
 		
-		
 		break;
 	}
-
   
 });
 
@@ -248,9 +237,6 @@ function setColor()
 	var pixel = document.getElementById(this.event.target.id);
 	if(pixel.id != "divMatrix")
 	{
-		
-		//var baseColor = document.getElementById('baseColor');
-		
 		if(mode == 1)
 		{
 			var color = document.getElementById('colorSelect');	
@@ -260,15 +246,7 @@ function setColor()
 			var color = document.getElementById('baseColor');	
 		}
 		
-		//if(getColorHex(pixel.style.backgroundColor) == baseColor.value)
-		//{
-			pixel.style.backgroundColor = color.value;
-		//}
-		//else
-		//{
-
-			//pixel.style.backgroundColor = baseColor.value;
-		//}
+		pixel.style.backgroundColor = color.value;
 		
 	}
 }
@@ -372,7 +350,6 @@ function rgbToHex(rgb) {
         b = componentFromStr(result[5], result[6]);
 		
         hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        //hex = rgbToWebHex(r,g,b);
         
     }
     return hex;
@@ -394,7 +371,6 @@ function storeMatrix()
 	for(var row = 0; row < system.stripRows; row++)
     {
 		
-			
 		for(var column = 0; column < system.stripColumns; column++)
 		{
 			
@@ -416,16 +392,16 @@ function storeMatrix()
 	matrixJson += '}}';
 	matrixData.value = matrixJson;
 		
-	//alert(matrixJson);
 }
 
 
 </script>
 
 
-	
-	 </form>
+</form>
    
+<?php include('footer.php'); ?>
+
 	
 </body>
 </html>

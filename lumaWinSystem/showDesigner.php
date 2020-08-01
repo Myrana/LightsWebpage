@@ -207,7 +207,7 @@ $conn->close();
     <input type="checkbox" name="clearFinish" id="clearFinish">
     
 		<label for="On3" style="font-size: 14px">Gamma correction</label>
-		<input type="checkbox" name="gammaCorrection" id="gammaCorrection"></p>
+		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" checked></p>
 		</center>
 
 <?php
