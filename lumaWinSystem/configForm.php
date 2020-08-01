@@ -673,51 +673,119 @@ function confirmDelete()
 	</p>
 	
 	</div>
+		<div class="column fifty">
 		<div class="ColumnStyles">
-		
-			<p><label for="StripType">Strip Type:</label><br />
-	<select name="StripType" id="StripType">
+			Channel 1
+		<table>
+			<tr>
+				<td><label for="StripType">Strip Type:</label></td>
+	<td><select name="StripType" id="StripType">
 		<?php echo $stripTypes;?>
-		</select>	
-	</p>	
+		</select></td>	
+	</tr>	
 	
 
+	<tr>
+	  <td><label for="StripRows">Strip rows:</label></td>
+	  <td><input type="number" id="StripRows" name="StripRows" min="1" value"10"></td>
+	</tr>
+	<tr>
+		<td><label for="StripColumns">Strip Columns:</label></td>
+	    <td><input type="number" id="StripColumns" name="StripColumns" min="1" value="1"></td>
+	</tr>
 
-
-<label for="StripRows">Strip rows:</label>
-	  <input type="number" id="StripRows" name="StripRows" min="1" value"10" style="width:15%"> </p>
-<p><label for="StripColumns">Strip Columns:</label>
-	  <input type="number" id="StripColumns" name="StripColumns" min="1" value="1" style="width:15%">
-
-<p><label for="onDMA">DMA:</label><br />
-	  <select name="DMA" id="DMA">
+	<tr>
+		<td><label for="onDMA">DMA:</label></td>
+	    <td><select name="DMA" id="DMA">
 		  <option value="5">5</option>
 		  <option value="10">10</option>
 		  <option value="12">12</option>
-	  </select>
+	  </select></td>
 
 
-</p>
+</tr>
 
-<p><label for="GPIO">GPIO Pin:</label><br />
-	  <input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></p>
+<tr>
+	<td><label for="GPIO">GPIO Pin:</label></td>
+	<td><input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></td>
+</tr>
 	
-	<p><label for="Brightness">Brightness:</label><br />
-	  <input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60">
-		</p>
+	<tr>
+		<td><label for="Brightness">Brightness:</label></td>
+	  	<td><input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60"></td>
+	</tr>
 					  
-	<p><label for="ongamma">Gamma:</label><br />
-<input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1">
-		</p>
+	<tr>
+		<td><label for="ongamma">Gamma:</label></td>
+		<td><input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1"></td>
+		</tr>
 	
-	<p>
-				  
-		<label for="enabled">Enabled</label>
-			<input type="checkbox" id="channelEnabled" name="channelEnabled" />
+	<tr>
+		<td><label for="enabled">Enabled</label>
+		<input type="checkbox" id="channelEnabled" name="channelEnabled" /></td>
 		
-	</p>
-				  
+	</tr>
+		</table>		  
 		</div>
+			</div>
+		
+		<div class="column fifty">
+		<div class="ColumnStyles">
+			Channel 2
+		<table>
+			<tr>
+				<td><label for="StripType2">Strip Type:</label></td>
+	<td><select name="StripType2" id="StripType2">
+		<?php echo $stripTypes;?>
+		</select></td>	
+	</tr>	
+	
+
+	<tr>
+	  <td><label for="StripRows2">Strip rows:</label></td>
+	  <td><input type="number" id="StripRows2" name="StripRows2" min="1" value"10"></td>
+	</tr>
+	<tr>
+		<td><label for="StripColumns2">Strip Columns:</label></td>
+	    <td><input type="number" id="StripColumns2" name="StripColumns2" min="1" value="1"></td>
+	</tr>
+
+	<tr>
+		<td><label for="onDMA2">DMA:</label></td>
+	    <td><select name="DMA2" id="DMA2">
+		  <option value="5">5</option>
+		  <option value="10">10</option>
+		  <option value="12">12</option>
+	  </select></td>
+
+
+</tr>
+
+<tr>
+	<td><label for="GPIO2">GPIO Pin:</label></td>
+	<td><input type="number" id="GPIO2" name="GPIO2" min="1" max="52" value="18"></td>
+</tr>
+	
+	<tr>
+		<td><label for="Brightness2">Brightness:</label></td>
+	  	<td><input type="number" id="Brightness2" name="Brightness2" min="1" max="255" value="60"></td>
+	</tr>
+					  
+	<tr>
+		<td><label for="ongamma2">Gamma:</label></td>
+		<td><input type="number" id="gamma2" name="gamma2" step=".1" min=".1" max="3.0" value="1"></td>
+		</tr>
+	
+	<tr>
+		<td><label for="enabled2">Enabled</label>
+		<input type="checkbox" id="channelEnabled2" name="channelEnabled2" /></td>
+		
+	</tr>
+		</table>		  
+		</div>
+			</div>
+		
+		
 			</div>
 			
 			  
