@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$expireAfter = 30;
+$expireAfter = 120;
 
 if(isset($_SESSION['last_action']))
 {

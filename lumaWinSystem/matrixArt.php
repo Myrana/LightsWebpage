@@ -189,7 +189,7 @@ background-color: red;
 <?php echo $lightSystemsScript;?>
    
 
-let isDrawing = false;
+let mode = 0;
 const divMatrix = document.getElementById('divMatrix');
 
 divMatrix.addEventListener('mousedown', e => {
@@ -201,15 +201,19 @@ divMatrix.addEventListener('mousedown', e => {
 	switch(e.which)
 	{
 		case 1:
-		isDrawing = true;
+			mode = 1;
 		break;
 
 		case 2:
-		setColor();	                             
+		mode = 0;
+		captureColor();	
+//		setColor();	                             
 		break;
 
 		case 3:
-		setToBaseColor();
+			mode = 2;
+		
+		
 		break;
 	}
 
@@ -220,19 +224,18 @@ divMatrix.addEventListener('mousedown', e => {
 divMatrix.addEventListener('mousemove', e => {
 	 e.stopPropagation();
      e.preventDefault();
-	
-	if(isDrawing)
-	{
-	
+	if(mode == 1 || mode == 2)
 		setColor();
-	}
+	//else
+	//	setToBaseColor();
+	
 });
 
 
 divMatrix.addEventListener('mouseup', e => {
     e.stopPropagation();
     e.preventDefault();
-	isDrawing = false;
+	mode = 0;
 	
 });
 
@@ -247,7 +250,15 @@ function setColor()
 	{
 		
 		//var baseColor = document.getElementById('baseColor');
-		var color = document.getElementById('colorSelect');
+		
+		if(mode == 1)
+		{
+			var color = document.getElementById('colorSelect');	
+		}
+		else if(mode ==  2)
+		{
+			var color = document.getElementById('baseColor');	
+		}
 		
 		//if(getColorHex(pixel.style.backgroundColor) == baseColor.value)
 		//{
@@ -262,9 +273,21 @@ function setColor()
 	}
 }
 
+function captureColor()
+{
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id != "divMatrix")
+	{
+		var color = document.getElementById('colorSelect');
+		color.value = rgbToWebHex(pixel.style.backgroundColor);
+		
+	}
+	
+}
+
 function setToBaseColor()
 {	
-	isDrawing = false;
+	isDrawing = 0;
 	var pixel = document.getElementById(this.event.target.id);
 	if(pixel.id == "divMatrix") return;
 	var color = document.getElementById('baseColor');
@@ -319,6 +342,21 @@ function componentFromStr(numStr, percent) {
     var num = Math.max(0, parseInt(numStr, 10));
     return percent ?
         Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+}
+
+
+function rgbToWebHex(rgb) 
+{
+	var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+    var result, r, g, b, hex = "";
+    if ( (result = rgbRegex.exec(rgb)) ) 
+    {
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
+        b = componentFromStr(result[5], result[6]);
+	}
+        
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
 
