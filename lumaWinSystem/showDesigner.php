@@ -221,9 +221,7 @@ $conn->close();
 		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" checked></p>
 		</center>
 		
-<<<<<<< HEAD
-		<div class="column" style="width: 70%">
-        <div id="divArt" class="ColumnStyles" hidden>
+ <div id="divArt" class="ColumnStyles fifty">
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
@@ -239,10 +237,10 @@ $conn->close();
     </div>
     </div>
 
+		
+    
 <?php
-=======
-		<?php
->>>>>>> f71eab6f68fceff79513bd2eb0925a1b780d7c20
+
     if($_SESSION["DesignerEditMode"]  == 0)
     {
         echo '<p>
@@ -264,28 +262,5 @@ $conn->close();
 
 			
     }
-    ?>
+?>
 		
-	</div>
-		
-		
-        <div id="divArt" class="ColumnStyles fifty">
-		<div style="text-align:center">
-		  <h1>Matrix Art!</h1>
-			<label>Base Color</label>
-			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000" />
-			<label>Color Select</label>
-			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
-			<input type="text" id="matrixData" name="matrixData" hidden />
-			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix">
-		<p></p><?php echo $matrixHTML; ?></P>
-		</div>
-		</div>
-		
-    </div>
-    </div>
-
-
-
-    </div>
-    </div>
