@@ -7,6 +7,9 @@ $conn = getDatabaseConnection();
 
 $lightShowsoption = '';
 $_SESSION['lightShowsScript'] = '';
+$_SESSION['systemlistoption'] = '';
+$_SESSION['lightSystemsScript'] = '';
+
 $results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix, hasText FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
@@ -38,8 +41,90 @@ if(mysqli_num_rows($results) > 0)
 
 
     }
-
+    
+    
 }
+
+$_SESSION['systemlistoption'] = '';
+$_SESSION['lightSystemsScript'] = '';
+
+$systemResults = mysqli_query($conn,"SELECT * FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
+if(mysqli_num_rows($systemResults) > 0)
+{
+    $_SESSION['lightSystemsScript'] = "let systemsMap = new Map();\r\n";
+    while($systemRow = mysqli_fetch_array($systemResults))
+    {
+		
+		$_SESSION['lightSystemsScript'] .= "var system = new Object(); \r";
+
+        $_SESSION['lightSystemsScript'] .= "    system.id = " . $systemRow['ID'] . ";\r";
+        $_SESSION['lightSystemsScript'] .= "    system.systemName = '" . $systemRow['systemName'] . "';\r";
+        $_SESSION['lightSystemsScript'] .= "    system.serverHostName = '" . $systemRow['serverHostName'] . "';\r";
+        $_SESSION['lightSystemsScript'] .= "    system.enabled = " . $systemRow['enabled'] . ";\r";
+        $_SESSION['lightSystemsScript'] .= "    system.userId = " . $systemRow['userId'] . ";\r";
+        $_SESSION['lightSystemsScript'] .= "    system.twitchSupport = " . $systemRow['twitchSupport'] . ";\r";
+		$_SESSION['lightSystemsScript'] .= "    system.mqttRetries = " . $systemRow['mqttRetries'] . ";\r";
+		$_SESSION['lightSystemsScript'] .= "    system.mqttRetryDelay = " . $systemRow['mqttRetryDelay']   .";\r";
+		$_SESSION['lightSystemsScript'] .= "    system.twitchMqttQueue = '" . $systemRow['twitchMqttQueue'] ."';\r";
+		$_SESSION['lightSystemsScript'] .= "    system.channelsMap = new Map();\r";
+		$_SESSION['lightSystemsScript'] .= "    system.featuresMap = new Map();\r";
+		
+		$channelResults = mysqli_query($conn,"SELECT * FROM lightSystemChannels where lightSystemId = " . $systemRow['ID'] . ";");
+		
+		if(mysqli_num_rows($channelResults) > 0)
+		{
+			
+			while($channelRow = mysqli_fetch_array($channelResults))
+			{
+				$_SESSION['lightSystemsScript'] .= "var channel = new Object(); \r";
+				$_SESSION['lightSystemsScript'] .= "    channel.channelId = " . $channelRow['channelId'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.stripType = " . $channelRow['stripType'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.stripColumns = " . $channelRow['stripColumns'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.stripRows = " . $channelRow['stripRows'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.dma = " . $channelRow['dma'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.gpio = " . $channelRow['gpio'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.brightness = " . $channelRow['brightness'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.gamma = " . $channelRow['gamma'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.enabled = " . $channelRow['enabled'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "system.channelsMap.set(" . $channelRow['channelId'] . ", channel);\r";
+				
+			}
+		}
+		
+		$featureResults = mysqli_query($conn,"SELECT * FROM lightSystemFeatures where lightSystemId = " . $systemRow['ID'] . ";");
+		if(mysqli_num_rows($featureResults) > 0)
+		{
+			while($featureRow = mysqli_fetch_array($featureResults))
+			{
+				$_SESSION['lightSystemsScript'] .= "var lightFeature = new Object(); \r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.featureId = " . $featureRow['featureId'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.featureGpio = " . $featureRow['featureGpio'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.featurePlayList = " . $featureRow['featurePlayList'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.motionDelayOff = " . $featureRow['motionDelayOff'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.timeFeatureStart = '" . $featureRow['timeFeatureStart'] ."';\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.timeFeatureEnd = '" . $featureRow['timeFeatureEnd'] ."';\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.luxThreshHold = " . $featureRow['luxThreshHold'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "system.featuresMap.set(" . $featureRow['featureId']  . ", lightFeature);\r";
+				
+			}
+		}
+		
+
+	
+        $_SESSION['lightSystemsScript'] .= "systemsMap.set(" . $systemRow['ID'] . ", system);\r";
+
+        if($systemRow['ID'] == $_SESSION["LightSystemID"] )
+            $_SESSION['systemlistoption'] .="<option value = '".$systemRow['ID']."' selected>". $systemRow['systemName']."</option>";
+        else
+            $_SESSION['systemlistoption'] .="<option value = '".$systemRow['ID']."'>". $systemRow['systemName']."</option>";
+
+    }
+    
+   
+}
+
+
+
 
 $conn->close();
 
@@ -48,16 +133,23 @@ $conn->close();
 <script>
 
     <?php echo $_SESSION['lightShowsScript'];?>
+    
+
 
 
     function setShowSettings()
     {
-
-	alert("REW");
-        var showNameId = document.getElementById("ShowNameId");
-        var index = parseInt(showNameId.value);
-
-
+		var showNameId = document.getElementById("ShowNameId");
+		var systemNameId = document.getElementById("SystemNameId");
+		
+		
+		var system = systemsMap.get(parseInt(systemNameId.value));
+		
+		var index = parseInt(showNameId.value);		
+		
+		
+        
+       
         var color1 = document.getElementById("Color1");
         var color2 = document.getElementById("Color2");
         var color3 = document.getElementById("Color3");
@@ -67,7 +159,8 @@ $conn->close();
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
-	//	var divArt = document.getElementById("divArt");
+		var divArt = document.getElementById("divArt");
+		var baseColor = document.getElementById("baseColor");
 		
 		
         color1.setAttribute('disabled', true);
@@ -80,13 +173,39 @@ $conn->close();
 		colorEvery.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
 		
-/*		if(showMap.get(index).isMatrix == 1)
+		divArt.setAttribute('hidden', true);
+        divArt.hidden = true;
+        
+        if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
         {
-            divArt.setAttribute('hidden', false);
+			var matrixHTML = "";
+			var divMatrix = document.getElementById("divMatrix");
+            
+			divArt.setAttribute('hidden', false);
             divArt.hidden = false;
+            
+            
+            var currentPos = 0;
+            
+    
+			for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+			{
+				
+				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				{
+					style="background-color:grey;"
+					currentPos += 1;
+					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
+				}
+				matrixHTML += "<br>";
+
+			}
+		
+		
+            divMatrix.innerHTML = matrixHTML;
 
         }
-  */
+  
         
         if(showMap.get(index).hasWidth == 1)
         {
@@ -148,7 +267,26 @@ $conn->close();
         }
         
     }
+    
+
+
 </script>
+
+<style>
+.pixel {
+  height: 15px;
+  width: 15px;
+  background-color: #000000;
+  border-radius: 50%;
+  display: inline-block;
+  
+}
+
+.pixel:hover {
+background-color: red;
+}
+
+</style>
 
 
 <div class="column seventy-five">
@@ -226,7 +364,7 @@ $conn->close();
     if($_SESSION["DesignerEditMode"]  == 0)
     {
         echo '<p>
-			<button type="submit" name="LightShow">Send Show</button>
+			<button type="submit" onClick="storeMatrix()" name="LightShow">Send Show</button>
 			<button type="submit" name="ClearQueue">Clear Queue</button>
         </p>';
     }
@@ -248,7 +386,7 @@ $conn->close();
 		
 	</div>
 		
- <div id="divArt" class="ColumnStyles fifty">
+ <div id="divArt" class="ColumnStyles fifty" hidden>
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
@@ -265,6 +403,224 @@ $conn->close();
 </div>
 
 		
+<script>
+let mode = 0;
+const divMatrix = document.getElementById('divMatrix');
+divMatrix.addEventListener('mouseleave', e => {
+  
+  	mode = 0;
+	
+});
+
+divMatrix.addEventListener('mousedown', e => {
+	e.stopPropagation();
+    e.preventDefault();
+
+	
+	
+	switch(e.which)
+	{
+		case 1:
+			mode = 1;
+		break;
+
+		case 2:
+			mode = 0;
+			captureColor();	
+		break;
+
+		case 3:
+			mode = 2;
+		
+		break;
+	}
+  
+});
+
+
+divMatrix.addEventListener('mousemove', e => {
+	 e.stopPropagation();
+     e.preventDefault();
+	if(mode == 1 || mode == 2)
+		setColor();
+	//else
+	//	setToBaseColor();
+	
+});
+
+
+divMatrix.addEventListener('mouseup', e => {
+    e.stopPropagation();
+    e.preventDefault();
+	mode = 0;
+	
+});
+function setColor()
+{	
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id != "divMatrix")
+	{
+		if(mode == 1)
+		{
+			var color = document.getElementById('colorSelect');	
+		}
+		else if(mode ==  2)
+		{
+			var color = document.getElementById('baseColor');	
+		}
+		
+		pixel.style.backgroundColor = color.value;
+		
+	}
+}
+
+function captureColor()
+{
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id != "divMatrix")
+	{
+		var color = document.getElementById('colorSelect');
+		color.value = rgbToWebHex(pixel.style.backgroundColor);
+		
+	}
+	
+}
+
+function setToBaseColor()
+{	
+	isDrawing = 0;
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id == "divMatrix") return;
+	var color = document.getElementById('baseColor');
+	pixel.style.background = color.value;
+
+}
+
+function setMatrixColors()
+{
+	var pixel;
+	var systemNameId = document.getElementById("SystemNameId");
+	var baseColor = document.getElementById("baseColor");
+    var index = parseInt(systemNameId.value);
+    var system = systemsMap.get(index);
+    var ledNum = 0;
+    for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
+    {
+		for(var column = 0; column < system.channelsMap.get(1).stripColumns; column++)
+		{
+			
+			ledNum += 1;
+			pixel = document.getElementById(ledNum);
+			pixel.style.background = baseColor.value;
+				
+		}
+			
+		
+	}
+	
     
+}
+
+function getColorHex(color){
+    var hex;
+    if(color.indexOf('#')>-1){
+        //for IE
+        hex = color;
+    } else {
+        var rgb = color.match(/\d+/g);
+        hex = '#'+ ('0' + parseInt(rgb[0], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2);
+    }
+    return hex;
+}
+
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+
+function componentFromStr(numStr, percent) {
+    var num = Math.max(0, parseInt(numStr, 10));
+    return percent ?
+        Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+}
+
+
+function rgbToWebHex(rgb) 
+{
+	var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+    var result, r, g, b, hex = "";
+    if ( (result = rgbRegex.exec(rgb)) ) 
+    {
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
+        b = componentFromStr(result[5], result[6]);
+	}
+        
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+
+function rgbToHex(rgb) {
+	
+    var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+    var result, r, g, b, hex = "";
+    if ( (result = rgbRegex.exec(rgb)) ) {
+			
+		
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
+        b = componentFromStr(result[5], result[6]);
+		
+        hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        
+    }
+    return hex;
+}
+
+function storeMatrix()
+{
+	var pixel;
+	var systemNameId = document.getElementById("SystemNameId");
+	var matrixData = document.getElementById("matrixData");
+	
+    var index = parseInt(systemNameId.value);
+
+    var system = systemsMap.get(index);
+    var currentPos = 0;
+    
+    var matrixJson = '{';
+    
+    
+	for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
+    {
+		
+		for(var column = 0; column < system.channelsMap.get(1).stripColumns; column++)
+		{
+			
+			currentPos += 1;
+			pixel = document.getElementById(currentPos);
+			matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
+			
+			if(column != (system.channelsMap.get(1).stripColumns - 1))
+				matrixJson += ",";
+				
+		}
+			
+		
+		if(row != system.channelsMap.get(1).stripRows - 1)
+			matrixJson += ",";
+		
+	}
+	
+	matrixJson += '}';
+	matrixData.value = matrixJson;
+	
+		
+}
+
+
+</script>    
 
 		

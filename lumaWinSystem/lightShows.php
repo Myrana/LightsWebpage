@@ -101,6 +101,9 @@ if(isset($_REQUEST['LightShow']))
 
     if(!empty($_POST['ShowName']))
     {
+
+
+			
         if(isset($_POST['color_1']))
         {
             if($hex != '#000000')
@@ -195,11 +198,14 @@ if(isset($_REQUEST['LightShow']))
            
         if(!empty($_POST['hasText']))
 			$sendArray['matrixText'] = $_POST['hasText'];
+			
+		if(!empty($_POST['matrixData']))
+			$sendArray['pixles'] = json_decode($_POST['matrixData']);
+		
         
 
     }
-    //$_SESSION["Color1"] = $g << 16 | $r << 8 | $b;
-
+    
     sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 
 }
@@ -221,35 +227,6 @@ if(isset($_REQUEST['btnPlaylist']))
 }
 
 
-$lightSystemsoption = '';
-$lightSystemsScript = '';
-$sql = "SELECT ID,systemName,serverHostName,userID,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1 and (userId = " . $_SESSION['UserID'] . " or userId = 1)";
-
-$results = mysqli_query($conn, $sql);
-if(mysqli_num_rows($results) > 0)
-{
-
-    $lightSystemsScript .= "let systemsMap = new Map();\r\n";
-    while($row = mysqli_fetch_array($results))
-    {
-        $lightSystemsScript .= "var system = new Object(); \r";
-
-        $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
-        $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
-        $lightSystemsScript .= "    system.stripRows = " . $row['stripRows'] .";\r";
-        $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
-        $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
-
-        $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
-
-
-        if($row['ID'] == $_SESSION["LightSystemID"] )
-            $lightSystemsoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
-        else
-            $lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
-
-    }
-}
 
 
 
@@ -279,25 +256,31 @@ include('header.php');
 
 <script>
 
-<?php echo $lightSystemsScript;?>
+
+
+<?php echo $_SESSION['lightSystemsScript'];?>
 
 	function initShowSystem()
 	{
 		setSystemSettings();
-		setShowSettings();
+		//setShowSettings();
+		
 	}
 
     function setSystemSettings()
     {
-        var systemNameId = document.getElementById("SystemNameId");
+		
         var widthId  = document.getElementById("WidthId");
         var widthOutput = document.getElementById("WidthValue");
         var chgBrightnessId = document.getElementById("ChgBrightnessId");
         var brightness = document.getElementById("Brightness");
-        
-        var index = parseInt(systemNameId.value);
-        var numLeds = systemsMap.get(index).stripRows * systemsMap.get(index).stripColumns;
 
+
+        var systemNameId = document.getElementById("SystemNameId");
+        var index = parseInt(systemNameId.value);
+        var system = systemsMap.get(index);
+        
+        var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
         if(widthId.value > numLeds)
         {
             widthId.setAttribute('value', numLeds);
@@ -309,8 +292,10 @@ include('header.php');
         widthId.setAttribute('max', numLeds);
         widthId.max = numLeds;
 
-		chgBrightnessId.value = systemsMap.get(index).brightness;
-		brightness.value = systemsMap.get(index).brightness;
+		chgBrightnessId.value = system.channelsMap.get(1).brightness;
+		brightness.value = system.channelsMap.get(1).brightness;
+		setShowSettings();
+
     }
 
 
@@ -325,7 +310,7 @@ include('header.php');
 		<center><img src="System-Control.png" id="systemControlPic" alt="System Control"/></center>
     <p><label for="SystemName">System Name:</label><br />
     <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
-        <?php echo $lightSystemsoption;?>
+        <?php echo $_SESSION['systemlistoption'];?>
         </select>
     </p>
     <p><label for="ChgBrightness">Change Brightness:</label>
@@ -335,19 +320,19 @@ include('header.php');
         <label for="On">On</label>
     <input type="checkbox" name="lights"  value="ON" checked><button type="submit" name="Power">Power</button>
 		<p>
-		
-			<script>
 
-		function setPlaylistName()
-		{
-			var playlistName = document.getElementById("PlayListNameId");
-			var playListId = document.getElementById("PlayListId");
-			var selectedText = playListId.options[playListId.selectedIndex].text;
-			playlistName.value = selectedText;
+	<script>
+
+	function setPlaylistName()
+	{
+		var playlistName = document.getElementById("PlayListNameId");
+		var playListId = document.getElementById("PlayListId");
+		var selectedText = playListId.options[playListId.selectedIndex].text;
+		playlistName.value = selectedText;
 
 
-		}
-		</script>
+	}
+	</script>
 	<label>Playlist</label>
 	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
 	<p><button type="submit" name="btnPlaylist">Play</button>
