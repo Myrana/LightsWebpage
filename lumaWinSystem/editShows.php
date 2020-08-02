@@ -475,6 +475,7 @@ function hexToRgb(hex)
 
 	function setShowParms()
 	{
+		
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var showControl = document.getElementById("ShowNameId");
@@ -509,8 +510,11 @@ function hexToRgb(hex)
 				//proper state for show.
 	    
 				showControl.value = show.id;
+				
 				showControl.onchange();
 
+				
+				
                 if(show.hasDelay)
                     delay.value = playList.showParms[i].delay;
 				
@@ -526,6 +530,7 @@ function hexToRgb(hex)
                     width.value = playList.showParms[i].width;
 
                 brightness.value = playList.showParms[i].brightness;
+                
 
                 if(show.numColors > 0)
                 {
@@ -629,6 +634,9 @@ function hexToRgb(hex)
 	  
          <input name="jsonContainer" type="text" id="jsonContainer" hidden></p>
         <?php include('showDesigner.php'); ?>
+        
+        <input name="SystemNameId" type="text" id="SystemNameId" value="<?php echo $_SESSION["LightSystemID"]; ?> " hidden></input>
+        
 
     </div>
 	</div>

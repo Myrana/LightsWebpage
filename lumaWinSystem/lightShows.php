@@ -263,7 +263,7 @@ include('header.php');
 	function initShowSystem()
 	{
 		setSystemSettings();
-		//setShowSettings();
+		setShowSettings();
 		
 	}
 
@@ -294,7 +294,7 @@ include('header.php');
 
 		chgBrightnessId.value = system.channelsMap.get(1).brightness;
 		brightness.value = system.channelsMap.get(1).brightness;
-		setShowSettings();
+		//setShowSettings();
 
     }
 
