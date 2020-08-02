@@ -2,12 +2,10 @@
 
 include('commonFunctions.php');
 
-$_SESSION["Brightness"] = 127;
 $_SESSION["Delay"] = 10;
 $_SESSION["Minutes"] = 1;
 $_SESSION["Width"] = 1;
 $_SESSION["ColorEvery"] = 2;
-$_SESSION["ChgBrightness"] = 20;
 $_SESSION["DesignerEditMode"] = 0;
 
 $conn = getDatabaseConnection();
@@ -66,10 +64,10 @@ if(isset($_REQUEST['Power']))
 if(isset($_REQUEST['btnChgBrightness']))
 {
 
-	if(!empty($_POST['Brightness']))
+	if(!empty($_POST['ChgBrightness']))
 	{
 
-		$_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
+		$_SESSION['ChgBrightness'] = $_POST['ChgBrightness'];
 		$sendArray['chgBrightness'] = $_POST['ChgBrightness'];
 
 		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
@@ -295,7 +293,8 @@ include('header.php');
         var widthId  = document.getElementById("WidthId");
         var widthOutput = document.getElementById("WidthValue");
         var chgBrightnessId = document.getElementById("ChgBrightnessId");
-
+        var brightness = document.getElementById("Brightness");
+        
         var index = parseInt(systemNameId.value);
         var numLeds = systemsMap.get(index).stripRows * systemsMap.get(index).stripColumns;
 
@@ -311,6 +310,7 @@ include('header.php');
         widthId.max = numLeds;
 
 		chgBrightnessId.value = systemsMap.get(index).brightness;
+		brightness.value = systemsMap.get(index).brightness;
     }
 
 

@@ -96,7 +96,7 @@ function read_topic($arg_1)
 			$client->loop();
 			$date2 = time();
 			
-			if (($date2 - $date1) > 5) break;
+			if (($date2 - $date1) > 2) break;
 			if(!empty($GLOBALS['rcv_message'])) break;
 	}
 	 

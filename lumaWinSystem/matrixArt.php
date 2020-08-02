@@ -76,6 +76,7 @@ if(mysqli_num_rows($results) > 0)
         $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
         $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
         $lightSystemsScript .= "    system.matrixDir = " . $row['matrixDirection'] .";\r";
+        $lightSystemsScript .= "    system.userId = " . $_SESSION['UserID'] .";\r";
 
         $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
 
@@ -366,7 +367,7 @@ function storeMatrix()
     var system = systemsMap.get(index);
     var currentPos = 0;
     
-    var matrixJson = '{"show": "23","gammaCorrection": 1, "brightness":"70", "pixles": {';
+    var matrixJson = '{"show": "23","gammaCorrection": 1, "brightness":"' + system.brightness + '","UserID":' + system.userId + ', "pixles": {';
     
 	for(var row = 0; row < system.stripRows; row++)
     {
@@ -405,4 +406,5 @@ function storeMatrix()
 	
 </body>
 </html>
+
 

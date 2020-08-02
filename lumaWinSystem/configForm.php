@@ -45,13 +45,13 @@ if(isset($_REQUEST['Edit']))
 		$channels = "";
 		
 		if(!empty($_POST['channelEnabled']))
-			$channels .= "('1','" . $systemId. "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '1')";
+			$channels .= "('1','" .  $_SESSION["LightSystemID"] . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '1')";
 	
 		if (!empty($_POST['channelEnabled2']))
 		{
 			if(!empty($channels)) $channels .= ",";
 				
-			$channels .= "('2','" . $systemId. "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '1')";
+			$channels .= "('2','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '1')";
 		}
 		
 		if(!empty($channels))
@@ -77,26 +77,26 @@ if(isset($_REQUEST['Edit']))
 					
 					$features = "";
 					if (!empty($_POST['motionFeature']))
-						$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
+						$features .= "('1','" .  $_SESSION["LightSystemID"] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
 
 					if (!empty($_POST['lightFeature']))
 					{
 						if(!empty($features)) $features .= ",";
 
-						$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
+						$features .= "('2','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
 
 					}
 
 					if (!empty($_POST['timeFeature'])) 
 					{
 						if(!empty($features)) $features .= ",";
-						$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
+						$features .= "('3','" .  $_SESSION["LightSystemID"]  . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
 					}
 					
 					if (!empty($_POST['luxFeature'])) 
 					{
 						if(!empty($features)) $features .= ",";
-						$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
+						$features .= "('4','" .  $_SESSION["LightSystemID"]  . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
 					}
 
 					if(!empty($features))
@@ -327,39 +327,76 @@ if(mysqli_num_rows($results) > 0)
 
 
 $systemlistoption = '';
-$results = mysqli_query($conn,"SELECT ID,systemName,serverHostName,userId, ls.enabled as systemEnable,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1;");
-if(mysqli_num_rows($results) > 0)
+$lightSystemsScript = '';
+$systemResults = mysqli_query($conn,"SELECT * FROM lightSystems;");
+if(mysqli_num_rows($systemResults) > 0)
 {
+	
     $lightSystemsScript = "let systemsMap = new Map();\r\n";
-    while($row = mysqli_fetch_array($results))
+    while($systemRow = mysqli_fetch_array($systemResults))
     {
-        $lightSystemsScript .= "var system = new Object(); \r";
+		
+		$lightSystemsScript .= "var system = new Object(); \r";
 
-        $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
-        $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
-        $lightSystemsScript .= "    system.stripType = '" . $row['stripType'] ."';\r";
-        $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
-        $lightSystemsScript .= "    system.stripRows = " . $row['stripRows'] .";\r";
-        $lightSystemsScript .= "    system.dma = " . $row['dma'] .";\r";
-        $lightSystemsScript .= "    system.gpio = " . $row['gpio'] .";\r";
-        $lightSystemsScript .= "    system.serverHostName = '" . $row['serverHostName'] ."';\r";
-        $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
-        $lightSystemsScript .= "    system.enabled = " . $row['enabled'] .";\r";
-        $lightSystemsScript .= "    system.userId = " . $row['userId'] .";\r";
-        $lightSystemsScript .= "    system.gamma = " . $row['gamma'] .";\r";
-		$lightSystemsScript .= "    system.twitchSupport = " . $row['TwitchSupport'] .";\r";
-		$lightSystemsScript .= "    system.mqttRetries = " . $row['mqttRetries'] .";\r";
-		$lightSystemsScript .= "    system.mqttRetryDelay = " . $row['mqttRetryDelay']   .";\r";
-		$lightSystemsScript .= "    system.twitchMqttQueue = '" . $row['twitchMqttQueue'] ."';\r";
-		$lightSystemsScript .= "    system.systemEnabled = " . $row['systemEnable'] .";\r";
-		$lightSystemsScript .= "    system.channelEnabled = " . $row['enabled'] .";\r";
+        $lightSystemsScript .= "    system.id = " . $systemRow['ID'] . ";\r";
+        $lightSystemsScript .= "    system.systemName = '" . $systemRow['systemName'] . "';\r";
+        $lightSystemsScript .= "    system.serverHostName = '" . $systemRow['serverHostName'] . "';\r";
+        $lightSystemsScript .= "    system.enabled = " . $systemRow['enabled'] . ";\r";
+        $lightSystemsScript .= "    system.userId = " . $systemRow['userId'] . ";\r";
+        $lightSystemsScript .= "    system.twitchSupport = " . $systemRow['twitchSupport'] . ";\r";
+		$lightSystemsScript .= "    system.mqttRetries = " . $systemRow['mqttRetries'] . ";\r";
+		$lightSystemsScript .= "    system.mqttRetryDelay = " . $systemRow['mqttRetryDelay']   .";\r";
+		$lightSystemsScript .= "    system.twitchMqttQueue = '" . $systemRow['twitchMqttQueue'] ."';\r";
+		$lightSystemsScript .= "    system.channelsMap = new Map();\r";
+		$lightSystemsScript .= "    system.featuresMap = new Map();\r";
+		
+		$channelResults = mysqli_query($conn,"SELECT * FROM lightSystemChannels where lightSystemId = " . $systemRow['ID'] . ";");
+		
+		if(mysqli_num_rows($channelResults) > 0)
+		{
+			
+			while($channelRow = mysqli_fetch_array($channelResults))
+			{
+				$lightSystemsScript .= "var channel = new Object(); \r";
+				$lightSystemsScript .= "    channel.channelId = " . $channelRow['channelId'] .";\r";
+				$lightSystemsScript .= "    channel.stripType = " . $channelRow['stripType'] .";\r";
+				$lightSystemsScript .= "    channel.stripColumns = " . $channelRow['stripColumns'] .";\r";
+				$lightSystemsScript .= "    channel.stripRows = " . $channelRow['stripRows'] .";\r";
+				$lightSystemsScript .= "    channel.dma = " . $channelRow['dma'] .";\r";
+				$lightSystemsScript .= "    channel.gpio = " . $channelRow['gpio'] .";\r";
+				$lightSystemsScript .= "    channel.brightness = " . $channelRow['brightness'] .";\r";
+				$lightSystemsScript .= "    channel.gamma = " . $channelRow['gamma'] .";\r";
+				$lightSystemsScript .= "    channel.enabled = " . $channelRow['enabled'] .";\r";
+				$lightSystemsScript .= "system.channelsMap.set(" . $channelRow['channelId'] . ", channel);\r";
+				
+			}
+		}
+		
+		$featureResults = mysqli_query($conn,"SELECT * FROM lightSystemFeatures where lightSystemId = " . $systemRow['ID'] . ";");
+		if(mysqli_num_rows($featureResults) > 0)
+		{
+			while($featureRow = mysqli_fetch_array($featureResults))
+			{
+				$lightSystemsScript .= "var lightFeature = new Object(); \r";
+				$lightSystemsScript .= "    lightFeature.featureId = " . $featureRow['featureId'] .";\r";
+				$lightSystemsScript .= "    lightFeature.featureGpio = " . $featureRow['featureGpio'] .";\r";
+				$lightSystemsScript .= "    lightFeature.featurePlayList = " . $featureRow['featurePlayList'] .";\r";
+				$lightSystemsScript .= "    lightFeature.motionDelayOff = " . $featureRow['motionDelayOff'] .";\r";
+				$lightSystemsScript .= "    lightFeature.timeFeatureStart = '" . $featureRow['timeFeatureStart'] ."';\r";
+				$lightSystemsScript .= "    lightFeature.timeFeatureEnd = '" . $featureRow['timeFeatureEnd'] ."';\r";
+				$lightSystemsScript .= "    lightFeature.luxThreshHold = " . $featureRow['luxThreshHold'] .";\r";
+				$lightSystemsScript .= "system.featuresMap.set(" . $featureRow['featureId']  . ", lightFeature);\r";
+				
+			}
+		}
+		
 
-        $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
+        $lightSystemsScript .= "systemsMap.set(" . $systemRow['ID'] . ", system);\r";
 
-        if($row['ID'] == $_SESSION["LightSystemID"])
-            $systemlistoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
+        if($systemRow['ID'] == $_SESSION["LightSystemID"])
+            $systemlistoption .="<option value = '".$systemRow['ID']."' selected>".$systemRow['systemName']."</option>";
         else
-            $systemlistoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+            $systemlistoption .="<option value = '".$systemRow['ID']."'>".$systemRow['systemName']."</option>";
 
     }
 }
@@ -367,34 +404,6 @@ if(mysqli_num_rows($results) > 0)
 
 
 
-$results = mysqli_query($conn,"SELECT * FROM lightSystemFeatures");
-if(mysqli_num_rows($results) > 0)
-{
-    $lightFeaturesScript = "let lightFeatureMap = new Map();\r\n";
-    
-    while($row = mysqli_fetch_array($results))
-    {
-		$lightFeaturesScript .= "var lightFeature = new Object(); \r";
-
-		$lightFeaturesScript .= "    lightFeature.lightSystemId = " . $row['lightSystemId'] .";\r";
-		$lightFeaturesScript .= "    lightFeature.featureId = " . $row['featureId'] .";\r";
-		$lightFeaturesScript .= "    lightFeature.featureGpio = " . $row['featureGpio'] .";\r";
-		$lightFeaturesScript .= "    lightFeature.featurePlayList = " . $row['featurePlayList'] .";\r";
-		$lightFeaturesScript .= "    lightFeature.motionDelayOff = " . $row['motionDelayOff'] .";\r";
-		$lightFeaturesScript .= "    lightFeature.timeFeatureStart = '" . $row['timeFeatureStart'] ."';\r";
-		$lightFeaturesScript .= "    lightFeature.timeFeatureEnd = '" . $row['timeFeatureEnd'] ."';\r";
-		$lightFeaturesScript .= "    lightFeature.luxThreshHold = " . $row['luxThreshHold'] .";\r";
-
-		$lightFeaturesScript .= "if(!lightFeatureMap.has(" . $row['lightSystemId'] . "))\r";
-		$lightFeaturesScript .= "{\r";
-		$lightFeaturesScript .= "   var lightFeatures = new Map();\r";
-		$lightFeaturesScript .= "   lightFeatureMap.set(" . $row['lightSystemId'] . ", lightFeatures);\r";
-		$lightFeaturesScript .= "}\r";
-       
-        $lightFeaturesScript  .= "   lightFeatureMap.get(" . $row['lightSystemId'] . ").set(lightFeature.featureId,lightFeature);\r";
-      
-    }
-}
 
 
 $systemStatus = "";
@@ -498,15 +507,25 @@ include('header.php');
 <script>
 
 
-<?php echo $lightFeaturesScript;?>
 <?php echo $lightSystemsScript;?>
+
+
 
 function setLightSystemSettings(fromPost)
 {
-
+	
+   //System related info
     var systemNameId = document.getElementById("LightSystem");
     var lightSystemName = document.getElementById("LightSystemName");
     var serverHostName = document.getElementById("ServerHostName");
+    var userID = document.getElementById("userID");
+    var twitchSupport = document.getElementById("twitchSupport");
+	var mqttRetries = document.getElementById("mqttRetries");
+	var mqttRetryDelay = document.getElementById("mqttRetryDelay");
+	var twitchMqttQueue = document.getElementById("twitchMqttQueue");
+	var systemEnabled = document.getElementById("systemEnabled");
+	
+    //channel related info
     var stripColumns = document.getElementById("StripColumns");
     var stripRows = document.getElementById("StripRows");
     var dma = document.getElementById("DMA");
@@ -514,7 +533,20 @@ function setLightSystemSettings(fromPost)
     var brightness = document.getElementById("Brightness");
     var gamma = document.getElementById("gamma");
     var stripType = document.getElementById("StripType");
-    var userID = document.getElementById("userID");
+    var channelEnabled = document.getElementById("channelEnabled")
+	
+	var stripColumns2 = document.getElementById("StripColumns2");
+    var stripRows2 = document.getElementById("StripRows2");
+    var dma2 = document.getElementById("DMA2");
+    var gpio2 = document.getElementById("GPIO2");
+    var brightness2 = document.getElementById("Brightness2");
+    var gamma2 = document.getElementById("gamma2");
+    var stripType2 = document.getElementById("StripType2");
+    var channelEnabled2 = document.getElementById("channelEnabled2")
+    
+	
+    
+    //feature realted info
     var motionFeature = document.getElementById("motionFeature");
     var lightFeature = document.getElementById("lightFeature");
     var timeFeature = document.getElementById("timeFeature");
@@ -529,39 +561,28 @@ function setLightSystemSettings(fromPost)
     var endTime = document.getElementById("endTime");
 	var luxThreshold = document.getElementById("luxThreshHold");
 	var luxPlaylist = document.getElementById("luxPlaylistId");
-	var twitchSupport = document.getElementById("twitchSupport");
-	var mqttRetries = document.getElementById("mqttRetries");
-	var mqttRetryDelay = document.getElementById("mqttRetryDelay");
-	var twitchMqttQueue = document.getElementById("twitchMqttQueue");
-	var systemEnabled = document.getElementById("systemEnabled");
-	var channelEnabled = document.getElementById("channelEnabled")
+	
+	
 	var systemStyles = document.getElementById("systemStyles");
 	
 	if(systemStyles && !fromPost)
 		systemStyles.style.display = "none";
 		
+		
     var index = parseInt(systemNameId.value);
-    var lightFeatureSettings = lightFeatureMap.get(index);
-    
     var system = systemsMap.get(index);
+
+    
 
     lightSystemName.value = system.systemName;
     serverHostName.value = system.serverHostName;
-    stripColumns.value = system.stripColumns;
-    stripRows.value = system.stripRows;
-    dma.value = system.dma;
-    gpio.value = system.gpio;
-    brightness.value = system.brightness;
-    gamma.value = system.gamma;
-    stripType.value = system.stripType;
-    userID.value = system.userId;
+	userID.value = system.userId;
 	mqttRetries.value = system.mqttRetries;
 	mqttRetryDelay.value = system.mqttRetryDelay;
 	twitchMqttQueue.value = system.twitchMqttQueue;
     twitchSupport.checked = system.twitchSupport;
-	systemEnabled.checked = system.systemEnabled;
-	channelEnabled.checked = system.channelEnabled;
-    
+	systemEnabled.checked = system.enabled;
+	
 	if(motionFeature.checked == true)
         motionFeature.click();
 
@@ -571,10 +592,15 @@ function setLightSystemSettings(fromPost)
     if(timeFeature.checked == true)
         timeFeature.click();
 	
-
-    if(lightFeatureSettings)
-    {
-		for (let [featureId, feature] of lightFeatureSettings)
+	if(channelEnabled.checked == true)
+		channelEnabled.click();
+	
+	if(channelEnabled2.checked == true)
+		channelEnabled2.click();
+	
+	if(system.featuresMap.size > 0)
+	{
+		for (let [featureId, feature] of system.featuresMap)
 		{
 			switch(featureId)
 			{
@@ -607,9 +633,44 @@ function setLightSystemSettings(fromPost)
 
 			}
 		}
-    }
+		
+	}
+	
     
-
+	if(system.channelsMap.size > 0)
+	{
+		for (let [channelId, channel] of system.channelsMap)
+		{
+			switch(channelId)
+			{
+				case 1:
+					stripColumns.value = channel.stripColumns;
+					stripRows.value = channel.stripRows;
+					dma.value = channel.dma;
+					gpio.value = channel.gpio;
+					brightness.value = channel.brightness;
+					gamma.value = channel.gamma;
+					stripType.value = channel.stripType;
+					channelEnabled.click();
+					break;
+				
+				case 2:
+					stripColumns2.value = channel.stripColumns;
+					stripRows2.value = channel.stripRows;
+					dma2.value = channel.dma;
+					gpio2.value = channel.gpio;
+					brightness2.value = channel.brightness;
+					gamma2.value = channel.gamma;
+					stripType2.value = channel.stripType;
+					channelEnabled2.click();
+					break;
+				
+				
+			}
+		}
+		
+	}
+	
 }
 
 function confirmDelete()

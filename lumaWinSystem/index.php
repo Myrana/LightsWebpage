@@ -10,12 +10,16 @@ if(isset($_REQUEST['Login']))
 	$row = mysqli_query($conn, $qry);
 	if(mysqli_num_rows($row) == 1)
 	{
-	  $query_data = mysqli_fetch_array($row);
-	  $_SESSION['authorized'] = 1;
-	  $_SESSION['User'] = $_POST['Username'];
-	  $_SESSION['UserID'] = $query_data['ID'];
-	  $_SESSION['isAdmin'] = $query_data['isAdmin'];  
-	  header('Location:lightShows.php');
+		  $query_data = mysqli_fetch_array($row);
+		  $_SESSION['authorized'] = 1;
+		  $_SESSION['User'] = $_POST['Username'];
+		  $_SESSION['UserID'] = $query_data['ID'];
+		  $_SESSION['isAdmin'] = $query_data['isAdmin'];  
+		  $_SESSION['Brightness'] = 60;
+		  $_SESSION['matrixHTML'] = "";
+		  $_SESSION['ChgBrightness'] = 20;
+	  
+		header('Location:lightShows.php');
 	}
 
 	$conn->close();
