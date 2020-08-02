@@ -53,6 +53,7 @@ $conn->close();
     function setShowSettings()
     {
 
+	alert("REW");
         var showNameId = document.getElementById("ShowNameId");
         var index = parseInt(showNameId.value);
 
@@ -66,7 +67,9 @@ $conn->close();
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
-
+	//	var divArt = document.getElementById("divArt");
+		
+		
         color1.setAttribute('disabled', true);
         color2.setAttribute('disabled', true);
         color3.setAttribute('disabled', true);
@@ -77,6 +80,14 @@ $conn->close();
 		colorEvery.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
 		
+/*		if(showMap.get(index).isMatrix == 1)
+        {
+            divArt.setAttribute('hidden', false);
+            divArt.hidden = false;
+
+        }
+  */
+        
         if(showMap.get(index).hasWidth == 1)
         {
             width.setAttribute('disabled', false);
@@ -211,7 +222,7 @@ $conn->close();
 		</center>
 		
 		<div class="column" style="width: 70%">
-        <div id="divArt" class="ColumnStyles">
+        <div id="divArt" class="ColumnStyles" hidden>
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
