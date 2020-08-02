@@ -141,16 +141,9 @@ $conn->close();
     {
 		var showNameId = document.getElementById("ShowNameId");
 		var systemNameId = document.getElementById("SystemNameId");
-		//alert(systemNameId.value);
-		
-		
 		var system = systemsMap.get(parseInt(systemNameId.value));
-		
 		var index = parseInt(showNameId.value);		
 		
-		
-        
-       
         var color1 = document.getElementById("Color1");
         var color2 = document.getElementById("Color2");
         var color3 = document.getElementById("Color3");
@@ -160,6 +153,7 @@ $conn->close();
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
+		
 		var divArt = document.getElementById("divArt");
 		var baseColor = document.getElementById("baseColor");
 		

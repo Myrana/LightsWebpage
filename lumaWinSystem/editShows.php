@@ -116,6 +116,8 @@ include('header.php');
 	<script>
 	<?php echo $playListScript;?>
 	
+	<?php echo $_SESSION['lightSystemsScript'];?>
+	
 
 function rgbToHex(r, g, b)
 {
@@ -143,6 +145,9 @@ function hexToRgb(hex)
 
 	function addShowSettings()
 	{
+		storeMatrix();
+		var matrixData = document.getElementById("matrixData");
+		
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var showControl = document.getElementById("ShowNameId");
@@ -190,6 +195,12 @@ function hexToRgb(hex)
 
 		}
 
+		if(matrixData.value.length > 0 )
+		{
+			playList.showParms[parmIndex].pixles = JSON.parse(matrixData.value);
+			alert(playList.showParms[parmIndex].pixles);
+		}
+			
         playList.showParms[parmIndex].brightness = brightness.value;
 
         if(show.hasDelay)
