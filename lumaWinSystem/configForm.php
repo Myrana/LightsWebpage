@@ -42,102 +42,101 @@ if(isset($_REQUEST['Edit']))
 	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='" . $systemEnabled . "',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "', twitchMqttQueue = '" . $_POST['twitchMqttQueue'] ."'  where ID = '" . $_POST['LightSystem'] . "';";
 	if ($conn->query($sql) === TRUE)
 	{
-		$sql= "";
-		$sql= "update lightSystemChannels set stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" . $_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', enabled='" . $channelEnabled . "' where channelId = '1' and lightSystemId = '". $_POST['LightSystem'] . "';"; 
-
+		$channels = "";
 		
-		if ($conn->query($sql) === TRUE)
+		if(!empty($_POST['channelEnabled']))
+			$channels .= "('1','" . $systemId. "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '1')";
+	
+		if (!empty($_POST['channelEnabled2']))
 		{
-			
-			$features = "";
-			$featureDelete = "";
-
-			if (!empty($_POST['motionFeature']))
-			{
-				$features = "('1','" . $_POST['LightSystem'] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
-			}
-			else
-			{
-				$featureDelete =  "1";
-			}
-
-			if (!empty($_POST['lightFeature']))
-			{
-				if(!empty($features)) $features .= ",";
-
-				$features .= "('2','" . $_POST['LightSystem'] . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
-
-			}
-			else
-			{
-				if(!empty($featureDelete)) $featureDelete .=  ",";
-				$featureDelete .=  "2";
-			}
-			
-
-			if (!empty($_POST['timeFeature'])) 
-			{
-				if(!empty($features)) $features .= ",";
-				$features .= "('3','" . $_POST['LightSystem'] . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
-			}
-			else
-			{
-				if(!empty($featureDelete)) $featureDelete .=  ",";
-				$featureDelete .=  "3";
-			}
-			
-			
-			if (!empty($_POST['luxFeature'])) 
-			{
-				if(!empty($features)) $features .= ",";
-				$features .= "('4','" . $_POST['LightSystem'] . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
-			}
-			else
-			{
-				if(!empty($featureDelete)) $featureDelete .=  ",";
-				$featureDelete .=  "4";
-			}
-
-			if(!empty($featureDelete))
-			{
-				$sql = "delete from lightSystemFeatures where featureId in (" . $featureDelete . ") and lightSystemId = " . $_POST['LightSystem'];
-				if ($conn->query($sql) === FALSE)
-				{
-					echo "<h1>Error: " . $conn->error . "</h1>";
-					echo $sql;	
-				}
-					
-			}
-			
-			if(!empty($features))
-			{
+			if(!empty($channels)) $channels .= ",";
+				
+			$channels .= "('2','" . $systemId. "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '1')";
+		}
+		
+		if(!empty($channels))
+		{
+		 
+			$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio,brightness, gamma, enabled) VALUES";
+			$sql .= $channels;
 			 
-				$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
-				$sql .= $features;
-				 
-				 
-				$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-				timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
+			 
+			$sql .= " ON DUPLICATE KEY UPDATE stripType = VALUES(stripType),stripType = VALUES(stripType),stripColumns = VALUES(stripColumns),
+			dma = VALUES(dma),gpio = VALUES(gpio), brightness = VALUES(brightness), gamma = VALUES(gamma), enabled = VALUES(enabled);";
 
+			if ($conn->query($sql) === TRUE)
+			{
+				$sql= "";
+				$sql= "update lightSystemChannels set stripType =  '" . $_POST['StripType'] ."', stripRows = '" . $_POST['StripRows'] . "', stripColumns = '" . $_POST['StripColumns'] . "', dma = '" . $_POST['DMA'] . "',gpio = '" . $_POST['GPIO'] . "',brightness = '" . $_POST['Brightness'] . "', gamma = '" . $_POST['gamma'] . "', enabled='" . $channelEnabled . "' where channelId = '1' and lightSystemId = '". $_POST['LightSystem'] . "';"; 
+
+			
 				if ($conn->query($sql) === TRUE)
-					echo "<h1>Your record was Edited successfully.</h1>";
+				{
+					
+					$features = "";
+					
+					$features = "";
+					if (!empty($_POST['motionFeature']))
+						$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
+
+					if (!empty($_POST['lightFeature']))
+					{
+						if(!empty($features)) $features .= ",";
+
+						$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
+
+					}
+
+					if (!empty($_POST['timeFeature'])) 
+					{
+						if(!empty($features)) $features .= ",";
+						$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
+					}
+					
+					if (!empty($_POST['luxFeature'])) 
+					{
+						if(!empty($features)) $features .= ",";
+						$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
+					}
+
+					if(!empty($features))
+					{
+					 
+						$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
+						$sql .= $features;
+						 
+						 
+						$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
+						timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
+
+						if ($conn->query($sql) === TRUE)
+							echo "<h1>Your Features were added to the database successfully.</h1>";
+						else
+						{
+							echo "<h1>Error: " . $conn->error . "</h1>";
+							echo $sql;	
+						}
+					}
+					
+					$sendArray["systemConfigChange"] = 1;
+					
+					sendMQTT(getServerHostName($_POST['LightSystem']), json_encode($sendArray));
+					
+				}
 				else
 				{
 					echo "<h1>Error: " . $conn->error . "</h1>";
 					echo $sql;	
 				}
 			}
-			
-			$sendArray["systemConfigChange"] = 1;
-			
-			sendMQTT(getServerHostName($_POST['LightSystem']), json_encode($sendArray));
-			
+			else
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $sql;	
+			}
+		
 		}
-		else
-		{
-			echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-		}
+		
 	}
 	else
 	{
@@ -162,12 +161,7 @@ if(isset($_REQUEST['Config']))
 			$systemEnabled = '1';
 	}
 	
-	$channelEnabled =  '0';
-	if(!empty($_POST['channelEnabled']))
-	{
-			$channelEnabled = '1';
-	}
-
+	
 
     $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay, twitchMqttQueue) VALUES('" . $_POST['LightSystemName'] . 
 		"','" . $_POST['ServerHostName'] . "', '" . $systemEnabled . "', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "', '" . $_POST['twitchMqttQueue'] . "')";
@@ -176,60 +170,89 @@ if(isset($_REQUEST['Config']))
     {
 		$sql = "";
 		$systemId = $conn->insert_id;
+		echo "<h1>Your LightSystem record was added to the database successfully.</h1>";
 		
-		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, brightness, gamma, enabled) VALUES ('" . $channelEnabled . "', '". $systemId . "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '" . $channelEnabled . "')";
+		//$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio, 
+		//brightness, gamma, enabled) 		VALUES ('" . $channelEnabled . "', '". $systemId . "', '". $_POST['StripType'] ."', '". $_POST['StripRows'] ."', '". $_POST['StripColumns'] ."', '". $_POST['DMA'] ."', '". $_POST['GPIO'] ."', '". $_POST['Brightness'] ."', '". $_POST['gamma'] ."', '" . $channelEnabled . "')";
 		
-		if ($conn->query($sql) === TRUE)
+		$channels = "";
+		
+		if(!empty($_POST['channelEnabled']))
+			$channels .= "('1','" . $systemId . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '1')";
+	
+		if (!empty($_POST['channelEnabled2']))
 		{
-			
-			$features = "";
-			if (!empty($_POST['motionFeature']))
-				$features = "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
-
-			if (!empty($_POST['lightFeature']))
-			{
-				if(!empty($features)) $features .= ",";
-
-				$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
-
-			}
-
-			if (!empty($_POST['timeFeature'])) 
-			{
-				if(!empty($features)) $features .= ",";
-				$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
-			}
-			
-			if (!empty($_POST['luxFeature'])) 
-			{
-				if(!empty($features)) $features .= ",";
-				$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
-			}
-
-			if(!empty($features))
-			{
+			if(!empty($channels)) $channels .= ",";
+				
+			$channels .= "('2','" . $systemId. "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '1')";
+		}
+		
+		if(!empty($channels))
+		{
+		 
+			$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio,brightness, gamma, enabled) VALUES";
+			$sql .= $channels;
 			 
-				$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
-				$sql .= $features;
-				 
-				 
-				$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-				timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
+			 
+			$sql .= " ON DUPLICATE KEY UPDATE stripType = VALUES(stripType),stripType = VALUES(stripType),stripColumns = VALUES(stripColumns),
+			dma = VALUES(dma),gpio = VALUES(gpio), brightness = VALUES(brightness), gamma = VALUES(gamma), enabled = VALUES(enabled);";
 
-				if ($conn->query($sql) === TRUE)
-					echo "<h1>Your record was added to the database successfully.</h1>";
-				else
+			if ($conn->query($sql) === TRUE)
+			{
+				echo "<h1>Your Channel records were added to the database successfully.</h1>";
+				
+				$features = "";
+				if (!empty($_POST['motionFeature']))
+					$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
+
+				if (!empty($_POST['lightFeature']))
 				{
-					echo "<h1>Error: " . $conn->error . "</h1>";
-					echo $sql;	
+					if(!empty($features)) $features .= ",";
+
+					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
+
 				}
+
+				if (!empty($_POST['timeFeature'])) 
+				{
+					if(!empty($features)) $features .= ",";
+					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
+				}
+				
+				if (!empty($_POST['luxFeature'])) 
+				{
+					if(!empty($features)) $features .= ",";
+					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
+				}
+
+				if(!empty($features))
+				{
+				 
+					$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
+					$sql .= $features;
+					 
+					 
+					$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
+					timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
+
+					if ($conn->query($sql) === TRUE)
+						echo "<h1>Your Features were added to the database successfully.</h1>";
+					else
+					{
+						echo "<h1>Error: " . $conn->error . "</h1>";
+						echo $sql;	
+					}
+				}
+		
+			}
+			else
+			{
+				echo "<h1>Error: " . $conn->error . "</h1>";
+				echo $sql;	
 			}
 		}
-		else 
-		{
-			echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-		}
+		
+				
 	}
 	else
 	{
@@ -239,9 +262,10 @@ if(isset($_REQUEST['Config']))
 		
 	}
 		
-	
     
 }
+
+
 
 if(isset($_REQUEST['Delete']))
 {
