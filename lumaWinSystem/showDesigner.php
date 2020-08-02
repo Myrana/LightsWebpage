@@ -156,32 +156,32 @@ $conn->close();
 		
 		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
-    <center><p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();" style="width: 25%">
-    <?php echo $lightShowsoption;?></select>
-</p></center>
-		<div class="clearfix">
-<div style="width: 50%; float: left;">
-	<table>
-    	<tr>
-			<td><label for="colors">Colors:</label></td>
+    		<center><p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();" style="width: 25%"><?php echo $lightShowsoption;?></select></p>
+			</center>
+		
+<div class="clearfix">
+	<div style="width: 50%; float: left;">
+		<table>
+    		<tr>
+				<td><label for="colors">Colors:</label></td>
 			
-			<td><input type="color"  Name="color_1" id="Color1" value ="#ff6500">
-        	<input type="color" Name="color_2" id="Color2" value="#906bfa">
-        	<input type="color" Name="color_3" id="Color3" value="#2c2367">
-        	<input type="color" Name="color_4" id="Color4" value="#ad5e8c"></td>
-		</tr>
+				<td><input type="color"  Name="color_1" id="Color1" value ="#ff6500">
+        		<input type="color" Name="color_2" id="Color2" value="#906bfa">
+        		<input type="color" Name="color_3" id="Color3" value="#2c2367">
+        		<input type="color" Name="color_4" id="Color4" value="#ad5e8c"></td>
+			</tr>
 
-        <tr>
-			<td><label for="Width">Width:</label></td>
-			<td><input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></td>
-		</tr>
+        	<tr>
+				<td><label for="Width">Width:</label></td>
+				<td><input type="number" id="WidthId" name="Width" min="1" max="300" value="<?php echo $_SESSION["Width"];?>"></td>
+			</tr>
 
-		<tr>
-			<td><label for="ColorEvery">X led:</label></td>
-			<td><input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>"></td>
-		</tr>
-	</table>
-</div>
+			<tr>
+				<td><label for="ColorEvery">X led:</label></td>
+				<td><input type="number" id="ColorEveryId" name="ColorEvery" min="1" max="300" value="<?php echo $_SESSION["ColorEvery"];?>"></td>
+			</tr>
+		</table>
+	</div>
 
 
 <div style="width: 50%; float: left;">
@@ -220,6 +220,7 @@ $conn->close();
 		<label for="On3" style="font-size: 14px">Gamma correction</label>
 		<input type="checkbox" name="gammaCorrection" id="gammaCorrection" checked></p>
 		</center>
+	</div>
 		
  <div id="divArt" class="ColumnStyles fifty">
 		<div style="text-align:center">
@@ -231,11 +232,11 @@ $conn->close();
 			<input type="text" id="matrixData" name="matrixData" hidden />
 			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix">
 		<p></p><?php echo $matrixHTML; ?></P>
-		</div>
+			</div>
 		</div>
 		
     </div>
-    </div>
+</div>
 
 		
     
