@@ -141,7 +141,6 @@ function hexToRgb(hex)
 
 	function addShowSettings()
 	{
-		storeMatrix();
 		var matrixData = document.getElementById("matrixData");
 		
 		var playListId = document.getElementById("PlayList");
@@ -196,6 +195,7 @@ function hexToRgb(hex)
 		
 		if(matrixData.value.length > 0 )
 		{
+			storeMatrix();
 			playList.showParms[parmIndex].pixles = JSON.parse(matrixData.value);
 		}
 			
@@ -210,7 +210,7 @@ function hexToRgb(hex)
             playList.showParms[parmIndex].delay = delay.value;
 				
 		if(show.hasText)
-			playList.showParms[parmIndex].text = text.value;
+			playList.showParms[parmIndex].matrixText = hasText.value;
 		
 		if(show.hasMinutes > 0)
             playList.showParms[parmIndex].minutes = minutes.value;
@@ -591,9 +591,10 @@ function hexToRgb(hex)
 					
 				}			
 				
-                if(show.hasDelay)
-                    delay.value = playList.showParms[i].delay;
+				if(show.hasDelay)
+					sdelay.value = playList.showParms[i].delay;
 				
+				alert(show.showName);
 				if(show.hasText)
 					hasText.value = playList.showParms[i].matrixText;
 

@@ -11,7 +11,7 @@ if(!empty($_REQUEST))
 
 }
 
-if($_SESSION['authorized'] == 0 || $_SESSION['isAdmin'] == 0)
+if($_SESSION['authorized'] == 0)
 {
   header("Location: lightShows.php");
   exit();
@@ -145,7 +145,7 @@ if(isset($_REQUEST['Edit']))
 	}
 }
 
-
+ 
 if(isset($_REQUEST['Config']))
 {
 

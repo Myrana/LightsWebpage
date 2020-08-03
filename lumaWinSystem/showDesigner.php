@@ -50,8 +50,6 @@ if(mysqli_num_rows($systemResults) > 0)
     $_SESSION['lightSystemsScript'] = "let systemsMap = new Map();\r\n";
     while($systemRow = mysqli_fetch_array($systemResults))
     {
-		if($_SESSION['LightSystemID'] == -1)
-			$_SESSION['LightSystemID'] = $systemRow['ID'];
 			
 		
 		$_SESSION['lightSystemsScript'] .= "var system = new Object(); \r";
@@ -624,13 +622,16 @@ function setShowSettings(arg1)
             colorEvery.disabled = false;
         }
 		
+		if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 1)
+		{
 		
-		if(showMap.get(index).hasText == 1)
-        {
-            hasText.setAttribute('disabled', false);
-            hasText.disabled = false;
+			if(showMap.get(index).hasText == 1)
+			{
+				hasText.setAttribute('disabled', false);
+				hasText.disabled = false;
 
-        }
+			}
+		}
         
     }
     
