@@ -516,10 +516,13 @@ function hexToRgb(hex)
         var matrixData = document.getElementById("matrixDiv");
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
-        
-         
+        var systemNameId = document.getElementById("SystemNameId");
+		var system = systemsMap.get(parseInt(systemNameId.value));
 		var showIndex = parseInt(showListControl.value) - 1;	
-	    
+		
+		var systemNameId = document.getElementById("SystemNameId");
+		var system = systemsMap.get(parseInt(systemNameId.value));
+		
 		for (i in playList.showParms)
 		{
 			if(i == showIndex)
@@ -533,12 +536,38 @@ function hexToRgb(hex)
 				showControl.value = show.id;
 				
 				showControl.onchange();
-				alert("!");
-				divArt.setAttribute('hidden', false);
-				divArt.hidden = false;
-            
 				
-				var matrixHTML = "";
+				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
+				{
+					
+					var matrixHTML = "";
+					var divMatrix = document.getElementById("divMatrix");
+					
+					divArt.setAttribute('hidden', false);
+					divArt.hidden = false;
+					
+					
+					var currentPos = 0;
+					
+			
+					for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+					{
+						for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+						{
+							currentPos += 1;
+							matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + playList.showParms[i].pixles[currentPos].co.replace("0x","#") + "' ></span>";		
+						}
+						matrixHTML += "<br>";
+
+					}
+				
+				
+					divMatrix.innerHTML = matrixHTML;
+					
+					
+				}
+				
+				/*var matrixHTML = "";
 				if(playList.showParms[i].pixles != undefined)
 				{
 					for(var parmPix in playList.showParms[i].pixles) 
@@ -551,7 +580,7 @@ function hexToRgb(hex)
 					divMatrix.innerHTML = matrixHTML;
 					alert(matrixHTML);
 				}		
-					
+					*/
 				
 				
                 if(show.hasDelay)

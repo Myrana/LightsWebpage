@@ -92,8 +92,8 @@ $conn->close();
 		
 		divArt.setAttribute('hidden', true);
         divArt.hidden = true;
-		alert(system);
-        if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
+	
+	    if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
         {
 			
 			var matrixHTML = "";
