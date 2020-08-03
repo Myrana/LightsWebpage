@@ -273,12 +273,8 @@ include('header.php');
 
 
 	
-	<script onLoad="rew();">
+	<script>
 
-	function rew()
-	{
-		alert("reerere");
-	}
 	
 	function setPlaylistName()
 	{
