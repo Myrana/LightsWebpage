@@ -192,10 +192,10 @@ function hexToRgb(hex)
 		}
 
 		playList.showParms[parmIndex].systemId = systemNameId.value;
-		
+		storeMatrix();
 		if(matrixData.value.length > 0 )
 		{
-			storeMatrix();
+			
 			playList.showParms[parmIndex].pixles = JSON.parse(matrixData.value);
 		}
 			
@@ -561,7 +561,7 @@ function hexToRgb(hex)
 				showControl.value = show.id;	
 				
 				
-				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
+				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText == 0)
 				{
 					var matrixHTML = "";
 					var divMatrix = document.getElementById("divMatrix");
@@ -592,11 +592,16 @@ function hexToRgb(hex)
 				}			
 				
 				if(show.hasDelay)
-					sdelay.value = playList.showParms[i].delay;
+					delay.value = playList.showParms[i].delay;
 				
-				if(show.hasText)
+				
+				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 1)
+				{
 					hasText.value = playList.showParms[i].matrixText;
-
+					hasText.setAttribute('disabled', false);
+					hasText.disabled = false;
+				}
+				
                 if(show.hasMinutes > 0)
                     minutes.value = playList.showParms[i].minutes;
                     

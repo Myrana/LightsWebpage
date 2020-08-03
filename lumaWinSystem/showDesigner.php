@@ -622,15 +622,13 @@ function setShowSettings(arg1)
             colorEvery.disabled = false;
         }
 		
-		if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 1)
+		if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText == 1)
 		{
 		
-			if(showMap.get(index).hasText == 1)
-			{
-				hasText.setAttribute('disabled', false);
-				hasText.disabled = false;
+			hasText.setAttribute('disabled', false);
+			hasText.disabled = false;
 
-			}
+
 		}
         
     }
