@@ -7,7 +7,9 @@
 	  <ul><a href="lightShows.php" title="System Manager"><i class="fas fa-network-wired" style="color: #FFFD00"></i></a></ul>
 	  <ul><a href="editShows.php" title="Edit Shows"><i class="fas fa-edit" style="color: #225900"></i></a></ul>
 	 <!-- <ul><a href="matrixArt.php" title="Matrix Manager"><i class="fa fa-th" style="color: #0200D4"></i></a></ul>	-->
-	  <ul><a href="testPage.php" title="Test Page" ><i class="fas fa-exclamation-circle" style="color: #500887"></i></a></ul>
+	 <?php if($_SESSION['isAdmin'] == 1) 
+		echo '<ul><a href="testPage.php" title="Test Page" ><i class="fas fa-exclamation-circle" style="color: #500887"></i></a></ul>';
+	 ?>
 	  <ul style="float: right"><a href="index.php" title="Login"><i class="fas fa-unlock-alt" style="color: #B312E7; margin-right: 20px"></i></a></ul>	
 </nav>
 

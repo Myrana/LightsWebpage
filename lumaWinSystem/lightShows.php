@@ -266,12 +266,15 @@ include('header.php');
     <p><label for="ChgBrightness">Change Brightness:</label>
         <input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="255">
         <button type="submit" name="btnChgBrightness">Change</button>
-    	<button type="submit" name="ClearQueue">Clear Queue</button>
+    	
 
     </p>
         <label for="On">On</label>
-    <input type="checkbox" name="lights"  value="ON" checked><button type="submit" name="Power">Power</button>
+		<input type="checkbox" name="lights"  value="ON" checked>
+		<button type="submit" name="Power">Power</button>
+		<button type="submit" name="ClearQueue">Clear Queue</button>
 		<p>
+			
 
 
 	
