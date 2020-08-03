@@ -204,9 +204,7 @@ if(isset($_REQUEST['Config']))
 				$features = "";
 				if (!empty($_POST['motionFeature']))
 					$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0','1')";
-				else
-					$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0','0')";
-
+			
 				if (!empty($_POST['lightFeature']))
 				{
 					if(!empty($features)) $features .= ",";
@@ -214,22 +212,11 @@ if(isset($_REQUEST['Config']))
 					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0','1')";
 
 				}
-				else
-				{
-					if(empty($features)) $features .= ",";
-
-					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0','0')";
-				}
-
+			
 				if (!empty($_POST['timeFeature'])) 
 				{
 					if(!empty($features)) $features .= ",";
 					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0','1')";
-				}
-				else
-				{
-					if(empty($features)) $features .= ",";
-					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0','0')";
 				}
 				
 				if (!empty($_POST['luxFeature'])) 
@@ -237,12 +224,7 @@ if(isset($_REQUEST['Config']))
 					if(!empty($features)) $features .= ",";
 					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "','1')";
 				}
-				else
-				{
-					if(empty($features)) $features .= ",";
-					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "','0')";
-				}
-
+			
 				if(!empty($features))
 				{
 				 
@@ -610,7 +592,10 @@ function setLightSystemSettings(fromPost)
 
     if(timeFeature.checked == true)
         timeFeature.click();
-	
+        
+	if(luxFeature.checked == true)
+		luxFeature.click();
+		
 	if(channelEnabled.checked == true)
 		channelEnabled.click();
 	
@@ -621,6 +606,7 @@ function setLightSystemSettings(fromPost)
 	{
 		for (let [featureId, feature] of system.featuresMap)
 		{
+			
 			if(feature.enabled)
 			{
 				switch(featureId)
@@ -628,8 +614,10 @@ function setLightSystemSettings(fromPost)
 					case 1:
 						motionDelay.value = feature.motionDelayOff;
 						motionGpio.value = feature.featureGpio;
+						alert(feature.featurePlayList);
 						motionPlaylist.value = feature.featurePlayList;
 						motionFeature.click();
+						
 						break;
 
 					case 2:

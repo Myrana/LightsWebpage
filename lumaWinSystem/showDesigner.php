@@ -409,6 +409,7 @@ function setToBaseColor()
 {	
 	isDrawing = 0;
 	var pixel = document.getElementById(this.event.target.id);
+	
 	if(pixel.id == "divMatrix") return;
 	var color = document.getElementById('baseColor');
 	pixel.style.background = color.value;

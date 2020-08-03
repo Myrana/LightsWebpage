@@ -167,6 +167,7 @@ function hexToRgb(hex)
         var gammaCorrection = document.getElementById("gammaCorrection");
         var hasText = document.getElementById("hasText");
 
+		var systemNameId = document.getElementById("SystemNameId");
 		
         
         var playListIndex = parseInt(playListId.value);
@@ -196,6 +197,8 @@ function hexToRgb(hex)
 
 		}
 
+		playList.showParms[parmIndex].systemId = systemNameId.value;
+		
 		if(matrixData.value.length > 0 )
 		{
 			playList.showParms[parmIndex].pixles = JSON.parse(matrixData.value);
@@ -368,8 +371,7 @@ function hexToRgb(hex)
         var gammaCorrection = document.getElementById("gammaCorrection");
         var matrixData = document.getElementById("matrixData");
         var systemNameId = document.getElementById("SystemNameId");
-		var system = systemsMap.get(parseInt(systemNameId.value));
-
+	
         var showIndex = parseInt(showListControl.value) - 1;
         
         
@@ -400,6 +402,9 @@ function hexToRgb(hex)
                     if(show.hasWidth)
                         playList.showParms[i].width = width.value;
 
+					var system = systemsMap.get(parseInt(playList.showParms[i].systemId));	
+					if(system == undefined)
+						system = systemsMap.get(parseInt(systemNameId.value));
 					
 					if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
 					{
@@ -536,7 +541,8 @@ function hexToRgb(hex)
 		var showIndex = parseInt(showListControl.value) - 1;	
 		
 		var systemNameId = document.getElementById("SystemNameId");
-		var system = systemsMap.get(parseInt(systemNameId.value));
+		//var system = systemsMap.get(parseInt(systemNameId.value));
+		
 		
 		for (i in playList.showParms)
 		{
@@ -551,6 +557,11 @@ function hexToRgb(hex)
 				showControl.value = show.id;
 				
 				showControl.onchange();
+				
+				var system = systemsMap.get(parseInt(playList.showParms[i].systemId));	
+				if(system == undefined)
+					system = systemsMap.get(parseInt(systemNameId.value));
+				
 				
 				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
 				{
