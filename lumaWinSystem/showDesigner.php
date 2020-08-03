@@ -231,7 +231,6 @@ background-color: red;
     {
         echo '<p>
 			<button type="submit" onClick="storeMatrix()" name="LightShow">Send Show</button>
-			<button type="submit" name="ClearQueue">Clear Queue</button>
         </p>';
     }
     else
