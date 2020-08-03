@@ -5,13 +5,11 @@ include_once('commonFunctions.php');
 
 $conn = getDatabaseConnection();
 
-$lightShowsoption = '';
-$_SESSION['lightShowsScript'] = '';
 
 $results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix, hasText FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
-    $_SESSION['lightShowsScript'] .= "let showMap = new Map();\r";
+    $_SESSION['lightShowsScript'] = "let showMap = new Map();\r";
 
     while($row = mysqli_fetch_array($results))
     {
@@ -45,17 +43,16 @@ if(mysqli_num_rows($results) > 0)
 
 
 
-$_SESSION['systemlistoption'] = '';
-$_SESSION['lightSystemsScript'] = '';
-
 $systemResults = mysqli_query($conn,"SELECT * FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
 if(mysqli_num_rows($systemResults) > 0)
 {
+	$_SESSION['systemlistoption'] = '';
     $_SESSION['lightSystemsScript'] = "let systemsMap = new Map();\r\n";
     while($systemRow = mysqli_fetch_array($systemResults))
     {
 		if($_SESSION['LightSystemID'] == -1)
 			$_SESSION['LightSystemID'] = $systemRow['ID'];
+			
 		
 		$_SESSION['lightSystemsScript'] .= "var system = new Object(); \r";
 
@@ -131,145 +128,6 @@ $conn->close();
 
 ?>
 
-<script>
-
-    <?php echo $_SESSION['lightShowsScript'];?>
-    
-
-
-
-    function setShowSettings()
-    {
-		
-		var showNameId = document.getElementById("ShowNameId");
-		var systemNameId = document.getElementById("SystemNameId");
-		var system = systemsMap.get(parseInt(systemNameId.value));
-		var index = parseInt(showNameId.value);		
-		
-        var color1 = document.getElementById("Color1");
-        var color2 = document.getElementById("Color2");
-        var color3 = document.getElementById("Color3");
-        var color4 = document.getElementById("Color4");
-        var delay = document.getElementById("DelayId");
-        var width = document.getElementById("WidthId");
-        var minutes = document.getElementById("NumMinutesId");
-        var colorEvery = document.getElementById("ColorEveryId");
-		var hasText = document.getElementById("hasText");
-		
-		var divArt = document.getElementById("divArt");
-		var baseColor = document.getElementById("baseColor");
-		
-		
-        color1.setAttribute('disabled', true);
-        color2.setAttribute('disabled', true);
-        color3.setAttribute('disabled', true);
-        color4.setAttribute('disabled', true);
-        delay.setAttribute('disabled', true);
-        width.setAttribute('disabled', true);
-        minutes.setAttribute('disabled', true);
-		colorEvery.setAttribute('disabled', true);
-		hasText.setAttribute('disabled', true);
-		
-		divArt.setAttribute('hidden', true);
-        divArt.hidden = true;
-	
-	    if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
-        {
-			
-			var matrixHTML = "";
-			var divMatrix = document.getElementById("divMatrix");
-            
-			divArt.setAttribute('hidden', false);
-            divArt.hidden = false;
-            
-            
-            var currentPos = 0;
-            
-    
-			for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
-			{
-				
-				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
-				{
-					style="background-color:grey;"
-					currentPos += 1;
-					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
-				}
-				matrixHTML += "<br>";
-
-			}
-		
-		
-            divMatrix.innerHTML = matrixHTML;
-            
-			
-        }
-  
-        
-        if(showMap.get(index).hasWidth == 1)
-        {
-            width.setAttribute('disabled', false);
-            width.disabled = false;
-
-        }
-
-        if(showMap.get(index).hasMinutes == 1)
-        {
-            minutes.setAttribute('disabled', false);
-            minutes.disabled = false;
-        }
-
-        if(showMap.get(index).hasDelay == 1)
-        {
-            delay.setAttribute('disabled', false);
-            delay.disabled = false;
-        }
-
-        if(showMap.get(index).numColors >= 1)
-        {
-            color1.setAttribute('disabled', false);
-            color1.disabled = false;
-        }
-
-        if(showMap.get(index).numColors >= 2)
-        {
-
-            color2.setAttribute('disabled', false);
-            color2.disabled = false;
-        }
-
-        if(showMap.get(index).numColors >= 3)
-        {
-            color3.setAttribute('disabled', false);
-            color3.disabled = false;
-        }
-
-        if(showMap.get(index).numColors == 4)
-        {
-            color4.setAttribute('disabled', false);
-            color4.disabled = false;
-        }
-        
-        
-        if(showMap.get(index).colorEvery == 1)
-        {
-            colorEvery.setAttribute('disabled', false);
-            colorEvery.disabled = false;
-        }
-		
-		
-		if(showMap.get(index).hasText == 1)
-        {
-            hasText.setAttribute('disabled', false);
-            hasText.disabled = false;
-
-        }
-        
-    }
-    
-
-
-</script>
 
 <style>
 .pixel {
@@ -410,6 +268,12 @@ background-color: red;
 
 		
 <script>
+	
+	
+
+<?php echo $_SESSION['lightShowsScript'];?>
+<?php echo $_SESSION['lightSystemsScript'];?>
+
 let mode = 0;
 const divMatrix = document.getElementById('divMatrix');
 divMatrix.addEventListener('mouseleave', e => {
@@ -627,6 +491,140 @@ function storeMatrix()
 		
 }
 
+
+function setShowSettings()
+    {
+		alert("!");
+		var showNameId = document.getElementById("ShowNameId");
+		var systemNameId = document.getElementById("SystemNameId");
+		
+		var system = systemsMap.get(parseInt(systemNameId.value));
+		var index = parseInt(showNameId.value);		
+		
+		
+        var color1 = document.getElementById("Color1");
+        var color2 = document.getElementById("Color2");
+        var color3 = document.getElementById("Color3");
+        var color4 = document.getElementById("Color4");
+        var delay = document.getElementById("DelayId");
+        var width = document.getElementById("WidthId");
+        var minutes = document.getElementById("NumMinutesId");
+        var colorEvery = document.getElementById("ColorEveryId");
+		var hasText = document.getElementById("hasText");
+		
+		var divArt = document.getElementById("divArt");
+		var baseColor = document.getElementById("baseColor");
+		alert("3");
+		
+		
+        color1.setAttribute('disabled', true);
+        color2.setAttribute('disabled', true);
+        color3.setAttribute('disabled', true);
+        color4.setAttribute('disabled', true);
+        delay.setAttribute('disabled', true);
+        width.setAttribute('disabled', true);
+        minutes.setAttribute('disabled', true);
+		colorEvery.setAttribute('disabled', true);
+		hasText.setAttribute('disabled', true);
+		
+		divArt.setAttribute('hidden', true);
+        divArt.hidden = true;
+	
+	    
+	    if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
+        {
+			
+			var matrixHTML = "";
+			var divMatrix = document.getElementById("divMatrix");
+            
+			divArt.setAttribute('hidden', false);
+            divArt.hidden = false;
+            
+            
+            var currentPos = 0;
+            
+    
+			for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+			{
+				
+				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				{
+					style="background-color:grey;"
+					currentPos += 1;
+					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
+				}
+				matrixHTML += "<br>";
+
+			}
+		
+		
+            divMatrix.innerHTML = matrixHTML;
+            
+			
+        }
+  
+        
+        if(showMap.get(index).hasWidth == 1)
+        {
+            width.setAttribute('disabled', false);
+            width.disabled = false;
+
+        }
+
+        if(showMap.get(index).hasMinutes == 1)
+        {
+            minutes.setAttribute('disabled', false);
+            minutes.disabled = false;
+        }
+
+        if(showMap.get(index).hasDelay == 1)
+        {
+            delay.setAttribute('disabled', false);
+            delay.disabled = false;
+        }
+
+        if(showMap.get(index).numColors >= 1)
+        {
+            color1.setAttribute('disabled', false);
+            color1.disabled = false;
+        }
+
+        if(showMap.get(index).numColors >= 2)
+        {
+
+            color2.setAttribute('disabled', false);
+            color2.disabled = false;
+        }
+
+        if(showMap.get(index).numColors >= 3)
+        {
+            color3.setAttribute('disabled', false);
+            color3.disabled = false;
+        }
+
+        if(showMap.get(index).numColors == 4)
+        {
+            color4.setAttribute('disabled', false);
+            color4.disabled = false;
+        }
+        
+        
+        if(showMap.get(index).colorEvery == 1)
+        {
+            colorEvery.setAttribute('disabled', false);
+            colorEvery.disabled = false;
+        }
+		
+		
+		if(showMap.get(index).hasText == 1)
+        {
+            hasText.setAttribute('disabled', false);
+            hasText.disabled = false;
+
+        }
+        
+    }
+    
 
 </script>    
 

@@ -16,8 +16,6 @@ $conn = getDatabaseConnection();
 $playlistoption = "";
 $playListScript = "";
 
-
-
 if(isset($_REQUEST['CommitPlayList']))
 {
 	if(!empty($_POST['jsonContainer']))
@@ -695,6 +693,37 @@ function hexToRgb(hex)
         setShowParms();
 
   }
+  
+  function setSystemSettings()
+    {
+		
+        var widthId  = document.getElementById("WidthId");
+        var widthOutput = document.getElementById("WidthValue");
+        var chgBrightnessId = document.getElementById("ChgBrightnessId");
+        var brightness = document.getElementById("Brightness");
+
+
+        var systemNameId = document.getElementById("SystemNameId");
+        var index = parseInt(systemNameId.value);
+        var system = systemsMap.get(index);
+        
+        var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
+        if(widthId.value > numLeds)
+        {
+            widthId.setAttribute('value', numLeds);
+            widthId.value = numLeds;
+            widthOutput.innerHTML = numLeds;
+
+        }
+
+        widthId.setAttribute('max', numLeds);
+        widthId.max = numLeds;
+
+		chgBrightnessId.value = system.channelsMap.get(1).brightness;
+		brightness.value = system.channelsMap.get(1).brightness;
+		//setShowSettings();
+
+    }
 
 </script>
 
