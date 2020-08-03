@@ -153,12 +153,13 @@ background-color: red;
 		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
     		<center>
-		<p><label for="SystemName">System Name:</label><br />
-			<select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
+		<p><label for="SystemName">System Name:</label>
+			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
 			<?php echo $_SESSION['systemlistoption'];?>
 			</select>
-			</p>
-				<p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select></p>
+			
+				<label for="ShowName">Show name</label>
+				<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select></p>
     
 			</center>
 		
@@ -255,12 +256,12 @@ background-color: red;
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
-			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000" />
+			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000"/>
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
-			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix">
-		<p></p><?php echo $matrixHTML; ?></P>
+			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix" style ="margin-top: 15px;">
+		<p><?php echo $matrixHTML; ?></P>
 			</div>
 		</div>
 		
