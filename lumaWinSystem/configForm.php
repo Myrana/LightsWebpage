@@ -77,37 +77,37 @@ if(isset($_REQUEST['Edit']))
 					
 					$features = "";
 					if (!empty($_POST['motionFeature']))
-						$features .= "('1','" .  $_SESSION["LightSystemID"] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
+						$features .= "('1','" .  $_SESSION["LightSystemID"] . "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0','1')";
 
 					if (!empty($_POST['lightFeature']))
 					{
 						if(!empty($features)) $features .= ",";
 
-						$features .= "('2','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
+						$features .= "('2','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0','1')";
 
 					}
 
 					if (!empty($_POST['timeFeature'])) 
 					{
 						if(!empty($features)) $features .= ",";
-						$features .= "('3','" .  $_SESSION["LightSystemID"]  . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
+						$features .= "('3','" .  $_SESSION["LightSystemID"]  . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0','1')";
 					}
 					
 					if (!empty($_POST['luxFeature'])) 
 					{
 						if(!empty($features)) $features .= ",";
-						$features .= "('4','" .  $_SESSION["LightSystemID"]  . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
+						$features .= "('4','" .  $_SESSION["LightSystemID"]  . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "','1')";
 					}
 
 					if(!empty($features))
 					{
 					 
-						$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
+						$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold, enabled) VALUES";
 						$sql .= $features;
 						 
 						 
 						$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-						timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
+						timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold), enabled = VALUES(enabled);";
 
 						if ($conn->query($sql) === TRUE)
 							echo "<h1>Your Features were added to the database successfully.</h1>";
@@ -203,37 +203,55 @@ if(isset($_REQUEST['Config']))
 				
 				$features = "";
 				if (!empty($_POST['motionFeature']))
-					$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0')";
+					$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0','1')";
+				else
+					$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0','0')";
 
 				if (!empty($_POST['lightFeature']))
 				{
 					if(!empty($features)) $features .= ",";
 
-					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0')";
+					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0','1')";
 
+				}
+				else
+				{
+					if(!empty($features)) $features .= ",";
+
+					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0','0')";
 				}
 
 				if (!empty($_POST['timeFeature'])) 
 				{
 					if(!empty($features)) $features .= ",";
-					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0')";
+					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0','1')";
+				}
+				else
+				{
+					if(!empty($features)) $features .= ",";
+					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0','0')";
 				}
 				
 				if (!empty($_POST['luxFeature'])) 
 				{
 					if(!empty($features)) $features .= ",";
-					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "')";
+					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "','1')";
+				}
+				else
+				{
+					if(!empty($features)) $features .= ",";
+					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "','0')";
 				}
 
 				if(!empty($features))
 				{
 				 
-					$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold) VALUES";
+					$sql = "INSERT INTO lightSystemFeatures(featureId, lightSystemId, featureGpio, featurePlaylist, motionDelayOff, timeFeatureStart, timeFeatureEnd, luxThreshHold, enabled) VALUES";
 					$sql .= $features;
 					 
 					 
 					$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
-					timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold);";
+					timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold), enabled = VALUES(enabled);";
 
 					if ($conn->query($sql) === TRUE)
 						echo "<h1>Your Features were added to the database successfully.</h1>";
@@ -385,6 +403,7 @@ if(mysqli_num_rows($systemResults) > 0)
 				$lightSystemsScript .= "    lightFeature.timeFeatureStart = '" . $featureRow['timeFeatureStart'] ."';\r";
 				$lightSystemsScript .= "    lightFeature.timeFeatureEnd = '" . $featureRow['timeFeatureEnd'] ."';\r";
 				$lightSystemsScript .= "    lightFeature.luxThreshHold = " . $featureRow['luxThreshHold'] .";\r";
+				$lightSystemsScript .= "    lightFeature.enabled = " . $featureRow['enabled'] .";\r";
 				$lightSystemsScript .= "system.featuresMap.set(" . $featureRow['featureId']  . ", lightFeature);\r";
 				
 			}
@@ -602,35 +621,38 @@ function setLightSystemSettings(fromPost)
 	{
 		for (let [featureId, feature] of system.featuresMap)
 		{
-			switch(featureId)
+			if(feature.enabled)
 			{
-				case 1:
-					motionDelay.value = feature.motionDelayOff;
-					motionGpio.value = feature.featureGpio;
-					motionPlaylist.value = feature.featurePlayList;
-					motionFeature.click();
-					break;
+				switch(featureId)
+				{
+					case 1:
+						motionDelay.value = feature.motionDelayOff;
+						motionGpio.value = feature.featureGpio;
+						motionPlaylist.value = feature.featurePlayList;
+						motionFeature.click();
+						break;
 
-				case 2:
-					lightGpio.value = feature.featureGpio;               
-					lightPlaylist.value = feature.featurePlayList;
-					lightFeature.click()
-					break;
+					case 2:
+						lightGpio.value = feature.featureGpio;               
+						lightPlaylist.value = feature.featurePlayList;
+						lightFeature.click()
+						break;
 
-				case 3:
-					timePlaylist.value = feature.featurePlayList;
-					startTime.value    = feature.timeFeatureStart;
-					endTime.value      = feature.timeFeatureEnd;
-					timeFeature.click();
-					
-					break;
-					
-				case 4:
-					luxPlaylist.value = feature.featurePlayList;
-					luxThreshold.value = feature.luxThreshHold;
-					luxFeature.click()
-					break;
+					case 3:
+						timePlaylist.value = feature.featurePlayList;
+						startTime.value    = feature.timeFeatureStart;
+						endTime.value      = feature.timeFeatureEnd;
+						timeFeature.click();
+						
+						break;
+						
+					case 4:
+						luxPlaylist.value = feature.featurePlayList;
+						luxThreshold.value = feature.luxThreshHold;
+						luxFeature.click()
+						break;
 
+				}
 			}
 		}
 		

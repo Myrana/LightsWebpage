@@ -247,7 +247,8 @@ function setColor()
 			var color = document.getElementById('baseColor');	
 		}
 		
-		pixel.style.backgroundColor = color.value;
+		//pixel.style.backgroundColor = color.value;
+		pixel.style.background = color.value;
 		
 	}
 }

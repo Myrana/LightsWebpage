@@ -161,10 +161,10 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
-		var text = document.getElementById("hasText");
-        var clearStart = document.getElementById("clearStart");
+	    var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
+        var hasText = document.getElementById("hasText");
 
 		
         
@@ -198,9 +198,13 @@ function hexToRgb(hex)
 		if(matrixData.value.length > 0 )
 		{
 			playList.showParms[parmIndex].pixles = JSON.parse(matrixData.value);
-			alert(playList.showParms[parmIndex].pixles);
 		}
 			
+		if(hasText.value.length > 0)
+		{
+		   playList.showParms[parmIndex].matrixText = hasText.value;
+		}
+		
         playList.showParms[parmIndex].brightness = brightness.value;
 
         if(show.hasDelay)
@@ -357,14 +361,16 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
-		var text = document.getElementById("hasText");
+		var hasText = document.getElementById("hasText");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
         
 
         var showIndex = parseInt(showListControl.value) - 1;
-
+		storeMatrix();
+		
+	//	var matrixData = document.getElementById("matrixData");
 		
 
         for (i in playList.showParms)
@@ -376,9 +382,8 @@ function hexToRgb(hex)
                  if(show.hasDelay)
                      playList.showParms[i].delay = delay.value;
 				
-		
 				if(show.hasText)
-					playList.showParms[i].text = text.value;
+					playList.showParms[i].matrixText = hasText.value;
 
                     if(show.hasMinutes > 0)
                         playList.showParms[i].minutes = minutes.value;
@@ -389,6 +394,7 @@ function hexToRgb(hex)
                     if(show.hasWidth)
                         playList.showParms[i].width = width.value;
 
+					
 
                     playList.showParms[i].brightness = brightness.value;
 
@@ -502,12 +508,14 @@ function hexToRgb(hex)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
-		var text = document.getElementById("hasText");
-        var clearStart = document.getElementById("clearStart");
+	    var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
+        var hasText = document.getElementById("hasText");
+        var matrixData = document.getElementById("matrixDiv");
+        var divMatrix = document.getElementById("divMatrix");
         
-       
+         
 		var showIndex = parseInt(showListControl.value) - 1;	
 	    
 		for (i in playList.showParms)
@@ -520,20 +528,33 @@ function hexToRgb(hex)
 				//next force the onchange event to fire to set the controls to 
 				//proper state for show.
 	    
+				
+				var matrixHTML = "";
+				if(playList.showParms[i].pixles != undefined)
+				{
+					for(var parmPix in playList.showParms[i].pixles) 
+					{
+							
+						matrixHTML += "<span id='" + parmPix  + "' class='pixel' style='background-color:" + playList.showParms[i].pixles[parmPix].co.replace("0x","#") + "' ></span>";		
+
+					}
+					matrixHTML += "<br>";
+					divMatrix.innerHTML = matrixHTML;
+					alert(matrixHTML);
+				}		
+					
 				showControl.value = show.id;
 				
 				showControl.onchange();
-
-				
-				
                 if(show.hasDelay)
                     delay.value = playList.showParms[i].delay;
 				
 				if(show.hasText)
-					text.value = playList.showParms[i].text;
+					hasText.value = playList.showParms[i].matrixText;
 
                 if(show.hasMinutes > 0)
                     minutes.value = playList.showParms[i].minutes;
+                    
                 if(show.colorEvery > 0)
                     colorEvery.value =  playList.showParms[i].colorEvery;
 
