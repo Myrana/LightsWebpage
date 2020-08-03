@@ -366,12 +366,16 @@ function hexToRgb(hex)
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
-        
+        var matrixData = document.getElementById("matrixData");
+        var systemNameId = document.getElementById("SystemNameId");
+		var system = systemsMap.get(parseInt(systemNameId.value));
 
         var showIndex = parseInt(showListControl.value) - 1;
-		storeMatrix();
+        
+        
 		
-	//	var matrixData = document.getElementById("matrixData");
+       
+		var matrixData = document.getElementById("matrixData");
 		
 
         for (i in playList.showParms)
@@ -396,6 +400,17 @@ function hexToRgb(hex)
                         playList.showParms[i].width = width.value;
 
 					
+					if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
+					{
+						storeMatrix();
+						if(matrixData.value.length > 0 )
+						{
+							alert(matrixData.value);
+							playList.showParms[i].pixles = JSON.parse(matrixData.value);
+						}
+
+					}
+		
 
                     playList.showParms[i].brightness = brightness.value;
 
