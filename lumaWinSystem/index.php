@@ -12,6 +12,7 @@ if(isset($_REQUEST['Login']))
 	{
 		  $query_data = mysqli_fetch_array($row);
 		  $_SESSION['authorized'] = 1;
+		  $_SESSION['LightSystemID'] = -1;
 		  $_SESSION['User'] = $_POST['Username'];
 		  $_SESSION['UserID'] = $query_data['ID'];
 		  $_SESSION['isAdmin'] = $query_data['isAdmin'];  

@@ -240,6 +240,88 @@ if(mysqli_num_rows($results) > 0)
 
 }
 
+
+$_SESSION['systemlistoption'] = '';
+$_SESSION['lightSystemsScript'] = '';
+
+$systemResults = mysqli_query($conn,"SELECT * FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
+if(mysqli_num_rows($systemResults) > 0)
+{
+    $_SESSION['lightSystemsScript'] = "let systemsMap = new Map();\r\n";
+    while($systemRow = mysqli_fetch_array($systemResults))
+    {
+		if($_SESSION['LightSystemID'] == -1)
+			$_SESSION['LightSystemID'] = $systemRow['ID'];
+		
+		$_SESSION['lightSystemsScript'] .= "var system = new Object(); \r";
+
+        $_SESSION['lightSystemsScript'] .= "    system.id = " . $systemRow['ID'] . ";\r";
+        $_SESSION['lightSystemsScript'] .= "    system.systemName = '" . $systemRow['systemName'] . "';\r";
+        $_SESSION['lightSystemsScript'] .= "    system.serverHostName = '" . $systemRow['serverHostName'] . "';\r";
+        $_SESSION['lightSystemsScript'] .= "    system.enabled = " . $systemRow['enabled'] . ";\r";
+        $_SESSION['lightSystemsScript'] .= "    system.userId = " . $systemRow['userId'] . ";\r";
+        $_SESSION['lightSystemsScript'] .= "    system.twitchSupport = " . $systemRow['twitchSupport'] . ";\r";
+		$_SESSION['lightSystemsScript'] .= "    system.mqttRetries = " . $systemRow['mqttRetries'] . ";\r";
+		$_SESSION['lightSystemsScript'] .= "    system.mqttRetryDelay = " . $systemRow['mqttRetryDelay']   .";\r";
+		$_SESSION['lightSystemsScript'] .= "    system.twitchMqttQueue = '" . $systemRow['twitchMqttQueue'] ."';\r";
+		$_SESSION['lightSystemsScript'] .= "    system.channelsMap = new Map();\r";
+		$_SESSION['lightSystemsScript'] .= "    system.featuresMap = new Map();\r";
+		
+		$channelResults = mysqli_query($conn,"SELECT * FROM lightSystemChannels where lightSystemId = " . $systemRow['ID'] . ";");
+		
+		if(mysqli_num_rows($channelResults) > 0)
+		{
+			
+			while($channelRow = mysqli_fetch_array($channelResults))
+			{
+				$_SESSION['lightSystemsScript'] .= "var channel = new Object(); \r";
+				$_SESSION['lightSystemsScript'] .= "    channel.channelId = " . $channelRow['channelId'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.stripType = " . $channelRow['stripType'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.stripColumns = " . $channelRow['stripColumns'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.stripRows = " . $channelRow['stripRows'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.dma = " . $channelRow['dma'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.gpio = " . $channelRow['gpio'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.brightness = " . $channelRow['brightness'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.gamma = " . $channelRow['gamma'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    channel.enabled = " . $channelRow['enabled'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "system.channelsMap.set(" . $channelRow['channelId'] . ", channel);\r";
+				
+			}
+		}
+		
+		$featureResults = mysqli_query($conn,"SELECT * FROM lightSystemFeatures where lightSystemId = " . $systemRow['ID'] . ";");
+		if(mysqli_num_rows($featureResults) > 0)
+		{
+			while($featureRow = mysqli_fetch_array($featureResults))
+			{
+				$_SESSION['lightSystemsScript'] .= "var lightFeature = new Object(); \r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.featureId = " . $featureRow['featureId'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.featureGpio = " . $featureRow['featureGpio'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.featurePlayList = " . $featureRow['featurePlayList'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.motionDelayOff = " . $featureRow['motionDelayOff'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.timeFeatureStart = '" . $featureRow['timeFeatureStart'] ."';\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.timeFeatureEnd = '" . $featureRow['timeFeatureEnd'] ."';\r";
+				$_SESSION['lightSystemsScript'] .= "    lightFeature.luxThreshHold = " . $featureRow['luxThreshHold'] .";\r";
+				$_SESSION['lightSystemsScript'] .= "system.featuresMap.set(" . $featureRow['featureId']  . ", lightFeature);\r";
+				
+			}
+		}
+		
+
+	
+        $_SESSION['lightSystemsScript'] .= "systemsMap.set(" . $systemRow['ID'] . ", system);\r";
+
+        if($systemRow['ID'] == $_SESSION["LightSystemID"] )
+            $_SESSION['systemlistoption'] .="<option value = '".$systemRow['ID']."' selected>". $systemRow['systemName']."</option>";
+        else
+            $_SESSION['systemlistoption'] .="<option value = '".$systemRow['ID']."'>". $systemRow['systemName']."</option>";
+
+    }
+    
+   
+}
+
+
 $conn->close();
 
 ?>
