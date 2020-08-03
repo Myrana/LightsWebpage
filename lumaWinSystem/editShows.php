@@ -594,7 +594,6 @@ function hexToRgb(hex)
 				if(show.hasDelay)
 					sdelay.value = playList.showParms[i].delay;
 				
-				alert(show.showName);
 				if(show.hasText)
 					hasText.value = playList.showParms[i].matrixText;
 
