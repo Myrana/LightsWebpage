@@ -509,7 +509,6 @@ function hexToRgb(hex)
 
 	function setShowParms()
 	{
-		
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var showControl = document.getElementById("ShowNameId");
@@ -533,15 +532,15 @@ function hexToRgb(hex)
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
         var systemNameId = document.getElementById("SystemNameId");
-		var system = systemsMap.get(parseInt(systemNameId.value));
+		
+		
 		var showIndex = parseInt(showListControl.value) - 1;	
 		
-		var systemNameId = document.getElementById("SystemNameId");
-		//var system = systemsMap.get(parseInt(systemNameId.value));
 		
 		
 		for (i in playList.showParms)
 		{
+		
 			if(i == showIndex)
 			{
 				
@@ -550,18 +549,21 @@ function hexToRgb(hex)
 				//next force the onchange event to fire to set the controls to 
 				//proper state for show.
 	    
-				showControl.value = show.id;
+								
 				
-				showControl.onchange();
+				system = systemsMap.get(parseInt(playList.showParms[i].systemId));	
 				
-				var system = systemsMap.get(parseInt(playList.showParms[i].systemId));	
+				
 				if(system == undefined)
 					system = systemsMap.get(parseInt(systemNameId.value));
+				
+				systemNameId.value = system.id;
+				
+				showControl.value = show.id;	
 				
 				
 				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
 				{
-					
 					var matrixHTML = "";
 					var divMatrix = document.getElementById("divMatrix");
 					
@@ -574,6 +576,7 @@ function hexToRgb(hex)
 			
 					for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
 					{
+						
 						for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
 						{
 							currentPos += 1;
@@ -664,6 +667,10 @@ function hexToRgb(hex)
 			}
 		}
 		
+		//setSystemSettings();		
+				//setShowSettings();
+				//showControl.onchange();
+	
 	}
 	
 	function setPlayListSettings()
@@ -689,37 +696,12 @@ function hexToRgb(hex)
 			
 		}
         setShowParms();
+        setShowSettings(false);
 
   }
   
-  function setSystemSettings()
-    {
-	    var widthId  = document.getElementById("WidthId");
-        var widthOutput = document.getElementById("WidthValue");
-        var chgBrightnessId = document.getElementById("ChgBrightnessId");
-        var brightness = document.getElementById("Brightness");
-
-		var systemNameId = document.getElementById("SystemNameId");
-        var index = parseInt(systemNameId.value);
-        var system = systemsMap.get(index);
-        
-        var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
-        if(widthId.value > numLeds)
-        {
-            widthId.setAttribute('value', numLeds);
-            widthId.value = numLeds;
-            widthOutput.innerHTML = numLeds;
-
-        }
-
-        widthId.setAttribute('max', numLeds);
-        widthId.max = numLeds;
-
-		chgBrightnessId.value = system.channelsMap.get(1).brightness;
-		brightness.value = system.channelsMap.get(1).brightness;
-		//setShowSettings();
-
-    }
+  
+	
 
 </script>
 

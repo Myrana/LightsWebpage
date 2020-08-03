@@ -158,7 +158,7 @@ background-color: red;
 			<?php echo $_SESSION['systemlistoption'];?>
 			</select>
 			</p>
-				<p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings();" style="width: 25%"><?php echo $lightShowsoption;?></select></p>
+				<p><label for="ShowName">Show name</label><br /><select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select></p>
     
 			</center>
 		
@@ -493,7 +493,7 @@ function storeMatrix()
 }
 
 
-function setShowSettings()
+function setShowSettings(arg1)
     {
 		var showNameId = document.getElementById("ShowNameId");
 		var systemNameId = document.getElementById("SystemNameId");
@@ -525,44 +525,54 @@ function setShowSettings()
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
-		
 		divArt.setAttribute('hidden', true);
-        divArt.hidden = true;
-	
-	    
-	    if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
-        {
-			
-			var matrixHTML = "";
-			var divMatrix = document.getElementById("divMatrix");
-            
-			divArt.setAttribute('hidden', false);
-            divArt.hidden = false;
-            
-            
-            var currentPos = 0;
-            
-    
-			for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+		divArt.hidden = true;
+		
+		if(arg1 ==  true)
+		{
+			if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
 			{
+		
 				
-				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				var matrixHTML = "";
+				var divMatrix = document.getElementById("divMatrix");
+				
+				divArt.setAttribute('hidden', false);
+				divArt.hidden = false;
+				
+				
+				var currentPos = 0;
+				
+		
+				for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
 				{
-					style="background-color:grey;"
-					currentPos += 1;
-					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
-				}
-				matrixHTML += "<br>";
+					
+					for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+					{
+						style="background-color:grey;"
+						currentPos += 1;
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
+					}
+					matrixHTML += "<br>";
 
-			}
-		
-		
-            divMatrix.innerHTML = matrixHTML;
-            
+				}
 			
-        }
-  
-        
+			
+				divMatrix.innerHTML = matrixHTML;
+				
+				
+			}
+		}
+		else
+		{
+			if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
+			{
+				divArt.setAttribute('hidden', false);
+				divArt.hidden = false;
+			}
+		}
+		
+       
         if(showMap.get(index).hasWidth == 1)
         {
             width.setAttribute('disabled', false);
@@ -624,9 +634,36 @@ function setShowSettings()
         
     }
     
+function setSystemSettings()
+    {
+		var widthId  = document.getElementById("WidthId");
+        var widthOutput = document.getElementById("WidthValue");
+        var chgBrightnessId = document.getElementById("ChgBrightnessId");
+        var brightness = document.getElementById("Brightness");
 
+		var systemNameId = document.getElementById("SystemNameId");
+        var index = parseInt(systemNameId.value);
+        var system = systemsMap.get(index);
+        
+        var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
+        if(widthId.value > numLeds)
+        {
+            widthId.setAttribute('value', numLeds);
+            widthId.value = numLeds;
+            widthOutput.innerHTML = numLeds;
 
-setShowSettings();
+        }
+
+        widthId.setAttribute('max', numLeds);
+        widthId.max = numLeds;
+
+		chgBrightnessId.value = system.channelsMap.get(1).brightness;
+		brightness.value = system.channelsMap.get(1).brightness;
+		//setShowSettings();
+
+    }
+
+setShowSettings(true);
 
 		
 </script>    
