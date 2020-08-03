@@ -383,6 +383,7 @@ function hexToRgb(hex)
             if(i == showIndex)
             {
                 var show = showMap.get(parseInt(playList.showParms[i].show));
+                playList.showParms[i].systemId = systemNameId.value;
 
                  if(show.hasDelay)
                      playList.showParms[i].delay = delay.value;

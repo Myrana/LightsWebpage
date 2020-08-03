@@ -170,10 +170,10 @@ if(isset($_REQUEST['LightShow']))
             $sendArray['show'] =  $_POST['ShowName'];
 
         if(!empty($_POST['Delay']))
-            $sendArray['delay'] = $_SESSION["Delay"];
+            $sendArray['delay'] = $_SESSION['Delay'];
 
         if(!empty($_POST['Minutes']))
-            $sendArray['minutes'] = $_SESSION["Minutes"];
+            $sendArray['minutes'] = $_SESSION['Minutes'];
 
         if(count($sendColors) > 0)
            $sendArray['colors'] = $sendColors;
@@ -202,7 +202,7 @@ if(isset($_REQUEST['LightShow']))
 		if(!empty($_POST['matrixData']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
-        
+        $sendArray['systemId'] = $_SESSION["LightSystemID"];
 
     }
     
