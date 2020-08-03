@@ -7,8 +7,6 @@ $conn = getDatabaseConnection();
 
 $lightShowsoption = '';
 $_SESSION['lightShowsScript'] = '';
-$_SESSION['systemlistoption'] = '';
-$_SESSION['lightSystemsScript'] = "";
 
 $results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix, hasText FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
@@ -62,6 +60,7 @@ $conn->close();
 
     function setShowSettings()
     {
+		
 		var showNameId = document.getElementById("ShowNameId");
 		var systemNameId = document.getElementById("SystemNameId");
 		var system = systemsMap.get(parseInt(systemNameId.value));
@@ -93,7 +92,7 @@ $conn->close();
 		
 		divArt.setAttribute('hidden', true);
         divArt.hidden = true;
-       
+		alert(system);
         if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
         {
 			

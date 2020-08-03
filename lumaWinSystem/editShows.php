@@ -118,6 +118,7 @@ include('header.php');
 	
 	<?php echo $_SESSION['lightSystemsScript'];?>
 	
+	
 
 function rgbToHex(r, g, b)
 {
@@ -368,7 +369,7 @@ function hexToRgb(hex)
         
 
         var showIndex = parseInt(showListControl.value) - 1;
-		//storeMatrix();
+		storeMatrix();
 		
 	//	var matrixData = document.getElementById("matrixData");
 		
@@ -498,8 +499,7 @@ function hexToRgb(hex)
 		var showControl = document.getElementById("ShowNameId");
 		var playListIndex = parseInt(playListId.value);
 		var playList = playListMap.get(playListIndex);
-		var systemNameId = document.getElementById("SystemNameId");
-		
+	
 		var color1 = document.getElementById("Color1");
         var color2 = document.getElementById("Color2");
         var color3 = document.getElementById("Color3");
@@ -533,36 +533,28 @@ function hexToRgb(hex)
 				showControl.value = show.id;
 				
 				showControl.onchange();
-				
-				
-				if(playList.showParms[i].pixles != undefined)
-				{
-					
-					divArt.setAttribute('hidden', false);
-					divArt.hidden = false;
-				
-					var system = systemsMap.get(parseInt(systemNameId.value));
-					var currentPos = 0;
-					
-					var matrixHTML = "";
-				
-					for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
-					{
-						for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
-						{
-							currentPos += 1;
-							matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + playList.showParms[i].pixles[currentPos].co.replace("0x","#") + "' ></span>";
-						}
-						matrixHTML += "<br>";
-
-					}
-		
-					
-					divMatrix.innerHTML = matrixHTML;
-				}
+				alert("!");
+				divArt.setAttribute('hidden', false);
+				divArt.hidden = false;
             
 				
-			    if(show.hasDelay)
+				var matrixHTML = "";
+				if(playList.showParms[i].pixles != undefined)
+				{
+					for(var parmPix in playList.showParms[i].pixles) 
+					{
+							
+						matrixHTML += "<span id='" + parmPix  + "' class='pixel' style='background-color:" + playList.showParms[i].pixles[parmPix].co.replace("0x","#") + "' ></span>";		
+
+					}
+					matrixHTML += "<br>";
+					divMatrix.innerHTML = matrixHTML;
+					alert(matrixHTML);
+				}		
+					
+				
+				
+                if(show.hasDelay)
                     delay.value = playList.showParms[i].delay;
 				
 				if(show.hasText)
