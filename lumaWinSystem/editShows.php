@@ -405,7 +405,6 @@ function hexToRgb(hex)
 						storeMatrix();
 						if(matrixData.value.length > 0 )
 						{
-							alert(matrixData.value);
 							playList.showParms[i].pixles = JSON.parse(matrixData.value);
 						}
 
