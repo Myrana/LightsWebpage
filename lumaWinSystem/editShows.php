@@ -58,7 +58,6 @@ if(isset($_REQUEST['btnDeletePlayList']))
 	if(!empty($_POST['PlayList']))
     {
 		$sql = "delete from userPlaylist where ID = " . $_POST['PlayList'];
-		echo $sql;
         if ($conn->query($sql) == FALSE)
         {
             echo "<h1>Error: " . $conn->error . "</h1>";
@@ -116,7 +115,7 @@ include('header.php');
 	
 	
 
-function rgbToHex(r, g, b)
+function jsonrgbToHex(r, g, b)
 {
   return "#" + ((1 << 24) + (parseInt(r) << 16) + (parseInt(g) << 8) + parseInt(b)).toString(16).slice(1);
 }
@@ -590,23 +589,7 @@ function hexToRgb(hex)
 					divMatrix.innerHTML = matrixHTML;
 					
 					
-				}
-				
-				/*var matrixHTML = "";
-				if(playList.showParms[i].pixles != undefined)
-				{
-					for(var parmPix in playList.showParms[i].pixles) 
-					{
-							
-						matrixHTML += "<span id='" + parmPix  + "' class='pixel' style='background-color:" + playList.showParms[i].pixles[parmPix].co.replace("0x","#") + "' ></span>";		
-
-					}
-					matrixHTML += "<br>";
-					divMatrix.innerHTML = matrixHTML;
-					alert(matrixHTML);
-				}		
-					*/
-				
+				}			
 				
                 if(show.hasDelay)
                     delay.value = playList.showParms[i].delay;
@@ -625,32 +608,31 @@ function hexToRgb(hex)
 
                 brightness.value = playList.showParms[i].brightness;
                 
-
                 if(show.numColors > 0)
                 {
                     switch(show.numColors)
                     {
                         case 1:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
                             break;
 
                         case 2:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
+                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color2.value =  jsonrgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
                             break;
 
                         case 3:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
-                            color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color3.g, playList.showParms[i].colors.color3.b);
+                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color2.value =  jsonrgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
+                            color3.value =  jsonrgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color3.g, playList.showParms[i].colors.color3.b);
 
                             break;
 
                         case 4:
-                            color1.value =  rgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  rgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
-                            color3.value =  rgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color3.g, playList.showParms[i].colors.color3.b);
-                            color4.value =  rgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color4.g, playList.showParms[i].colors.color4.b);
+                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color2.value =  jsonrgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
+                            color3.value =  jsonrgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color3.g, playList.showParms[i].colors.color3.b);
+                            color4.value =  jsonrgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color4.g, playList.showParms[i].colors.color4.b);
                             break;
 
                     }
@@ -667,9 +649,6 @@ function hexToRgb(hex)
 			}
 		}
 		
-		//setSystemSettings();		
-				//setShowSettings();
-				//showControl.onchange();
 	
 	}
 	
@@ -695,13 +674,13 @@ function hexToRgb(hex)
 			showListControl.add(option); 
 			
 		}
+		
         setShowParms();
         setShowSettings(false);
 
   }
   
   
-	
 
 </script>
 
