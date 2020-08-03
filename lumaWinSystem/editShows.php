@@ -730,7 +730,7 @@ function hexToRgb(hex)
          <input name="jsonContainer" type="text" id="jsonContainer" hidden></p>
         <?php include('showDesigner.php'); ?>
         
-        <input name="SystemNameId" type="text" id="SystemNameId" value="<?php echo $_SESSION["LightSystemID"]; ?> " hidden></input>
+     
         
 
     </div>
