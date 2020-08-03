@@ -114,8 +114,6 @@ include('header.php');
 	<script>
 	<?php echo $playListScript;?>
 	
-	<?php echo $_SESSION['lightSystemsScript'];?>
-	
 	
 
 function rgbToHex(r, g, b)
@@ -670,6 +668,7 @@ function hexToRgb(hex)
 	
 	function setPlayListSettings()
 	{
+		
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var counter = 1;
@@ -677,7 +676,6 @@ function hexToRgb(hex)
 		showListControl.options.length = 0;
 		playListIndex = parseInt(playListId.value);
 		var playList = playListMap.get(playListIndex);
-	
 		for (i in playList.showParms)
 		{
 			var option = document.createElement("option");
@@ -701,8 +699,7 @@ function hexToRgb(hex)
         var chgBrightnessId = document.getElementById("ChgBrightnessId");
         var brightness = document.getElementById("Brightness");
 
-
-        var systemNameId = document.getElementById("SystemNameId");
+		var systemNameId = document.getElementById("SystemNameId");
         var index = parseInt(systemNameId.value);
         var system = systemsMap.get(index);
         

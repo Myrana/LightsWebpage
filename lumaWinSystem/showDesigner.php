@@ -275,7 +275,6 @@ background-color: red;
 <?php echo $_SESSION['lightShowsScript'];?>
 <?php echo $_SESSION['lightSystemsScript'];?>
 
-
 let mode = 0;
 const divMatrix = document.getElementById('divMatrix');
 divMatrix.addEventListener('mouseleave', e => {
