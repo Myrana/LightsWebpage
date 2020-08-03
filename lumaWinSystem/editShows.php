@@ -696,8 +696,7 @@ function hexToRgb(hex)
   
   function setSystemSettings()
     {
-		
-        var widthId  = document.getElementById("WidthId");
+	    var widthId  = document.getElementById("WidthId");
         var widthOutput = document.getElementById("WidthValue");
         var chgBrightnessId = document.getElementById("ChgBrightnessId");
         var brightness = document.getElementById("Brightness");

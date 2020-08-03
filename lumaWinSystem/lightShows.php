@@ -252,25 +252,9 @@ include('header.php');
 ?>
 
 
-<body onload="initShowSystem();">
+<body >
 <?php include("nav.php");  ?>
 
-
-<script>
-
-
-
-	function initShowSystem()
-	{
-		setSystemSettings();
-		setShowSettings();
-		
-	}
-
-    
-
-
-</script>
 
 <div class="clearfix">
 <div class="column twenty-five">
@@ -287,8 +271,15 @@ include('header.php');
     <input type="checkbox" name="lights"  value="ON" checked><button type="submit" name="Power">Power</button>
 		<p>
 
-	<script>
 
+	
+	<script onLoad="rew();">
+
+	function rew()
+	{
+		alert("reerere");
+	}
+	
 	function setPlaylistName()
 	{
 		var playlistName = document.getElementById("PlayListNameId");

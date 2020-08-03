@@ -141,6 +141,7 @@ $conn->close();
 
 .pixel:hover {
 background-color: red;
+
 }
 
 </style>
@@ -273,6 +274,7 @@ background-color: red;
 
 <?php echo $_SESSION['lightShowsScript'];?>
 <?php echo $_SESSION['lightSystemsScript'];?>
+
 
 let mode = 0;
 const divMatrix = document.getElementById('divMatrix');
@@ -494,7 +496,6 @@ function storeMatrix()
 
 function setShowSettings()
     {
-		alert("!");
 		var showNameId = document.getElementById("ShowNameId");
 		var systemNameId = document.getElementById("SystemNameId");
 		
@@ -514,7 +515,6 @@ function setShowSettings()
 		
 		var divArt = document.getElementById("divArt");
 		var baseColor = document.getElementById("baseColor");
-		alert("3");
 		
 		
         color1.setAttribute('disabled', true);
@@ -626,6 +626,10 @@ function setShowSettings()
     }
     
 
+
+setShowSettings();
+
+		
 </script>    
 
 		
