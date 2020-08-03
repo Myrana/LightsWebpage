@@ -216,7 +216,7 @@ if(isset($_REQUEST['Config']))
 				}
 				else
 				{
-					if(!empty($features)) $features .= ",";
+					if(empty($features)) $features .= ",";
 
 					$features .= "('2','" . $systemId . "', '" . $_POST['lightFeatureGPIO'] . "', '" . $_POST['lightPlaylist'] . "','0','0','0','0','0')";
 				}
@@ -228,7 +228,7 @@ if(isset($_REQUEST['Config']))
 				}
 				else
 				{
-					if(!empty($features)) $features .= ",";
+					if(empty($features)) $features .= ",";
 					$features .= "('3','" . $systemId . "', '0','" . $_POST['timePlaylist'] . "', '0','" . $_POST['startTime'] . "', '" . $_POST['endTime'] . "','0','0')";
 				}
 				
@@ -239,7 +239,7 @@ if(isset($_REQUEST['Config']))
 				}
 				else
 				{
-					if(!empty($features)) $features .= ",";
+					if(empty($features)) $features .= ",";
 					$features .= "('4','" . $systemId . "', '0','" . $_POST['luxPlaylist'] . "', '0','0', '0','" . $_POST['luxThreshHold'] . "','0')";
 				}
 
