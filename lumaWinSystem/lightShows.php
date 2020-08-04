@@ -254,10 +254,7 @@ include('header.php');
 
 
 <div class="clearfix">
-
-<?php include_once('showDesigner.php'); ?>
-
-	<div class="column twenty-five">
+<div class="column twenty-five">
 	
 	
 
@@ -299,8 +296,14 @@ include('header.php');
 		</p>
 		
 	</div>
-	
-	
+		
+
+
+
+
+
+<?php include_once('showDesigner.php'); ?>
+
  </form>
     
     
