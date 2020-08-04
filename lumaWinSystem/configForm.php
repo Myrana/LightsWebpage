@@ -703,7 +703,7 @@ function confirmDelete()
 
 </script>
 
-	  <h1>Config Page</h1>
+	  <center><img src="Images/configuration.png" alt="Configuration" /></center>
 	<div class="clearfix">
 	<div class="column thirty-three">
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">

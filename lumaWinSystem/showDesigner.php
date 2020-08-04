@@ -151,13 +151,15 @@ background-color: red;
 		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
     		<center>
-		<p><label for="SystemName">System Name:</label>
+		<p>
+			<label for="ShowName">Show name</label>
+			<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
+			
+			<label for="SystemName">System Name:</label>
 			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
 			<?php echo $_SESSION['systemlistoption'];?>
 			</select>
-			
-				<label for="ShowName">Show name</label>
-				<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select></p>
+		</p>
     
 			</center>
 		
