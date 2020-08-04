@@ -194,7 +194,6 @@ function hexToRgb(hex)
 		
 		var system = systemsMap.get(parseInt(systemNameId.value));
 		
-		alert(system);
 		if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
 		{
 			storeMatrix();

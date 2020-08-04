@@ -466,8 +466,6 @@ function storeMatrix()
     
 	for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
     {
-	//	alert(system.channelsMap.get(1).stripRows);
-	//	alert(system.channelsMap.get(1).stripColumns);
 		for(var column = 0; column < system.channelsMap.get(1).stripColumns; column++)
 		{
 			
