@@ -152,13 +152,15 @@ background-color: red;
 
     		<center>
 		<p>
-			<label for="ShowName">Show name</label>
-			<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
 			
 			<label for="SystemName">System Name:</label>
 			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
-			<?php echo $_SESSION['systemlistoption'];?>
-			</select>
+			<?php echo $_SESSION['systemlistoption'];?></select>
+			
+			<label for="ShowName">Show name</label>
+			<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
+			
+			
 		</p>
     
 			</center>
