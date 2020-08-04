@@ -260,7 +260,7 @@ background-color: red;
 				  <option value="1" selected>S</option>
 				  <option value="2">M</option>
 				  <option value="3">L</option>
-				  
+				  <input type="text" id="test" name="test"> </input>
 				</select>
 			</p>
 			
@@ -289,6 +289,10 @@ background-color: red;
 <?php echo $_SESSION['lightSystemsScript'];?>
 
 let mode = 0;
+let oldx = 0;
+let oldy = 0;
+let direction = 1;
+
 const divMatrix = document.getElementById('divMatrix');
 
 divMatrix.addEventListener('mouseleave', e => {
@@ -322,19 +326,39 @@ divMatrix.addEventListener('mousedown', e => {
   
 });
 
-
-divMatrix.addEventListener('mousemove', e => {
+    
+divMatrix.addEventListener('mousemove', e => 
+{
 	 e.stopPropagation();
      e.preventDefault();
+     if (e.pageX > oldx && e.pageY == oldy) 
+     {
+             direction = 3;
+     }
+     else if (e.pageX == oldx && e.pageY > oldy) 
+     {
+             direction = 2;
+     }
+     else if (e.pageX == oldx && e.pageY < oldy) 
+     {
+             direction = 1;
+     }
+     else if (e.pageX < oldx && e.pageY == oldy) 
+     {
+             direction = 4;
+     }
+    
+    //document.getElementById('test').value = direction;
+	
 	if(mode == 1 || mode == 2)
 		setColor();
-	//else
-	//	setToBaseColor();
+	
 	
 });
 
 
-divMatrix.addEventListener('mouseup', e => {
+divMatrix.addEventListener('mouseup', e => 
+{
     e.stopPropagation();
     e.preventDefault();
 	mode = 0;
