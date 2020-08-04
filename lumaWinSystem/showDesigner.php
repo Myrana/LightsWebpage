@@ -255,7 +255,20 @@ background-color: red;
 		<div style="text-align:center">
 		  <h1>Matrix Art!</h1>
 			<label>Base Color</label>
+			<p>
+				<select id="brushSize" name="brushSize">
+				  <option value="1" selected>S</option>
+				  <option value="2">M</option>
+				  <option value="3">L</option>
+				  
+				</select>
+			</p>
+			
+			
 			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000"/>
+			
+			
+			
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
@@ -277,6 +290,7 @@ background-color: red;
 
 let mode = 0;
 const divMatrix = document.getElementById('divMatrix');
+
 divMatrix.addEventListener('mouseleave', e => {
   
   	mode = 0;
@@ -328,18 +342,35 @@ divMatrix.addEventListener('mouseup', e => {
 });
 function setColor()
 {	
-	var pixel = document.getElementById(this.event.target.id);
+	var pixel;
+	var brushSize = document.getElementById("brushSize");
+	var systemNameId = document.getElementById("SystemNameId");
+	var system = systemsMap.get(index);
+    
+	alert(brushSize.value);
+	
 	if(pixel.id != "divMatrix")
 	{
-		if(mode == 1)
+		
+		for(var count = 0; count < brushSize.value; count++)
 		{
-			var color = document.getElementById('colorSelect');	
+			var pos = (count * system.channelsMap.get(1).stripColumns) + document.getElementById(this.event.target.id;
+			if(pos <= system.channelsMap.get(1).stripColumns * system.channelsMap.get(1).stripRows)
+			{
+				pixal = document.getElementById(pos);
+				if(mode == 1)
+				{
+					var color = document.getElementById('colorSelect');	
+				}
+				else if(mode ==  2)
+				{
+					var color = document.getElementById('baseColor');	
+				}
+			
+				pixel.style.background = color.value;
+			}
 		}
-		else if(mode ==  2)
-		{
-			var color = document.getElementById('baseColor');	
-		}
-		pixel.style.background = color.value;
+		
 		//pixel.style.backgroundColor = color.value;
 		
 	}
