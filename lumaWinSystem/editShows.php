@@ -104,11 +104,11 @@ $title = 'Edit Shows';
 include('header.php'); 
 ?>
 
+<?php include('nav.php'); ?>
 
 <body onLoad="setPlayListSettings();">
 
 
-	<?php include('nav.php'); ?>
 	
 	<script>
 	<?php echo $playListScript;?>
@@ -697,7 +697,7 @@ function hexToRgb(hex)
   
 
 </script>
-
+	<center><img src="Images/edit-shows.png" alt="Edit Shows" /></center>
 	<div class="clearfix">
 	<div class="column twenty-five">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
