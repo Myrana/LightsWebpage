@@ -171,6 +171,7 @@ function hexToRgb(hex)
 		var show = showMap.get(parseInt(showControl.value));
         var parmIndex = 0;
 		//Deal with new or empty playlist
+		
 		if(playList.showParms.length == 0)
 		{
 			var json = '[{"show": "' + show.id + '", "UserID": "' + userId + '"}]';
@@ -189,11 +190,12 @@ function hexToRgb(hex)
 
 		}
 
-		
 		playList.showParms[parmIndex].systemId = systemNameId.value;
 		
 		var system = systemsMap.get(parseInt(systemNameId.value));
-		if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
+		
+		alert(system);
+		if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
 		{
 			storeMatrix();
 			if(matrixData.value.length > 0 )
@@ -203,7 +205,8 @@ function hexToRgb(hex)
 			}
 		}
 			
-		if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 1)
+		
+		if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 1)
 		{
 			if(hasText.value.length > 0)
 			{

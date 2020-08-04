@@ -451,6 +451,8 @@ function rgbToHex(rgb) {
 
 function storeMatrix()
 {
+	
+    
 	var pixel;
 	var systemNameId = document.getElementById("SystemNameId");
 	var matrixData = document.getElementById("matrixData");
@@ -462,10 +464,10 @@ function storeMatrix()
     
     var matrixJson = '{';
     
-    
 	for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
     {
-		
+	//	alert(system.channelsMap.get(1).stripRows);
+	//	alert(system.channelsMap.get(1).stripColumns);
 		for(var column = 0; column < system.channelsMap.get(1).stripColumns; column++)
 		{
 			
