@@ -262,7 +262,6 @@ background-color: red;
 				  <option value="1" selected>S</option>
 				  <option value="2">M</option>
 				  <option value="3">L</option>
-				  <input type="text" id="test" name="test"> </input>
 				</select>
 			</p>
 			
@@ -349,8 +348,9 @@ divMatrix.addEventListener('mousemove', e =>
      {
              direction = 4;
      }
-    
-    //document.getElementById('test').value = direction;
+  
+	oldx = e.pageX;
+    oldy = e.pageY;
 	
 	if(mode == 1 || mode == 2)
 		setColor();
@@ -367,48 +367,13 @@ divMatrix.addEventListener('mouseup', e =>
 	
 });
 
-/*
-function setColor()
-{	
-	var pixel;
-	var brushSize = document.getElementById("brushSize");
-	var systemNameId = document.getElementById("SystemNameId");
-	var system = systemsMap.get(index);
-    
-	alert(brushSize.value);
-	
-	if(pixel.id != "divMatrix")
-	{
-		
-		for(var count = 0; count < brushSize.value; count++)
-		{
-			var pos = (count * system.channelsMap.get(1).stripColumns) + document.getElementById(this.event.target.id;
-			if(pos <= system.channelsMap.get(1).stripColumns * system.channelsMap.get(1).stripRows)
-			{
-				pixal = document.getElementById(pos);
-				if(mode == 1)
-				{
-					var color = document.getElementById('colorSelect');	
-				}
-				else if(mode ==  2)
-				{
-					var color = document.getElementById('baseColor');	
-				}
-			
-				pixel.style.background = color.value;
-			}
-		}
-		
-		//pixel.style.backgroundColor = color.value;
-		
-	}
-}
-*/
+
 function setColor()
 {	
 	var brushSize = document.getElementById("brushSize");
 	var systemNameId = document.getElementById("SystemNameId");
 	var system = systemsMap.get(parseInt(systemNameId.value));
+	var index = 0;
 	
     var pos = parseInt(this.event.target.id);
     var maxPixels = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
@@ -418,7 +383,11 @@ function setColor()
 	{
 		for(var count = 0; count < brushSize.value; count++)
 		{
-			var index = pos + (system.channelsMap.get(1).stripColumns * count);
+			if(direction == 3 || direction == 4)
+				index = pos + (system.channelsMap.get(1).stripColumns * count);
+			else
+				index = pos + count;
+				
 			if(index <= maxPixels)
 			{
 				
@@ -432,7 +401,7 @@ function setColor()
 				{
 					var color = document.getElementById('baseColor');	
 				}
-				//pixel.style.backgroundColor = color.value;
+		
 				pixel.style.background = color.value;
 			}
 		}
