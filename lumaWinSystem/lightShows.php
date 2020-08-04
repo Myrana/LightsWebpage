@@ -254,11 +254,13 @@ include('header.php');
 
 
 <div class="clearfix">
-<div class="column twenty-five">
 	
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		
+		<?php include_once('showDesigner.php'); ?>
 	
-
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	<div class="column twenty-five">
+		<div class="ColumnStyles">
 		<center><img src="System-Control.png" id="systemControlPic" alt="System Control"/></center>
     <p><label for="ChgBrightness">Change Brightness:</label>
         <input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="255">
@@ -297,12 +299,9 @@ include('header.php');
 		
 	</div>
 		
-
-
-
-
-
-<?php include_once('showDesigner.php'); ?>
+		</div>
+	
+	</div>
 
  </form>
     
