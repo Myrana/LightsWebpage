@@ -338,6 +338,8 @@ divMatrix.addEventListener('mouseup', e => {
 	mode = 0;
 	
 });
+
+/*
 function setColor()
 {	
 	var pixel;
@@ -373,6 +375,45 @@ function setColor()
 		
 	}
 }
+*/
+function setColor()
+{	
+	var brushSize = document.getElementById("brushSize");
+	var systemNameId = document.getElementById("SystemNameId");
+	var system = systemsMap.get(parseInt(systemNameId.value));
+	
+    var pos = parseInt(this.event.target.id);
+    var maxPixels = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
+	
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id != "divMatrix")
+	{
+		for(var count = 0; count < brushSize.value; count++)
+		{
+			var index = pos + (system.channelsMap.get(1).stripColumns * count);
+			if(index <= maxPixels)
+			{
+				
+				pixel = document.getElementById(index);
+				
+				if(mode == 1)
+				{
+					var color = document.getElementById('colorSelect');	
+				}
+				else if(mode ==  2)
+				{
+					var color = document.getElementById('baseColor');	
+				}
+				//pixel.style.backgroundColor = color.value;
+				pixel.style.background = color.value;
+			}
+		}
+		
+		
+		
+	}
+}
+
 
 function captureColor()
 {
