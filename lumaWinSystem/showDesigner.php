@@ -266,9 +266,6 @@ background-color: red;
 			
 			<label>Base Color</label>
 			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000"/>
-			
-			
-			
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
@@ -279,7 +276,7 @@ background-color: red;
 		
     </div>
 
-	<div id="divShapes" class="ColumnStyles">
+	<div id="divShapes" name="divShapes" class="ColumnStyles">
 		<div style="text-align: center">
 		
 			<h1>Matrix Designer!</h1>
@@ -625,6 +622,8 @@ function setShowSettings(arg1)
 		var hasText = document.getElementById("hasText");
 		
 		var divArt = document.getElementById("divArt");
+		var divShapes = document.getElementById("divShapes");
+		
 		var baseColor = document.getElementById("baseColor");
 		
 		
@@ -639,6 +638,8 @@ function setShowSettings(arg1)
 		hasText.setAttribute('disabled', true);
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
+		divShapes.setAttribute('hidden', true);
+		divShapes.hidden = true;
 		
 		if(arg1 ==  true)
 		{
@@ -674,6 +675,18 @@ function setShowSettings(arg1)
 				
 				
 			}
+			
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
+			{
+				
+				divShapes.setAttribute('hidden', false);
+				divShapes.hidden = false;
+			}
+			else
+			{
+				divShapes.setAttribute('hidden', true);
+				divShapes.hidden = true;
+			}
 		}
 		else
 		{
@@ -682,8 +695,25 @@ function setShowSettings(arg1)
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
 			}
+			
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
+			{
+				
+				divShapes.setAttribute('hidden', false);
+				divShapes.hidden = false;
+			}
+			
 		}
 		
+			
+		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 2) 
+		{
+		
+			hasText.setAttribute('disabled', false);
+			hasText.disabled = false;
+
+
+		}
        
         if(showMap.get(index).hasWidth == 1)
         {
@@ -735,15 +765,7 @@ function setShowSettings(arg1)
             colorEvery.setAttribute('disabled', false);
             colorEvery.disabled = false;
         }
-		
-		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 2) 
-		{
-		
-			hasText.setAttribute('disabled', false);
-			hasText.disabled = false;
-
-
-		}
+	
         
     }
     
