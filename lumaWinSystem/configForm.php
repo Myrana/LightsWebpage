@@ -88,8 +88,6 @@ if(isset($_REQUEST['Edit']))
 
 			if ($conn->query($sql) === TRUE)
 			{
-				echo "<h1>Your Features were added to the database successfully.</h1>";
-				
 				$sendArray["systemConfigChange"] = 1;
 				sendMQTT(getServerHostName($_POST['LightSystem']), json_encode($sendArray));
 			}
@@ -159,7 +157,6 @@ if(isset($_REQUEST['Config']))
     {
 		$sql = "";
 		$systemId = $conn->insert_id;
-		echo "<h1>Your LightSystem record was added to the database successfully.</h1>";
 		
 		
 		$channels = "";
@@ -177,7 +174,6 @@ if(isset($_REQUEST['Config']))
 
 		if ($conn->query($sql) === TRUE)
 		{
-			echo "<h1>Your Channel records were added to the database successfully.</h1>";
 			
 			$features = "";
 			$features .= "('1','" . $systemId. "', '" . $_POST['motionFeatureGPIO'] . "', '" . $_POST['motionPlaylist'] . "', '" . $_POST['motionDelayOff'] . "','0','0','0','" . $motionEnabled . "')";
@@ -193,9 +189,7 @@ if(isset($_REQUEST['Config']))
 			$sql .= " ON DUPLICATE KEY UPDATE featureGpio = VALUES(featureGpio),featurePlaylist = VALUES(featurePlaylist),motionDelayOff = VALUES(motionDelayOff),
 			timeFeatureStart = VALUES(timeFeatureStart),timeFeatureEnd = VALUES(timeFeatureEnd), luxThreshHold = VALUES(luxThreshHold), enabled = VALUES(enabled);";
 
-			if ($conn->query($sql) === TRUE)
-				echo "<h1>Your Features were added to the database successfully.</h1>";
-			else
+			if ($conn->query($sql) != TRUE)
 			{
 				echo "<h1>Features Error: " . $conn->error . "</h1>";
 				echo $sql;	
