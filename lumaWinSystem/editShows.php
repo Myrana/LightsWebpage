@@ -695,7 +695,21 @@ function hexToRgb(hex)
 
   }
   
-  
+function confirmDelete()
+{
+	  
+	var playListIndex = parseInt(playListId.value);
+	var playList = playListMap.get(playListIndex);
+
+	var retVal = confirm("Are you sure you want to delete? " + playList.playListName);
+	if (retVal)
+	  return true;
+	else
+	return false;
+	
+} 
+
+
 
 </script>
 	<center><img src="Images/edit-shows.png" alt="Edit Shows" /></center>
@@ -712,7 +726,7 @@ function hexToRgb(hex)
 
 		<p style="margin-bottom: -14px;">
 		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
-		<button type="submit" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
+		<button type="submit" onclick="return confirmDelete();" name="btnDeletePlayList" style="margin: 3px;">Delete Playlist</button>
 		</p>
 			
 		<p style="margin-left: 3px">
