@@ -1,6 +1,8 @@
 <?php
 include_once("commonFunctions.php");
 
+
+
 if(isset($_REQUEST['Login']))
 { 
 	$conn = getDatabaseConnection();
@@ -32,23 +34,20 @@ if(isset($_REQUEST['Login']))
 			$_SESSION['authorized'] = 1;
 			$sysRow = mysqli_fetch_array($sysResults);
 			$_SESSION['LightSystemID'] = $sysRow['ID'];
-			header('Location:lightShows.php');
+			//header('Location:lightShows.php');
+	
 		}
-		else
-		{
-			
-			killUserSession();
-		}
+		
 
 	}
 	$conn->close();
 }
-else if(isset($_SESSION['authorized']))
+
+
+if($_SESSION['authorized'] == 1)
 {
-	killUserSession();
+	header('Location:lightShows.php');
 }
-
-
 
 ?>
 
