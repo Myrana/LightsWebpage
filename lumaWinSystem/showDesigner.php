@@ -144,8 +144,8 @@ background-color: red;
 </style>
 
 
-<div class="column seventy-five">
-    <div class="ColumnStyles fifty">
+<div class="column thirty-seven">
+    <div class="ColumnStyles">
 		
 		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
@@ -251,16 +251,17 @@ background-color: red;
 ?>
 		
 	</div>
-		
- <div id="divArt" class="ColumnStyles fifty" hidden>
-		<div style="text-align:center">
-		  <h1>Matrix Art!</h1>
+		</div>
+<div class="column thirty-seven" id="matrixDesigner">		
+	 <div id="divArt" class="ColumnStyles" hidden>
+		<div style="text-align: center">
+		  <h1>Matrix Designer!</h1>
 			<label>Base Color</label>
 			<p>
-				<select id="brushSize" name="brushSize">
-				  <option value="1" selected>S</option>
-				  <option value="2">M</option>
-				  <option value="3">L</option>
+				<select id="brushSize" name="brushSize" style="width: 25%">
+				  <option value="1" selected>single width</option>
+				  <option value="2">double width</option>
+				  <option value="3">triple width</option>
 				</select>
 			</p>
 			
@@ -278,7 +279,48 @@ background-color: red;
 		</div>
 		
     </div>
-</div>
+
+	<div id="divShapes" class="ColumnStyles">
+		<div style="text-align: center">
+		
+			<h1>Matrix Designer!</h1>
+		<center>	
+			<table>
+				<tr>
+					<td><label>Starting Row</label></td>
+					<td><input type="number" id="startRow" name="startRow" /></td>
+				</tr>
+				
+				<tr>
+					<td><label>Starting Column</label></td>
+					<td><input type="number" id="startColumn" name="startColumn" /></td>
+				
+				</tr>
+				
+				<tr>
+					<td><label>Radius</label></td>
+					<td><input type="number" id="radius" name="radius" /></td>
+				
+				</tr>
+				
+				<tr>
+					<td><label>Length</label></td>
+					<td><input type="number" id="length" name="length" /></td>
+				
+				</tr>
+				
+				<tr>
+					<td><label>Width</label></td>
+					<td><input type="number" id="width" name="width" /></td>
+				
+				</tr>
+			
+			</table>
+		</center>
+			
+		</div>
+	
+	</div>
 
 		
 <script>
