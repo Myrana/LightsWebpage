@@ -322,7 +322,8 @@ background-color: red;
 	
 	</div>
 
-		
+		<?php include('footer.php'); ?>
+
 <script>
 	
 	
