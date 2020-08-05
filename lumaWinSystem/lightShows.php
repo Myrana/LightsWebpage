@@ -305,9 +305,8 @@ include('header.php');
 <?php include_once('showDesigner.php'); ?>
 
  </form>
-    
-    
-	<?php include('footer.php'); ?>
+        
+
 	
 	
 	

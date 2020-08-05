@@ -741,5 +741,5 @@ function hexToRgb(hex)
 </form>
 
 </body>
-<?php include('footer.php'); ?>
+
 </html>
