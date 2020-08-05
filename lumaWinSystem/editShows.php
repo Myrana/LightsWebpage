@@ -194,7 +194,7 @@ function hexToRgb(hex)
 		
 		var system = systemsMap.get(parseInt(systemNameId.value));
 		
-		if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
+		if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 1)
 		{
 			storeMatrix();
 			if(matrixData.value.length > 0 )
@@ -205,7 +205,7 @@ function hexToRgb(hex)
 		}
 			
 		
-		if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 1)
+		if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 2)
 		{
 			if(hasText.value.length > 0)
 			{
@@ -218,9 +218,6 @@ function hexToRgb(hex)
         if(show.hasDelay)
             playList.showParms[parmIndex].delay = delay.value;
 				
-		if(show.hasText)
-			playList.showParms[parmIndex].matrixText = hasText.value;
-		
 		if(show.hasMinutes > 0)
             playList.showParms[parmIndex].minutes = minutes.value;
 
@@ -409,7 +406,7 @@ function hexToRgb(hex)
 					if(system == undefined)
 						system = systemsMap.get(parseInt(systemNameId.value));
 					
-					if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 0)
+					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 1)
 					{
 						storeMatrix();
 						if(matrixData.value.length > 0 )
@@ -419,7 +416,11 @@ function hexToRgb(hex)
 
 					}
 		
-
+					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 2)
+					{
+						playList.showParms[i].matrixText = hasText.value;
+					}
+				
                     playList.showParms[i].brightness = brightness.value;
 
                     if(show.numColors > 0)
@@ -570,7 +571,7 @@ function hexToRgb(hex)
 				
 				divArt.setAttribute('hidden', true);
 					divArt.hidden = true;
-				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText == 0)
+				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 1)
 				{
 					var matrixHTML = "";
 					var divMatrix = document.getElementById("divMatrix");
@@ -604,7 +605,7 @@ function hexToRgb(hex)
 					delay.value = playList.showParms[i].delay;
 				
 				
-				if( (system.channelsMap.get(1).stripRows > 1 && show.isMatrix) && show.hasText === 1)
+				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 2)
 				{
 					hasText.value = playList.showParms[i].matrixText;
 					hasText.setAttribute('disabled', false);

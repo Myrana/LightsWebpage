@@ -6,7 +6,7 @@ include_once('commonFunctions.php');
 $conn = getDatabaseConnection();
 
 
-$results = mysqli_query($conn,"SELECT ID,showName,numColors,hasDelay,hasWidth, hasMinutes, colorEvery, isMatrix, hasText FROM lightShows WHERE enabled = 1 order by showOrder asc");
+$results = mysqli_query($conn,"SELECT * FROM lightShows WHERE enabled = 1 order by showOrder asc");
 if(mysqli_num_rows($results) > 0)
 {
     $_SESSION['lightShowsScript'] = "let showMap = new Map();\r";
@@ -28,9 +28,8 @@ if(mysqli_num_rows($results) > 0)
         $_SESSION['lightShowsScript'] .= "  show.hasWidth = " . $row['hasWidth'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
-		$_SESSION['lightShowsScript'] .= "  show.isMatrix = " . $row['isMatrix'] .";\r";
-		$_SESSION['lightShowsScript'] .= "  show.hasText = " . $row['hasText'] .";\r";
-
+		$_SESSION['lightShowsScript'] .= "  show.matrixType = " . $row['matrixType'] .";\r";
+		
         $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
 
 
@@ -597,7 +596,7 @@ function setShowSettings(arg1)
 		
 		if(arg1 ==  true)
 		{
-			if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 1)
 			{
 		
 				
@@ -632,7 +631,7 @@ function setShowSettings(arg1)
 		}
 		else
 		{
-			if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText === 0)
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 1)
 			{
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
@@ -691,7 +690,7 @@ function setShowSettings(arg1)
             colorEvery.disabled = false;
         }
 		
-		if( (system.channelsMap.get(1).stripRows > 1 && showMap.get(index).isMatrix) && showMap.get(index).hasText == 1)
+		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 2) 
 		{
 		
 			hasText.setAttribute('disabled', false);
