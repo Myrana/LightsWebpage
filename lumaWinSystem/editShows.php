@@ -697,15 +697,16 @@ function hexToRgb(hex)
   
 function confirmDelete()
 {
-	  
+	var playListId = document.getElementById("PlayList");
 	var playListIndex = parseInt(playListId.value);
 	var playList = playListMap.get(playListIndex);
 
 	var retVal = confirm("Are you sure you want to delete? " + playList.playListName);
+	
 	if (retVal)
 	  return true;
 	else
-	return false;
+		return false;
 	
 } 
 
