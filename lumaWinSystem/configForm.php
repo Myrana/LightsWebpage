@@ -219,33 +219,25 @@ if(isset($_REQUEST['Config']))
 if(isset($_REQUEST['Delete']))
 {
 	$sql = "DELETE FROM lightSystems WHERE ID =" . $_POST['LightSystem'];
-	if ($conn->query($sql) === TRUE)
-		echo "<h1>Your record was deleted from lightSystems database successfully.</h1>";
-	else
-		{
-			echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-		}
+	if ($conn->query($sql) != TRUE)
+	{
+		echo "<h1>Error: " . $conn->error . "</h1>";
+		echo $sql;	
+	}
 
-	$sql = "DELETE FROM lightSystemFeatures WHERE lightSystemId =" .$_POST['LightSystem'];
-	
-	if ($conn->query($sql) === TRUE)
-		echo "<h1>Your features record was deleted from lightSystemFeatures database successfully.</h1>";
-	else
-		{
-			echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-		}
+	$sql = "DELETE FROM lightSystemFeatures WHERE lightSystemId =" .$_POST['LightSystem'];	
+	if ($conn->query($sql) != TRUE)
+	{
+		echo "<h1>Error: " . $conn->error . "</h1>";
+		echo $sql;	
+	}
 	
 	$sql = "DELETE FROM lightSystemChannels WHERE lightSystemId =" .$_POST['LightSystem'];
-	
-	if ($conn->query($sql) === TRUE)
-		echo "<h1>Your features record was deleted from lightSystemChannels database successfully.</h1>";
-	else
-		{
-			echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-		}
+	if ($conn->query($sql) != TRUE)
+	{
+		echo "<h1>Error: " . $conn->error . "</h1>";
+		echo $sql;	
+	}
 	
 	
 }
