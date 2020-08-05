@@ -280,7 +280,7 @@ background-color: red;
 		
     </div>
 
-	<div id="divShapes" class="ColumnStyles">
+	<div id="divShapes" name="divShapes" class="ColumnStyles">
 		<div style="text-align: center">
 		
 			<h1>Matrix Designer!</h1>
@@ -621,6 +621,8 @@ function setShowSettings(arg1)
 		var hasText = document.getElementById("hasText");
 		
 		var divArt = document.getElementById("divArt");
+		var divShapes = document.getElementById("divShapes");
+		
 		var baseColor = document.getElementById("baseColor");
 		
 		
@@ -635,6 +637,8 @@ function setShowSettings(arg1)
 		hasText.setAttribute('disabled', true);
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
+		divShapes.setAttribute('hidden', true);
+		divShapes.hidden = true;
 		
 		if(arg1 ==  true)
 		{
