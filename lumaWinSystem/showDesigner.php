@@ -256,7 +256,6 @@ background-color: red;
 	 <div id="divArt" class="ColumnStyles" hidden>
 		<div style="text-align: center">
 		  <h1>Matrix Designer!</h1>
-			<label>Base Color</label>
 			<p>
 				<select id="brushSize" name="brushSize" style="width: 25%">
 				  <option value="1" selected>single width</option>
@@ -265,7 +264,7 @@ background-color: red;
 				</select>
 			</p>
 			
-			
+			<label>Base Color</label>
 			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000"/>
 			
 			
