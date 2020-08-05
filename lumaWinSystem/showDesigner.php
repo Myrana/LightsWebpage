@@ -321,6 +321,10 @@ background-color: red;
 		</div>
 	
 	</div>
+		</div>
+			
+			<!-- Clear fix end div -->
+			</div>
 
 		<?php include('footer.php'); ?>
 
