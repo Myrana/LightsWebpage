@@ -267,9 +267,6 @@ background-color: red;
 			
 			
 			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000"/>
-			
-			
-			
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
@@ -674,6 +671,18 @@ function setShowSettings(arg1)
 				
 				
 			}
+			
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
+			{
+				
+				divShapes.setAttribute('hidden', false);
+				divShapes.hidden = false;
+			}
+			else
+			{
+				divShapes.setAttribute('hidden', true);
+				divShapes.hidden = true;
+			}
 		}
 		else
 		{
@@ -682,8 +691,25 @@ function setShowSettings(arg1)
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
 			}
+			
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
+			{
+				
+				divShapes.setAttribute('hidden', false);
+				divShapes.hidden = false;
+			}
+			
 		}
 		
+			
+		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 2) 
+		{
+		
+			hasText.setAttribute('disabled', false);
+			hasText.disabled = false;
+
+
+		}
        
         if(showMap.get(index).hasWidth == 1)
         {
@@ -735,15 +761,7 @@ function setShowSettings(arg1)
             colorEvery.setAttribute('disabled', false);
             colorEvery.disabled = false;
         }
-		
-		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 2) 
-		{
-		
-			hasText.setAttribute('disabled', false);
-			hasText.disabled = false;
-
-
-		}
+	
         
     }
     
