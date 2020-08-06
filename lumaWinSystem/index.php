@@ -56,18 +56,23 @@ if($_SESSION['authorized'] == 1)
 include('header.php'); 
 ?>
 
-<body>
 <?php include("nav.php");  ?>
-	
-<h1>Home</h1>
-	<form name="login" id="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<p><label>Username:</label> <br />
-			<input type="text" name="Username" id="Username"></p>
-		<p><label>Password:</label> <br />
+
+<body>
+	<h1>Home</h1>
+		<form name="login" id="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+			<p>
+			<label>Username:</label> <br />
+			<input type="text" name="Username" id="Username">
+			</p>
+			
+			<p>
+			<label>Password:</label> <br />
 			<input type="password" name="Password" id="Password">
-		</p>
-	<button type="submit" name="Login">Login</button>
-	</form>
+			</p>
+			
+			<button type="submit" name="Login">Login</button>
+		</form>
 </body>
 	<?php include("footer.php"); ?>
 </html>

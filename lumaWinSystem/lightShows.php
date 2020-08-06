@@ -254,34 +254,26 @@ $conn->close();
 include('header.php'); 
 ?>
 
-
-<body >
 <?php include("nav.php");  ?>
 
-
+<body>
 <div class="clearfix">
-<div class="column twenty-five">
-	
-	
-
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<center><img src="System-Control.png" id="systemControlPic" alt="System Control"/></center>
-    <p><label for="ChgBrightness">Change Brightness:</label>
-        <input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="255">
-        <button type="submit" name="btnChgBrightness">Change</button>
-    	
-
-    </p>
-        <label for="On">On</label>
-		<input type="checkbox" name="lights"  value="ON" checked>
-		<button type="submit" name="Power">Power</button>
-		<button type="submit" name="ClearQueue">Clear Queue</button>
-		<p>
+	<div class="column twenty-five">
+    	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+			<center><img src="System-Control.png" id="systemControlPic" alt="System Control"/></center>
+   				<p>
+				<label for="ChgBrightness">Change Brightness:</label>
+        		<input type="number" value="<?php echo $_SESSION["ChgBrightness"];?>" id="ChgBrightnessId" name="ChgBrightness" min="1" max="255">
+        		<button type="submit" name="btnChgBrightness">Change</button>
+    			</p>
 			
-
-
-	
-	<script>
+				<label for="On">On</label>
+				<input type="checkbox" name="lights"  value="ON" checked>
+				<button type="submit" name="Power">Power</button>
+				<button type="submit" name="ClearQueue">Clear Queue</button>
+		
+				
+<script>
 
 	setSystemSettings();
 	function setPlaylistName()
@@ -293,29 +285,23 @@ include('header.php');
 
 
 	}
-	</script>
-	<label>Playlist</label>
-	<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
-	<p><button type="submit" name="btnPlaylist">Play</button>
-	<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button></p>
+</script>
+		<p>		
+				<label>Playlist</label>
+				<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+				<p>
+				<button type="submit" name="btnPlaylist">Play</button>
+				<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>
+				</p>
 			
 		</p>
 		
 	</div>
 		
-
-
-
-
-
 <?php include_once('showDesigner.php'); ?>
 
  </form>
-        
-
-	
-	
-	
+       	
 </body>
 </html>
 

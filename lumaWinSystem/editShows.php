@@ -723,20 +723,24 @@ function confirmDelete()
 	
 } 
 
-
-
 </script>
-	<center><img src="Images/edit-shows.png" alt="Edit Shows" /></center>
-	<div class="clearfix">
+	
+<center><img src="Images/edit-shows.png" alt="Edit Shows" /></center>
+<div class="clearfix">
 	<div class="column twenty-five">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-		<label for="PlayList">Select Playlist</label>
-	<select id="PlayList" name="PlayList" onchange="setPlayListSettings();">
-	<?php echo $playlistoption;?>
-	</select>
+			<label for="PlayList">Select Playlist</label>
+			<select id="PlayList" name="PlayList" onchange="setPlayListSettings();">
+			<?php echo $playlistoption;?>
+			</select>
 		
-		<p><label for="ShowName">Select Show</label><select id="ShowName" name="ShowName" onchange="setShowParms();"></select></p>
-		<p><label>New Playlist Name*</label> <br /><input type="text" id="NewPlayListName" name="NewPlayListName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%"></p>
+		<p>
+		<label for="ShowName">Select Show</label><select id="ShowName" name="ShowName" onchange="setShowParms();"></select>
+		</p>
+		
+		<p>
+		<label>New Playlist Name*</label> <br /><input type="text" id="NewPlayListName" name="NewPlayListName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
+		</p>
 
 		<p style="margin-bottom: -14px;">
 		<button type="submit" name="btnCreatePlayList" style="margin: 3px;">Create Playlist</button>
@@ -744,28 +748,22 @@ function confirmDelete()
 		</p>
 			
 		<p style="margin-left: 3px">
-			<input type="checkbox" id="allUsersPlaylist" name="allUsersPlaylist" />
-			<label for="allUserPlaylist" style="margin-left: 3px">All users can use</label>
+		<input type="checkbox" id="allUsersPlaylist" name="allUsersPlaylist" />
+		<label for="allUserPlaylist" style="margin-left: 3px">All users can use</label>
 		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>	
-		
 		</p>
 		
 		<p style="margin-top: -12px; margin-left: 3px">
 		<button onclick="location.href='lightShows.php'; return false" name="btnLightShows">Light Shows</button>	
 		</p>
 	  
-	  </div>
+	</div>
 	  
          <input name="jsonContainer" type="text" id="jsonContainer" hidden></p>
         <?php include('showDesigner.php'); ?>
         
-     
-        
-
-    </div>
-	</div>
 </div>
-
+	
 </form>
 
 </body>
