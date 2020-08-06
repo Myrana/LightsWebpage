@@ -141,6 +141,8 @@ function hexToRgb(hex)
 
 	function addShowSettings()
 	{
+		
+		
 		var matrixData = document.getElementById("matrixData");
 		
 		var playListId = document.getElementById("PlayList");
@@ -191,7 +193,9 @@ function hexToRgb(hex)
 
 		}
 
+	
 		playList.showParms[parmIndex].systemId = systemNameId.value;
+		
 		playList.showParms[parmIndex].channelId = channelId.value;
 		
 		var system = systemsMap.get(parseInt(systemNameId.value));
@@ -313,25 +317,23 @@ function hexToRgb(hex)
 	function removeShowSettings()
     {
 		
-
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
-        
         var playListIndex = parseInt(playListId.value);
         var playList = playListMap.get(playListIndex);
         var showIndex = parseInt(showListControl.value) - 1;
-		
         for (i in playList.showParms)
         {
 			if(i == showIndex)
             {
+				
 				playList.showParms.splice(showIndex,1); 
+				
 				break;
 			}
 			
 		}
-
-
+		
 		setPlayListSettings();
 
 	}
@@ -549,14 +551,11 @@ function hexToRgb(hex)
         var channelId = document.getElementById("ChannelId");
 		
 		
-		
 		var showIndex = parseInt(showListControl.value) - 1;	
-		
-		
 		
 		for (i in playList.showParms)
 		{
-		
+			
 			if(i == showIndex)
 			{
 				
@@ -577,7 +576,7 @@ function hexToRgb(hex)
 		
 				if(playList.showParms[i].channelId != undefined)
 				{
-					channelId.options[playList.showParms[i].channelId].selected = true;
+					channelId.options[playList.showParms[i].channelId - 1].selected = true;
 				}
 				
 				showControl.value = show.id;	
@@ -612,8 +611,8 @@ function hexToRgb(hex)
 					divMatrix.innerHTML = matrixHTML;
 					
 					
-				}			
-				
+				}		
+					
 				if(show.hasDelay)
 					delay.value = playList.showParms[i].delay;
 				
@@ -666,7 +665,6 @@ function hexToRgb(hex)
                     }
 
                 }
-                
                 //handle checkboxes
                 clearStart.checked = (playList.showParms[i].clearStart != undefined && playList.showParms[i].clearStart == 1) ? true : false;
                 clearFinish.checked = (playList.showParms[i].clearFinish != undefined && playList.showParms[i].clearFinish == 1) ? true : false;
@@ -686,10 +684,10 @@ function hexToRgb(hex)
 		var playListId = document.getElementById("PlayList");
 		var showListControl = document.getElementById("ShowName");
 		var counter = 1;
-
 		showListControl.options.length = 0;
 		playListIndex = parseInt(playListId.value);
 		var playList = playListMap.get(playListIndex);
+		
 		for (i in playList.showParms)
 		{
 			var option = document.createElement("option");

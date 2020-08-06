@@ -151,7 +151,7 @@ background-color: red;
 
     		<center>
 				<label for="channelId">Channel</label>
-				<select id="ChanelId" name="ChannelId"style="width: 25%">
+				<select id="ChannelId" name="ChannelId"style="width: 25%">
 				</select>
 		<p>
 			<label for="SystemName">System Name:</label>
@@ -780,7 +780,7 @@ function setSystemSettings()
 	var brightness = document.getElementById("Brightness");
 
 	var systemNameId = document.getElementById("SystemNameId");
-	var channelId = document.getElementById("ChanelId");
+	var channelId = document.getElementById("ChannelId");
 	
 	var index = parseInt(systemNameId.value);
 	var system = systemsMap.get(index);
