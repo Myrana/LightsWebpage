@@ -94,12 +94,9 @@ if(isset($_REQUEST['LightShow']))
     $b = 12;
 
 
-    $sendArray['brightness'] = $_SESSION["Brightness"];
-
+    
     if(!empty($_POST['ShowName']))
     {
-
-
 			
         if(isset($_POST['color_1']))
         {
@@ -165,6 +162,12 @@ if(isset($_REQUEST['LightShow']))
 
         if(!empty($_POST['ShowName']))
             $sendArray['show'] =  $_POST['ShowName'];
+
+		
+		$sendArray['brightness'] = $_SESSION["Brightness"];
+		$sendArray['channelId'] = $_SESSION["ChannelId"];
+		
+
 
         if(!empty($_POST['Delay']))
             $sendArray['delay'] = $_SESSION['Delay'];

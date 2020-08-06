@@ -162,6 +162,7 @@ function hexToRgb(hex)
         var hasText = document.getElementById("hasText");
 
 		var systemNameId = document.getElementById("SystemNameId");
+		var channelId = document.getElementById("ChannelId");
 		
         
         var playListIndex = parseInt(playListId.value);
@@ -191,6 +192,7 @@ function hexToRgb(hex)
 		}
 
 		playList.showParms[parmIndex].systemId = systemNameId.value;
+		playList.showParms[parmIndex].channelId = channelId.value;
 		
 		var system = systemsMap.get(parseInt(systemNameId.value));
 		
@@ -371,6 +373,8 @@ function hexToRgb(hex)
         var gammaCorrection = document.getElementById("gammaCorrection");
         var matrixData = document.getElementById("matrixData");
         var systemNameId = document.getElementById("SystemNameId");
+        var channelId = document.getElementById("ChannelId");
+		
 	
         var showIndex = parseInt(showListControl.value) - 1;
         
@@ -389,6 +393,8 @@ function hexToRgb(hex)
 
                  if(show.hasDelay)
                      playList.showParms[i].delay = delay.value;
+                
+                playList.showParms[i].channelId = channelId.value;
 				
 				if(show.hasText)
 					playList.showParms[i].matrixText = hasText.value;
@@ -540,6 +546,8 @@ function hexToRgb(hex)
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
         var systemNameId = document.getElementById("SystemNameId");
+        var channelId = document.getElementById("ChannelId");
+		
 		
 		
 		var showIndex = parseInt(showListControl.value) - 1;	
@@ -566,6 +574,11 @@ function hexToRgb(hex)
 					system = systemsMap.get(parseInt(systemNameId.value));
 				
 				systemNameId.value = system.id;
+		
+				if(playList.showParms[i].channelId != undefined)
+				{
+					channelId.options[playList.showParms[i].channelId].selected = true;
+				}
 				
 				showControl.value = show.id;	
 				
