@@ -39,36 +39,45 @@ if (!empty($_POST))
 include('header.php'); 
 ?>
 
+ <?php include("nav.php");  ?>
+
 <body>
+	<h1>Registration Page</h1>
+		<form name="Registraition" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	
+			<p>
+			<label for="username">Username:</label><br />
+			<input name="username" type="text" id="username" placeholder="50 characters or less" maxlength="100">
+			</p>
 
-  <?php include("nav.php");  ?>
-	  <h1>Registration Page</h1>
-<form name="Registraition" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-	
-	<p><label for="username">Username:</label><br />
-	  <input name="username" type="text" id="username" placeholder="50 characters or less" maxlength="100"></p>
-	
-	<p><label for="password">Password:</label><br />
-	  <input name="password" type="text" id="password" placeholder="50 characters or less" maxlength="50"></p>
-	
-	<p><label for="admin">Is admin?:</label><br />
-	  <input type="checkbox" id="admin" name="admin" value="admin">
-		<label for="admin">Yes</label>
-	
-	</p>
-	
-	<p><label for="email">Email:</label><br />
-	  <input name="email" type="text" id="email" placeholder="100 characters or less" maxlength="50"></p>
-	
-	<p><label for="phonenumber">Phone Number:</label><br />
-	  <input name="phonenumber" type="text" id="phonenumber" placeholder="10 characters or less" maxlength="50"></p>
-	
-	<p><label for="twitter">Twitter:</label><br />
-	  <input name="twitter" type="text" id="twitter" placeholder="50 characters or less" maxlength="50"></p>
+			<p>
+			<label for="password">Password:</label><br />
+			<input name="password" type="text" id="password" placeholder="50 characters or less" maxlength="50">
+			</p>
 
-	
-<button type="submit" name="Submit">Add User</button>
-</form>
+			<p>
+			<label for="admin">Is admin?:</label><br />
+			<input type="checkbox" id="admin" name="admin" value="admin">
+			<label for="admin">Yes</label>
+			</p>
+
+			<p>
+			<label for="email">Email:</label><br />
+			<input name="email" type="text" id="email" placeholder="100 characters or less" maxlength="50">
+			</p>
+
+			<p>
+			<label for="phonenumber">Phone Number:</label><br />
+			<input name="phonenumber" type="text" id="phonenumber" placeholder="10 characters or less" maxlength="50">
+			</p>
+
+			<p>
+			<label for="twitter">Twitter:</label><br />
+			<input name="twitter" type="text" id="twitter" placeholder="50 characters or less" maxlength="50">
+			</p>
+
+			<button type="submit" name="Submit">Add User</button>
+		</form>
 </body>
 	<?php include("footer.php"); ?>
 </html>

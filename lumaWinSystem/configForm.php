@@ -442,9 +442,11 @@ $conn->close();
 $title = 'Config Form';
 include('header.php'); 
 ?>
- 
-<body onload="setLightSystemSettings(true);">
+
 <?php include("nav.php");  ?>
+
+<body onload="setLightSystemSettings(true);">
+
 
 <script>
 
@@ -646,8 +648,8 @@ function confirmDelete()
 
 </script>
 
-	  <center><img src="Images/configuration.png" alt="Configuration" /></center>
-	<div class="clearfix">
+<center><img src="Images/configuration.png" alt="Configuration" /></center>
+<div class="clearfix">
 	<div class="column thirty-three">
 		<form name="Config Page" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 		
@@ -655,26 +657,28 @@ function confirmDelete()
 			<select name="LightSystem" id="LightSystem" onChange="setLightSystemSettings(false);">
 			<?php echo $systemlistoption;?>
 			</select>	
-	</p>
+			</p>
+			
 			<button type="submit" name="Config">Add Record</button> 
 			<button type="submit" name="Edit">Edit Record</button>
 			<button type="submit" onclick="return confirmDelete();" name="Delete">Delete Record</button>
 			<button type="submit" name="Status">Status Of LightSystem</button> 
-			
+
 			<?php echo $systemStatus; ?>
 			
-		</div>
+	</div>
 	
-	          <div class="column thirty-three">
-				  <div class="ColumnStyles">
+	<div class="column thirty-three">
+		<div class="ColumnStyles">
 	
-	<p><label for="LightSystemName">Light System Name:</label><br />
-	  <input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
+			<p><label for="LightSystemName">Light System Name:</label><br />
+	  		<input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
 	
-	<p><label for="ServerHostName">Server Host Name:</label><br />
-	  <input name="ServerHostName" type="text" id="ServerHostName" placeholder="50 characters or less" maxlength="50"></p>
+			<p><label for="ServerHostName">Server Host Name:</label><br />
+	  		<input name="ServerHostName" type="text" id="ServerHostName" placeholder="50 characters or less" maxlength="50">
+			</p>
 
-		<p>
+			<p>
 			<label for="enabled">Enabled</label>
 			<input type="checkbox" id="systemEnabled" name="systemEnabled" />
 			
@@ -682,248 +686,239 @@ function confirmDelete()
 			<input type="checkbox" id="twitchSupport" name="twitchSupport" />
 			</p>
 		
-		<p>
-		
+			<p>
 			<label for="mqttRetries">MQTT Retries:</label> <br />
 			<input type="number" id="mqttRetries" name="mqttRetries" value="2000" />
+			</p>
 		
-		</p>
-		
-		<p>
-		
+			<p>
 			<label for="mqttRetryDelay">MQTT Retry Delay:</label> <br />
 			<input type="number" id="mqttRetryDelay" name="mqttRetryDelay" value="2500" />
-			
-		</p>
+			</p>
 		
-		<p>
-		
+			<p>
 			<label for="twitchMqttQueue">MQTT Queue:</label> <br />
 			<input type="text" id="twitchMqttQueue" name="twitchMqttQueue" placeholder="Queue name here" />
-			
-			
-		</p>
+			</p>
 					 
-		<p><label for="userID">Light System User:</label><br />
-	<select name="userID" id="userID">
-		<?php echo $users;?>
-		</select>	
-	</p>
+			<p>
+			<label for="userID">Light System User:</label><br />
+			<select name="userID" id="userID">
+			<?php echo $users;?>
+			</select>	
+			</p>
 	
-	</div>
-		<div class="column fifty">
+		</div>
+		
+	<div class="column fifty">
 		<div class="ColumnStyles">
 			Channel 1
 		<table>
 			<tr>
 				<td><label for="StripType">Strip Type:</label></td>
-	<td><select name="StripType" id="StripType">
-		<?php echo $stripTypes;?>
-		</select></td>	
-	</tr>	
+				<td><select name="StripType" id="StripType">
+				<?php echo $stripTypes;?>
+				</select></td>	
+			</tr>	
 	
-
-	<tr>
-	  <td><label for="StripRows">Strip rows:</label></td>
-	  <td><input type="number" id="StripRows" name="StripRows" min="1" value="1"></td>
-	</tr>
-	<tr>
-		<td><label for="StripColumns">Strip Columns:</label></td>
-	    <td><input type="number" id="StripColumns" name="StripColumns" min="1" value="1"></td>
-	</tr>
-
-	<tr>
-		<td><label for="onDMA">DMA:</label></td>
-	    <td><select name="DMA" id="DMA">
-		  <option value="5">5</option>
-		  <option value="10">10</option>
-		  <option value="12">12</option>
-	  </select></td>
-
-
-</tr>
-
-<tr>
-	<td><label for="GPIO">GPIO Pin:</label></td>
-	<td><input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></td>
-</tr>
-	
-	<tr>
-		<td><label for="Brightness">Brightness:</label></td>
-	  	<td><input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60"></td>
-	</tr>
-					  
-	<tr>
-		<td><label for="ongamma">Gamma:</label></td>
-		<td><input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1"></td>
+		<tr>
+		  <td><label for="StripRows">Strip rows:</label></td>
+		  <td><input type="number" id="StripRows" name="StripRows" min="1" value="1"></td>
 		</tr>
-	
-	<tr>
-		<td><label for="enabled">Enabled</label>
-		<input type="checkbox" id="channelEnabled" name="channelEnabled" /></td>
-		
+
+		<tr>
+			<td><label for="StripColumns">Strip Columns:</label></td>
+			<td><input type="number" id="StripColumns" name="StripColumns" min="1" value="1"></td>
+		</tr>
+
+		<tr>
+			<td><label for="onDMA">DMA:</label></td>
+			<td><select name="DMA" id="DMA">
+				 <option value="5">5</option>
+				 <option value="10">10</option>
+				 <option value="12">12</option>
+				</select>
+			</td>
 	</tr>
-		</table>		  
-		</div>
-			</div>
+
+	<tr>
+		<td><label for="GPIO">GPIO Pin:</label></td>
+		<td><input type="number" id="GPIO" name="GPIO" min="1" max="52" value="18"></td>
+	</tr>
+
+		<tr>
+			<td><label for="Brightness">Brightness:</label></td>
+			<td><input type="number" id="Brightness" name="Brightness" min="1" max="255" value="60"></td>
+		</tr>
+
+		<tr>
+			<td><label for="ongamma">Gamma:</label></td>
+			<td><input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1"></td>
+			</tr>
+
+		<tr>
+			<td><label for="enabled">Enabled</label>
+			<input type="checkbox" id="channelEnabled" name="channelEnabled" /></td>
+
+		</tr>
+	</table>		  
+	</div>
+</div>
 		
-		<div class="column fifty">
+	<div class="column fifty">
 		<div class="ColumnStyles">
 			Channel 2
 		<table>
 			<tr>
 				<td><label for="StripType2">Strip Type:</label></td>
-	<td><select name="StripType2" id="StripType2">
-		<?php echo $stripTypes;?>
-		</select></td>	
-	</tr>	
+				<td><select name="StripType2" id="StripType2">
+					<?php echo $stripTypes;?>
+					</select></td>	
+			</tr>	
 	
+			<tr>
+			  <td><label for="StripRows2">Strip rows:</label></td>
+			  <td><input type="number" id="StripRows2" name="StripRows2" min="1" value="1"></td>
+			</tr>
+			
+			<tr>
+				<td><label for="StripColumns2">Strip Columns:</label></td>
+				<td><input type="number" id="StripColumns2" name="StripColumns2" min="1" value="1"></td>
+			</tr>
 
-	<tr>
-	  <td><label for="StripRows2">Strip rows:</label></td>
-	  <td><input type="number" id="StripRows2" name="StripRows2" min="1" value="1"></td>
-	</tr>
-	<tr>
-		<td><label for="StripColumns2">Strip Columns:</label></td>
-	    <td><input type="number" id="StripColumns2" name="StripColumns2" min="1" value="1"></td>
-	</tr>
+			<tr>
+				<td><label for="onDMA2">DMA:</label></td>
+				<td><select name="DMA2" id="DMA2">
+					  <option value="5">5</option>
+					  <option value="10">10</option>
+					  <option value="12">12</option>
+			  		</select>
+				</td>
+			</tr>
 
-	<tr>
-		<td><label for="onDMA2">DMA:</label></td>
-	    <td><select name="DMA2" id="DMA2">
-		  <option value="5">5</option>
-		  <option value="10">10</option>
-		  <option value="12">12</option>
-	  </select></td>
+			<tr>
+				<td><label for="GPIO2">GPIO Pin:</label></td>
+				<td><input type="number" id="GPIO2" name="GPIO2" min="1" max="52" value="18"></td>
+			</tr>
 
+			<tr>
+				<td><label for="Brightness2">Brightness:</label></td>
+				<td><input type="number" id="Brightness2" name="Brightness2" min="1" max="255" value="60"></td>
+			</tr>
 
-</tr>
+			<tr>
+				<td><label for="ongamma2">Gamma:</label></td>
+				<td><input type="number" id="gamma2" name="gamma2" step=".1" min=".1" max="3.0" value="1"></td>
+				</tr>
 
-<tr>
-	<td><label for="GPIO2">GPIO Pin:</label></td>
-	<td><input type="number" id="GPIO2" name="GPIO2" min="1" max="52" value="18"></td>
-</tr>
-	
-	<tr>
-		<td><label for="Brightness2">Brightness:</label></td>
-	  	<td><input type="number" id="Brightness2" name="Brightness2" min="1" max="255" value="60"></td>
-	</tr>
-					  
-	<tr>
-		<td><label for="ongamma2">Gamma:</label></td>
-		<td><input type="number" id="gamma2" name="gamma2" step=".1" min=".1" max="3.0" value="1"></td>
-		</tr>
-	
-	<tr>
-		<td><label for="enabled2">Enabled</label>
-		<input type="checkbox" id="channelEnabled2" name="channelEnabled2" /></td>
-		
-	</tr>
+			<tr>
+				<td><label for="enabled2">Enabled</label>
+				<input type="checkbox" id="channelEnabled2" name="channelEnabled2" /></td>
+
+			</tr>
 		</table>		  
 		</div>
-			</div>
-		
-		
-			</div>
+	</div>		
+</div>
 			
 			  
-<div class="column thirty-three">
-<div class="ColumnStyles">	
-<p><label for="motionFeature">Use a motion sensor?</label>
-	
-	<input type="checkbox" id="motionFeature" name="motionFeature"/></p>
-	
-	<div id="motionFields" style="display: none">
-	
-		<label>Motion Delay:</label><br />
-		<input type="number" id="motionDelay" name="motionDelayOff" min="5" value="10">
-	<p>
-	<label for="motionPlaylist">Motion Playlist:</label>
-		<select id="motionPlayListId"  name="motionPlaylist">
-        <?php echo $playlistoption;?>
-        </select>
-
-	
-	</p>
-	
-	<P>
-	
-	<label for="motionFeatureGPIO">Motion GPIO Pin:</label><br />
-	  <input type="number" id="motionFeatureGPIO" name="motionFeatureGPIO" min="1" max="52" value="18">	
-	
-	</P>
-	
-	</div>
-	</div>
-	<div class="ColumnStyles">
-	
-	<p><label for="OnlightFeature">Use a light sensor?</label>
-	
-	<input type="checkbox" id="lightFeature" name="lightFeature"/></p>
-	
-	<div id="lightFields" style="display: none">
-	
-		<label for="OnlightPlaylist">Light Playlist:</label>
-		<select id="lightPlayListId"  name="lightPlaylist">
-        <?php echo $playlistoption;?>
-        </select>
-		
-		<P>
-		
-		<label for="OnlightFeatureGPIO">Light GPIO Pin:</label><br />
-	  <input type="number" id="lightFeatureGPIO" name="lightFeatureGPIO" min="1" max="52" value="18">
-		
-		</P>
-	
-	</div>
-			  
-</div>
-	
-	<div class="ColumnStyles">
-		
-		<p><label for="OntimeFeature">Use time of day?</label>
-	
-	<input type="checkbox" id="timeFeature" name="timeFeature"/></p>
-	<div id="timeFields" style="display: none">
-	<label>Start Time:</label> <br />
-		<input type="time" id="startTime" name="startTime" value="20:00"/>
-	<p>
-		
-	<label>End Time:</label> <br />
-		<input type="time" id="endTime" name="endTime" value="06:00"/>
-		
-	</p>
+	<div class="column thirty-three">
+		<div class="ColumnStyles">	
 		<p>
-		
-			<label for="timePlaylist">Time Playlist:</label>
-		<select id="timePlayListId"  name="timePlaylist">
-        <?php echo $playlistoption;?>
-        </select>
-		
+		<label for="motionFeature">Use a motion sensor?</label>
+		<input type="checkbox" id="motionFeature" name="motionFeature"/>
 		</p>
-	</div>
-		</div>
-	<div class="ColumnStyles">
-	<p><label for="OnluxFeature">Use lux?</label>
-		<input type="checkbox" id="luxFeature" name="luxFeature"/></p>
-		<div id="luxFields" style="display: none">
-		<input type="number" id="luxThreshHold" name="luxThreshHold" value="300">
-		<p>
-		<label for="luxPlaylist">Lux Playlist:</label>
-			<select id="luxPlaylistId" name="luxPlaylist">
+	
+			<div id="motionFields" style="display: none">
+	
+			<label>Motion Delay:</label><br />
+			<input type="number" id="motionDelay" name="motionDelayOff" min="5" value="10">
+
+			<p>
+			<label for="motionPlaylist">Motion Playlist:</label>
+			<select id="motionPlayListId"  name="motionPlaylist">
 			<?php echo $playlistoption;?>
 			</select>
-		</p>	
-		</div>
-		
+			</p>
+
+			<P>
+			<label for="motionFeatureGPIO">Motion GPIO Pin:</label><br />
+			<input type="number" id="motionFeatureGPIO" name="motionFeatureGPIO" min="1" max="52" value="18">	
+			</P>
 	
+			</div>
+		</div>
+	<div class="ColumnStyles">
+	
+	<p>
+		<label for="OnlightFeature">Use a light sensor?</label>
+		<input type="checkbox" id="lightFeature" name="lightFeature"/>
+	</p>
+	
+		<div id="lightFields" style="display: none">
+	
+			<label for="OnlightPlaylist">Light Playlist:</label>
+			<select id="lightPlayListId"  name="lightPlaylist">
+        	<?php echo $playlistoption;?>
+        	</select>
+		
+			<P>
+		
+			<label for="OnlightFeatureGPIO">Light GPIO Pin:</label><br />
+		  	<input type="number" id="lightFeatureGPIO" name="lightFeatureGPIO" min="1" max="52" value="18">
+		
+			</P>
+	
+		</div>		  
+	</div>
+	
+	<div class="ColumnStyles">
+		
+		<p>
+			<label for="OntimeFeature">Use time of day?</label>
+			<input type="checkbox" id="timeFeature" name="timeFeature"/>
+		</p>
+	
+		<div id="timeFields" style="display: none">
+			<label>Start Time:</label> <br />
+			<input type="time" id="startTime" name="startTime" value="20:00"/>
+			
+			<p>
+			<label>End Time:</label> <br />
+			<input type="time" id="endTime" name="endTime" value="06:00"/>
+			</p>
+		
+			<p>
+			<label for="timePlaylist">Time Playlist:</label>
+			<select id="timePlayListId"  name="timePlaylist">
+        	<?php echo $playlistoption;?>
+        	</select>
+			</p>
+		</div>
+	</div>
+	
+	<div class="ColumnStyles">
+		<p>
+			<label for="OnluxFeature">Use lux?</label>
+			<input type="checkbox" id="luxFeature" name="luxFeature"/>
+		</p>
+		
+			<div id="luxFields" style="display: none">
+				<input type="number" id="luxThreshHold" name="luxThreshHold" value="300">
+				<p>
+				<label for="luxPlaylist">Lux Playlist:</label>
+				<select id="luxPlaylistId" name="luxPlaylist">
+				<?php echo $playlistoption;?>
+				</select>
+				</p>	
+			</div>
 	</div>
 	</form>
 	</div>
-		</div>
+</div>
 	<?php include('footer.php'); ?>
 	
-  </body>
+</body>
 
 </html>
  

@@ -150,11 +150,10 @@ background-color: red;
 		<center><img src="Images/Show-Designer.png" alt="Show Designer"/></center>
 
     		<center>
+				<label for="channelId">Channel</label>
+				<select id="ChanelId" name="ChannelId"style="width: 25%">
+				</select>
 		<p>
-			
-			
-			<select id="ChanelId" name="ChannelId"style="width: 25%">
-			</select>
 			<label for="SystemName">System Name:</label>
 			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
 			<?php echo $_SESSION['systemlistoption'];?></select>
