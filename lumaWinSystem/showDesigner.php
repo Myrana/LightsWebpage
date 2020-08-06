@@ -152,6 +152,9 @@ background-color: red;
     		<center>
 		<p>
 			
+			
+			<select id="ChanelId" name="ChannelId"style="width: 25%">
+			</select>
 			<label for="SystemName">System Name:</label>
 			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
 			<?php echo $_SESSION['systemlistoption'];?></select>
@@ -769,35 +772,53 @@ function setShowSettings(arg1)
         
     }
     
+
 function setSystemSettings()
-    {
-		var widthId  = document.getElementById("WidthId");
-        var widthOutput = document.getElementById("WidthValue");
-        var chgBrightnessId = document.getElementById("ChgBrightnessId");
-        var brightness = document.getElementById("Brightness");
+{
+	var widthId  = document.getElementById("WidthId");
+	var widthOutput = document.getElementById("WidthValue");
+	var chgBrightnessId = document.getElementById("ChgBrightnessId");
+	var brightness = document.getElementById("Brightness");
 
-		var systemNameId = document.getElementById("SystemNameId");
-        var index = parseInt(systemNameId.value);
-        var system = systemsMap.get(index);
-        
-        var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
-        if(widthId.value > numLeds)
-        {
-            widthId.setAttribute('value', numLeds);
-            widthId.value = numLeds;
-            widthOutput.innerHTML = numLeds;
+	var systemNameId = document.getElementById("SystemNameId");
+	var channelId = document.getElementById("ChanelId");
+	
+	var index = parseInt(systemNameId.value);
+	var system = systemsMap.get(index);
+	channelId.options.length = 0;
+	for (let [key, value] of system.channelsMap)
+	{
+		if(value.enabled)
+		{
+			var option = document.createElement("option");
+			option.text = key;
+			option.value = key;
+			
+			channelId.add(option); 
+		}
+		
+	}
+	
+	
+	var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
+	if(widthId.value > numLeds)
+	{
+		widthId.setAttribute('value', numLeds);
+		widthId.value = numLeds;
+		widthOutput.innerHTML = numLeds;
 
-        }
+	}
 
-        widthId.setAttribute('max', numLeds);
-        widthId.max = numLeds;
+	widthId.setAttribute('max', numLeds);
+	widthId.max = numLeds;
 
-		chgBrightnessId.value = system.channelsMap.get(1).brightness;
-		brightness.value = system.channelsMap.get(1).brightness;
-		//setShowSettings();
+	chgBrightnessId.value = system.channelsMap.get(1).brightness;
+	brightness.value = system.channelsMap.get(1).brightness;
+	//setShowSettings();
 
-    }
+}
 
+setSystemSettings();
 setShowSettings(true);
 
 		

@@ -191,7 +191,7 @@ if(isset($_REQUEST['LightShow']))
            $sendArray['powerOn'] = "OFF";
            
         if (!empty($_POST['ColorEvery']))
-           $sendArray['colorEvery'] = $_SESSION["ColorEvery"];
+           $sendArray['colorEvery'] = $_SESSION['ColorEvery'];
            
         if(!empty($_POST['hasText']))
 			$sendArray['matrixText'] = $_POST['hasText'];
@@ -199,7 +199,10 @@ if(isset($_REQUEST['LightShow']))
 		if(!empty($_POST['matrixData']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
-        $sendArray['systemId'] = $_SESSION["LightSystemID"];
+	
+		
+		
+        $sendArray['systemId'] = $_SESSION['LightSystemID'];
 
     }
     
@@ -277,7 +280,7 @@ include('header.php');
 	
 	<script>
 
-	
+	setSystemSettings();
 	function setPlaylistName()
 	{
 		var playlistName = document.getElementById("PlayListNameId");
