@@ -719,8 +719,7 @@ function setShowSettings(arg1)
 
 
 		}
-       
-       
+              
 		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
 		{
 		
@@ -745,8 +744,7 @@ function setShowSettings(arg1)
 				
 				
 			}
-		
-		
+				
 		}
 			
         if(showMap.get(index).hasWidth == 1)

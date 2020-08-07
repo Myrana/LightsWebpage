@@ -46,7 +46,6 @@ if(isset($_REQUEST['Login']))
 	
 		}
 		
-
 	}
 	$conn->close();
 	

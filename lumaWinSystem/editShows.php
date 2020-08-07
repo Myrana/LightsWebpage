@@ -8,7 +8,6 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
-
 $_SESSION["DesignerEditMode"]  = 1;
     
 $conn = getDatabaseConnection();
