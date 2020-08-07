@@ -286,31 +286,36 @@ background-color: red;
 			<table>
 				<tr>
 					<td><label>Starting Row</label></td>
-					<td><input type="number" id="startRow" name="startRow" /></td>
+					<td><input type="number" id="startRow" name="startRow" value="<?php echo $_SESSION["startRow"];?>" /></td>
 				</tr>
 				
 				<tr>
 					<td><label>Starting Column</label></td>
-					<td><input type="number" id="startColumn" name="startColumn" /></td>
+					<td><input type="number" id="startColumn" name="startColumn" value="<?php echo $_SESSION["startColumn"];?>" /></td>
 				
 				</tr>
 				
 				<tr>
 					<td><label>Radius</label></td>
-					<td><input type="number" id="radius" name="radius" /></td>
+					<td><input type="number" id="radius" name="radius" value="<?php echo $_SESSION["radius"];?>" /></td>
 				
 				</tr>
 				
 				<tr>
 					<td><label>Length</label></td>
-					<td><input type="number" id="length" name="length" /></td>
+					<td><input type="number" id="length" name="length" value="<?php echo $_SESSION["length"];?>" /></td>
 				
 				</tr>
 				
 				<tr>
 					<td><label>Width</label></td>
-					<td><input type="number" id="width" name="width" /></td>
+					<td><input type="number" id="width" name="width" value="<?php echo $_SESSION["width"];?>" /></td>
 				
+				</tr>
+				
+				<tr>
+				<td><label>Fill</label></td>
+				<td><input type="checkbox" id="fill" name="fill" /></td>	
 				</tr>
 			
 			</table>
@@ -622,6 +627,9 @@ function setShowSettings(arg1)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
+		/*var startRow = document.getElementById("startRow");
+		var startColumn = document.getElementById("startColumn");
+		var radius = document.getElementById("radius");*/
 		
 		var divArt = document.getElementById("divArt");
 		var divShapes = document.getElementById("divShapes");
@@ -638,6 +646,9 @@ function setShowSettings(arg1)
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
+		/*startRow.setAttribute('disabled', true);
+		startColumn.setAttribute('disabled', true);
+		radius.setAttribute('disabled', true);*/
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
 		divShapes.setAttribute('hidden', true);

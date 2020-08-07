@@ -42,6 +42,24 @@ if(!empty($_REQUEST))
 
     if(!empty($_POST['ShowName']))
         $_SESSION["ShowName"] = $_POST['ShowName'];
+	
+	if(!empty($_POST['startRow']))
+		$_SESSION["startRow"] = $_POST['startRow'];
+	
+	if(!empty($_POST['startColumn']))
+		$_SESSION["startColumn"] = $_POST['startColumn'];
+	
+	if(!empty($_POST['radius']))
+		$_SESSION["radius"] = $_POST['radius'];
+	
+	if(!empty($_POST['length']))
+		$_SESSION["length"] = $_POST['length'];
+	
+	if(!empty($_POST['width']))
+		$_SESSION["width"] = $_POST['width'];
+	
+	if(!empty($_POST['fill']))
+		$_SESSION["fill"] = $_POST['fill'];
 
 }
 
@@ -215,7 +233,7 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['width'] = $_POST['width'];
 		
 		if(!empty($_POST['fill']))
-			$sendArray['fill'] = $_POST['fill'];
+			$sendArray['fill'] = 1;
 			
 			
 		if(!empty($_POST['matrixData']))

@@ -26,6 +26,14 @@ if(isset($_REQUEST['Login']))
 		$_SESSION['Minutes'] = 1;
 		$_SESSION['Width'] = 1;
 		$_SESSION['ColorEvery'] = 2;
+		
+		$_SESSION['startRow'] = 6;
+		$_SESSION['startColumn'] = 18;
+		$_SESSION['radius'] = 4;
+		
+		$_SESSION['length'] = 5;
+		$_SESSION['width'] = 5;
+		$_SESSION['fill'] = 0;
 
 	
 		$sysResults = mysqli_query($conn, "SELECT ID FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
