@@ -19,49 +19,49 @@ if(!empty($_REQUEST))
 {
     $sendArray['UserID'] = $_SESSION['UserID'];
     if(!empty($_POST['SystemName']))
-        $_SESSION["LightSystemID"]  = $_POST['SystemName'];
+        $_SESSION['LightSystemID']  = $_POST['SystemName'];
 
 
     if(!empty($_POST['Brightness']))
-        $_SESSION["Brightness"] = $_POST['Brightness'];
+        $_SESSION['Brightness'] = $_POST['Brightness'];
 
     if(!empty($_POST['Delay']))
-        $_SESSION["Delay"] = $_POST['Delay'];
+        $_SESSION['Delay'] = $_POST['Delay'];
 
     if(!empty($_POST['Minutes']))
-        $_SESSION["Minutes"] = $_POST['Minutes'];
+        $_SESSION['Minutes'] = $_POST['Minutes'];
 
     if(!empty($_POST['Width']))
-        $_SESSION["Width"] = $_POST['Width'];
+        $_SESSION['Width'] = $_POST['Width'];
 
     if(!empty($_POST['ColorEvery']))
         $_SESSION["ColorEvery"] = $_POST['ColorEvery'];
 
     if(!empty($_POST['ChgBrightness']))
-        $_SESSION["ChgBrightness"] = $_POST['ChgBrightness'];
+        $_SESSION['ChgBrightness'] = $_POST['ChgBrightness'];
 
     if(!empty($_POST['ShowName']))
-        $_SESSION["ShowName"] = $_POST['ShowName'];
+        $_SESSION['ShowName'] = $_POST['ShowName'];
 	
 	if(!empty($_POST['startRow']))
-		$_SESSION["startRow"] = $_POST['startRow'];
+		$_SESSION['startRow'] = $_POST['startRow'];
 	
 	if(!empty($_POST['startColumn']))
-		$_SESSION["startColumn"] = $_POST['startColumn'];
+		$_SESSION['startColumn'] = $_POST['startColumn'];
 	
 	if(!empty($_POST['radius']))
-		$_SESSION["radius"] = $_POST['radius'];
+		$_SESSION['radius'] = $_POST['radius'];
 	
 	if(!empty($_POST['length']))
-		$_SESSION["len"] = $_POST['length'];
+		$_SESSION['length'] = $_POST['length'];
 	
 	if(!empty($_POST['height']))
-		$_SESSION["height"] = $_POST['height'];
+		$_SESSION['height'] = $_POST['height'];
 	
 	if(!empty($_POST['fill']))
-		$_SESSION["fill"] = 1;
+		$_SESSION['fill'] = 1;
 	else
-		$_SESSION["fill"] = 0;
+		$_SESSION['fill'] = 0;
 
 }
 
