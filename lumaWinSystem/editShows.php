@@ -165,6 +165,11 @@ function hexToRgb(hex)
 
 		var systemNameId = document.getElementById("SystemNameId");
 		var channelId = document.getElementById("ChannelId");
+		var startRow = document.getElementById("startRow");
+		var startColumn = document.getElementById("startColumn");
+		var radius = document.getElementById("radius");
+		var len = document.getElementById("length");
+		var height = document.getElementById("height");
 		
         
         var playListIndex = parseInt(playListId.value);
@@ -218,6 +223,38 @@ function hexToRgb(hex)
 			   playList.showParms[parmIndex].matrixText = hasText.value;
 			}
 		}
+		
+		if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 4)
+		{
+			switch(show.matrixShape)
+			{
+					case 1:
+						playList.showParms[parmIndex].startRow = startRow.value;
+						playList.showParms[parmIndex].startColumn = startColumn.value;
+						playList.showParms[parmIndex].radius = radius.value;
+						playList.showParms[parmIndex].len = len.value;
+						playList.showParms[parmIndex].height = height.value;
+						
+						
+
+					break;
+					
+					case 2:
+					case 3:
+						playList.showParms[parmIndex].startRow = startRow.value;
+						playList.showParms[parmIndex].startColumn = startColumn.value;
+						
+						playList.showParms[parmIndex].len = len.value;
+						playList.showParms[parmIndex].height = height.value;
+						
+						break;
+					
+			}
+		
+		}
+		
+		
+		
 		
         playList.showParms[parmIndex].brightness = brightness.value;
 
@@ -428,6 +465,35 @@ function hexToRgb(hex)
 					{
 						playList.showParms[i].matrixText = hasText.value;
 					}
+					
+					if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 4)
+					{
+						switch(show.matrixShape)
+						{
+								case 1:
+									playList.showParms[i].startRow = startRow.value;
+									playList.showParms[i].startColumn = startColumn.value;
+									playList.showParms[i].radius = radius.value;
+									playList.showParms[i].len = len.value;
+									playList.showParms[i].height = height.value;
+									
+									
+
+								break;
+								
+								case 2:
+								case 3:
+									playList.showParms[i].startRow = startRow.value;
+									playList.showParms[i].startColumn = startColumn.value;
+									
+									playList.showParms[i].len = len.value;
+									playList.showParms[i].height = height.value;
+									
+									break;
+								
+						}
+					
+					}
 				
                     playList.showParms[i].brightness = brightness.value;
 
@@ -611,10 +677,7 @@ function hexToRgb(hex)
 					divMatrix.innerHTML = matrixHTML;
 					
 					
-				}		
-					
-				if(show.hasDelay)
-					delay.value = playList.showParms[i].delay;
+				}	
 				
 				
 				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 2)
@@ -623,6 +686,13 @@ function hexToRgb(hex)
 					hasText.setAttribute('disabled', false);
 					hasText.disabled = false;
 				}
+				
+					
+					
+				if(show.hasDelay)
+					delay.value = playList.showParms[i].delay;
+				
+				
 				
                 if(show.hasMinutes > 0)
                     minutes.value = playList.showParms[i].minutes;

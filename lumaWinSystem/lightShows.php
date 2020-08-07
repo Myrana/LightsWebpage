@@ -53,7 +53,7 @@ if(!empty($_REQUEST))
 		$_SESSION["radius"] = $_POST['radius'];
 	
 	if(!empty($_POST['length']))
-		$_SESSION["length"] = $_POST['length'];
+		$_SESSION["len"] = $_POST['length'];
 	
 	if(!empty($_POST['height']))
 		$_SESSION["height"] = $_POST['height'];
@@ -229,7 +229,7 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['radius'] = $_POST['radius'];
 		
 		if(!empty($_POST['length']))
-			$sendArray['length'] = $_POST['length'];
+			$sendArray['len'] = $_POST['length'];
 		
 		if(!empty($_POST['height']))
 			$sendArray['height'] = $_POST['height'];
