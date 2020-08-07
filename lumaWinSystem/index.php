@@ -49,13 +49,15 @@ if(isset($_REQUEST['Login']))
 
 	}
 	$conn->close();
+	
+	if($_SESSION['authorized'] == 1)
+	{
+		header('Location:lightShows.php');
+	}
+
 }
 
 
-if($_SESSION['authorized'] == 1)
-{
-	header('Location:lightShows.php');
-}
 
 ?>
 
