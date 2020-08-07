@@ -414,6 +414,12 @@ function hexToRgb(hex)
         var systemNameId = document.getElementById("SystemNameId");
         var channelId = document.getElementById("ChannelId");
 		
+		var startRow = document.getElementById("startRow");
+		var startColumn = document.getElementById("startColumn");
+		var radius = document.getElementById("radius");
+		var len = document.getElementById("length");
+		var height = document.getElementById("height");
+		
 	
         var showIndex = parseInt(showListControl.value) - 1;
         
@@ -616,6 +622,11 @@ function hexToRgb(hex)
         var systemNameId = document.getElementById("SystemNameId");
         var channelId = document.getElementById("ChannelId");
 		
+		var startRow = document.getElementById("startRow");
+		var startColumn = document.getElementById("startColumn");
+		var radius = document.getElementById("radius");
+		var len = document.getElementById("length");
+		var height = document.getElementById("height");
 		
 		var showIndex = parseInt(showListControl.value) - 1;	
 		
