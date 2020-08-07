@@ -59,7 +59,9 @@ if(!empty($_REQUEST))
 		$_SESSION["width"] = $_POST['width'];
 	
 	if(!empty($_POST['fill']))
-		$_SESSION["fill"] = $_POST['fill'];
+		$_SESSION["fill"] = 1;
+	else
+		$_SESSION["fill"] = 0;
 
 }
 

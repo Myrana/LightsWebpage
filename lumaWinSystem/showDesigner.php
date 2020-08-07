@@ -29,6 +29,7 @@ if(mysqli_num_rows($results) > 0)
         $_SESSION['lightShowsScript'] .= "  show.hasMinutes = " . $row['hasMinutes'] .";\r";
         $_SESSION['lightShowsScript'] .= "  show.colorEvery = " . $row['colorEvery'] .";\r";
 		$_SESSION['lightShowsScript'] .= "  show.matrixType = " . $row['matrixType'] .";\r";
+		$_SESSION['lightShowsScript'] .= "  show.matrixShape = " . $row['matrixShape'] .";\r";
 		
         $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
 
@@ -315,7 +316,11 @@ background-color: red;
 				
 				<tr>
 				<td><label>Fill</label></td>
-				<td><input type="checkbox" id="fill" name="fill" /></td>	
+				<?php if($_SESSION["fill"] == 0)
+						echo '<td><input type="checkbox" id="fill" name="fill" /></td>';
+					 else
+					    echo '<td><input type="checkbox" id="fill" name="fill" checked/></td>';
+				?>
 				</tr>
 			
 			</table>
@@ -627,9 +632,9 @@ function setShowSettings(arg1)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
-		/*var startRow = document.getElementById("startRow");
+		var startRow = document.getElementById("startRow");
 		var startColumn = document.getElementById("startColumn");
-		var radius = document.getElementById("radius");*/
+		var radius = document.getElementById("radius");
 		
 		var divArt = document.getElementById("divArt");
 		var divShapes = document.getElementById("divShapes");
@@ -646,9 +651,9 @@ function setShowSettings(arg1)
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
-		/*startRow.setAttribute('disabled', true);
+		startRow.setAttribute('disabled', true);
 		startColumn.setAttribute('disabled', true);
-		radius.setAttribute('disabled', true);*/
+		radius.setAttribute('disabled', true);
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
 		divShapes.setAttribute('hidden', true);
@@ -694,6 +699,14 @@ function setShowSettings(arg1)
 				
 				divShapes.setAttribute('hidden', false);
 				divShapes.hidden = false;
+				
+				if(showMap.get(index).matrixShape == 1)
+				{
+					startRow.setAttribute('disabled', false);
+					startColumn.setAttribute('disabled', false);
+					radius.setAttribute('disabled', false);
+				}
+			
 			}
 			else
 			{
