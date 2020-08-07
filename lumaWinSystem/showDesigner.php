@@ -309,8 +309,8 @@ background-color: red;
 				</tr>
 				
 				<tr>
-					<td><label>Width</label></td>
-					<td><input type="number" id="width" name="width" value="<?php echo $_SESSION["width"];?>" /></td>
+					<td><label>Height</label></td>
+					<td><input type="number" id="height" name="height" value="<?php echo $_SESSION["height"];?>" /></td>
 				
 				</tr>
 				
@@ -635,8 +635,8 @@ function setShowSettings(arg1)
 		var startRow = document.getElementById("startRow");
 		var startColumn = document.getElementById("startColumn");
 		var radius = document.getElementById("radius");
-		var length = document.getElementById("length");
-		var width = document.getElementById("width");
+		var len = document.getElementById("length");
+		var height = document.getElementById("height");
 		
 		var divArt = document.getElementById("divArt");
 		var divShapes = document.getElementById("divShapes");
@@ -656,8 +656,8 @@ function setShowSettings(arg1)
 		startRow.setAttribute('disabled', true);
 		startColumn.setAttribute('disabled', true);
 		radius.setAttribute('disabled', true);
-		length.setAttribute('disabled', true);
-		width.setAttribute('disabled', true);
+		len.setAttribute('disabled', true);
+		height.setAttribute('disabled', true);
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
 		divShapes.setAttribute('hidden', true);
@@ -704,28 +704,26 @@ function setShowSettings(arg1)
 				divShapes.setAttribute('hidden', false);
 				divShapes.hidden = false;
 				
-				if(showMap.get(index).matrixShape == 1)
+				switch(showMap.get(index).matrixShape)
 				{
-					startRow.setAttribute('disabled', false);
-					startColumn.setAttribute('disabled', false);
-					radius.setAttribute('disabled', false);
+					case 1:
+						startRow.disabled = false;
+						startColumn.disabled  = false;
+						radius.disabled = false;
+						
+					break;
+					
+					case 2:
+					case 3:
+						startRow.disabled = false;
+						startColumn.disabled  = false;
+						len.disabled = false;
+						height.disabled = false;
+					break;
+					
+					
 				}
 				
-				if(showMap.get(index).matrixShape == 2)
-				{
-					startRow.setAttribute('disabled', false);
-					startColumn.setAttribute('disabled', false);
-					length.setAttribute('disabled', false);
-					width.setAttribute('disabled', false);
-				}
-				
-				if(showMap.get(index).matrixShape == 3)
-				{
-					startRow.setAttribute('disabled', false);
-					startColumn.setAttribute('disabled', false);
-					length.setAttribute('disabled', false);
-					width.setAttribute('disabled', false);
-				}
 			
 			}
 			else

@@ -231,8 +231,8 @@ if(isset($_REQUEST['LightShow']))
 		if(!empty($_POST['length']))
 			$sendArray['length'] = $_POST['length'];
 		
-		if(!empty($_POST['width']))
-			$sendArray['width'] = $_POST['width'];
+		if(!empty($_POST['height']))
+			$sendArray['height'] = $_POST['height'];
 		
 		if(!empty($_POST['fill']))
 			$sendArray['fill'] = 1;

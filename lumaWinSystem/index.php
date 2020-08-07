@@ -32,7 +32,7 @@ if(isset($_REQUEST['Login']))
 		$_SESSION['radius'] = 4;
 		
 		$_SESSION['length'] = 5;
-		$_SESSION['width'] = 5;
+		$_SESSION['height'] = 5;
 		$_SESSION['fill'] = 0;
 
 	
