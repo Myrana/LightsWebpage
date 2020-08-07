@@ -698,7 +698,39 @@ function setShowSettings(arg1)
 				
 			}
 			
-		
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
+			{
+				
+				divShapes.setAttribute('hidden', false);
+				divShapes.hidden = false;
+				
+				switch(showMap.get(index).matrixShape)
+				{
+					case 1:
+						startRow.disabled = false;
+						startColumn.disabled  = false;
+						radius.disabled = false;
+						
+					break;
+					
+					case 2:
+					case 3:
+						startRow.disabled = false;
+						startColumn.disabled  = false;
+						len.disabled = false;
+						height.disabled = false;
+					break;
+					
+					
+				}
+				
+			
+			}
+			else
+			{
+				divShapes.setAttribute('hidden', true);
+				divShapes.hidden = true;
+			}
 		}
 		else
 		{
@@ -706,6 +738,13 @@ function setShowSettings(arg1)
 			{
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
+			}
+			
+			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
+			{
+				
+				divShapes.setAttribute('hidden', false);
+				divShapes.hidden = false;
 			}
 			
 		}
@@ -720,35 +759,6 @@ function setShowSettings(arg1)
 
 		}
        
-       
-		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
-		{
-		
-			divShapes.setAttribute('hidden', false);
-			divShapes.hidden = false;
-			switch(showMap.get(index).matrixShape)
-			{
-				case 1:
-					startRow.disabled = false;
-					startColumn.disabled  = false;
-					radius.disabled = false;
-					
-				break;
-				
-				case 2:
-				case 3:
-					startRow.disabled = false;
-					startColumn.disabled  = false;
-					len.disabled = false;
-					height.disabled = false;
-				break;
-				
-				
-			}
-		
-		
-		}
-			
         if(showMap.get(index).hasWidth == 1)
         {
             width.setAttribute('disabled', false);
