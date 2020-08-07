@@ -198,6 +198,25 @@ if(isset($_REQUEST['LightShow']))
            
         if(!empty($_POST['hasText']))
 			$sendArray['matrixText'] = $_POST['hasText'];
+		
+		if(!empty($_POST['startRow']))
+			$sendArray['startRow'] = $_POST['startRow'];
+		
+		if(!empty($_POST['startColumn']))
+			$sendArray['startColumn'] = $_POST['startColumn'];
+		
+		if(!empty($_POST['radius']))
+			$sendArray['radius'] = $_POST['radius'];
+		
+		if(!empty($_POST['length']))
+			$sendArray['length'] = $_POST['length'];
+		
+		if(!empty($_POST['width']))
+			$sendArray['width'] = $_POST['width'];
+		
+		if(!empty($_POST['fill']))
+			$sendArray['fill'] = $_POST['fill'];
+			
 			
 		if(!empty($_POST['matrixData']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
