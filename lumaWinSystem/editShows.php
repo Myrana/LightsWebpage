@@ -170,7 +170,6 @@ function hexToRgb(hex)
 		var radius = document.getElementById("radius");
 		var len = document.getElementById("length");
 		var height = document.getElementById("height");
-		
         
         var playListIndex = parseInt(playListId.value);
         var playList = playListMap.get(playListIndex);
@@ -216,7 +215,7 @@ function hexToRgb(hex)
 		}
 			
 		
-		if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 2)
+		if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 2)
 		{
 			if(hasText.value.length > 0)
 			{
@@ -224,19 +223,18 @@ function hexToRgb(hex)
 			}
 		}
 		
-		if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 4)
+		
+		if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 4)
 		{
+			
 			switch(show.matrixShape)
 			{
 					case 1:
+						
 						playList.showParms[parmIndex].startRow = startRow.value;
 						playList.showParms[parmIndex].startColumn = startColumn.value;
 						playList.showParms[parmIndex].radius = radius.value;
-						//playList.showParms[parmIndex].len = len.value;
-						//playList.showParms[parmIndex].height = height.value;
-						
-						
-
+					
 					break;
 					
 					case 2:
@@ -247,13 +245,12 @@ function hexToRgb(hex)
 						playList.showParms[parmIndex].len = len.value;
 						playList.showParms[parmIndex].height = height.value;
 						
+						
 						break;
 					
 			}
 		
 		}
-		
-		
 		
 		
         playList.showParms[parmIndex].brightness = brightness.value;
@@ -472,7 +469,7 @@ function hexToRgb(hex)
 						playList.showParms[i].matrixText = hasText.value;
 					}
 					
-					if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 4)
+					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 4)
 					{
 						switch(show.matrixShape)
 						{
@@ -480,8 +477,6 @@ function hexToRgb(hex)
 									playList.showParms[i].startRow = startRow.value;
 									playList.showParms[i].startColumn = startColumn.value;
 									playList.showParms[i].radius = radius.value;
-									//playList.showParms[i].len = len.value;
-									//playList.showParms[i].height = height.value;
 									
 									
 
@@ -501,6 +496,7 @@ function hexToRgb(hex)
 					
 					}
 				
+		
                     playList.showParms[i].brightness = brightness.value;
 
                     if(show.numColors > 0)
@@ -689,8 +685,6 @@ function hexToRgb(hex)
 					
 					
 				}	
-				
-				
 				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 2)
 				{
 					hasText.value = playList.showParms[i].matrixText;
@@ -698,22 +692,22 @@ function hexToRgb(hex)
 					hasText.disabled = false;
 				}
 				
-				if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 4)
+				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 4)
 				{
+					
+					
 					switch(show.matrixShape)
 					{
 							case 1:
 							 	startRow.value = playList.showParms[i].startRow;
 								startColumn.value = playList.showParms[i].startColumn ;
 								radius.value = playList.showParms[i].radius;
-								
-									
-									
 
 							break;
 								
 							case 2:
 							case 3:
+							
 							 	startRow.value = playList.showParms[i].startRow;
 								startColumn.value = playList.showParms[i].startColumn;
 									
@@ -725,7 +719,7 @@ function hexToRgb(hex)
 					}
 					
 				}
-					
+			
 				if(show.hasDelay)
 					delay.value = playList.showParms[i].delay;
 				
@@ -782,7 +776,7 @@ function hexToRgb(hex)
 			}
 		}
 		
-	
+		setShowSettings(false);
 	}
 	
 	function setPlayListSettings()
