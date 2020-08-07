@@ -232,8 +232,8 @@ function hexToRgb(hex)
 						playList.showParms[parmIndex].startRow = startRow.value;
 						playList.showParms[parmIndex].startColumn = startColumn.value;
 						playList.showParms[parmIndex].radius = radius.value;
-						playList.showParms[parmIndex].len = len.value;
-						playList.showParms[parmIndex].height = height.value;
+						//playList.showParms[parmIndex].len = len.value;
+						//playList.showParms[parmIndex].height = height.value;
 						
 						
 
@@ -474,8 +474,8 @@ function hexToRgb(hex)
 									playList.showParms[i].startRow = startRow.value;
 									playList.showParms[i].startColumn = startColumn.value;
 									playList.showParms[i].radius = radius.value;
-									playList.showParms[i].len = len.value;
-									playList.showParms[i].height = height.value;
+									//playList.showParms[i].len = len.value;
+									//playList.showParms[i].height = height.value;
 									
 									
 
@@ -687,7 +687,33 @@ function hexToRgb(hex)
 					hasText.disabled = false;
 				}
 				
+				if( system.channelsMap.get(1).stripRows > 1 && show.isMatrix == 4)
+				{
+					switch(show.matrixShape)
+					{
+							case 1:
+							 	startRow.value = playList.showParms[i].startRow;
+								startColumn.value = playList.showParms[i].startColumn ;
+								radius.value = playList.showParms[i].radius;
+								
+									
+									
+
+							break;
+								
+							case 2:
+							case 3:
+							 	startRow.value = playList.showParms[i].startRow;
+								startColumn.value = playList.showParms[i].startColumn;
+									
+								len.value = playList.showParms[i].len;
+								height.value = playList.showParms[i].height;
+									
+								break;
+								
+					}
 					
+				}
 					
 				if(show.hasDelay)
 					delay.value = playList.showParms[i].delay;
