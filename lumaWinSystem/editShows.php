@@ -161,6 +161,7 @@ function hexToRgb(hex)
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
         var hasText = document.getElementById("hasText");
+		var position = document.getElementById("position");
 
 		var systemNameId = document.getElementById("SystemNameId");
 		var channelId = document.getElementById("ChannelId");
@@ -219,6 +220,9 @@ function hexToRgb(hex)
 			if(hasText.value.length > 0)
 			{
 			   playList.showParms[parmIndex].matrixText = hasText.value;
+			   playList.showParms[parmIndex].position = position.value;
+			   //alert(playList.showParms[parmIndex].position);
+			   //alert("added show parm!");
 			}
 		}
 		
@@ -403,6 +407,7 @@ function hexToRgb(hex)
         var colorEvery = document.getElementById("ColorEveryId");
         var brightness = document.getElementById("Brightness");
 		var hasText = document.getElementById("hasText");
+		var position = document.getElementById("position");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -439,6 +444,7 @@ function hexToRgb(hex)
 				
 				if(show.hasText)
 					playList.showParms[i].matrixText = hasText.value;
+					playList.showParms[i].position = position.value;
 
                     if(show.hasMinutes > 0)
                         playList.showParms[i].minutes = minutes.value;
@@ -466,6 +472,9 @@ function hexToRgb(hex)
 					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 2)
 					{
 						playList.showParms[i].matrixText = hasText.value;
+						playList.showParms[i].position = position.value;
+						//alert(playList.showParms[i].position);
+						//alert("we made it!")
 					}
 					
 					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 4)
