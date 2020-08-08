@@ -840,12 +840,12 @@ function confirmDelete()
 <div class="clearfix">
 	<div class="column twenty-five">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-			<label for="PlayList">Select Playlist</label>
+			<label for="PlayList">Select Art</label>
 			<select id="PlayArtShow"  name="PlayArtShow" >
 				<?php echo $_SESSION['userArtOptions'];?>
 			</select>
 		
-		<button type="submit" onClick="savePlayList();" name="CommitPlayList" id="CommitPlayList">Save PlayList</button>	
+		<button type="submit" onClick="savePlayList();" name="CommitArt" id="CommitArt">Save PlayList</button>	
 		</p>
 		
 		<p style="margin-top: -12px; margin-left: 3px">
