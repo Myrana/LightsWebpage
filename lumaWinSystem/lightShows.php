@@ -17,9 +17,12 @@ if($_SESSION['authorized'] == 0)
 if(!empty($_REQUEST))
 {
     $sendArray['UserID'] = $_SESSION['UserID'];
+    
     if(!empty($_POST['SystemName']))
         $_SESSION['LightSystemID']  = $_POST['SystemName'];
 
+	if(!empty($_POST['ChannelId']))
+		$_SESSION['ChannelId'] = $_POST['ChannelId'];
 
     if(!empty($_POST['Brightness']))
         $_SESSION['Brightness'] = $_POST['Brightness'];
@@ -111,8 +114,6 @@ if(isset($_REQUEST['LightShow']))
     $r = 5;
     $g = 3;
     $b = 12;
-
-
     
     if(!empty($_POST['ShowName']))
     {
@@ -186,7 +187,7 @@ if(isset($_REQUEST['LightShow']))
 		$sendArray['brightness'] = $_SESSION["Brightness"];
 		$sendArray['channelId'] = $_SESSION["ChannelId"];
 		
-
+		
 
         if(!empty($_POST['Delay']))
             $sendArray['delay'] = $_SESSION['Delay'];
@@ -217,6 +218,9 @@ if(isset($_REQUEST['LightShow']))
            
         if(!empty($_POST['hasText']))
 			$sendArray['matrixText'] = $_POST['hasText'];
+			
+		if(!empty($_POST['position']))
+			$sendArray['position'] = $_POST['position'];
 		
 		if(!empty($_POST['startRow']))
 			$sendArray['startRow'] = $_POST['startRow'];
@@ -235,20 +239,42 @@ if(isset($_REQUEST['LightShow']))
 		
 		if(!empty($_POST['fill']))
 			$sendArray['fill'] = 1;
-			
+		
 			
 		if(!empty($_POST['matrixData']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
-	
+		
 		
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
-
+       
+       
+		
+		if(!empty($_POST['saveArt']) && !empty($_POST['saveArtName']))
+		{
+		   $sql = "insert into matrixArt(userID, artName, showParms, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','1')" ;
+		   if ($conn->query($sql) != TRUE)
+			{
+				echo "<h1>Ooops Error Saving Art!: " . $conn->error . "</h1>";
+				echo $sql;	
+			}
+		}
+		
+		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+		
+		
+		
     }
     
-    sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+}
 
+if(isset($_REQUEST['PlayArtShow']))
+{
+	$sendArray['playArtShow'] = 1;
+	$sendArray['artShow'] = intval($_POST('PlayArtShow'));
+	$sendArray['UserID'] = intval($_SESSION['UserID']);
+	sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 }
 
 
@@ -261,9 +287,10 @@ if(isset($_REQUEST['btnPlaylist']))
 		$sendArray['playPlaylist'] = 1;
 		$sendArray['playlistName'] = intval($_POST['Playlist']);
 		$sendArray['UserID'] = intval($_SESSION['UserID']);
-		$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-		$query_data = mysqli_fetch_array($displayStrip);
-		sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+		//$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
+		//$query_data = mysqli_fetch_array($displayStrip);
+		//sendMQTT($query_data['serverHostName'], json_encode($sendArray));
 	}
 }
 
@@ -327,8 +354,11 @@ include('header.php');
 		<p>		
 				<label>Playlist</label>
 				<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+				<select id="PlayArtShow"  name="PlayArtShow" ><?php echo $_SESSION['userArtOptions'];?></select>
+				
 				<p>
 				<button type="submit" name="btnPlaylist">Play</button>
+				<button type="submit" name="btnPlayArtShow">Play Art</button>
 				<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>
 				</p>
 			

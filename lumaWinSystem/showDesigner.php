@@ -117,6 +117,29 @@ if(mysqli_num_rows($systemResults) > 0)
 
     }
     
+    $_SESSION['userArtScript'] = "";
+    $_SESSION['userArtOptions'] = "";
+	$artresults = mysqli_query($conn,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
+	
+	if(mysqli_num_rows($artresults) > 0)
+	{
+		$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
+		while($artRow = mysqli_fetch_array($artresults))
+		{
+		
+			$_SESSION['userArtScript']  .= "var art = new Object(); \r";
+
+			$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
+			$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
+			$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
+			$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
+			$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
+			
+			$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
+		}
+
+	}
+
    
 }
 
@@ -217,7 +240,16 @@ background-color: red;
 
         <center>
 			
-			<p><input type="text" name="hasText" id="hasText" placeholder="Scrolling text" /></p>
+			<p>
+				<select name="position" id="position">
+					<option value="1">Top</option>
+					<option value="2">Center</option>
+					<option value="3">Bottom</option>
+				</input>
+				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" />
+				
+				
+			</p>
 			
 			
 			<p><label for="On1" style="font-size: 14px">Clear start</label>
@@ -260,6 +292,11 @@ background-color: red;
 		<div style="text-align: center">
 		  <h1>Matrix Designer!</h1>
 			<p>
+				<p>
+					<input type="checkbox" name="saveArt" id="saveArt">
+					<input type="text" name="saveArtName" id="saveArtName">
+				</p>
+				
 				<select id="brushSize" name="brushSize" style="width: 25%">
 				  <option value="1" selected>single width</option>
 				  <option value="2">double width</option>
@@ -342,6 +379,8 @@ background-color: red;
 
 <?php echo $_SESSION['lightShowsScript'];?>
 <?php echo $_SESSION['lightSystemsScript'];?>
+<?php $_SESSION['userArtScript']; ?>
+
 
 let mode = 0;
 let oldx = 0;
