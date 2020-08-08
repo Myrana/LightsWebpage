@@ -331,6 +331,7 @@ if(mysqli_num_rows($artresults) > 0)
 
 }
 
+
 $conn->close();
 
 ?>
@@ -375,11 +376,14 @@ include('header.php');
 		<p>		
 				<label>Playlist</label>
 				<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
-				<select id="PlayArtShow"  name="PlayArtShow" ><?php echo $_SESSION['userArtOptions'];?></select>
-				
-				<p>
 				<button type="submit" name="btnPlaylist">Play</button>
+				<p>
+				<label>Art</label>
+				<select id="PlayArtShow"  name="PlayArtShow" ><?php echo $_SESSION['userArtOptions'];?></select>
 				<button type="submit" name="btnPlayArtShow">Play Art</button>
+				</p>			
+				<p>		
+				<label>Playlist Editor</label>	
 				<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>
 				</p>
 			

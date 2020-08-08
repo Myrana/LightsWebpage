@@ -664,7 +664,7 @@ function hexToRgb(hex)
 				showControl.value = show.id;	
 				
 				divArt.setAttribute('hidden', true);
-					divArt.hidden = true;
+				divArt.hidden = true;
 				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 1)
 				{
 					var matrixHTML = "";

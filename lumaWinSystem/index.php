@@ -36,6 +36,7 @@ if(isset($_REQUEST['Login']))
 		$_SESSION['fill'] = 0;
 		$_SESSION['ChannelId'] = 0;
 		$_SESSION['position'] = 1;
+		$_SESSION['ShowName'] = 0; 
 
 	
 		$sysResults = mysqli_query($conn, "SELECT ID FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
@@ -44,17 +45,13 @@ if(isset($_REQUEST['Login']))
 			$_SESSION['authorized'] = 1;
 			$sysRow = mysqli_fetch_array($sysResults);
 			$_SESSION['LightSystemID'] = $sysRow['ID'];
-			//header('Location:lightShows.php');
+			header('Location:lightShows.php');
 	
 		}
 		
 	}
 	$conn->close();
 	
-	if($_SESSION['authorized'] == 1)
-	{
-		header('Location:lightShows.php');
-	}
 
 }
 

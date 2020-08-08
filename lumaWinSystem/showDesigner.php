@@ -10,7 +10,7 @@ $results = mysqli_query($conn,"SELECT * FROM lightShows WHERE enabled = 1 order 
 if(mysqli_num_rows($results) > 0)
 {
     $_SESSION['lightShowsScript'] = "let showMap = new Map();\r";
-
+	$lightShowsoption = "";
     while($row = mysqli_fetch_array($results))
     {
         if($_SESSION["ShowName"] != $row['ID'])
@@ -32,8 +32,6 @@ if(mysqli_num_rows($results) > 0)
 		$_SESSION['lightShowsScript'] .= "  show.matrixShape = " . $row['matrixShape'] .";\r";
 		
         $_SESSION['lightShowsScript'] .= "    showMap.set(" . $row['ID'] . ", show);\r";
-
-
 
 
     }
@@ -135,6 +133,28 @@ if(mysqli_num_rows($systemResults) > 0)
 }
 
 
+$_SESSION['userArtScript'] = "";
+$_SESSION['userArtOptions'] = "";
+$artresults = mysqli_query($conn,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
+
+if(mysqli_num_rows($artresults) > 0)
+{
+	$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
+	while($artRow = mysqli_fetch_array($artresults))
+	{
+	
+		$_SESSION['userArtScript']  .= "var art = new Object(); \r";
+
+		$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
+		$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
+		$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
+		$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
+		$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
+		
+		$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
+	}
+
+}
 
 $conn->close();
 
@@ -170,11 +190,11 @@ background-color: red;
 				</select>
 		<p>
 			<label for="SystemName">System Name:</label>
-			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
+			<select id="SystemNameId" name="SystemNameId"style="width: 25%" onChange="setSystemSettings();">
 			<?php echo $_SESSION['systemlistoption'];?></select>
 			
 			<label for="ShowName">Show name</label>
-			<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
+			<select id="ShowNameId" name="ShowNameId" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
 			
 			
 		</p>
@@ -258,7 +278,7 @@ background-color: red;
 			<button type="submit" onClick="storeMatrix()" name="LightShow">Send Show</button>
         </p>';
     }
-    else
+    elseif($_SESSION["DesignerEditMode"]  == 1)
     {
         echo '<p style="margin-bottom: -14px;">
 		<button onClick="addShowSettings();return false" name="AddShow">Add Show</button>
@@ -367,7 +387,8 @@ background-color: red;
 
 <?php echo $_SESSION['lightShowsScript'];?>
 <?php echo $_SESSION['lightSystemsScript'];?>
-<?php $_SESSION['userArtScript']; ?>
+<?php echo $_SESSION['userArtScript'];?>
+
 
 
 let mode = 0;
