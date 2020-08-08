@@ -272,9 +272,8 @@ if(isset($_REQUEST['LightShow']))
 }
 
 
-if(isset($_REQUEST['PlayArtShow']))
+if(isset($_REQUEST['btnPlayArtShow']))
 {
-		
 	$sendArray['playArtShow'] = 1;
 	$sendArray['artShowId'] = intval($_POST['PlayArtShow']);
 	$sendArray['UserID'] = intval($_SESSION['UserID']);
@@ -285,7 +284,6 @@ if(isset($_REQUEST['PlayArtShow']))
 
 if(isset($_REQUEST['btnPlaylist']))
 {
-
 	if(!empty($_POST['Playlist']))
 	{
 		$sendArray['playPlaylist'] = 1;
