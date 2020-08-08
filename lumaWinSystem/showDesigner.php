@@ -281,12 +281,10 @@ background-color: red;
 		<div style="text-align: center">
 		  <h1>Matrix Designer!</h1>
 			<p>
-				<p>
-					<label>Save art</label>
-					<input type="checkbox" name="saveArt" id="saveArt">
-					<input type="text" name="saveArtName" id="saveArtName" placeholder="Art Name" style="width: 85%">
-				</p>
 				
+				<?php if($_SESSION["DesignerEditMode"]  == 0)
+					echo '<p><label>Save art</label><input type="checkbox" name="saveArt" id="saveArt"><input type="text" name="saveArtName" id="saveArtName" placeholder="Art Name" style="width: 85%"></p>';
+				?>
 				<select id="brushSize" name="brushSize" style="width: 25%">
 				  <option value="1" selected>single width</option>
 				  <option value="2">double width</option>
