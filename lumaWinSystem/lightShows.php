@@ -308,29 +308,7 @@ if(mysqli_num_rows($results) > 0)
 
 }
 
-$_SESSION['userArtScript'] = "";
-$_SESSION['userArtOptions'] = "";
-$artresults = mysqli_query($conn,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
-
-if(mysqli_num_rows($artresults) > 0)
-{
-	$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
-	while($artRow = mysqli_fetch_array($artresults))
-	{
-	
-		$_SESSION['userArtScript']  .= "var art = new Object(); \r";
-
-		$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
-		$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
-		$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
-		$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
-		$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
-		
-		$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
-	}
-
-}
-
+buildUserArt();
 
 $conn->close();
 
@@ -372,6 +350,21 @@ include('header.php');
 
 
 	}
+	
+	function setArtSystem()
+	{
+		var artShowId = document.getElementById("PlayArtShow");
+		if(artShowId.value != 0)
+		{
+			var systemNameId = document.getElementById("SystemNameId");
+			var playArtShow = document.getElementById("PlayArtShow");
+			var art = artListMap.get(parseInt(playArtShow.value));
+			
+			systemNameId.value = art.showParms.systemId;
+		}
+	}
+	
+	
 </script>
 		<p>		
 				<label>Playlist</label>
@@ -379,7 +372,7 @@ include('header.php');
 				<button type="submit" name="btnPlaylist">Play</button>
 				<p>
 				<label>Art</label>
-				<select id="PlayArtShow"  name="PlayArtShow" ><?php echo $_SESSION['userArtOptions'];?></select>
+				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
 				<button type="submit" name="btnPlayArtShow">Play Art</button>
 				</p>			
 				<p>		

@@ -41,31 +41,7 @@ if(isset($_REQUEST['btnDeleteArtShow']))
 }
 
 
-
-$_SESSION['userArtScript'] = "";
-$_SESSION['userArtOptions'] = "";
-$artresults = mysqli_query($conn,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
-
-if(mysqli_num_rows($artresults) > 0)
-{
-	$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
-	while($artRow = mysqli_fetch_array($artresults))
-	{
-	
-		$_SESSION['userArtScript']  .= "var art = new Object(); \r";
-
-		$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
-		$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
-		$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
-		$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
-		$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
-		
-		$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
-	}
-
-}
-
-
+buildUserArt();
 
 /*
 if(isset($_REQUEST['btnDeletePlayList']))
@@ -206,8 +182,8 @@ function saveArtSettings()
 	if(system == undefined)
 		system = systemsMap.get(parseInt(systemNameId.value));
 	
-	art.systemId = systemNameId.value;
-	art.channelId = channelId.value;
+	art.showParms.systemId = systemNameId.value;
+	art.showParms.channelId = channelId.value;
 			
 	
 	storeMatrix();
@@ -219,12 +195,12 @@ function saveArtSettings()
 		
 		
 	}
-	art.brightness = brightness.value;
+	art.showParms.brightness = brightness.value;
 
 
-	art.clearStart = (clearStart.checked) ? 1 : 0;
-	art.clearFinish   = (clearFinish.checked) ? 1 : 0;
-	art.gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
+	art.showParms.clearStart = (clearStart.checked) ? 1 : 0;
+	art.showParms.clearFinish   = (clearFinish.checked) ? 1 : 0;
+	art.showParms.gammaCorrection   = (gammaCorrection.checked) ? 1 : 0;
 	
 	jsonContainer.value = JSON.stringify(art.showParms);
 	
