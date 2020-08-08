@@ -221,8 +221,8 @@ function hexToRgb(hex)
 			{
 			   playList.showParms[parmIndex].matrixText = hasText.value;
 			   playList.showParms[parmIndex].position = position.value;
-			   //alert(playList.showParms[parmIndex].position);
-			   //alert("added show parm!");
+			   
+			   //alert("added show parm: " + playList.showParms[parmIndex].position);
 			}
 		}
 		
@@ -474,7 +474,7 @@ function hexToRgb(hex)
 						playList.showParms[i].matrixText = hasText.value;
 						playList.showParms[i].position = position.value;
 						//alert(playList.showParms[i].position);
-						//alert("we made it!")
+						//alert("save show parm: " + playList.showParms[i].position);
 					}
 					
 					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 4)
@@ -620,6 +620,7 @@ function hexToRgb(hex)
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
         var hasText = document.getElementById("hasText");
+		var position = document.getElementById("position");
         var matrixData = document.getElementById("matrixDiv");
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
@@ -698,6 +699,9 @@ function hexToRgb(hex)
 					hasText.value = playList.showParms[i].matrixText;
 					hasText.setAttribute('disabled', false);
 					hasText.disabled = false;
+					position.value = playList.showParms[i].position;
+					position.setAttribute('disabled', false);
+					position.disabled = false;
 				}
 				
 				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 4)
