@@ -116,31 +116,22 @@ if(mysqli_num_rows($systemResults) > 0)
             $_SESSION['systemlistoption'] .="<option value = '".$systemRow['ID']."'>". $systemRow['systemName']."</option>";
 
     }
-    
-    $_SESSION['userArtScript'] = "";
-    $_SESSION['userArtOptions'] = "";
-	$artresults = mysqli_query($conn,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
-	
-	if(mysqli_num_rows($artresults) > 0)
-	{
-		$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
-		while($artRow = mysqli_fetch_array($artresults))
-		{
-		
-			$_SESSION['userArtScript']  .= "var art = new Object(); \r";
-
-			$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
-			$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
-			$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
-			$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
-			$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
-			
-			$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
-		}
-
-	}
-
    
+	$postionOptions = "";
+    $postionsResults = mysqli_query($conn,"SELECT * FROM lPosition");
+	if(mysqli_num_rows($postionsResults) > 0)
+	{
+		while($positionRow = mysqli_fetch_array($postionsResults))
+		{
+			if($positionRow['ID'] == $_SESSION["position"] )
+				$postionOptions .= '<option selected value="' . $positionRow['ID'] . '">' . $positionRow['description'] . '</option>';
+			else
+				$postionOptions .= '<option value="' . $positionRow['ID'] . '">' . $positionRow['description'] . '</option>';
+			
+		}
+	}
+		 
+	
 }
 
 
@@ -242,10 +233,8 @@ background-color: red;
 			
 			<p>
 				<select name="position" id="position" style="width: 50%">
-					<option value="1">Top</option>
-					<option value="2">Center</option>
-					<option value="3">Bottom</option>
-				</input>
+					<?php echo $postionOptions;?>
+				</select>
 				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" style="width: 50%" />
 				
 				

@@ -35,6 +35,7 @@ if(isset($_REQUEST['Login']))
 		$_SESSION['height'] = 5;
 		$_SESSION['fill'] = 0;
 		$_SESSION['ChannelId'] = 0;
+		$_SESSION['position'] = 1;
 
 	
 		$sysResults = mysqli_query($conn, "SELECT ID FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");

@@ -13,7 +13,7 @@ if($_SESSION['authorized'] == 0)
   exit();
 }
 
-
+$sendArray['UserID'] = "";
 if(!empty($_REQUEST))
 {
     $sendArray['UserID'] = $_SESSION['UserID'];
@@ -65,6 +65,8 @@ if(!empty($_REQUEST))
 	else
 		$_SESSION['fill'] = 0;
 
+	if(!empty($_POST['position']))
+		$_SESSION['position'] = $_POST['position'];
 }
 
 if(isset($_REQUEST['Power']))
@@ -269,10 +271,12 @@ if(isset($_REQUEST['LightShow']))
     
 }
 
+
 if(isset($_REQUEST['PlayArtShow']))
 {
+		
 	$sendArray['playArtShow'] = 1;
-	$sendArray['artShow'] = intval($_POST('PlayArtShow'));
+	$sendArray['artShowId'] = intval($_POST['PlayArtShow']);
 	$sendArray['UserID'] = intval($_SESSION['UserID']);
 	sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 }
@@ -287,10 +291,8 @@ if(isset($_REQUEST['btnPlaylist']))
 		$sendArray['playPlaylist'] = 1;
 		$sendArray['playlistName'] = intval($_POST['Playlist']);
 		$sendArray['UserID'] = intval($_SESSION['UserID']);
-		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
-		//$displayStrip = mysqli_query($conn,"SELECT serverHostName FROM lightSystems WHERE ID = ".$_SESSION["LightSystemID"] );
-		//$query_data = mysqli_fetch_array($displayStrip);
-		//sendMQTT($query_data['serverHostName'], json_encode($sendArray));
+	    sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
+		
 	}
 }
 
@@ -308,7 +310,28 @@ if(mysqli_num_rows($results) > 0)
 
 }
 
+$_SESSION['userArtScript'] = "";
+$_SESSION['userArtOptions'] = "";
+$artresults = mysqli_query($conn,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
 
+if(mysqli_num_rows($artresults) > 0)
+{
+	$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
+	while($artRow = mysqli_fetch_array($artresults))
+	{
+	
+		$_SESSION['userArtScript']  .= "var art = new Object(); \r";
+
+		$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
+		$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
+		$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
+		$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
+		$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
+		
+		$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
+	}
+
+}
 
 $conn->close();
 
