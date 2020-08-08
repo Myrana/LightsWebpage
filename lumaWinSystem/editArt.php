@@ -144,6 +144,7 @@ function setArtShowSettings()
 	var matrixData = document.getElementById("matrixDiv");
 	var divMatrix = document.getElementById("divMatrix");
 	var divArt = document.getElementById("divArt");
+	var systemNameId = document.getElementById("SystemNameId");
 	var currentPos = 0;
 	var matrixHTML = "";
 	
@@ -151,14 +152,16 @@ function setArtShowSettings()
 	var art = artListMap.get(parseInt(playArtShow.value));
 	var systemNameId = document.getElementById("SystemNameId");
 	
-	showControl.disabled = true;
-	showControl.value = art.showParms.show;
-	setShowSettings(true);
-	
 	system = systemsMap.get(parseInt(art.showParms.systemId));
 	if(system == undefined)
 		system = systemsMap.get(parseInt(systemNameId.value));
-				
+	
+	showControl.disabled = true;
+	showControl.value = art.showParms.show;
+	systemNameId.value = system.id;
+	
+	setShowSettings(true);
+	
 	for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
 	{
 		

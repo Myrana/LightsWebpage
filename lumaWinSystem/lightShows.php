@@ -116,7 +116,6 @@ if(isset($_REQUEST['LightShow']))
     $r = 5;
     $g = 3;
     $b = 12;
-    
     if(!empty($_POST['ShowName']))
     {
 			
@@ -241,6 +240,7 @@ if(isset($_REQUEST['LightShow']))
 		
 		if(!empty($_POST['fill']))
 			$sendArray['fill'] = 1;
+		
 		
 			
 		if(!empty($_POST['matrixData']))

@@ -190,11 +190,11 @@ background-color: red;
 				</select>
 		<p>
 			<label for="SystemName">System Name:</label>
-			<select id="SystemNameId" name="SystemNameId"style="width: 25%" onChange="setSystemSettings();">
+			<select id="SystemNameId" name="SystemName"style="width: 25%" onChange="setSystemSettings();">
 			<?php echo $_SESSION['systemlistoption'];?></select>
 			
 			<label for="ShowName">Show name</label>
-			<select id="ShowNameId" name="ShowNameId" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
+			<select id="ShowNameId" name="ShowName" onChange="setShowSettings(true);" style="width: 25%"><?php echo $lightShowsoption;?></select>
 			
 			
 		</p>
