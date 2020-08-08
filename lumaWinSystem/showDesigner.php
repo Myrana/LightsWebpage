@@ -241,12 +241,12 @@ background-color: red;
         <center>
 			
 			<p>
-				<select name="position" id="position">
+				<select name="position" id="position" style="width: 50%">
 					<option value="1">Top</option>
 					<option value="2">Center</option>
 					<option value="3">Bottom</option>
 				</input>
-				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" />
+				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" style="width: 50%" />
 				
 				
 			</p>
@@ -293,8 +293,9 @@ background-color: red;
 		  <h1>Matrix Designer!</h1>
 			<p>
 				<p>
+					<label>Save art</label>
 					<input type="checkbox" name="saveArt" id="saveArt">
-					<input type="text" name="saveArtName" id="saveArtName">
+					<input type="text" name="saveArtName" id="saveArtName" placeholder="Art Name" style="width: 85%">
 				</p>
 				
 				<select id="brushSize" name="brushSize" style="width: 25%">
@@ -671,6 +672,7 @@ function setShowSettings(arg1)
         var minutes = document.getElementById("NumMinutesId");
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
+		var position = document.getElementById("position");
 		var startRow = document.getElementById("startRow");
 		var startColumn = document.getElementById("startColumn");
 		var radius = document.getElementById("radius");
@@ -692,6 +694,7 @@ function setShowSettings(arg1)
         minutes.setAttribute('disabled', true);
 		colorEvery.setAttribute('disabled', true);
 		hasText.setAttribute('disabled', true);
+		position.setAttribute('disabled', true);
 		startRow.setAttribute('disabled', true);
 		startColumn.setAttribute('disabled', true);
 		radius.setAttribute('disabled', true);
@@ -755,6 +758,8 @@ function setShowSettings(arg1)
 		
 			hasText.setAttribute('disabled', false);
 			hasText.disabled = false;
+			position.setAttribute('disabled', false);
+			position.disabled = false;
 
 
 		}
