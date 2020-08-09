@@ -247,9 +247,7 @@ function hexToRgb(hex)
 						
 						playList.showParms[parmIndex].len = len.value;
 						playList.showParms[parmIndex].height = height.value;
-						
-						
-						break;
+					break;
 					
 			}
 		
@@ -351,6 +349,8 @@ function hexToRgb(hex)
      
 
     }
+    
+    
 	function removeShowSettings()
     {
 		
@@ -834,6 +834,58 @@ function confirmDelete()
 	
 } 
 
+
+function setArtSystem()
+{
+	var artShowId = document.getElementById("PlayArtShow");
+	if(artShowId.value != 0)
+	{
+		
+		var systemNameId = document.getElementById("SystemNameId");
+		var playArtShow = document.getElementById("PlayArtShow");
+		var art = artListMap.get(parseInt(playArtShow.value));
+		
+		systemNameId.value = art.showParms.systemId;
+	}
+}
+
+
+function addArtShow()
+{
+	
+	var artShowId = document.getElementById("PlayArtShow");
+	if(artShowId.value != 0)
+	{
+		
+		var systemNameId = document.getElementById("SystemNameId");
+		var playArtShow = document.getElementById("PlayArtShow");
+		var playListId = document.getElementById("PlayList");
+		var showControl = document.getElementById("ShowNameId");
+		var showListControl = document.getElementById("ShowName");
+		
+		var art = artListMap.get(parseInt(playArtShow.value));
+		var playList = playListMap.get(parseInt(playListId.value));
+		playList.showParms[playList.showParms.length] = art.showParms;
+		
+		
+		var option = document.createElement("option");
+		var show = showMap.get(parseInt(art.showParms.show));
+		
+		option.text = show.showName;
+		option.value = showListControl.length + 1;
+		showListControl.add(option); 
+		
+		showListControl.value = showListControl.length;
+		showControl.value = art.showParms.show;
+	
+		setShowParms();
+	  
+	}
+	
+	return false;
+}
+
+	
 </script>
 	
 <center><img src="Images/edit-shows.png" alt="Edit Shows" /></center>
@@ -848,7 +900,11 @@ function confirmDelete()
 		<p>
 		<label for="ShowName">Select Show</label><select id="ShowName" name="ShowName" onchange="setShowParms();"></select>
 		</p>
-		
+		<p>
+		<label>Art</label>
+				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
+				<button name="btnAddArtShow" onclick="return addArtShow();">Add Art</button>
+		</p>
 		<p>
 		<label>New Playlist Name*</label> <br /><input type="text" id="NewPlayListName" name="NewPlayListName" max="50" placeholder="Enter a playlist name (50 characters)" style="width: 100%">
 		</p>
