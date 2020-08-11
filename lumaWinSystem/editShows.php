@@ -162,6 +162,7 @@ function hexToRgb(hex)
         var gammaCorrection = document.getElementById("gammaCorrection");
         var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
+		var direction = document.getElementById("direction");
 
 		var systemNameId = document.getElementById("SystemNameId");
 		var channelId = document.getElementById("ChannelId");
@@ -247,6 +248,13 @@ function hexToRgb(hex)
 						
 						playList.showParms[parmIndex].len = len.value;
 						playList.showParms[parmIndex].height = height.value;
+					break;
+					
+					case 4:
+						playList.showParms[parmIndex].startRow = startRow.value;
+						playList.showParms[parmIndex].startColumn = startColumn.value;
+						playList.showParms[parmIndex].len = len.value;
+						playList.showParms[parmIndex].direction = direction.value;
 					break;
 					
 			}
@@ -408,6 +416,7 @@ function hexToRgb(hex)
         var brightness = document.getElementById("Brightness");
 		var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
+		var direction = document.getElementById("direction");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -499,6 +508,13 @@ function hexToRgb(hex)
 									playList.showParms[i].height = height.value;
 									
 									break;
+								
+								case 4:
+									playList.showParms[i].startRow = startRow.value;
+									playList.showParms[i].startColumn = startColumn.value;
+									playList.showParms[i].len = len.value;
+									playList.showParms[i].direction = direction.value;
+								break;
 								
 						}
 					
@@ -621,6 +637,7 @@ function hexToRgb(hex)
         var gammaCorrection = document.getElementById("gammaCorrection");
         var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
+		var direction = document.getElementById("direction");
         var matrixData = document.getElementById("matrixDiv");
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
@@ -725,6 +742,16 @@ function hexToRgb(hex)
 									
 								len.value = playList.showParms[i].len;
 								height.value = playList.showParms[i].height;
+									
+								break;
+							
+							case 4:
+							
+							 	startRow.value = playList.showParms[i].startRow;
+								startColumn.value = playList.showParms[i].startColumn;	
+								len.value = playList.showParms[i].len;
+								height.value = playList.showParms[i].height;
+								direction.value = playList.showParms[i].direction;
 									
 								break;
 								
