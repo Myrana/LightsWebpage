@@ -67,6 +67,9 @@ if(!empty($_REQUEST))
 
 	if(!empty($_POST['position']))
 		$_SESSION['position'] = $_POST['position'];
+	
+	if(!empty($_POST['direction']))
+		$_SESSION['direction'] = $_POST['direction'];
 }
 
 if(isset($_REQUEST['Power']))
@@ -242,9 +245,12 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['fill'] = 1;
 		
 		
+		if(!empty($_POST['direction']))
+			$sendArray['direction'] = $_POST['direction'];
 			
 		if(!empty($_POST['matrixData']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
+		
 		
 		
 		

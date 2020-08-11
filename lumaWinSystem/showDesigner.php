@@ -41,7 +41,7 @@ if(mysqli_num_rows($results) > 0)
 
 
 
-$systemResults = mysqli_query($conn,"SELECT * FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
+$systemResults = mysqli_query($conn,"SELECT * FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1 and enabled = 1");
 if(mysqli_num_rows($systemResults) > 0)
 {
 	$_SESSION['systemlistoption'] = '';
@@ -129,7 +129,20 @@ if(mysqli_num_rows($systemResults) > 0)
 		}
 	}
 		 
-	
+
+	$directionOptions = "";
+    $directionResults = mysqli_query($conn,"SELECT * FROM lDirection");
+	if(mysqli_num_rows($postionsResults) > 0)
+	{
+		while($directionRow = mysqli_fetch_array($directionResults))
+		{
+			if($directionRow['ID'] == $_SESSION["direction"] )
+				$directionOptions .= '<option selected value="' . $directionRow['ID'] . '">' . $directionRow['description'] . '</option>';
+			else
+				$directionOptions .= '<option value="' . $directionRow['ID'] . '">' . $directionRow['description'] . '</option>';
+			
+		}
+	}
 }
 
 
@@ -336,6 +349,15 @@ background-color: red;
 					<td><input type="number" id="height" name="height" value="<?php echo $_SESSION["height"];?>" /></td>
 				
 				</tr>
+
+				<tr>
+					<td><label>Triangle Direction</label></td>
+					<td><select name="direction" id="direction">
+					<?php echo $directionOptions;?>
+					</select></td>
+									
+				</tr>
+
 				
 				<tr>
 				<td><label>Fill</label></td>
@@ -669,6 +691,8 @@ function setShowSettings(arg1)
 		var divShapes = document.getElementById("divShapes");
 		
 		var baseColor = document.getElementById("baseColor");
+		var direction = document.getElementById("direction");
+
 		
 		
         color1.setAttribute('disabled', true);
@@ -686,10 +710,14 @@ function setShowSettings(arg1)
 		radius.setAttribute('disabled', true);
 		len.setAttribute('disabled', true);
 		height.setAttribute('disabled', true);
+		direction.setAttribute('disabled', true);
+		
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
 		divShapes.setAttribute('hidden', true);
 		divShapes.hidden = true;
+		
+		
 		
 		if(arg1 ==  true)
 		{
@@ -770,6 +798,13 @@ function setShowSettings(arg1)
 					startColumn.disabled  = false;
 					len.disabled = false;
 					height.disabled = false;
+				break;
+					
+				case 4:
+					startRow.disabled = false;
+					startColumn.disabled  = false;
+					len.disabled = false;
+					direction.disabled = false;
 				break;
 				
 				

@@ -36,6 +36,7 @@ if(isset($_REQUEST['Login']))
 		$_SESSION['fill'] = 0;
 		$_SESSION['ChannelId'] = 0;
 		$_SESSION['position'] = 1;
+		$_SESSION['direction'] = 1;
 		$_SESSION['ShowName'] = 0; 
 
 	

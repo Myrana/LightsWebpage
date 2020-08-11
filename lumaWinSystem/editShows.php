@@ -632,7 +632,7 @@ function hexToRgb(hex)
 		var radius = document.getElementById("radius");
 		var len = document.getElementById("length");
 		var height = document.getElementById("height");
-		
+	
 		var showIndex = parseInt(showListControl.value) - 1;	
 		
 		for (i in playList.showParms)
