@@ -246,10 +246,10 @@ background-color: red;
 				<select name="position" id="position" style="width: 50%">
 					<?php echo $postionOptions;?>
 				</select>
-				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" style="width: 50%" />
-				
-				
+				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" style="width: 50%" />	
 			</p>
+			
+			<input type="file" name="uploadArt" id="updateArt" accept="image/jpeg, image/png" />
 			
 			
 			<p><label for="On1" style="font-size: 14px">Clear start</label>
@@ -681,6 +681,7 @@ function setShowSettings(arg1)
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
+		var upload = document.getElementById("uploadArt");
 		var startRow = document.getElementById("startRow");
 		var startColumn = document.getElementById("startColumn");
 		var radius = document.getElementById("radius");
@@ -711,6 +712,7 @@ function setShowSettings(arg1)
 		len.setAttribute('disabled', true);
 		height.setAttribute('disabled', true);
 		direction.setAttribute('disabled', true);
+		upload.setAttribute('disabled', true);
 		
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;

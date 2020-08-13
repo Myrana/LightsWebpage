@@ -163,6 +163,7 @@ function hexToRgb(hex)
         var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
 		var direction = document.getElementById("direction");
+		var upload = document.getElementById("uploadArt");
 
 		var systemNameId = document.getElementById("SystemNameId");
 		var channelId = document.getElementById("ChannelId");
@@ -417,6 +418,7 @@ function hexToRgb(hex)
 		var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
 		var direction = document.getElementById("direction");
+		var upload = document.getElementById("uploadArt");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -638,6 +640,7 @@ function hexToRgb(hex)
         var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
 		var direction = document.getElementById("direction");
+		var upload = document.getElementById("uploadArt");
         var matrixData = document.getElementById("matrixDiv");
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
