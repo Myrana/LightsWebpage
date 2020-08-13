@@ -250,6 +250,8 @@ background-color: red;
 			</p>
 			
 			<input type="file" name="uploadArt" id="updateArt" accept="image/jpeg, image/png" />
+			<label>Save art</label>
+			<input type="checkbox" name="saveArt" id="saveArt" />
 			
 			
 			<p><label for="On1" style="font-size: 14px">Clear start</label>
