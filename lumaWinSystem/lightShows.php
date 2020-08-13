@@ -252,20 +252,22 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
 		
-		$target_dir = "/home/hellweek/code/uploadArt/";
-		$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
-		$uploadOk = 1;
-		if (move_uploaded_file($_FILES['uploadArt']['tmp_name'], $target_file)) 
+		if(!empty($_FILES['uploadArt']['tmp_name'])
 		{
-			print "Received {$_FILES['uploadArt']['name']} - its size is {$_FILES['uploadArt']['size']}";
-			echo "The file ". basename( $_FILES["uploadArt"]["name"]). " has been uploaded.";
-			$sendArray['uploadArt'] = $target_file;
+			$target_dir = "/home/hellweek/code/uploadArt/";
+			$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
+		
+			if (move_uploaded_file($_FILES['uploadArt']['tmp_name'], $target_file)) 
+			{
+				echo "Received {$_FILES['uploadArt']['name']} - its size is {$_FILES['uploadArt']['size']} <br>";
+				echo "The file ". basename( $_FILES["uploadArt"]["name"]). " has been uploaded.";
+				$sendArray['uploadArt'] = $target_file;
+			}
+			else
+			{
+				echo "error moving";
+			}
 		}
-		else
-		{
-			echo "error moving";
-		}
-			
 		
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
