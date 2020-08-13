@@ -252,7 +252,7 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
 		
-		if(!empty($_FILES['uploadArt']['tmp_name'])
+		if(!empty($_FILES['uploadArt']['tmp_name']))
 		{
 			$target_dir = "/home/hellweek/code/uploadArt/";
 			$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
@@ -262,6 +262,10 @@ if(isset($_REQUEST['LightShow']))
 				echo "Received {$_FILES['uploadArt']['name']} - its size is {$_FILES['uploadArt']['size']} <br>";
 				echo "The file ". basename( $_FILES["uploadArt"]["name"]). " has been uploaded.";
 				$sendArray['uploadArt'] = $target_file;
+				
+				if(!empty($_POST['saveArt']))
+					$sendArray['saveArt'] = 1;
+				
 			}
 			else
 			{
