@@ -252,8 +252,20 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
 		
-		
-		
+		if(!empty($_POST['uploadArt']))
+		{
+			$target_dir = "media/";
+			$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
+			$uploadOk = 1;
+			print "Received {$_FILES['uploadArt']['name']} - its size is {$_FILES['fileToUpload']['size']}";
+			
+			if (move_uploaded_file($_FILES["uploadArt"]["tmp_name"], $target_file)) 
+			{
+				echo "The file ". basename( $_FILES["uploadArt"]["name"]). " has been uploaded.";
+				$sendArray['uploadArt'] = basename( $_FILES["uploadArt"]["name"]);
+			}
+			
+		}
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
        
@@ -330,7 +342,7 @@ include('header.php');
 <body>
 <div class="clearfix">
 	<div class="column twenty-five">
-    	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+    	<form method="post" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			<center><img src="System-Control.png" id="systemControlPic" alt="System Control"/></center>
    				<p>
 				<label for="ChgBrightness">Change Brightness:</label>
