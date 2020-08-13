@@ -164,6 +164,7 @@ function hexToRgb(hex)
 		var position = document.getElementById("position");
 		var direction = document.getElementById("direction");
 		var upload = document.getElementById("uploadArt");
+		var saveArt = document.getElementById("saveArt");
 
 		var systemNameId = document.getElementById("SystemNameId");
 		var channelId = document.getElementById("ChannelId");
@@ -260,6 +261,17 @@ function hexToRgb(hex)
 					
 			}
 		
+		}
+		
+		if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 5)
+		{
+			if(upload.value.length > 0)
+			{
+			   playList.showParms[parmIndex].upload = upload.value;
+			   playList.showParms[parmIndex].saveArt = saveArt.value;
+			   
+			   //alert("added show parm: " + playList.showParms[parmIndex].position);
+			}
 		}
 		
 		
@@ -419,6 +431,7 @@ function hexToRgb(hex)
 		var position = document.getElementById("position");
 		var direction = document.getElementById("direction");
 		var upload = document.getElementById("uploadArt");
+		var saveArt = document.getElementById("saveArt");
         var clearStart = document.getElementById("clearStart");
         var clearFinish = document.getElementById("clearFinish");
         var gammaCorrection = document.getElementById("gammaCorrection");
@@ -521,6 +534,16 @@ function hexToRgb(hex)
 						}
 					
 					}
+				
+					if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 5)
+				{
+				
+				   playList.showParms[i].upload = upload.value;
+				   playList.showParms[i].saveArt = saveArt.value;
+
+				   //alert("added show parm: " + playList.showParms[parmIndex].position);
+				}
+			
 				
 		
                     playList.showParms[i].brightness = brightness.value;
@@ -641,6 +664,7 @@ function hexToRgb(hex)
 		var position = document.getElementById("position");
 		var direction = document.getElementById("direction");
 		var upload = document.getElementById("uploadArt");
+		var saveArt = document.getElementById("saveArt");
         var matrixData = document.getElementById("matrixDiv");
         var divMatrix = document.getElementById("divMatrix");
         var divArt = document.getElementById("divArt");
@@ -760,6 +784,16 @@ function hexToRgb(hex)
 								
 					}
 					
+				}
+				
+				if( system.channelsMap.get(1).stripRows > 1 && show.matrixType == 5)
+				{
+					upload.value = playList.showParms[i].uploadArt;
+					upload.setAttribute('disabled', false);
+					upload.disabled = false;
+					saveArt.value = playList.showParms[i].saveArt;
+					saveArt.setAttribute('disabled', false);
+					saveArt.disabled = false;
 				}
 			
 				if(show.hasDelay)

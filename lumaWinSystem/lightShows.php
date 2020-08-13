@@ -252,7 +252,7 @@ if(isset($_REQUEST['LightShow']))
 			$sendArray['pixles'] = json_decode($_POST['matrixData']);
 		
 		
-		if(!empty($_FILES['uploadArt']['tmp_name'])
+		/*if(!empty($_FILES['uploadArt']['tmp_name']) 
 		{
 			$target_dir = "/home/hellweek/code/uploadArt/";
 			$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
@@ -267,7 +267,7 @@ if(isset($_REQUEST['LightShow']))
 			{
 				echo "error moving";
 			}
-		}
+		} */
 		
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
