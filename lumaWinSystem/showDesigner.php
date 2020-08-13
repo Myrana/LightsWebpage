@@ -681,7 +681,7 @@ function setShowSettings(arg1)
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
-		var upload = document.getElementById("uploadArt");
+		//var upload = document.getElementById("uploadArt");
 		var startRow = document.getElementById("startRow");
 		var startColumn = document.getElementById("startColumn");
 		var radius = document.getElementById("radius");
@@ -712,7 +712,7 @@ function setShowSettings(arg1)
 		len.setAttribute('disabled', true);
 		height.setAttribute('disabled', true);
 		direction.setAttribute('disabled', true);
-		upload.setAttribute('disabled', true);
+		//upload.setAttribute('disabled', true);
 		
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
