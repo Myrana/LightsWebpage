@@ -275,8 +275,6 @@ if(isset($_REQUEST['LightShow']))
 		
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
-       
-       
 		
 		if(!empty($_POST['saveArt']) && !empty($_POST['saveArtName']))
 		{

@@ -119,41 +119,44 @@ function setArtShowSettings()
 	var showControl = document.getElementById("ShowNameId");
 	var matrixData = document.getElementById("matrixDiv");
 	var divMatrix = document.getElementById("divMatrix");
-	var divArt = document.getElementById("divArt");
+	var divShapes = document.getElementById("divShapes");
 	var systemNameId = document.getElementById("SystemNameId");
+	
 	var currentPos = 0;
 	var matrixHTML = "";
 	
 	var playArtShow = document.getElementById("PlayArtShow");
-	var art = artListMap.get(parseInt(playArtShow.value));
 	var systemNameId = document.getElementById("SystemNameId");
-	
-	system = systemsMap.get(parseInt(art.showParms.systemId));
-	if(system == undefined)
-		system = systemsMap.get(parseInt(systemNameId.value));
-	
 	showControl.disabled = true;
-	showControl.value = art.showParms.show;
-	systemNameId.value = system.id;
-	
-	setShowSettings(true);
-	
-	for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+	setShowSettings();
+
+	if(parseInt(playArtShow.value) != 0)
 	{
+		var art = artListMap.get(parseInt(playArtShow.value));
+		system = systemsMap.get(parseInt(systemNameId.value));
+		systemNameId.value = system.id;
+		showControl.value = art.showParms.show;
 		
-		for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+		for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
 		{
 			
-			currentPos += 1;
-			matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos].co.replace("0x","#") + "' ></span>";
-			
+			for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+			{
+				
+				currentPos += 1;
+				matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos].co.replace("0x","#") + "' ></span>";
+				
+			}
+			matrixHTML += "<br>";
+
 		}
-		matrixHTML += "<br>";
-
-	}
-
+		divMatrix.innerHTML = matrixHTML;
+		setShowSettings(false);
 	
-	divMatrix.innerHTML = matrixHTML;
+	}
+	
+	
+
 	
 }
 
@@ -222,7 +225,6 @@ function confirmDelete()
 		return false;
 	
 } 
-
 
 
 

@@ -249,7 +249,7 @@ background-color: red;
 				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" style="width: 50%" />	
 			</p>
 			
-			<input type="file" name="uploadArt" id="updateArt" accept="image/jpeg, image/png" />
+			<input type="file" name="uploadArt" id="uploadArt" accept="image/jpeg, image/png" />
 			<label>Save art</label>
 			<input type="checkbox" name="saveArt" id="saveArt" />
 			
@@ -672,8 +672,7 @@ function setShowSettings(arg1)
 		var system = systemsMap.get(parseInt(systemNameId.value));
 		var index = parseInt(showNameId.value);		
 		
-		
-        var color1 = document.getElementById("Color1");
+		var color1 = document.getElementById("Color1");
         var color2 = document.getElementById("Color2");
         var color3 = document.getElementById("Color3");
         var color4 = document.getElementById("Color4");
@@ -683,19 +682,19 @@ function setShowSettings(arg1)
         var colorEvery = document.getElementById("ColorEveryId");
 		var hasText = document.getElementById("hasText");
 		var position = document.getElementById("position");
-		//var upload = document.getElementById("uploadArt");
 		var startRow = document.getElementById("startRow");
 		var startColumn = document.getElementById("startColumn");
 		var radius = document.getElementById("radius");
 		var len = document.getElementById("length");
-		var height = document.getElementById("height");
-		
+		var height = document.getElementById("height");	
 		var divArt = document.getElementById("divArt");
 		var divShapes = document.getElementById("divShapes");
-		
 		var baseColor = document.getElementById("baseColor");
 		var direction = document.getElementById("direction");
 
+		var upload = document.getElementById("uploadArt");
+		var saveArt = document.getElementById("saveArt");
+		
 		
 		
         color1.setAttribute('disabled', true);
@@ -714,13 +713,14 @@ function setShowSettings(arg1)
 		len.setAttribute('disabled', true);
 		height.setAttribute('disabled', true);
 		direction.setAttribute('disabled', true);
-		//upload.setAttribute('disabled', true);
 		
 		divArt.setAttribute('hidden', true);
 		divArt.hidden = true;
 		divShapes.setAttribute('hidden', true);
 		divShapes.hidden = true;
 		
+		upload.setAttribute('disabled', true);
+		saveArt.setAttribute('disabled', true);
 		
 		
 		if(arg1 ==  true)
@@ -770,7 +770,7 @@ function setShowSettings(arg1)
 			
 		}
 		
-			
+		
 		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 2) 
 		{
 		
@@ -784,7 +784,6 @@ function setShowSettings(arg1)
               
 		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 4)
 		{
-		
 			divShapes.setAttribute('hidden', false);
 			divShapes.hidden = false;
 			switch(showMap.get(index).matrixShape)
@@ -814,6 +813,17 @@ function setShowSettings(arg1)
 				
 			}
 				
+		}
+		
+		if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 5) 
+		{
+		
+			upload.setAttribute('disabled', false);
+			upload.disabled = false;
+			saveArt.setAttribute('disabled', false);
+			saveArt.disabled = false;
+
+
 		}
 			
         if(showMap.get(index).hasWidth == 1)
