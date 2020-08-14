@@ -21,12 +21,12 @@ foreach($files as $file)
 {
 	$counter++;
 	if(is_file($target_dir . $file ) == true)
-		$imageList .= '<a href="' .  $target_dir . $file . '">' . $target_dir . $file . '</a><img src="' . $target_dir . $file . '" width="320" height="160"></image>';
+
+	$imageList .= '<a target="_blank" href="' . $target_dir . $file . '"><img src="' . $target_dir . $file . '" width="320" height="160" /></a>';
 		
-	if($counter % 2 == 0)
-		$imageList .= "<br>";
-    
-    
+	if($counter % 5 == 0)
+		$imageList .= "<br>";    
+   
 }
 
 
@@ -39,7 +39,7 @@ foreach($files as $file)
 	
 <?php echo $imageList;?>
 
-<!--<img src=”image location” width=”1920” height=”1017” />	-->
+
 	
 </body>
 <?php include("footer.php"); ?>
