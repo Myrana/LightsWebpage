@@ -71,7 +71,7 @@ $conn->close();
 
 <!doctype html>
 <?php 
-$title = 'Edit Shows';
+$title = 'Edit Art';
 include('header.php'); 
 ?>
 
@@ -230,7 +230,7 @@ function confirmDelete()
 
 </script>
 	
-<center><img src="Images/edit-shows.png" alt="Edit Art Work" /></center>
+<center>Edit Art</center>
 <div class="clearfix">
 	<div class="column twenty-five">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
