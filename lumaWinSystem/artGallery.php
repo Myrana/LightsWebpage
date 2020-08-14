@@ -18,7 +18,7 @@ $imageList = "";
 foreach($files as $file)
 {
 	if(is_file($target_dir . $file ) == true)
-		$imageList .= '<img src="' . $target_dir . $file . '" width="320" height="160" />';
+		$imageList .= '<a target="_blank" href="' . $target_dir . $file . '"><img src="' . $target_dir . $file . '" width="320" height="160" /></a>';
     
     
 }
@@ -35,7 +35,7 @@ home/hellweek/code/uploadArt
 	
 <?php echo $imageList;?>
 
-<!--<img src=”image location” width=”1920” height=”1017” />	-->
+
 	
 </body>
 <?php include("footer.php"); ?>
