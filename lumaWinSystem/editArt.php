@@ -230,7 +230,7 @@ function confirmDelete()
 
 </script>
 	
-<center>Edit Art</center>
+<center><img src="Images/edit-art.png" alt="edit art" /></center>
 <div class="clearfix">
 	<div class="column twenty-five">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
