@@ -15,15 +15,19 @@ $target_dir = "userArt/";
 
 $files = scandir($target_dir, 1);
 $imageList = "";
+
+$counter = 0;
 foreach($files as $file)
 {
+	$counter++;
 	if(is_file($target_dir . $file ) == true)
-		$imageList .= '<img src="' . $target_dir . $file . '" width="320" height="160" />';
+		$imageList .= '<a href="' .  $target_dir . $file . '">' . $target_dir . $file . '</a><img src="' . $target_dir . $file . '" width="320" height="160"></image>';
+		
+	if($counter % 2 == 0)
+		$imageList .= "<br>";
     
     
 }
-home/hellweek/code/uploadArt
-//print_r($files);
 
 
 ?>
