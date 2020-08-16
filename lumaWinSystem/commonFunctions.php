@@ -1,7 +1,8 @@
 <?php
 
 session_start();
-$expireAfter = 30;
+$expireAfter = 120;
+
 
 if(isset($_SESSION['last_action']))
 {
@@ -57,12 +58,42 @@ function getServerHostName($arg_1)
 	return $retVal;		
 }
 
+
+function buildUserArt()
+{
+	$_SESSION['userArtScript'] = "";
+	$_SESSION['userArtOptions'] = "<option value = '0'>-- Select One --</option>";
+	$con = getDatabaseConnection();
+	$artresults = mysqli_query($con,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
+
+	if(mysqli_num_rows($artresults) > 0)
+	{
+		$_SESSION['userArtScript']  = "let artListMap = new Map();\r";
+		while($artRow = mysqli_fetch_array($artresults))
+		{
+		
+			$_SESSION['userArtScript']  .= "var art = new Object(); \r";
+
+			$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
+			$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
+			$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
+			$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
+			$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
+			
+			$_SESSION['userArtOptions']  .="<option value = '".$artRow['ID']."'>".$artRow['artName']."</option>";
+		}
+
+	}
+}
+
+
 function sendMQTT($arg_1, $arg_2)
 {
 	$client = new Mosquitto\Client();
 	$client->connect('romoserver.local', 1883, 5);
 	$client->loop();
 	$mid = $client->publish($arg_1, $arg_2);
+	$client->loop();
 	$client->loop();
 }
 
@@ -95,13 +126,14 @@ function read_topic($arg_1)
 			$client->loop();
 			$date2 = time();
 			
-			if (($date2 - $date1) > 20) break;
+			if (($date2 - $date1) > 2) break;
 			if(!empty($GLOBALS['rcv_message'])) break;
 	}
 	 
 	$client->disconnect();
 	unset($client);						
 } 
+
 
 
 /*****************************************************************

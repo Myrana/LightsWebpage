@@ -1,0 +1,412 @@
+<?php
+
+include('commonFunctions.php');
+
+
+$conn = getDatabaseConnection();
+
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: registration.php");
+  exit();
+}
+
+if(!empty($_REQUEST))
+{
+    $sendArray['UserID'] = $_SESSION['UserID'];
+    if(!empty($_POST['SystemName']))
+        $_SESSION["LightSystemID"]  = $_POST['SystemName'];
+}
+
+
+$matrixHTML = "";
+if(isset($_REQUEST['btnWorkMatrix']))
+{
+    $sql = "SELECT ID,systemName,serverHostName,userID,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1 and ID = " . $_SESSION['LightSystemID'];
+   
+	$results = mysqli_query($conn, $sql);
+	if(mysqli_num_rows($results) > 0)
+	{
+		$row = mysqli_fetch_array($results);
+		$ledRows = $row['stripRows'];
+		$ledColumns = $row['stripColumns'];	
+		$currentPos = 0;
+		
+		for($ledRow = 0; $ledRow < $ledRows; $ledRow++)
+		{
+			
+			for($ledColumn = 0; $ledColumn < $ledColumns; $ledColumn++)
+			{
+				$currentPos += 1;
+				$matrixHTML .= "<span id='" . $currentPos  . "' class='pixel'></span>";		
+			}
+			$matrixHTML .= "<br>";
+
+		}
+	}
+}
+
+
+if(isset($_REQUEST['btnDisplayArt']))
+{
+	if(!empty($_POST['matrixData']))
+	{
+		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), $_POST['matrixData']);
+	}	
+}
+
+
+$lightSystemsoption = '';
+$lightSystemsScript = '';
+
+$sql = "SELECT ID,systemName,serverHostName,userID,TwitchSupport,mqttRetries,mqttRetryDelay,twitchMqttQueue,lc.* FROM LedLightSystem.lightSystems as ls, LedLightSystem.lightSystemChannels as lc where ls.id = lc.lightSystemId and lc.channelId = 1 and lc.enabled = 1 and ls.enabled = 1 and (userId = " . $_SESSION['UserID'] . " or userId = 1)";
+
+$results = mysqli_query($conn, $sql);
+if(mysqli_num_rows($results) > 0)
+{
+
+    $lightSystemsScript .= "let systemsMap = new Map();\r\n";
+    while($row = mysqli_fetch_array($results))
+    {
+        $lightSystemsScript .= "var system = new Object(); \r";
+
+        $lightSystemsScript .= "    system.id = " . $row['ID'] .";\r";
+        $lightSystemsScript .= "    system.systemName = '" . $row['systemName'] ."';\r";
+        $lightSystemsScript .= "    system.stripRows = " . $row['stripRows'] .";\r";
+        $lightSystemsScript .= "    system.stripColumns = " . $row['stripColumns'] .";\r";
+        $lightSystemsScript .= "    system.brightness = " . $row['brightness'] .";\r";
+        $lightSystemsScript .= "    system.matrixDir = " . $row['matrixDirection'] .";\r";
+        $lightSystemsScript .= "    system.userId = " . $_SESSION['UserID'] .";\r";
+
+        $lightSystemsScript .= "systemsMap.set(" . $row['ID'] . ", system);\r";
+
+        if($row['ID'] == $_SESSION["LightSystemID"] )
+            $lightSystemsoption .="<option value = '".$row['ID']."' selected>".$row['systemName']."</option>";
+        else
+            $lightSystemsoption .="<option value = '".$row['ID']."'>".$row['systemName']."</option>";
+
+    }
+}
+
+$conn->close();
+
+?>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="LED lights, LEDs, Accent Lighting, Matrixs">
+<meta name="Description" content="LED Accent Lights">
+<title>Matrix Art</title>
+<script src="//kit.fontawesome.com/4717f0a393.js" crossorigin="anonymous"></script>
+<link href="css/Styles.css" rel="stylesheet" type="text/css">	
+
+<style>
+.pixel {
+  height: 15px;
+  width: 15px;
+  background-color: #000000;
+  border-radius: 50%;
+  display: inline-block;
+  
+}
+
+.pixel:hover {
+background-color: red;
+}
+
+</style>
+
+</head>
+
+<?php 
+	if(!empty($_REQUEST) && !isset($_REQUEST['btnDisplayArt']))
+		echo '<body onload="setMatrixColors();" >';
+	else
+		echo '<body>';
+	
+?>
+
+
+<?php include("nav.php");  ?>
+
+
+<div class="clearfix">
+<div class="column">
+	
+
+    <form method="post" name="frmMatrix" id="frmMatrix" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+		<img src="System-Control.png" alt="System Control" width="100%" />
+    <p><label for="SystemName">System Name:</label><br />
+    <select id="SystemNameId" name="SystemName" onChange="setSystemSettings();">
+        <?php echo $lightSystemsoption;?>
+        </select>       
+    </p>
+	<p><button type="submit" name="btnWorkMatrix">Create Art!</button>
+	<p><button type="submit" onClick="storeMatrix()" name="btnDisplayArt" >Display Art!</button>
+
+    </div>
+
+
+    <div class="column" style="width: 70%">
+        <div id="divArt" class="ColumnStyles">
+		<div style="text-align:center">
+		  <h1>Matrix Art!</h1>
+			<label>Base Color</label>
+			<input type="color" id="baseColor" onchange="setMatrixColors()" name="baseColor" value="#000000" />
+			<label>Color Select</label>
+			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
+			<input type="text" id="matrixData" name="matrixData" hidden />
+			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix">
+		<p></p><?php echo $matrixHTML; ?></P>
+		</div>
+		</div>
+		
+    </div>
+    </div>
+	</div>
+
+<script>
+
+
+
+
+<?php echo $lightSystemsScript;?>
+   
+
+let mode = 0;
+const divMatrix = document.getElementById('divMatrix');
+
+divMatrix.addEventListener('mouseleave', e => {
+  
+  	mode = 0;
+	
+});
+
+divMatrix.addEventListener('mousedown', e => {
+	e.stopPropagation();
+    e.preventDefault();
+
+	
+	
+	switch(e.which)
+	{
+		case 1:
+			mode = 1;
+		break;
+
+		case 2:
+			mode = 0;
+			captureColor();	
+		break;
+
+		case 3:
+			mode = 2;
+		
+		break;
+	}
+  
+});
+
+
+divMatrix.addEventListener('mousemove', e => {
+	 e.stopPropagation();
+     e.preventDefault();
+	if(mode == 1 || mode == 2)
+		setColor();
+	//else
+	//	setToBaseColor();
+	
+});
+
+
+divMatrix.addEventListener('mouseup', e => {
+    e.stopPropagation();
+    e.preventDefault();
+	mode = 0;
+	
+});
+
+
+
+
+
+function setColor()
+{	
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id != "divMatrix")
+	{
+		if(mode == 1)
+		{
+			var color = document.getElementById('colorSelect');	
+		}
+		else if(mode ==  2)
+		{
+			var color = document.getElementById('baseColor');	
+		}
+		
+		//pixel.style.backgroundColor = color.value;
+		pixel.style.background = color.value;
+		
+	}
+}
+
+function captureColor()
+{
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id != "divMatrix")
+	{
+		var color = document.getElementById('colorSelect');
+		color.value = rgbToWebHex(pixel.style.backgroundColor);
+		
+	}
+	
+}
+
+function setToBaseColor()
+{	
+	isDrawing = 0;
+	var pixel = document.getElementById(this.event.target.id);
+	if(pixel.id == "divMatrix") return;
+	var color = document.getElementById('baseColor');
+	pixel.style.background = color.value;
+
+}
+
+function setMatrixColors()
+{
+	var pixel;
+	var systemNameId = document.getElementById("SystemNameId");
+	var baseColor = document.getElementById("baseColor");
+    var index = parseInt(systemNameId.value);
+    var system = systemsMap.get(index);
+    var ledNum = 0;
+    
+    for(var row = 0; row < system.stripRows; row++)
+    {
+				
+		for(var column = 0; column < system.stripColumns ; column++)
+		{
+			ledNum += 1;
+			pixel = document.getElementById(ledNum);
+			pixel.style.background = baseColor.value;
+			
+			
+		}	
+	}
+
+}
+
+function getColorHex(color){
+    var hex;
+    if(color.indexOf('#')>-1){
+        //for IE
+        hex = color;
+    } else {
+        var rgb = color.match(/\d+/g);
+        hex = '#'+ ('0' + parseInt(rgb[0], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[1], 10).toString(16)).slice(-2) + ('0' + parseInt(rgb[2], 10).toString(16)).slice(-2);
+    }
+    return hex;
+}
+
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+
+function componentFromStr(numStr, percent) {
+    var num = Math.max(0, parseInt(numStr, 10));
+    return percent ?
+        Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+}
+
+
+function rgbToWebHex(rgb) 
+{
+	var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+    var result, r, g, b, hex = "";
+    if ( (result = rgbRegex.exec(rgb)) ) 
+    {
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
+        b = componentFromStr(result[5], result[6]);
+	}
+        
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+
+function rgbToHex(rgb) {
+	
+    var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
+    var result, r, g, b, hex = "";
+    if ( (result = rgbRegex.exec(rgb)) ) {
+			
+		
+        r = componentFromStr(result[1], result[2]);
+        g = componentFromStr(result[3], result[4]);
+        b = componentFromStr(result[5], result[6]);
+		
+        hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        
+    }
+    return hex;
+}
+
+function storeMatrix()
+{
+	var pixel;
+	var systemNameId = document.getElementById("SystemNameId");
+	var matrixData = document.getElementById("matrixData");
+	
+    var index = parseInt(systemNameId.value);
+
+    var system = systemsMap.get(index);
+    var currentPos = 0;
+    
+    var matrixJson = '{"show": "23","gammaCorrection": 1, "brightness":"' + system.brightness + '","UserID":' + system.userId + ', "pixles": {';
+    
+	for(var row = 0; row < system.stripRows; row++)
+    {
+		
+		for(var column = 0; column < system.stripColumns; column++)
+		{
+			
+			currentPos += 1;
+			pixel = document.getElementById(currentPos);
+			matrixJson += '"' + currentPos + '":{"r":' + row + ',"c":' + column + ',"co":"' + rgbToHex(pixel.style.backgroundColor) + '"}';
+			
+			if(column != (system.stripColumns - 1))
+				matrixJson += ",";
+				
+		}
+			
+		
+		if(row != system.stripRows - 1)
+			matrixJson += ",";
+		
+	}
+	
+	matrixJson += '}}';
+	matrixData.value = matrixJson;
+	alert(matrixData.value);
+		
+}
+
+
+</script>
+
+
+</form>
+   
+<?php include('footer.php'); ?>
+
+	
+</body>
+</html>
+
+

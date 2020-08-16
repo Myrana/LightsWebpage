@@ -259,21 +259,21 @@ function showRequestHandler(req) {
   if(req.url.query.color1) 
   	{
    	       colorRGB =  hexToRgb(req.url.query.color1);       
-  		JSONObj += ',"colors":{"color1": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + '}';
+  		JSONObj += ',"colors":{"color1": {"r":' + colorRGB.split(',')[1] + ',"g":' + colorRGB.split(',')[0] + ',"b":' + colorRGB.split(',')[2] + '}';
   	}
  
   	if(req.url.query.color2) 
   	{
    	       colorRGB =  hexToRgb(req.url.query.color2);
    	       
-  		JSONObj += ',"color2": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + "}";
+  		JSONObj += ',"color2": {"r":' + colorRGB.split(',')[1] + ',"g":' + colorRGB.split(',')[0] + ',"b":' + colorRGB.split(',')[2] + "}";
   	}
   	
   	  if(req.url.query.color3) 
   	    	{
    	       colorRGB =  hexToRgb(req.url.query.color3);
    	       
-  		JSONObj += ',"color3": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + "}";
+  		JSONObj += ',"color3": {"r":' + colorRGB.split(',')[1] + ',"g":' + colorRGB.split(',')[0] + ',"b":' + colorRGB.split(',')[2] + "}";
   	}
 
 
@@ -281,7 +281,7 @@ function showRequestHandler(req) {
   	{
    	       colorRGB =  hexToRgb(req.url.query.color4);
    	       
-  		JSONObj += ',"color4": {"r":' + colorRGB.split(',')[0] + ',"g":' + colorRGB.split(',')[1] + ',"b":' + colorRGB.split(',')[2] + "}";
+  		JSONObj += ',"color4": {"r":' + colorRGB.split(',')[1] + ',"g":' + colorRGB.split(',')[0] + ',"b":' + colorRGB.split(',')[2] + "}";
   	}
   	
   	JSONObj += "}";
