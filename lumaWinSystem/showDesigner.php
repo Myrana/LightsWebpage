@@ -248,8 +248,10 @@ background-color: red;
 				</select>
 				<input type="text" name="hasText" id="hasText" placeholder="Scrolling text" style="width: 50%" />	
 			</p>
+			 
+			<input type="file" name="uploadArt" id="uploadArt" accept=".gif,.jpg,.jpeg,.png" />
+			<!--<input type="file" name="uploadArt" id="uploadArt" accept="image/jpeg, image/png, /image/gif" /> -->
 			
-			<input type="file" name="uploadArt" id="uploadArt" accept="image/jpeg, image/png, /image/gif" />
 			<label>Save art</label>
 			<input type="checkbox" name="saveArt" id="saveArt" />
 			

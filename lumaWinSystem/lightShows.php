@@ -278,12 +278,24 @@ if(isset($_REQUEST['LightShow']))
 		
 		if(!empty($_POST['saveArt']) && !empty($_POST['saveArtName']))
 		{
-		   $sql = "insert into matrixArt(userID, artName, showParms, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','1')" ;
-		   if ($conn->query($sql) != TRUE)
-			{
-				echo "<h1>Ooops Error Saving Art!: " . $conn->error . "</h1>";
-				echo $sql;	
-			}
+		  $sql = "select stripColumns from lightSystemChannels where lightSystemId = '" . $_SESSION['LightSystemID'] . "' and channelId = '" . $_SESSION['ChannelId'] . "';";
+		  
+		  $results = mysqli_query($conn , $sql);
+		  
+		  if(mysqli_num_rows($results) > 0)
+          {
+					
+				$row = mysqli_fetch_array($results);
+				
+				$sql = "insert into matrixArt(userID, artName, showParms, savedPixalsWidth, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','" . $row['stripColumns'] . "','1')" ;
+				$sendArray['stripColumns'] = strval($row['stripColumns']);
+				if ($conn->query($sql) != TRUE)
+				{
+					echo "<h1>Ooops Error Saving Art!: " . $conn->error . "</h1>";
+					echo $sql;	
+				}
+		  }
+			 
 		}
 		
 		sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
