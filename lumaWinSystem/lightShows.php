@@ -127,13 +127,7 @@ if(isset($_REQUEST['LightShow']))
             if($hex != '#000000')
             {
                 $hex = $_POST['color_1'];
-                list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-                $color["r"] = $r;
-                $color["g"] = $g;
-                $color["b"] = $b;
-                $sendColors['color1'] = $color;
+                $sendColors['c1'] = $hex;
             }
 
         }
@@ -143,13 +137,7 @@ if(isset($_REQUEST['LightShow']))
             $hex = $_POST['color_2'];
             if($hex != '#000000')
             {
-                list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-                $color["r"] = $r;
-                $color["g"] = $g;
-                $color["b"] = $b;
-                $sendColors['color2'] = $color;
+                $sendColors['c2'] = $hex;
             }
 
         }
@@ -159,13 +147,7 @@ if(isset($_REQUEST['LightShow']))
             $hex = $_POST['color_3'];
             if($hex != '#000000')
             {
-                list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-
-
-                $color["r"] = $r;
-                $color["g"] = $g;
-                $color["b"] = $b;
-                $sendColors['color3'] = $color;
+                $sendColors['c3'] = $hex;
             }
 
         }
@@ -175,11 +157,7 @@ if(isset($_REQUEST['LightShow']))
            $hex = $_POST['color_4'];
            if($hex != '#000000')
            {
-              list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
-               $color["r"] = $r;
-               $color["g"] = $g;
-               $color["b"] = $b;
-               $sendColors['color4'] = $color;
+               $sendColors['c4'] = $hex;
             }
 
        }
@@ -200,7 +178,7 @@ if(isset($_REQUEST['LightShow']))
             $sendArray['minutes'] = $_SESSION['Minutes'];
 
         if(count($sendColors) > 0)
-           $sendArray['colors'] = $sendColors;
+           $sendArray['c'] = $sendColors;
         
         if (!empty($_POST['clearStart']))
             $sendArray['clearStart'] = 1;

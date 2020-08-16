@@ -296,8 +296,8 @@ function hexToRgb(hex)
             switch(show.numColors)
             {
                 case 1:
-                    var cvtColor = hexToRgb(color1.value);
-                    var json = '{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+                    //var cvtColor = hexToRgb(color1.value);
+                    var json = '{"c1": "' + color1.value + '"}';
 
                     var colors = JSON.parse(json);
 
@@ -307,25 +307,18 @@ function hexToRgb(hex)
 
                 case 2:
                     var cvtColor = hexToRgb(color1.value);
-                    var json = '{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '},';
-
-                    cvtColor = hexToRgb(color2.value);
-                    json += '"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
-                    var colors = JSON.parse(json);
+                    var json = '{"c1": "' + color1.value + '"},';
+                    json += '{"c2": "' + color2.value + '"}';
                     playList.showParms[parmIndex].colors = colors;
 
                   break;
 
                 case 3:
-                    var cvtColor = hexToRgb(color1.value);
-                    var json = '{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '},';
 
-                    cvtColor = hexToRgb(color2.value);
-                    json += '"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '},';
-
-                    cvtColor = hexToRgb(color3.value);
-                    json += '"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
-
+					var json = '{"c1": "' + color1.value + '"},';
+                    json += '{"c2": "' + color2.value + '"},';
+                    json += '{"c3": "' + color3.value + '"}';
+                    
                     var colors = JSON.parse(json);
 
                     playList.showParms[parmIndex].colors = colors;
@@ -333,22 +326,15 @@ function hexToRgb(hex)
                   break;
 
                 case 4:
-                    var cvtColor = hexToRgb(color1.value);
-                    var json = '{"color1": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '},';
-
-                    cvtColor = hexToRgb(color2.value);
-                    json += '"color2": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '},';
-
-                    cvtColor = hexToRgb(color3.value);
-                    json += '"color3": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '},';
-
-                    cvtColor = hexToRgb(color4.value);
-                    json += '"color4": {"b": ' + cvtColor.b + ', "g": ' + cvtColor.g + ', "r": ' + cvtColor.r + '}}';
+					var json = '{"c1": "' + color1.value + '"},';
+                    json += '{"c2": "' + color2.value + '"},';
+                    json += '{"c3": "' + color3.value + '"},';
+                    json += '{"c4": "' + color4.value + '"}';
 
                     var colors = JSON.parse(json);
 
-                   playList.showParms[parmIndex].colors = colors;
-                   break;
+					playList.showParms[parmIndex].c = colors;
+                  break;
 
 
             }
@@ -554,77 +540,28 @@ function hexToRgb(hex)
                         switch(show.numColors)
                         {
                             case 1:
-                                var cvtColor = hexToRgb(color1.value);
                                 
-                                playList.showParms[i].colors.color1.r = cvtColor.r;
-                                playList.showParms[i].colors.color1.g = cvtColor.g;
-                                playList.showParms[i].colors.color1.b = cvtColor.b;
-
-                              break;
+                                playList.showParms[i].c.c1 = color1.value;
+                                
+                            break;
 
                             case 2:
-								var cvtColor = hexToRgb(color1.value);
-								
-								playList.showParms[i].colors.color1.r = cvtColor.r;
-                                playList.showParms[i].colors.color1.g = cvtColor.g;
-                                playList.showParms[i].colors.color1.b = cvtColor.b;
-								
-								
-                                cvtColor = hexToRgb(color2.value);
-                                playList.showParms[i].colors.color2.r = cvtColor.r;
-                                playList.showParms[i].colors.color2.g = cvtColor.g;
-                                playList.showParms[i].colors.color2.b = cvtColor.b;
-                             
-
-                              break;
+								playList.showParms[i].c.c1 = color1.value;
+								playList.showParms[i].c.c2 = color2.value;
+                            break;
 
                             case 3:
-                            
-                                var cvtColor = hexToRgb(color1.value);
-								
-                                playList.showParms[i].colors.color1.r = cvtColor.r;
-                                playList.showParms[i].colors.color1.g = cvtColor.g;
-                                playList.showParms[i].colors.color1.b = cvtColor.b;
-								
-								
-                                cvtColor = hexToRgb(color2.value);
-                                playList.showParms[i].colors.color2.r = cvtColor.r;
-                                playList.showParms[i].colors.color2.g = cvtColor.g;
-                                playList.showParms[i].colors.color2.b = cvtColor.b;
-                                
-                                cvtColor = hexToRgb(color3.value);
-                                playList.showParms[i].colors.color3.r = cvtColor.r;
-                                playList.showParms[i].colors.color3.g = cvtColor.g;
-                                playList.showParms[i].colors.color3.b = cvtColor.b;
-                                
-                                
-                              break;
+								playList.showParms[i].c.c1 = color1.value;
+								playList.showParms[i].c.c2 = color2.value;                                
+								playList.showParms[i].c.c3 = color3.value;                                
+                            break;
 
                             case 4:
-                                var cvtColor = hexToRgb(color1.value);
-								
-                                playList.showParms[i].colors.color1.r = cvtColor.r;
-                                playList.showParms[i].colors.color1.g = cvtColor.g;
-                                playList.showParms[i].colors.color1.b = cvtColor.b;
-								
-								
-                                cvtColor = hexToRgb(color2.value);
-                                playList.showParms[i].colors.color2.r = cvtColor.r;
-                                playList.showParms[i].colors.color2.g = cvtColor.g;
-                                playList.showParms[i].colors.color2.b = cvtColor.b;
-                                
-                                cvtColor = hexToRgb(color3.value);
-                                playList.showParms[i].colors.color3.r = cvtColor.r;
-                                playList.showParms[i].colors.color3.g = cvtColor.g;
-                                playList.showParms[i].colors.color3.b = cvtColor.b;
-                                
-                                cvtColor = hexToRgb(color4.value);
-                                playList.showParms[i].colors.color4.r = cvtColor.r;
-                                playList.showParms[i].colors.color4.g = cvtColor.g;
-                                playList.showParms[i].colors.color4.b = cvtColor.b;
-                                
-
-                            break;
+								playList.showParms[i].c.c1 = color1.value;
+								playList.showParms[i].c.c2 = color2.value;                                
+								playList.showParms[i].c.c3 = color3.value;                                
+								playList.showParms[i].c.c4 = color4.value;
+							break;
                         }
 
                     }
@@ -817,26 +754,25 @@ function hexToRgb(hex)
                     switch(show.numColors)
                     {
                         case 1:
-                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
+                            color1.value =  playList.showParms[i].c.c1;
                             break;
 
                         case 2:
-                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  jsonrgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
+                            color1.value =  playList.showParms[i].c.c1;
+                            color2.value =  playList.showParms[i].c.c2;
                             break;
 
                         case 3:
-                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  jsonrgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
-                            color3.value =  jsonrgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color3.g, playList.showParms[i].colors.color3.b);
-
+                            color1.value =  playList.showParms[i].c.c1;
+                            color2.value =  playList.showParms[i].c.c2;
+                            color3.value =  playList.showParms[i].c.c3;
                             break;
 
                         case 4:
-                            color1.value =  jsonrgbToHex(playList.showParms[i].colors.color1.r, playList.showParms[i].colors.color1.g, playList.showParms[i].colors.color1.b);
-                            color2.value =  jsonrgbToHex(playList.showParms[i].colors.color2.r, playList.showParms[i].colors.color2.g, playList.showParms[i].colors.color2.b);
-                            color3.value =  jsonrgbToHex(playList.showParms[i].colors.color3.r, playList.showParms[i].colors.color3.g, playList.showParms[i].colors.color3.b);
-                            color4.value =  jsonrgbToHex(playList.showParms[i].colors.color4.r, playList.showParms[i].colors.color4.g, playList.showParms[i].colors.color4.b);
+                            color1.value =  playList.showParms[i].c.c1;
+                            color2.value =  playList.showParms[i].c.c2;
+                            color3.value =  playList.showParms[i].c.c3;
+                            color4.value =  playList.showParms[i].c.c4;
                             break;
 
                     }

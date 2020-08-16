@@ -729,18 +729,13 @@ function setShowSettings(arg1)
 		{
 			if( system.channelsMap.get(1).stripRows > 1 && showMap.get(index).matrixType == 1)
 			{
-		
-				
 				var matrixHTML = "";
 				var divMatrix = document.getElementById("divMatrix");
 				
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
 				
-				
 				var currentPos = 0;
-				
-		
 				for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
 				{
 					
@@ -757,10 +752,7 @@ function setShowSettings(arg1)
 			
 				divMatrix.innerHTML = matrixHTML;
 				
-				
 			}
-			
-		
 		}
 		else
 		{
@@ -924,7 +916,6 @@ function setSystemSettings()
 
 	chgBrightnessId.value = system.channelsMap.get(1).brightness;
 	brightness.value = system.channelsMap.get(1).brightness;
-	//setShowSettings();
 
 }
 
