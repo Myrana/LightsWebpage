@@ -135,6 +135,18 @@ if(isset($_REQUEST['Config']))
 	if(!empty($_POST['channelEnabled2']))
 			$channelEnabled2 = '1';
 	
+	$matrixDirection =  '0';
+	if(!empty($_POST['matrixDirection']))
+			$matrixDirection = $_POST['matrixDirection'];
+	
+	$matrixDirection2 =  '0';
+	if(!empty($_POST['matrixDirection2']))
+			$matrixDirection2 = $_POST['matrixDirection2'];
+	
+	$channelEnabled2 =  '0';
+	if(!empty($_POST['channelEnabled2']))
+			$channelEnabled2 = '1';
+	
 	$motionEnabled =  '0';
 	if(!empty($_POST['motionFeature']))
 		$motionEnabled = '1';
@@ -163,9 +175,9 @@ if(isset($_REQUEST['Config']))
 		
 		$channels = "";
 		
-		$channels .= "('1','" .  $systemId  . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '" . $channelEnabled . "', '" . $_POST['matrixDirection'] . "'),";
+		$channels .= "('1','" .  $systemId  . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '" . $channelEnabled . "', '" . $matrixDirection . "'),";
 		
-		$channels .= "('2','" .  $systemId  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '" . $channelEnabled2 . "', '" . $_POST['matrixDirection2'] . "')";
+		$channels .= "('2','" .  $systemId  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '" . $channelEnabled2 . "', '" . $matrixDirection2 . "')";
 	
 		
 		 
@@ -580,7 +592,7 @@ function setLightSystemSettings(fromPost)
 					case 2:
 						lightGpio.value = feature.featureGpio;               
 						lightPlaylist.value = feature.featurePlayList;
-						lightFeature.click()
+						lightFeature.click();
 						
 						break;
 
@@ -595,7 +607,7 @@ function setLightSystemSettings(fromPost)
 					case 4:
 						luxPlaylist.value = feature.featurePlayList;
 						luxThreshold.value = feature.luxThreshHold;
-						luxFeature.click()
+						luxFeature.click();
 						
 						break;
 
@@ -620,6 +632,7 @@ function setLightSystemSettings(fromPost)
 					brightness.value = channel.brightness;
 					gamma.value = channel.gamma;
 					stripType.value = channel.stripType;
+					matrixDirection.value = channel.matrixDirection;
 					if(channel.enabled == 1)
 						channelEnabled.click();
 					
@@ -633,6 +646,7 @@ function setLightSystemSettings(fromPost)
 					brightness2.value = channel.brightness;
 					gamma2.value = channel.gamma;
 					stripType2.value = channel.stripType;
+					matrixDirection2.value = channel.matrixDirection2;
 					if(channel.enabled == 1)
 						channelEnabled2.click();
 					
@@ -781,8 +795,8 @@ function confirmDelete()
 		</tr>
 			
 		<tr>
-			<td><label for="direction">Matrix Direction</label></td>
-			<td><select name="direction" id="direction"><?php echo $direction; ?></select></td>
+			<td><label for="matrixDirection">Matrix Direction</label></td>
+			<td><select name="matrixDirection" id="matrixDirection"><?php echo $direction; ?></select></td>
 		</tr>
 	</table>		  
 	</div>
