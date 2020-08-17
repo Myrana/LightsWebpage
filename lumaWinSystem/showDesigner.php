@@ -255,6 +255,9 @@ background-color: red;
 			<label>Save art</label>
 			<input type="checkbox" name="saveArt" id="saveArt" />
 			
+			<!---	<td><label for="shiftCols">X led:</label></td>
+				<td><input type="number" id="shiftCols" name="shiftCols" min="-10" max="10" value="0"></td> --->
+			
 			
 			<p><label for="On1" style="font-size: 14px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">
@@ -312,6 +315,10 @@ background-color: red;
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
+			<label for="shiftCols">Shift Col:</label>
+			<input type="number" id="shiftCols" name="shiftCols" min="-1" max="1" value="0" /> 
+			<input type="button" id="btnShiftCols" name="btnShiftCols" value="Shift" />
+			
 			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix" style ="margin-top: 15px;">
 		<p><?php echo $matrixHTML; ?></P>
 			</div>
@@ -433,6 +440,8 @@ divMatrix.addEventListener('mousedown', e => {
   
 });
 
+
+
     
 divMatrix.addEventListener('mousemove', e => 
 {
@@ -472,6 +481,77 @@ divMatrix.addEventListener('mouseup', e =>
 	mode = 0;
 	
 });
+
+const btnShiftCols = document.getElementById('btnShiftCols');
+btnShiftCols.addEventListener('click', e => 
+{
+	var pixel;
+	var systemNameId = document.getElementById("SystemNameId");
+	var shiftControl = document.getElementById("shiftCols");
+	var baseColor = document.getElementById("baseColor");
+    var index = parseInt(systemNameId.value);
+    var system = systemsMap.get(index);
+    var ledNum = 0;
+    var moveLeft = false;
+    var shiftCols  = parseInt(shiftControl.value);
+    
+
+    if(shiftCols == 0) return;
+    
+    moveLeft = ( shiftCols >= 0) ? true : false;
+    
+    if(moveLeft == true)
+    {
+		for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
+		{
+			
+			for(var column = 0; column < system.channelsMap.get(1).stripColumns; column++)
+			{
+				
+				var pixTo = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + (parseInt(column) + 1);
+				var pixFrom = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + ((parseInt(column) + 2) );
+				
+				
+				if(pixTo == 0 || pixFrom == 0) break;	
+			
+				var pixelFrom = document.getElementById(pixFrom);
+				var pixelTo = document.getElementById(pixTo);
+				pixelTo.style.backgroundColor = pixelFrom.style.backgroundColor;
+					
+			}
+				
+			
+		}
+		
+	}
+	else
+	{
+		for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
+		{
+			
+			for(var column = (system.channelsMap.get(1).stripColumns); column > 0; column--)
+			{
+				
+				var pixTo = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + (parseInt(column));
+				
+				var pixFrom = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + ((parseInt(column) - 1) );
+				
+				if(pixTo == 0 || pixFrom == 0) break;
+				
+				var pixelFrom = document.getElementById(pixFrom);
+				var pixelTo = document.getElementById(pixTo);
+				
+				pixelTo.style.backgroundColor = pixelFrom.style.backgroundColor;
+					
+			}
+				
+			
+		}
+	}
+	
+	
+});
+
 
 
 function setColor()

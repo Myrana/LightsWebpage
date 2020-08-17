@@ -557,7 +557,6 @@ function setLightSystemSettings(fromPost)
 					case 1:
 						motionDelay.value = feature.motionDelayOff;
 						motionGpio.value = feature.featureGpio;
-						alert(feature.featurePlayList);
 						motionPlaylist.value = feature.featurePlayList;
 						motionFeature.click();
 						

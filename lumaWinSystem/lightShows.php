@@ -290,6 +290,13 @@ if(isset($_REQUEST['btnPlayArtShow']))
 	$sendArray['playArtShow'] = 1;
 	$sendArray['artShowId'] = intval($_POST['PlayArtShow']);
 	$sendArray['UserID'] = intval($_SESSION['UserID']);
+	$sendArray['sc'] = intval($_POST['shiftCols']);
+	if (!empty($_POST['clearStart']))
+		$sendArray['clearStart'] = 1;
+
+    if (!empty($_POST['clearFinish']))
+		$sendArray['clearFinish'] = 1;
+		
 	sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 }
 
