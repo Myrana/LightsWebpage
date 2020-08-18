@@ -316,7 +316,7 @@ background-color: red;
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
 			<label for="shiftCols">Shift Col:</label>
-			<input type="number" id="shiftCols" name="shiftCols" min="-1" max="1" value="0" /> 
+			<input type="number" id="shiftCols" name="shiftCols" min="-1" max="1" value="0" style="width: 15%" /> 
 			<input type="button" id="btnShiftCols" name="btnShiftCols" value="Shift" />
 			
 			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix" style ="margin-top: 15px;">
