@@ -145,6 +145,46 @@ if(mysqli_num_rows($systemResults) > 0)
 	}
 }
 
+$systemStatus = "";
+if(isset($_REQUEST['Status']))
+{
+	$rcv_message = "";
+	$statusmsg = "";
+	requestSystemInfo(getServerHostName($_POST['LightSystem']));
+	if(!empty($rcv_message) )
+    {
+			
+        $systemInfo = json_decode($rcv_message);
+		
+		$systemStatus .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";
+		
+		
+		$systemStatus .= "<tr>" . "<td>Name</td>" . "<td>" . $systemInfo->{'systemName'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Temp</td>" . "<td>" . $systemInfo->{'systemTemp'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Up</td>" . "<td>" . $systemInfo->{'uptime'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Load</td>" . "<td>" . $systemInfo->{'load'} . "</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Total</td>" . "<td>" . $systemInfo->{'totalRam'} . "Ram</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Free</td>" . "<td>" . $systemInfo->{'freeRam'} . " Ram</td></tr>";
+		$systemStatus .= "<tr>" . "<td>Queue</td>" . "<td>" . $systemInfo->{'showsInQueue'} . "</td></tr>";
+		
+		
+		if($systemInfo->{'showsInQueue'} > 0)
+        {
+			$systemStatus .= "<tr>" . "<td>Show</td>" . "<td>" . $systemInfo->{'runningShow'} . "</td></tr>";
+        }
+
+		$systemStatus .= "<tr>" . "<td>Alerts</td>" . "<td>" . $systemInfo->{'alerts'} . "</td></tr>";
+
+		$systemStatus .= "</table></div>";
+    }
+    else
+    {
+        echo $statusmsg."TIMEDOUT";
+    }
+
+} 
+
+
 
 
 $conn->close();
@@ -254,6 +294,12 @@ background-color: red;
 			
 			<label>Save art</label>
 			<input type="checkbox" name="saveArt" id="saveArt" />
+			
+			<p>
+			
+				<?php echo $systemStatus;?>
+			
+			</p>
 			
 			<!---	<td><label for="shiftCols">X led:</label></td>
 				<td><input type="number" id="shiftCols" name="shiftCols" min="-10" max="10" value="0"></td> --->
