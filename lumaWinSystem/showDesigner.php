@@ -294,7 +294,8 @@ background-color: red;
 		
 	</div>
 		</div>
-<div class="column thirty-seven" id="matrixDesigner">		
+<div class="column thirty-seven" id="matrixDesigner">
+	<center>
 	 <div id="divArt" class="ColumnStyles" hidden>
 		<div style="text-align: center">
 		  <h1>Matrix Designer!</h1>
@@ -325,6 +326,7 @@ background-color: red;
 		</div>
 		
     </div>
+</center>
 
 	<div id="divShapes" name="divShapes" class="ColumnStyles">
 		<div style="text-align: center">
