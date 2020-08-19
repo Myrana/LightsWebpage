@@ -275,7 +275,7 @@ if(isset($_REQUEST['LightShow']))
 					
 				$row = mysqli_fetch_array($results);
 				
-				$sql = "insert into matrixArt(userID, artName, showParms, savedPixalsWidth, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','" . $row['stripColumns'] . "','1')" ;
+				$sql = "insert into matrixArt(userID, artName, showParms, savedPixalsWidth, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','" . $row['stripColumns'] . "','1')" ;			
 				$sendArray['stripColumns'] = strval($row['stripColumns']);
 				if ($conn->query($sql) != TRUE)
 				{

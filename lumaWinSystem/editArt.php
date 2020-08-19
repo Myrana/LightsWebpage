@@ -19,14 +19,22 @@ if(isset($_REQUEST['btnCommitArtShow']))
 {
 	if(!empty($_POST['jsonContainer']))
     {
-	    $sql = "update matrixArt set showParms='" . $_POST['jsonContainer'] . "' where ID = " . $_POST['PlayArtShow'];
-	    if ($conn->query($sql) == FALSE)
-        {
-            echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-        }
+		 $sql = "select stripColumns from lightSystemChannels where lightSystemId = '" . $_SESSION['LightSystemID'] . "' and channelId = '" . $_SESSION['ChannelId'] . "';";
+		  
+		  $results = mysqli_query($conn , $sql);
+		  
+		  if(mysqli_num_rows($results) > 0)
+          {
+				$row = mysqli_fetch_array($results);
+				$sql = "update matrixArt set showParms='" . $_POST['jsonContainer'] . "', savedPixalsWidth = '" . $row['stripColumns'] . "' where ID = " . $_POST['PlayArtShow'];
+	    
+				if ($conn->query($sql) == FALSE)
+				{
+					echo "<h1>Error: " . $conn->error . "</h1>";
+					echo $sql;	
+				}
+		 }
 	}
-   
 }
 
 if(isset($_REQUEST['btnDeleteArtShow']))
