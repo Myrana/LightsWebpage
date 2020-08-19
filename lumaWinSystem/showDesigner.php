@@ -777,7 +777,7 @@ function setShowSettings(arg1)
 
 		var upload = document.getElementById("uploadArt");
 		var saveArt = document.getElementById("saveArt");
-		//alert("got element by ID");
+		
 		
 		
         color1.setAttribute('disabled', true);
@@ -804,7 +804,7 @@ function setShowSettings(arg1)
 		
 		upload.setAttribute('disabled', true);
 		saveArt.setAttribute('disabled', true);
-		//alert("disabled stuff");
+		
 		
 		
 		
@@ -814,11 +814,11 @@ function setShowSettings(arg1)
 			{
 				var matrixHTML = "";
 				var divMatrix = document.getElementById("divMatrix");
-				alert("inside if matrixtype 1");
+				
 				
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
-				alert("unhide div art");
+				
 				
 				var currentPos = 0;
 				for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
@@ -829,7 +829,7 @@ function setShowSettings(arg1)
 						style="background-color:grey;"
 						currentPos += 1;
 						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";
-						//alert("set matrix grid");
+						
 					}
 					matrixHTML += "<br>";
 
