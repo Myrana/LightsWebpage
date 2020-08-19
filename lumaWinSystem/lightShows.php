@@ -260,6 +260,8 @@ if(isset($_REQUEST['LightShow']))
 				}
 		}
 		
+		if(!empty($_POST['saveArtName']))
+			$sendArray['matrixStartRow'] = (int)($_POST['saveArtName']);
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
 		
