@@ -255,9 +255,6 @@ background-color: red;
 			<label>Save art</label>
 			<input type="checkbox" name="saveArt" id="saveArt" />
 			
-			<!---	<td><label for="shiftCols">X led:</label></td>
-				<td><input type="number" id="shiftCols" name="shiftCols" min="-10" max="10" value="0"></td> --->
-			
 			
 			<p><label for="On1" style="font-size: 14px">Clear start</label>
     <input type="checkbox" name="clearStart" id="clearStart">

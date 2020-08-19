@@ -259,9 +259,8 @@ if(isset($_REQUEST['LightShow']))
 					echo "error moving";
 				}
 		}
-		
-		if(!empty($_POST['saveArtName']))
-			$sendArray['matrixStartRow'] = (int)($_POST['saveArtName']);
+					
+		echo $sendArray['matrixStartRow'];
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
 		
@@ -301,7 +300,8 @@ if(isset($_REQUEST['btnPlayArtShow']))
 	$sendArray['playArtShow'] = 1;
 	$sendArray['artShowId'] = intval($_POST['PlayArtShow']);
 	$sendArray['UserID'] = intval($_SESSION['UserID']);
-	$sendArray['sc'] = intval($_POST['shiftCols']);
+	$sendArray['sc'] = intval($_POST['shiftColsArt']);
+		
 	if (!empty($_POST['clearStart']))
 		$sendArray['clearStart'] = 1;
 
@@ -408,8 +408,10 @@ include('header.php');
 				<label>Art</label>
 				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
 				<button type="submit" name="btnPlayArtShow">Play Art</button>
-				<label>Starting row</label>
-				<input type="number" id="matrixStartRow" name="matrixStartRow" value="0" max="32" />	
+					
+				<label for="shiftColsl">Shift:</label></td>
+				<input type="number" id="shiftColsArt" name="shiftColsArt" min="-32" max="32" value="0" /> 
+				
 				</p>			
 				<p>		
 				<label>Playlist Editor</label>	
