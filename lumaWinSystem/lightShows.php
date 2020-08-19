@@ -409,8 +409,8 @@ include('header.php');
 				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
 				<button type="submit" name="btnPlayArtShow">Play Art</button>
 					
-				<label for="shiftColsl">Shift:</label></td>
-				<input type="number" id="shiftColsArt" name="shiftColsArt" min="-32" max="32" value="0" /> 
+				<label for="shiftColsArt">Shift:</label></td>
+				<input type="number" id="shiftColsArt" name="shiftColsArt" min="-32" max="32" value="0" style="width: 35%" /> 
 				
 				</p>			
 				<p>		
