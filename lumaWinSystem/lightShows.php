@@ -401,22 +401,23 @@ include('header.php');
 	
 </script>
 		<p>		
-				<label>Playlist</label>
-				<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
-				<button type="submit" name="btnPlaylist">Play</button>
-				<p>
-				<label>Art</label>
-				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
-				<button type="submit" name="btnPlayArtShow">Play Art</button>
-					
-				<label for="shiftColsArt">Shift:</label></td>
-				<input type="number" id="shiftColsArt" name="shiftColsArt" min="-32" max="32" value="0" style="width: 35%" /> 
-				
-				</p>			
-				<p>		
-				<label>Playlist Editor</label>	
-				<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>
-				</p>
+			<label>Playlist</label>
+			<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+			<button type="submit" name="btnPlaylist">Play</button>
+		<p>
+			<label>Art</label>
+			
+			<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
+			
+			<label for="shiftColsArt">Shift:</label></td>
+			<input type="number" id="shiftColsArt" name="shiftColsArt" min="-32" max="32" value="0" style="width: 35%" />		
+			
+			<button type="submit" name="btnPlayArtShow">Play Art</button>
+		</p>			
+		<p>		
+			<label>Playlist Editor</label>	
+			<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>				
+		</p>
 			
 		</p>
 		
