@@ -112,7 +112,7 @@ if(isset($_REQUEST['ClearQueue']))
 
 
 
-
+$_SESSION['lightShowInfo'] = "";
 if(isset($_REQUEST['LightShow']))
 {
 
@@ -237,18 +237,27 @@ if(isset($_REQUEST['LightShow']))
 		
 			if (move_uploaded_file($_FILES['uploadArt']['tmp_name'], $target_file)) 
 			{
-				echo "Received {$_FILES['uploadArt']['name']} - its size is {$_FILES['uploadArt']['size']} <br>";
-				echo "The file ". basename( $_FILES["uploadArt"]["name"]). " has been uploaded.";
+				
+				$target_dir = "/home/hellweek/code/uploadArt/";
+				$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
+
+				$_SESSION['lightShowInfo'] .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";
+				
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>File</td>" . "<td>" . $_FILES['uploadArt']['name'] . "</td></tr>";
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Size</td>" . "<td>" . $_FILES['uploadArt']['size'] . "</td></tr>";		
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Status</td>" . "<td>Upload Complete</td></tr>";	
+				$_SESSION['lightShowInfo'] .= "</table></div>";
+					
 				$sendArray['uploadArt'] = $target_file;
 				
 				if(!empty($_POST['saveArt']))
 					$sendArray['saveArt'] = 1;
-				
-			}
-			else
-			{
-				echo "error moving";
-			}
+					
+				}
+				else
+				{
+					echo "error moving";
+				}
 		}
 		
 		
@@ -373,6 +382,7 @@ include('header.php');
 	
 	function setArtSystem()
 	{
+		return;
 		var artShowId = document.getElementById("PlayArtShow");
 		if(artShowId.value != 0)
 		{
