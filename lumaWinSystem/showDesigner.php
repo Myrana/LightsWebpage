@@ -309,9 +309,6 @@ background-color: red;
 				  <option value="2">double width</option>
 				  <option value="3">triple width</option>
 				</select>
-				
-				<label>Starting row</label>
-				<input type="number" id="matrixStartRow" name="matrixStartRow" value="0" max="32" />
 			</p>
 			
 			<label>Base Color</label>

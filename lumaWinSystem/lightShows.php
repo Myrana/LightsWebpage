@@ -408,6 +408,8 @@ include('header.php');
 				<label>Art</label>
 				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
 				<button type="submit" name="btnPlayArtShow">Play Art</button>
+				<label>Starting row</label>
+				<input type="number" id="matrixStartRow" name="matrixStartRow" value="0" max="32" />	
 				</p>			
 				<p>		
 				<label>Playlist Editor</label>	
