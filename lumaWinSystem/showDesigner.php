@@ -777,7 +777,7 @@ function setShowSettings(arg1)
 
 		var upload = document.getElementById("uploadArt");
 		var saveArt = document.getElementById("saveArt");
-		
+		//alert("got element by ID");
 		
 		
         color1.setAttribute('disabled', true);
@@ -797,13 +797,15 @@ function setShowSettings(arg1)
 		height.setAttribute('disabled', true);
 		direction.setAttribute('disabled', true);
 		
-		divArt.setAttribute('hidden', true);
-		divArt.hidden = true;
+		divArt.setAttribute('hidden', true); //change back to true
+		divArt.hidden = true; // change back to true
 		divShapes.setAttribute('hidden', true);
 		divShapes.hidden = true;
 		
 		upload.setAttribute('disabled', true);
 		saveArt.setAttribute('disabled', true);
+		//alert("disabled stuff");
+		
 		
 		
 		if(arg1 ==  true)
@@ -812,9 +814,11 @@ function setShowSettings(arg1)
 			{
 				var matrixHTML = "";
 				var divMatrix = document.getElementById("divMatrix");
+				alert("inside if matrixtype 1");
 				
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
+				alert("unhide div art");
 				
 				var currentPos = 0;
 				for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
@@ -824,7 +828,8 @@ function setShowSettings(arg1)
 					{
 						style="background-color:grey;"
 						currentPos += 1;
-						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";
+						//alert("set matrix grid");
 					}
 					matrixHTML += "<br>";
 

@@ -129,7 +129,7 @@ function setArtShowSettings()
 	var systemNameId = document.getElementById("SystemNameId");
 	showControl.disabled = true;
 	setShowSettings();
-
+	
 	if(parseInt(playArtShow.value) != 0)
 	{
 		var art = artListMap.get(parseInt(playArtShow.value));
@@ -142,10 +142,10 @@ function setArtShowSettings()
 			
 			for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
 			{
-				
+				//alert("set pixels");
 				currentPos += 1;
 				matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos].co.replace("0x","#") + "' ></span>";
-				
+				//alert("pixels set");
 			}
 			matrixHTML += "<br>";
 
@@ -155,7 +155,7 @@ function setArtShowSettings()
 	
 	}
 	
-	
+	alert("end");
 
 	
 }

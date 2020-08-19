@@ -382,7 +382,7 @@ include('header.php');
 	
 	function setArtSystem()
 	{
-		return;
+		
 		var artShowId = document.getElementById("PlayArtShow");
 		if(artShowId.value != 0)
 		{
@@ -392,6 +392,8 @@ include('header.php');
 			
 			systemNameId.value = art.showParms.systemId;
 		}
+		
+		return;
 	}
 	
 	
