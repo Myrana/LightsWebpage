@@ -77,6 +77,7 @@ function buildUserArt()
 			$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
 			$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
 			$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
+			$_SESSION['userArtScript']  .= "    art.origWidth = '" . $artRow['savedPixalsWidth'] ."';\r";
 			$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
 			$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
 			

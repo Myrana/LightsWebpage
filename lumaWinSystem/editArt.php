@@ -137,25 +137,60 @@ function setArtShowSettings()
 		systemNameId.value = system.id;
 		showControl.value = art.showParms.show;
 		
-		for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+		var offset = 0;
+		var maxRows = Object.keys(art.showParms.pixles).length / art.origWidth;
+		for(var ledRow = 0; ledRow < maxRows; ledRow++)
 		{
-			
-			for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+			var skipRow = (ledRow > maxRows) ? true : false;
+			if((ledRow > maxRows) )
 			{
-				//alert("set pixels");
-				currentPos += 1;
-				matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos].co.replace("0x","#") + "' ></span>";
-				//alert("pixels set");
+				break;
 			}
-			matrixHTML += "<br>";
+			else
+			{
+				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				{
+					if(ledColumn < art.origWidth)
+					{
+						currentPos += 1;
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos - offset].co.replace("0x","#") + "' ></span>";
+					}
+					else
+					{
+						currentPos += 1;
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:0xffffff' ></span>";
+						offset++;
+					}
+					
+					
+				}
+				
+				matrixHTML += "<br>";
 
+			}
 		}
+		
+		if(maxRows < system.channelsMap.get(1).stripRows)
+		{
+			for(var ledRow = maxRows; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+			{
+		
+				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				{
+					currentPos += (1 + offset);
+					offset++;
+					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:0xffffff' ></span>";
+				}
+				matrixHTML += "<br>";
+			}
+		}
+		
 		divMatrix.innerHTML = matrixHTML;
+		
 		setShowSettings(false);
 	
 	}
 	
-	alert("end");
 
 	
 }
