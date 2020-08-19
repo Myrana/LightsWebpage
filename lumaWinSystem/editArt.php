@@ -177,12 +177,14 @@ function setArtShowSettings()
 		
 				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
 				{
-					currentPos += (1 + offset);
+					currentPos += 1;
 					offset++;
 					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:0xffffff' ></span>";
 				}
 				matrixHTML += "<br>";
 			}
+			
+			
 		}
 		
 		divMatrix.innerHTML = matrixHTML;
