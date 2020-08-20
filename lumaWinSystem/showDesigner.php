@@ -739,7 +739,6 @@ function storeMatrix()
 	
 	matrixJson += '}';
 	matrixData.value = matrixJson;
-	
 		
 }
 

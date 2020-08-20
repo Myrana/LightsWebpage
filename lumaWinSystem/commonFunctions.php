@@ -64,6 +64,7 @@ function buildUserArt()
 	$_SESSION['userArtScript'] = "";
 	$_SESSION['userArtOptions'] = "<option value = '0'>-- Select One --</option>";
 	$con = getDatabaseConnection();
+	//$artresults = mysqli_query($con,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1 orderby artName desc");
 	$artresults = mysqli_query($con,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
 
 	if(mysqli_num_rows($artresults) > 0)

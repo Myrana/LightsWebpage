@@ -384,7 +384,7 @@ include('header.php');
 	
 	function setArtSystem()
 	{
-		
+		return;
 		var artShowId = document.getElementById("PlayArtShow");
 		if(artShowId.value != 0)
 		{
@@ -410,7 +410,7 @@ include('header.php');
 			<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
 			
 			<label for="shiftColsArt">Shift:</label></td>
-			<input type="number" id="shiftColsArt" name="shiftColsArt" min="-32" max="32" value="0" style="width: 35%" />		
+			<input type="number" id="shiftColsArt" name="shiftColsArt" min="-63" max="63" value="0" style="width: 35%" />		
 			
 			<button type="submit" name="btnPlayArtShow">Play Art</button>
 		</p>			

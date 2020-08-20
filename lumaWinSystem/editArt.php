@@ -166,7 +166,7 @@ function setArtShowSettings()
 					else
 					{
 						currentPos += 1;
-						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:0xffffff' ></span>";
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:#000000' ></span>";
 						offset++;
 					}
 					
@@ -187,7 +187,7 @@ function setArtShowSettings()
 				{
 					currentPos += 1;
 					offset++;
-					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:0xffffff' ></span>";
+					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:#000000' ></span>";
 				}
 				matrixHTML += "<br>";
 			}
