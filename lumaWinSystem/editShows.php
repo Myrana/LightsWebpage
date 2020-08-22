@@ -656,8 +656,6 @@ function hexToRgb(hex)
 					
 					
 					var currentPos = 0;
-					
-			
 					for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
 					{
 						

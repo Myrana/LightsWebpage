@@ -19,14 +19,22 @@ if(isset($_REQUEST['btnCommitArtShow']))
 {
 	if(!empty($_POST['jsonContainer']))
     {
-	    $sql = "update matrixArt set showParms='" . $_POST['jsonContainer'] . "' where ID = " . $_POST['PlayArtShow'];
-	    if ($conn->query($sql) == FALSE)
-        {
-            echo "<h1>Error: " . $conn->error . "</h1>";
-			echo $sql;	
-        }
+		 $sql = "select stripColumns from lightSystemChannels where lightSystemId = '" . $_SESSION['LightSystemID'] . "' and channelId = '" . $_SESSION['ChannelId'] . "';";
+		  
+		  $results = mysqli_query($conn , $sql);
+		  
+		  if(mysqli_num_rows($results) > 0)
+          {
+				$row = mysqli_fetch_array($results);
+				$sql = "update matrixArt set showParms='" . $_POST['jsonContainer'] . "', savedPixalsWidth = '" . $row['stripColumns'] . "' where ID = " . $_POST['PlayArtShow'];
+	    
+				if ($conn->query($sql) == FALSE)
+				{
+					echo "<h1>Error: " . $conn->error . "</h1>";
+					echo $sql;	
+				}
+		 }
 	}
-   
 }
 
 if(isset($_REQUEST['btnDeleteArtShow']))
@@ -129,7 +137,7 @@ function setArtShowSettings()
 	var systemNameId = document.getElementById("SystemNameId");
 	showControl.disabled = true;
 	setShowSettings();
-
+	
 	if(parseInt(playArtShow.value) != 0)
 	{
 		var art = artListMap.get(parseInt(playArtShow.value));
@@ -137,24 +145,61 @@ function setArtShowSettings()
 		systemNameId.value = system.id;
 		showControl.value = art.showParms.show;
 		
-		for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+		var offset = 0;
+		var maxRows = Object.keys(art.showParms.pixles).length / art.origWidth;
+		for(var ledRow = 0; ledRow < maxRows; ledRow++)
 		{
-			
-			for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+			var skipRow = (ledRow > maxRows) ? true : false;
+			if((ledRow > maxRows) )
 			{
-				
-				currentPos += 1;
-				matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos].co.replace("0x","#") + "' ></span>";
-				
+				break;
 			}
-			matrixHTML += "<br>";
+			else
+			{
+				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				{
+					if(ledColumn < art.origWidth)
+					{
+						currentPos += 1;
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + art.showParms.pixles[currentPos - offset].co.replace("0x","#") + "' ></span>";
+					}
+					else
+					{
+						currentPos += 1;
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:#000000' ></span>";
+						offset++;
+					}
+					
+					
+				}
+				
+				matrixHTML += "<br>";
 
+			}
 		}
+		
+		if(maxRows < system.channelsMap.get(1).stripRows)
+		{
+			for(var ledRow = maxRows; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
+			{
+		
+				for(var ledColumn = 0; ledColumn < system.channelsMap.get(1).stripColumns; ledColumn++)
+				{
+					currentPos += 1;
+					offset++;
+					matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:#000000' ></span>";
+				}
+				matrixHTML += "<br>";
+			}
+			
+			
+		}
+		
 		divMatrix.innerHTML = matrixHTML;
+		
 		setShowSettings(false);
 	
 	}
-	
 	
 
 	

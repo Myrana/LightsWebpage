@@ -64,6 +64,7 @@ function buildUserArt()
 	$_SESSION['userArtScript'] = "";
 	$_SESSION['userArtOptions'] = "<option value = '0'>-- Select One --</option>";
 	$con = getDatabaseConnection();
+	//$artresults = mysqli_query($con,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1 orderby artName desc");
 	$artresults = mysqli_query($con,"SELECT * FROM  matrixArt where userID =" . $_SESSION['UserID'] . " or userID = 1");
 
 	if(mysqli_num_rows($artresults) > 0)
@@ -77,6 +78,7 @@ function buildUserArt()
 			$_SESSION['userArtScript']  .= "    art.id = " . $artRow['ID'] .";\r";
 			$_SESSION['userArtScript']  .= "    art.userId = " . $artRow['userID'] .";\r";
 			$_SESSION['userArtScript']  .= "    art.artName = '" . $artRow['artName'] ."';\r";
+			$_SESSION['userArtScript']  .= "    art.origWidth = '" . $artRow['savedPixalsWidth'] ."';\r";
 			$_SESSION['userArtScript']  .= "    art.showParms = JSON.parse('" . $artRow['showParms'] . "');\r";       
 			$_SESSION['userArtScript']  .= "    artListMap.set(" . $artRow['ID'] . ", art);\r";
 			

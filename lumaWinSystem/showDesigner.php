@@ -287,11 +287,12 @@ background-color: red;
 
 			
     }
+    echo $_SESSION['lightShowInfo'];
 ?>
 		
 	</div>
 		</div>
-<div class="column thirty-seven" id="matrixDesigner">		
+<div class="column" id="matrixDesigner">		
 	 <div id="divArt" class="ColumnStyles" hidden>
 		<div style="text-align: center">
 		  <h1>Matrix Designer!</h1>
@@ -312,6 +313,10 @@ background-color: red;
 			<label>Color Select</label>
 			<input type="color" id="colorSelect" name="colorSelect" value="#34ebde" />
 			<input type="text" id="matrixData" name="matrixData" hidden />
+			<label for="shiftCols">Shift Col:</label>
+			<input type="number" id="shiftCols" name="shiftCols" min="-1" max="1" value="0" /> 
+			<input type="button" id="btnShiftCols" name="btnShiftCols" value="Shift" />
+			
 			<div oncontextmenu="return false;" id="divMatrix" name="divMatrix" style ="margin-top: 15px;">
 		<p><?php echo $matrixHTML; ?></P>
 			</div>
@@ -433,6 +438,8 @@ divMatrix.addEventListener('mousedown', e => {
   
 });
 
+
+
     
 divMatrix.addEventListener('mousemove', e => 
 {
@@ -472,6 +479,77 @@ divMatrix.addEventListener('mouseup', e =>
 	mode = 0;
 	
 });
+
+const btnShiftCols = document.getElementById('btnShiftCols');
+btnShiftCols.addEventListener('click', e => 
+{
+	var pixel;
+	var systemNameId = document.getElementById("SystemNameId");
+	var shiftControl = document.getElementById("shiftCols");
+	var baseColor = document.getElementById("baseColor");
+    var index = parseInt(systemNameId.value);
+    var system = systemsMap.get(index);
+    var ledNum = 0;
+    var moveLeft = false;
+    var shiftCols  = parseInt(shiftControl.value);
+    
+
+    if(shiftCols == 0) return;
+    
+    moveLeft = ( shiftCols >= 0) ? true : false;
+    
+    if(moveLeft == true)
+    {
+		for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
+		{
+			
+			for(var column = 0; column < system.channelsMap.get(1).stripColumns; column++)
+			{
+				
+				var pixTo = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + (parseInt(column) + 1);
+				var pixFrom = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + ((parseInt(column) + 2) );
+				
+				
+				if(pixTo == 0 || pixFrom == 0) break;	
+			
+				var pixelFrom = document.getElementById(pixFrom);
+				var pixelTo = document.getElementById(pixTo);
+				pixelTo.style.backgroundColor = pixelFrom.style.backgroundColor;
+					
+			}
+				
+			
+		}
+		
+	}
+	else
+	{
+		for(var row = 0; row < system.channelsMap.get(1).stripRows; row++)
+		{
+			
+			for(var column = (system.channelsMap.get(1).stripColumns); column > 0; column--)
+			{
+				
+				var pixTo = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + (parseInt(column));
+				
+				var pixFrom = ( (parseInt(system.channelsMap.get(1).stripColumns)) * parseInt(row)) + ((parseInt(column) - 1) );
+				
+				if(pixTo == 0 || pixFrom == 0) break;
+				
+				var pixelFrom = document.getElementById(pixFrom);
+				var pixelTo = document.getElementById(pixTo);
+				
+				pixelTo.style.backgroundColor = pixelFrom.style.backgroundColor;
+					
+			}
+				
+			
+		}
+	}
+	
+	
+});
+
 
 
 function setColor()
@@ -661,7 +739,6 @@ function storeMatrix()
 	
 	matrixJson += '}';
 	matrixData.value = matrixJson;
-	
 		
 }
 
@@ -716,13 +793,15 @@ function setShowSettings(arg1)
 		height.setAttribute('disabled', true);
 		direction.setAttribute('disabled', true);
 		
-		divArt.setAttribute('hidden', true);
-		divArt.hidden = true;
+		divArt.setAttribute('hidden', true); //change back to true
+		divArt.hidden = true; // change back to true
 		divShapes.setAttribute('hidden', true);
 		divShapes.hidden = true;
 		
 		upload.setAttribute('disabled', true);
 		saveArt.setAttribute('disabled', true);
+		
+		
 		
 		
 		if(arg1 ==  true)
@@ -732,8 +811,10 @@ function setShowSettings(arg1)
 				var matrixHTML = "";
 				var divMatrix = document.getElementById("divMatrix");
 				
+				
 				divArt.setAttribute('hidden', false);
 				divArt.hidden = false;
+				
 				
 				var currentPos = 0;
 				for(var ledRow = 0; ledRow < system.channelsMap.get(1).stripRows; ledRow++)
@@ -743,7 +824,8 @@ function setShowSettings(arg1)
 					{
 						style="background-color:grey;"
 						currentPos += 1;
-						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";		
+						matrixHTML += "<span id='" + currentPos  + "' class='pixel' style='background-color:" + baseColor.value + "' ></span>";
+						
 					}
 					matrixHTML += "<br>";
 

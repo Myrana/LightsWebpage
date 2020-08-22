@@ -58,16 +58,18 @@ if(isset($_REQUEST['Edit']))
 	if ($conn->query($sql) == TRUE)
 	{
 		$channels = "";
-		$channels .= "('1','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '" . $channelEnabled . "'),";
-		$channels .= "('2','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '" . $channelEnabled2 . "')";
+		
+		$channels .= "('1','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '" . $channelEnabled . "', '" . $_POST['matrixDirection'] . "'),";
+		
+		$channels .= "('2','" .  $_SESSION["LightSystemID"]  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '" . $channelEnabled2 . "', '" . $_POST['matrixDirection2'] . "')";
 		
 		 
-		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio,brightness, gamma, enabled) VALUES";
+		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio,brightness, gamma, enabled, matrixDirection) VALUES";
 		$sql .= $channels;
 		 
 		 
 		$sql .= " ON DUPLICATE KEY UPDATE stripType = VALUES(stripType),stripType = VALUES(stripType),stripColumns = VALUES(stripColumns),
-		dma = VALUES(dma),gpio = VALUES(gpio), brightness = VALUES(brightness), gamma = VALUES(gamma), enabled = VALUES(enabled);";
+		dma = VALUES(dma),gpio = VALUES(gpio), brightness = VALUES(brightness), gamma = VALUES(gamma), enabled = VALUES(enabled), matrixDirection = VALUES(matrixDirection);";
 
 		if ($conn->query($sql) == TRUE)
 		{
@@ -133,6 +135,18 @@ if(isset($_REQUEST['Config']))
 	if(!empty($_POST['channelEnabled2']))
 			$channelEnabled2 = '1';
 	
+	$matrixDirection =  '0';
+	if(!empty($_POST['matrixDirection']))
+			$matrixDirection = $_POST['matrixDirection'];
+	
+	$matrixDirection2 =  '0';
+	if(!empty($_POST['matrixDirection2']))
+			$matrixDirection2 = $_POST['matrixDirection2'];
+	
+	$channelEnabled2 =  '0';
+	if(!empty($_POST['channelEnabled2']))
+			$channelEnabled2 = '1';
+	
 	$motionEnabled =  '0';
 	if(!empty($_POST['motionFeature']))
 		$motionEnabled = '1';
@@ -160,17 +174,19 @@ if(isset($_REQUEST['Config']))
 		
 		
 		$channels = "";
-		$channels .= "('1','" .  $systemId  . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '" . $channelEnabled . "'),";
-		$channels .= "('2','" .  $systemId  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '" . $channelEnabled2 . "')";
+		
+		$channels .= "('1','" .  $systemId  . "', '" . $_POST['StripType'] . "', '" . $_POST['StripRows'] . "', '" . $_POST['StripColumns'] . "', '" . $_POST['DMA'] . "', '" . $_POST['GPIO'] . "', '" . $_POST['Brightness'] . "', '" . $_POST['gamma'] . "', '" . $channelEnabled . "', '" . $matrixDirection . "'),";
+		
+		$channels .= "('2','" .  $systemId  . "', '" . $_POST['StripType2'] . "', '" . $_POST['StripRows2'] . "', '" . $_POST['StripColumns2'] . "', '" . $_POST['DMA2'] . "', '" . $_POST['GPIO2'] . "', '" . $_POST['Brightness2'] . "', '" . $_POST['gamma2'] . "', '" . $channelEnabled2 . "', '" . $matrixDirection2 . "')";
 	
 		
 		 
-		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio,brightness, gamma, enabled) VALUES";
+		$sql = "INSERT INTO lightSystemChannels(channelId, lightSystemId, stripType, stripRows, stripColumns, dma, gpio,brightness, gamma, enabled, matrixDirection) VALUES";
 		$sql .= $channels;
 		 
 		 
 		$sql .= " ON DUPLICATE KEY UPDATE stripType = VALUES(stripType),stripType = VALUES(stripType),stripColumns = VALUES(stripColumns),
-		dma = VALUES(dma),gpio = VALUES(gpio), brightness = VALUES(brightness), gamma = VALUES(gamma), enabled = VALUES(enabled);";
+		dma = VALUES(dma),gpio = VALUES(gpio), brightness = VALUES(brightness), gamma = VALUES(gamma), enabled = VALUES(enabled), matrixDirection = VALUES(matrixDirection);";
 
 		if ($conn->query($sql) === TRUE)
 		{
@@ -256,6 +272,13 @@ while($query_data = mysqli_fetch_array($displayUsername))
 {
     $users .="<option value = '".$query_data['ID']."'>".$query_data['username']."</option>";
 }
+
+$matrixDirection = mysqli_query($conn,"SELECT ID, description FROM lMatrixDirection");
+$direction = '';
+while($query_data = mysqli_fetch_array($matrixDirection))
+{
+    $direction .="<option value = '".$query_data['ID']."'>".$query_data['description']."</option>";
+}
 	
 $playlistoption = '';
 $results = mysqli_query($conn,"SELECT ID, playlistName FROM userPlaylist");
@@ -308,6 +331,7 @@ if(mysqli_num_rows($systemResults) > 0)
 				$lightSystemsScript .= "    channel.brightness = " . $channelRow['brightness'] .";\r";
 				$lightSystemsScript .= "    channel.gamma = " . $channelRow['gamma'] .";\r";
 				$lightSystemsScript .= "    channel.enabled = " . $channelRow['enabled'] .";\r";
+				$lightSystemsScript .= "	channel.matrixDirection = " . $channelRow['matrixDirection'] .";\r";
 				$lightSystemsScript .= "system.channelsMap.set(" . $channelRow['channelId'] . ", channel);\r";
 				
 			}
@@ -477,7 +501,8 @@ function setLightSystemSettings(fromPost)
     var brightness = document.getElementById("Brightness");
     var gamma = document.getElementById("gamma");
     var stripType = document.getElementById("StripType");
-    var channelEnabled = document.getElementById("channelEnabled")
+    var channelEnabled = document.getElementById("channelEnabled");
+	var matrixDirection = document.getElementById("matrixDirection");
 	
 	var stripColumns2 = document.getElementById("StripColumns2");
     var stripRows2 = document.getElementById("StripRows2");
@@ -486,7 +511,8 @@ function setLightSystemSettings(fromPost)
     var brightness2 = document.getElementById("Brightness2");
     var gamma2 = document.getElementById("gamma2");
     var stripType2 = document.getElementById("StripType2");
-    var channelEnabled2 = document.getElementById("channelEnabled2")
+    var channelEnabled2 = document.getElementById("channelEnabled2");
+	var matrixDirection2 = document.getElementById("matrixDirection2");
     
 	
     
@@ -557,7 +583,6 @@ function setLightSystemSettings(fromPost)
 					case 1:
 						motionDelay.value = feature.motionDelayOff;
 						motionGpio.value = feature.featureGpio;
-						alert(feature.featurePlayList);
 						motionPlaylist.value = feature.featurePlayList;
 						motionFeature.click();
 						
@@ -566,7 +591,8 @@ function setLightSystemSettings(fromPost)
 					case 2:
 						lightGpio.value = feature.featureGpio;               
 						lightPlaylist.value = feature.featurePlayList;
-						lightFeature.click()
+						lightFeature.click();
+						
 						break;
 
 					case 3:
@@ -580,7 +606,8 @@ function setLightSystemSettings(fromPost)
 					case 4:
 						luxPlaylist.value = feature.featurePlayList;
 						luxThreshold.value = feature.luxThreshHold;
-						luxFeature.click()
+						luxFeature.click();
+						
 						break;
 
 				}
@@ -604,8 +631,10 @@ function setLightSystemSettings(fromPost)
 					brightness.value = channel.brightness;
 					gamma.value = channel.gamma;
 					stripType.value = channel.stripType;
+					matrixDirection.value = channel.matrixDirection;
 					if(channel.enabled == 1)
 						channelEnabled.click();
+					
 					break;
 				
 				case 2:
@@ -616,8 +645,10 @@ function setLightSystemSettings(fromPost)
 					brightness2.value = channel.brightness;
 					gamma2.value = channel.gamma;
 					stripType2.value = channel.stripType;
+					matrixDirection2.value = channel.matrixDirection2;
 					if(channel.enabled == 1)
 						channelEnabled2.click();
+					
 					break;
 				
 				
@@ -761,6 +792,11 @@ function confirmDelete()
 			<input type="checkbox" id="channelEnabled" name="channelEnabled" /></td>
 
 		</tr>
+			
+		<tr>
+			<td><label for="matrixDirection">Matrix Direction</label></td>
+			<td><select name="matrixDirection" id="matrixDirection"><?php echo $direction; ?></select></td>
+		</tr>
 	</table>		  
 	</div>
 </div>
@@ -815,6 +851,12 @@ function confirmDelete()
 				<td><label for="enabled2">Enabled</label>
 				<input type="checkbox" id="channelEnabled2" name="channelEnabled2" /></td>
 
+			</tr>
+			
+			<tr>
+			<td><label for="matrixDirection2">Matrix Direction</label></td>
+			<td><select name="matrixDirection2" id="matrixDirection2"><?php echo $direction; ?></select></td>
+			
 			</tr>
 		</table>		  
 		</div>

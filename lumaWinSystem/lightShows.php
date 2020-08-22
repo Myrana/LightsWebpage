@@ -112,7 +112,7 @@ if(isset($_REQUEST['ClearQueue']))
 
 
 
-
+$_SESSION['lightShowInfo'] = "";
 if(isset($_REQUEST['LightShow']))
 {
 
@@ -237,20 +237,30 @@ if(isset($_REQUEST['LightShow']))
 		
 			if (move_uploaded_file($_FILES['uploadArt']['tmp_name'], $target_file)) 
 			{
-				echo "Received {$_FILES['uploadArt']['name']} - its size is {$_FILES['uploadArt']['size']} <br>";
-				echo "The file ". basename( $_FILES["uploadArt"]["name"]). " has been uploaded.";
+				
+				$target_dir = "/home/hellweek/code/uploadArt/";
+				$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
+
+				$_SESSION['lightShowInfo'] .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";
+				
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>File</td>" . "<td>" . $_FILES['uploadArt']['name'] . "</td></tr>";
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Size</td>" . "<td>" . $_FILES['uploadArt']['size'] . "</td></tr>";		
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Status</td>" . "<td>Upload Complete</td></tr>";	
+				$_SESSION['lightShowInfo'] .= "</table></div>";
+					
 				$sendArray['uploadArt'] = $target_file;
 				
 				if(!empty($_POST['saveArt']))
 					$sendArray['saveArt'] = 1;
-				
-			}
-			else
-			{
-				echo "error moving";
-			}
+					
+				}
+				else
+				{
+					echo "error moving";
+				}
 		}
-		
+					
+		echo $sendArray['matrixStartRow'];
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
 		
@@ -265,7 +275,7 @@ if(isset($_REQUEST['LightShow']))
 					
 				$row = mysqli_fetch_array($results);
 				
-				$sql = "insert into matrixArt(userID, artName, showParms, savedPixalsWidth, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','" . $row['stripColumns'] . "','1')" ;
+				$sql = "insert into matrixArt(userID, artName, showParms, savedPixalsWidth, enabled) values(". $_SESSION['UserID'] . ",'" . $_POST['saveArtName'] . "','" . json_encode($sendArray) . "','" . $row['stripColumns'] . "','1')" ;			
 				$sendArray['stripColumns'] = strval($row['stripColumns']);
 				if ($conn->query($sql) != TRUE)
 				{
@@ -290,6 +300,14 @@ if(isset($_REQUEST['btnPlayArtShow']))
 	$sendArray['playArtShow'] = 1;
 	$sendArray['artShowId'] = intval($_POST['PlayArtShow']);
 	$sendArray['UserID'] = intval($_SESSION['UserID']);
+	$sendArray['sc'] = intval($_POST['shiftColsArt']);
+		
+	if (!empty($_POST['clearStart']))
+		$sendArray['clearStart'] = 1;
+
+    if (!empty($_POST['clearFinish']))
+		$sendArray['clearFinish'] = 1;
+		
 	sendMQTT(getServerHostName($_SESSION["LightSystemID"]), json_encode($sendArray));
 }
 
@@ -366,6 +384,7 @@ include('header.php');
 	
 	function setArtSystem()
 	{
+		return;
 		var artShowId = document.getElementById("PlayArtShow");
 		if(artShowId.value != 0)
 		{
@@ -375,23 +394,30 @@ include('header.php');
 			
 			systemNameId.value = art.showParms.systemId;
 		}
+		
+		return;
 	}
 	
 	
 </script>
 		<p>		
-				<label>Playlist</label>
-				<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
-				<button type="submit" name="btnPlaylist">Play</button>
-				<p>
-				<label>Art</label>
-				<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
-				<button type="submit" name="btnPlayArtShow">Play Art</button>
-				</p>			
-				<p>		
-				<label>Playlist Editor</label>	
-				<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>
-				</p>
+			<label>Playlist</label>
+			<select id="PlayListId"  name="Playlist" onChange="setPlaylistName();"><?php echo $playlistoption;?></select>
+			<button type="submit" name="btnPlaylist">Play</button>
+		<p>
+			<label>Art</label>
+			
+			<select id="PlayArtShow"  name="PlayArtShow" onChange="setArtSystem();"><?php echo $_SESSION['userArtOptions'];?></select>
+			
+			<label for="shiftColsArt">Shift:</label></td>
+			<input type="number" id="shiftColsArt" name="shiftColsArt" min="-63" max="63" value="0" style="width: 35%" />		
+			
+			<button type="submit" name="btnPlayArtShow">Play Art</button>
+		</p>			
+		<p>		
+			<label>Playlist Editor</label>	
+			<button onclick="location.href='editShows.php'; return false" name="btnEditist">Editor</button>				
+		</p>
 			
 		</p>
 		
