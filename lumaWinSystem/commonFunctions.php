@@ -3,7 +3,7 @@
 session_start();
 $expireAfter = 120;
 
-
+	
 if(isset($_SESSION['last_action']))
 {
     
@@ -24,16 +24,11 @@ if(isset($_SESSION['last_action']))
  //Assings the current timestamp as last activity
 $_SESSION['last_action'] = time();
 
-$_SESSION['servername'] = "romoserver.local";
-$_SESSION['username'] = "hellweek";
-$_SESSION['password'] = "covert69guess";
-$_SESSION['dbName'] = "LedLightSystem";
-
 
 function getDatabaseConnection()
 {
 	// Create connection
-	$conn = new mysqli($_SESSION['servername'], $_SESSION['username'], $_SESSION['password'] , $_SESSION['dbName']);
+	$conn = new mysqli($_SESSION['DBServer'], $_SESSION['DBUserID'], $_SESSION['DBPassword'] , $_SESSION['DataBase']);
 	// Check connection
 	if ($conn->connect_error) 
 	{
@@ -92,7 +87,7 @@ function buildUserArt()
 function sendMQTT($arg_1, $arg_2)
 {
 	$client = new Mosquitto\Client();
-	$client->connect('romoserver.local', 1883, 5);
+	$client->connect($_SESSION['MQTTBroker'], 1883, 5);
 	$client->loop();
 	$mid = $client->publish($arg_1, $arg_2);
 	$client->loop();
@@ -115,7 +110,7 @@ function read_topic($arg_1)
 //	$client->onDisconnect('disconnect');
 	$client->onSubscribe('subscribe');
 	$client->onMessage('message');
-	$client->connect('romoserver.local', 1883, 5);
+	$client->connect($_SESSION['MQTTBroker'], 1883, 5);
 
 	$queue = $arg_1 . '/SystemStatus';
 	$client->subscribe($queue,1);

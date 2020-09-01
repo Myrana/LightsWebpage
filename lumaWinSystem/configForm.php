@@ -277,7 +277,11 @@ $matrixDirection = mysqli_query($conn,"SELECT ID, description FROM lMatrixDirect
 $direction = '';
 while($query_data = mysqli_fetch_array($matrixDirection))
 {
-    $direction .="<option value = '".$query_data['ID']."'>".$query_data['description']."</option>";
+	if($query_data['ID'] != 0)
+		$direction .="<option value = '".$query_data['ID']."'>".$query_data['description']."</option>";
+	else
+		$direction .="<option value = '".$query_data['ID']."' selected>".$query_data['description']."</option>";
+	
 }
 	
 $playlistoption = '';
@@ -513,9 +517,7 @@ function setLightSystemSettings(fromPost)
     var stripType2 = document.getElementById("StripType2");
     var channelEnabled2 = document.getElementById("channelEnabled2");
 	var matrixDirection2 = document.getElementById("matrixDirection2");
-    
-	
-    
+        
     //feature realted info
     var motionFeature = document.getElementById("motionFeature");
     var lightFeature = document.getElementById("lightFeature");
@@ -541,7 +543,6 @@ function setLightSystemSettings(fromPost)
 		
     var index = parseInt(systemNameId.value);
     var system = systemsMap.get(index);
-
     
 
     lightSystemName.value = system.systemName;
@@ -645,7 +646,7 @@ function setLightSystemSettings(fromPost)
 					brightness2.value = channel.brightness;
 					gamma2.value = channel.gamma;
 					stripType2.value = channel.stripType;
-					matrixDirection2.value = channel.matrixDirection2;
+					matrixDirection2.value = channel.matrixDirection;
 					if(channel.enabled == 1)
 						channelEnabled2.click();
 					
