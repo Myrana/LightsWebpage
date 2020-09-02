@@ -2,16 +2,18 @@
 
 include('commonFunctions.php');
 
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: index.php");
+  exit();
+}
+
 
 $_SESSION["DesignerEditMode"] = 0;
 
 $conn = getDatabaseConnection();
 
-if($_SESSION['authorized'] == 0)
-{
-  header("Location: registration.php");
-  exit();
-}
+
 
 $sendArray['UserID'] = "";
 if(!empty($_REQUEST))
@@ -232,18 +234,13 @@ if(isset($_REQUEST['LightShow']))
 		
 		if(!empty($_FILES['uploadArt']['tmp_name']))
 		{
-			$target_dir = "/home/hellweek/code/uploadArt/";
-			$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
-		
+			$target_file = $_SESSION['UploadArtDir'] . basename($_FILES["uploadArt"]["name"]);
+
 			if (move_uploaded_file($_FILES['uploadArt']['tmp_name'], $target_file)) 
 			{
-				
-				$target_dir = "/home/hellweek/code/uploadArt/";
-				$target_file = $target_dir . basename($_FILES["uploadArt"]["name"]);
-
-				$_SESSION['lightShowInfo'] .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";
-				
-				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>File</td>" . "<td>" . $_FILES['uploadArt']['name'] . "</td></tr>";
+			
+				$_SESSION['lightShowInfo'] .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";				
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>File</td>" . "<td>" . $target_file . "</td></tr>";
 				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Size</td>" . "<td>" . $_FILES['uploadArt']['size'] . "</td></tr>";		
 				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Status</td>" . "<td>Upload Complete</td></tr>";	
 				$_SESSION['lightShowInfo'] .= "</table></div>";
@@ -253,14 +250,20 @@ if(isset($_REQUEST['LightShow']))
 				if(!empty($_POST['saveArt']))
 					$sendArray['saveArt'] = 1;
 					
-				}
-				else
-				{
-					echo "error moving";
-				}
+			}
+			else
+			{
+				$_SESSION['lightShowInfo'] .= "<div id='systemStyles' class='systemStyles'><table style='width:100%; font-size:14px; font-weight:bold;'>";				
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>File</td>" . "<td>" . $target_file . "</td></tr>";
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Size</td>" . "<td>" . $_FILES['uploadArt']['size'] . "</td></tr>";		
+				$_SESSION['lightShowInfo'] .= "<tr>" . "<td>Status</td>" . "<td>Error Moving File!</td></tr>";	
+				$_SESSION['lightShowInfo'] .= "</table></div>";
+			}
+		
+				
 		}
 					
-		echo $sendArray['matrixStartRow'];
+					
 		
         $sendArray['systemId'] = $_SESSION['LightSystemID'];
 		

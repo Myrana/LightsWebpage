@@ -2,6 +2,13 @@
 
 include_once('commonFunctions.php');
 
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: index.php");
+  exit();
+}
+
+
 $conn = getDatabaseConnection();
 
 if(!empty($_REQUEST))
@@ -9,12 +16,6 @@ if(!empty($_REQUEST))
     if(!empty($_POST['LightSystem']))
         $_SESSION["LightSystemID"]  = $_POST['LightSystem'];
 
-}
-
-if($_SESSION['authorized'] == 0)
-{
-  header("Location: lightShows.php");
-  exit();
 }
 
 

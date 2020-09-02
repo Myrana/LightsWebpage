@@ -6,7 +6,7 @@ include_once('commonFunctions.php');
 
 if($_SESSION['authorized'] == 0)
 {
-  header("Location: registration.php");
+  header("Location: index.php");
   exit();
 }
 

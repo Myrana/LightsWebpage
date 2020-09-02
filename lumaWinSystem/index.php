@@ -2,29 +2,32 @@
 include_once("commonFunctions.php");
 
 
+$_SESSION['authorized'] = 0;			
 if(isset($_REQUEST['Login']))
-{ 
+{ 	
 	$confFile = realpath("/etc") . "/rpilightsystem.conf";
 	echo $confFile;
 
 	if(file_exists($confFile))
 	{
 		
+		
 		$confFile = realpath("/etc") . "/rpilightsystem.conf";
 		echo $confFile;
 
 		if(file_exists($confFile))
 		{
+			
 			$ini_array = parse_ini_file($confFile);	
 			$_SESSION['DBServer'] = $ini_array["DBServer"];
 			$_SESSION['DBUserID'] = $ini_array["DBUserID"];
 			$_SESSION['DBPassword'] = $ini_array["DBPassword"];
 			$_SESSION['DataBase'] = $ini_array["DataBase"];
 			$_SESSION['MQTTBroker'] = $ini_array["MQTTBroker"];
+			$_SESSION['UploadArtDir'] = $ini_array["UploadArtDir"];
 			
 		
 			$conn = getDatabaseConnection();
-			$_SESSION['authorized'] = 0;
 			$qry = "SELECT ID,isAdmin FROM lumaUsers WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
 
 			$row = mysqli_query($conn, $qry);
