@@ -2,6 +2,13 @@
 
 include_once('commonFunctions.php');
 
+if($_SESSION['authorized'] == 0)
+{
+  header("Location: index.php");
+  exit();
+}
+
+
 $conn = getDatabaseConnection();
 
 if(!empty($_REQUEST))
@@ -9,12 +16,6 @@ if(!empty($_REQUEST))
     if(!empty($_POST['LightSystem']))
         $_SESSION["LightSystemID"]  = $_POST['LightSystem'];
 
-}
-
-if($_SESSION['authorized'] == 0)
-{
-  header("Location: lightShows.php");
-  exit();
 }
 
 
@@ -277,7 +278,11 @@ $matrixDirection = mysqli_query($conn,"SELECT ID, description FROM lMatrixDirect
 $direction = '';
 while($query_data = mysqli_fetch_array($matrixDirection))
 {
-    $direction .="<option value = '".$query_data['ID']."'>".$query_data['description']."</option>";
+	if($query_data['ID'] != 0)
+		$direction .="<option value = '".$query_data['ID']."'>".$query_data['description']."</option>";
+	else
+		$direction .="<option value = '".$query_data['ID']."' selected>".$query_data['description']."</option>";
+	
 }
 	
 $playlistoption = '';
@@ -513,9 +518,7 @@ function setLightSystemSettings(fromPost)
     var stripType2 = document.getElementById("StripType2");
     var channelEnabled2 = document.getElementById("channelEnabled2");
 	var matrixDirection2 = document.getElementById("matrixDirection2");
-    
-	
-    
+        
     //feature realted info
     var motionFeature = document.getElementById("motionFeature");
     var lightFeature = document.getElementById("lightFeature");
@@ -541,7 +544,6 @@ function setLightSystemSettings(fromPost)
 		
     var index = parseInt(systemNameId.value);
     var system = systemsMap.get(index);
-
     
 
     lightSystemName.value = system.systemName;
@@ -645,7 +647,7 @@ function setLightSystemSettings(fromPost)
 					brightness2.value = channel.brightness;
 					gamma2.value = channel.gamma;
 					stripType2.value = channel.stripType;
-					matrixDirection2.value = channel.matrixDirection2;
+					matrixDirection2.value = channel.matrixDirection;
 					if(channel.enabled == 1)
 						channelEnabled2.click();
 					
@@ -878,7 +880,7 @@ function confirmDelete()
 
 			<p>
 			<label for="motionPlaylist">Motion Playlist:</label>
-			<select id="motionPlayListId"  name="motionPlaylist">
+			<select id="motionPlayListId"  name="motionPlaylist" value= "0">
 			<?php echo $playlistoption;?>
 			</select>
 			</p>
@@ -900,7 +902,7 @@ function confirmDelete()
 		<div id="lightFields" style="display: none">
 	
 			<label for="OnlightPlaylist">Light Playlist:</label>
-			<select id="lightPlayListId"  name="lightPlaylist">
+			<select id="lightPlayListId"  name="lightPlaylist" value = "0">
         	<?php echo $playlistoption;?>
         	</select>
 		
@@ -932,7 +934,7 @@ function confirmDelete()
 		
 			<p>
 			<label for="timePlaylist">Time Playlist:</label>
-			<select id="timePlayListId"  name="timePlaylist">
+			<select id="timePlayListId"  name="timePlaylist" value = "0">
         	<?php echo $playlistoption;?>
         	</select>
 			</p>

@@ -963,9 +963,12 @@ function setSystemSettings()
 	var widthOutput = document.getElementById("WidthValue");
 	var chgBrightnessId = document.getElementById("ChgBrightnessId");
 	var brightness = document.getElementById("Brightness");
+	
+	
 
 	var systemNameId = document.getElementById("SystemNameId");
 	var channelId = document.getElementById("ChannelId");
+	var shiftColsArt = document.getElementById("shiftColsArt");
 	
 	var index = parseInt(systemNameId.value);
 	var system = systemsMap.get(index);
@@ -983,8 +986,10 @@ function setSystemSettings()
 		
 	}
 	
-	
+	shiftColsArt.max = system.channelsMap.get(1).stripColumns - 1;
+	shiftColsArt.min = -(system.channelsMap.get(1).stripColumns - 1);
 	var numLeds = system.channelsMap.get(1).stripRows * system.channelsMap.get(1).stripColumns;
+	
 	if(widthId.value > numLeds)
 	{
 		widthId.setAttribute('value', numLeds);
