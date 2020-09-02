@@ -879,7 +879,7 @@ function confirmDelete()
 
 			<p>
 			<label for="motionPlaylist">Motion Playlist:</label>
-			<select id="motionPlayListId"  name="motionPlaylist">
+			<select id="motionPlayListId"  name="motionPlaylist" value= "0">
 			<?php echo $playlistoption;?>
 			</select>
 			</p>
@@ -901,7 +901,7 @@ function confirmDelete()
 		<div id="lightFields" style="display: none">
 	
 			<label for="OnlightPlaylist">Light Playlist:</label>
-			<select id="lightPlayListId"  name="lightPlaylist">
+			<select id="lightPlayListId"  name="lightPlaylist" value = "0">
         	<?php echo $playlistoption;?>
         	</select>
 		
@@ -933,7 +933,7 @@ function confirmDelete()
 		
 			<p>
 			<label for="timePlaylist">Time Playlist:</label>
-			<select id="timePlayListId"  name="timePlaylist">
+			<select id="timePlayListId"  name="timePlaylist" value = "0">
         	<?php echo $playlistoption;?>
         	</select>
 			</p>
