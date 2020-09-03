@@ -3,6 +3,26 @@
 session_start();
 $expireAfter = 120;
 
+
+if(!isset($_SESSION['DBServer']))
+{
+	$confFile = realpath("/etc") . "/rpilightsystem.conf";
+	if(file_exists($confFile))
+	{
+	
+		if(file_exists($confFile))
+		{	
+			$ini_array = parse_ini_file($confFile);	
+			$_SESSION['DBServer'] = $ini_array["DBServer"];
+			$_SESSION['DBUserID'] = $ini_array["DBUserID"];
+			$_SESSION['DBPassword'] = $ini_array["DBPassword"];
+			$_SESSION['DataBase'] = $ini_array["DataBase"];
+			$_SESSION['MQTTBroker'] = $ini_array["MQTTBroker"];
+			$_SESSION['UploadArtDir'] = $ini_array["UploadArtDir"];
+		}
+	}
+}
+	
 	
 if(isset($_SESSION['last_action']))
 {
