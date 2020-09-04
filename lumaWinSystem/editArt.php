@@ -15,18 +15,25 @@ $conn = getDatabaseConnection();
 $playlistoption = "";
 $playListScript = "";
 
+
+	
 if(isset($_REQUEST['btnCommitArtShow']))
 {
+	if(!empty($_POST['ChannelId']))
+		$_SESSION['ChannelId'] = $_POST['ChannelId'];
+
+
 	if(!empty($_POST['jsonContainer']))
     {
 		 $sql = "select stripColumns from lightSystemChannels where lightSystemId = '" . $_SESSION['LightSystemID'] . "' and channelId = '" . $_SESSION['ChannelId'] . "';";
 		  
-		  $results = mysqli_query($conn , $sql);
+		 $results = mysqli_query($conn , $sql);
 		  
 		  if(mysqli_num_rows($results) > 0)
           {
 				$row = mysqli_fetch_array($results);
 				$sql = "update matrixArt set showParms='" . $_POST['jsonContainer'] . "', savedPixalsWidth = '" . $row['stripColumns'] . "' where ID = " . $_POST['PlayArtShow'];
+				
 	    
 				if ($conn->query($sql) == FALSE)
 				{
@@ -235,7 +242,6 @@ function saveArtSettings()
 			
 	
 	storeMatrix();
-	
 	if(matrixData.value.length > 0 )
 	{
 		
