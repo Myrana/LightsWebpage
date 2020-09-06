@@ -740,8 +740,8 @@ function confirmDelete()
 			</p>
 		
 			<p>
-			<label for="twitchMqttQueue">MQTT Queue:</label> <br />
-			<input type="text" id="twitchMqttQueue" name="twitchMqttQueue" placeholder="Queue name here" />
+			<label for="twitchMqttQueue">Twitch MQTT Queue:</label> <br />
+			<input type="text" id="twitchMqttQueue" name="twitchMqttQueue" placeholder="Twitch Queue name" />
 			</p>
 					 
 			<p>
