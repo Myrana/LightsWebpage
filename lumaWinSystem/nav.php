@@ -2,8 +2,8 @@
 
 <center><img src="Images/winslowBanner.png" alt="LumaWin LED Systems"></center>
 	<nav>
-	  <ul><a href="registration.php" title="Registration"><i class="fas fa-user-plus" style="color: #FF0004"></i></a></ul>  
 	   <?php if($_SESSION['isAdmin'] == 1) 
+	    echo '<ul><a href="registration.php" title="Registration"><i class="fas fa-user-plus" style="color: #FF0004"></i></a></ul>';
 		echo '<ul><a href="configForm.php" title="Configuration"><i class="fas fa-cogs" style="color: #F97400"></i></a></ul>';
 	  ?>
 	  
