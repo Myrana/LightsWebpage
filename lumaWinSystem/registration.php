@@ -5,23 +5,25 @@ include_once('commonFunctions.php');
 if (!empty($_POST)) 
 {
  
-    $username= $_POST['username'];
-    $password = $_POST['password'];
-    $admin = $_POST['admin'];
-    $email = $_POST['email'];
-    $phonenumber = $_POST['phonenumber'];
-    $twitter = $_POST['twitter'];
-
-	//$sql = "INSERT INTO lightSystems(systemName, serverHostName, stripType, stripHeight, stripWidth, dma, gpio) VALUES('')
-
-	//$sql = "INSERT INTO lightSystems(systemName,serverHostName, stripType) VALUES('" . '$lightSystemName' . "','" . '$serverHostName' . "', 257)";
-
-	$sql = "INSERT INTO lumaUsers(username, password, email, phonenumber, twitter) VALUES('" . $_POST['username'] . "','" . $_POST['password'] . "', '" . $_POST['email'] . "','" . $_POST['phonenumber'] . "','" . $_POST['twitter'] . "')";
-
-
-	if ($conn->query($sql) === TRUE) {
+     
+	$conn = getDatabaseConnection();
+ 
+    $authorized = 0;
+    $isAdmin = 0;
+    if(!empty($_POST['authorized']))
+		$authorized = 1;
+	
+    if(!empty($_POST['admin']))
+		$isAdmin = 1;
+    	
+	$sql = "INSERT INTO lumaUsers(username, password, email, phonenumber, twitter, isAdmin, authorized) VALUES('" . $_POST['username'] . "','" . $_POST['password'] . "', '" . $_POST['email'] . "','" . $_POST['phonenumber'] . "','" . $_POST['twitter'] . "','" . $isAdmin . "','" . $authorized . "')";
+	
+	if ($conn->query($sql) === TRUE) 
+	{
 	  echo "<h1>Your record was added to the database successfully.</h1>";
-	} else {
+	} 
+	else 
+	{
 	  echo "<h1>Error: " . $conn->error . "</h1>";
 	}
 
@@ -57,9 +59,16 @@ include('header.php');
 
 			<p>
 			<label for="admin">Is admin?:</label><br />
-			<input type="checkbox" id="admin" name="admin" value="admin">
+			<input type="checkbox" id="admin" name="admin" >
 			<label for="admin">Yes</label>
 			</p>
+
+			<p>
+			<label for="authorized">Authorized:</label><br />
+			<input type="checkbox" id="authorized" name="authorized">
+			<label for="authorized">Yes</label>
+			</p>
+			
 
 			<p>
 			<label for="email">Email:</label><br />
