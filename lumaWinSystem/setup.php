@@ -4,7 +4,6 @@ include_once('commonFunctions.php');
 
 if (!empty($_POST)) 
 {
- 
 
 	$conn = getDatabaseConnection();
 	$qry = "SELECT ID,isAdmin FROM lumaUsers";
@@ -54,7 +53,7 @@ include('header.php');
 
 			<p>
 			<label for="password">Password:</label><br />
-			<input type="paaword" name="password" type="text" id="password" placeholder="Admin Password" maxlength="50">
+			<input type="password" name="password" type="text" id="password" placeholder="Admin Password" maxlength="50">
 			</p>
 
 			<button type="submit" name="Submit">Setup</button>

@@ -55,7 +55,7 @@ if(isset($_REQUEST['Edit']))
 		$luxEnabled = '1';
 		
 	
-	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='" . $systemEnabled . "',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "', twitchMqttQueue = '" . $_POST['twitchMqttQueue'] ."'  where ID = '" . $_SESSION["LightSystemID"] . "';";
+	$sql = "update lightSystems set SystemName = '" . $_POST['LightSystemName'] . "',serverHostName = '" . $_POST['ServerHostName'] . "', enabled='" . $systemEnabled . "',userId= '" . $_POST['userID'] . "', twitchSupport = '" . $twitchSupport . "', mqttRetries = '" . $_POST['mqttRetries'] . "', mqttRetryDelay = '" . $_POST['mqttRetryDelay'] . "', twitchMqttQueue = '" . $_POST['twitchMqttQueue'] . "', mqttBroker = '" . $_POST['mqttBroker'] ."'  where ID = '" . $_SESSION["LightSystemID"] . "';";
 	if ($conn->query($sql) == TRUE)
 	{
 		$channels = "";
@@ -165,8 +165,8 @@ if(isset($_REQUEST['Config']))
 		$luxEnabled = '1';
 
 		
-    $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay, twitchMqttQueue) VALUES('" . $_POST['LightSystemName'] . 
-		"','" . $_POST['ServerHostName'] . "', '" . $systemEnabled . "', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "', '" . $_POST['twitchMqttQueue'] . "')";
+    $sql = "INSERT INTO lightSystems(systemName, serverHostName, enabled, userId, twitchSupport, mqttRetries, mqttRetryDelay, twitchMqttQueue, mqttBroker) VALUES('" . $_POST['LightSystemName'] . 
+		"','" . $_POST['ServerHostName'] . "', '" . $systemEnabled . "', '" . $_POST['userID'] . "', '" . $twitchSupport . "', '" . $_POST['mqttRetries'] . "', '" . $_POST['mqttRetryDelay'] . "', '" . $_POST['twitchMqttQueue'] . "', '" . $_POST['mqttBroker'] . "')";
 	
 	if ($conn->query($sql) === TRUE)
     {
@@ -316,6 +316,7 @@ if(mysqli_num_rows($systemResults) > 0)
 		$lightSystemsScript .= "    system.mqttRetries = " . $systemRow['mqttRetries'] . ";\r";
 		$lightSystemsScript .= "    system.mqttRetryDelay = " . $systemRow['mqttRetryDelay']   .";\r";
 		$lightSystemsScript .= "    system.twitchMqttQueue = '" . $systemRow['twitchMqttQueue'] ."';\r";
+		$lightSystemsScript .= "    system.mqttBroker = '" . $systemRow['mqttBroker'] ."';\r";		
 		$lightSystemsScript .= "    system.channelsMap = new Map();\r";
 		$lightSystemsScript .= "    system.featuresMap = new Map();\r";
 		
@@ -497,6 +498,8 @@ function setLightSystemSettings(fromPost)
 	var mqttRetryDelay = document.getElementById("mqttRetryDelay");
 	var twitchMqttQueue = document.getElementById("twitchMqttQueue");
 	var systemEnabled = document.getElementById("systemEnabled");
+    var mqttBroker = document.getElementById("mqttBroker");
+	
 	
     //channel related info
     var stripColumns = document.getElementById("StripColumns");
@@ -548,12 +551,15 @@ function setLightSystemSettings(fromPost)
 
     lightSystemName.value = system.systemName;
     serverHostName.value = system.serverHostName;
+    mqttBroker.value = system.mqttBroker;
+	
 	userID.value = system.userId;
 	mqttRetries.value = system.mqttRetries;
 	mqttRetryDelay.value = system.mqttRetryDelay;
 	twitchMqttQueue.value = system.twitchMqttQueue;
     twitchSupport.checked = system.twitchSupport;
 	systemEnabled.checked = system.enabled;
+	
 	
 	if(motionFeature.checked == true)
         motionFeature.click();
@@ -711,6 +717,10 @@ function confirmDelete()
 	  		<input name="ServerHostName" type="text" id="ServerHostName" placeholder="50 characters or less" maxlength="50">
 			</p>
 
+	       <p><label for="mqttBroker">MQTT Broker Address:</label><br />
+	  	  <input name="mqttBroker" type="text" id="mqttBroker" placeholder="50 characters or less" maxlength="50">
+			</p>
+			
 			<p>
 			<label for="enabled">Enabled</label>
 			<input type="checkbox" id="systemEnabled" name="systemEnabled" />
