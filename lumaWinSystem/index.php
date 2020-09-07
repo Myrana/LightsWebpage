@@ -7,13 +7,13 @@ if(isset($_REQUEST['Login']))
 { 	
 			
 	$conn = getDatabaseConnection();
-	$qry = "SELECT ID,isAdmin FROM lumaUsers WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
+	$qry = "SELECT ID,isAdmin,defaultLightSystem FROM lumaUsers WHERE username = '" . $_POST['Username'] . "' and password = '" . $_POST['Password'] ."' and authorized = 1";
 	$row = mysqli_query($conn, $qry);
 	if(mysqli_num_rows($row) == 1)
 	{
 		$query_data = mysqli_fetch_array($row);
 
-		$_SESSION['LightSystemID'] = -1;
+		$_SESSION['LightSystemID'] = $query_data['defaultLightSystem'];
 		$_SESSION['User'] = $_POST['Username'];
 		$_SESSION['UserID'] = $query_data['ID'];
 		$_SESSION['isAdmin'] = $query_data['isAdmin'];  
@@ -38,14 +38,6 @@ if(isset($_REQUEST['Login']))
 		$_SESSION['direction'] = 1;
 		$_SESSION['ShowName'] = 0; 
 		
-		$sysResults = mysqli_query($conn, "SELECT ID FROM lightSystems where userId =" . $_SESSION['UserID'] . " or userId = 1");
-		if(mysqli_num_rows($sysResults) > 0)
-		{
-			$sysRow = mysqli_fetch_array($sysResults);
-			$_SESSION['LightSystemID'] = $sysRow['ID'];
-			
-
-		}
 		
 		$_SESSION['authorized'] = 1;
 		header('Location:lightShows.php');
