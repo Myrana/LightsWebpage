@@ -64,7 +64,7 @@ while($query_data = mysqli_fetch_array($displayUsername))
 			</select>	
 			</p>
 	</div>
-	<div class="column seventy-five">
+	<div class="column seventy-five ColumnStyles">
 			<p>
 			<label for="username">Username:</label><br />
 			<input name="username" type="text" id="username" placeholder="50 characters or less" maxlength="100">
