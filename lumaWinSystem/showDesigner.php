@@ -51,8 +51,8 @@ if(mysqli_num_rows($systemResults) > 0)
 			
 		
 		$_SESSION['lightSystemsScript'] .= "var system = new Object(); \r";
-
-        $_SESSION['lightSystemsScript'] .= "    system.id = " . $systemRow['ID'] . ";\r";
+	
+	    $_SESSION['lightSystemsScript'] .= "    system.id = " . $systemRow['ID'] . ";\r";
         $_SESSION['lightSystemsScript'] .= "    system.systemName = '" . $systemRow['systemName'] . "';\r";
         $_SESSION['lightSystemsScript'] .= "    system.serverHostName = '" . $systemRow['serverHostName'] . "';\r";
         $_SESSION['lightSystemsScript'] .= "    system.enabled = " . $systemRow['enabled'] . ";\r";
