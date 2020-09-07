@@ -709,6 +709,8 @@ function confirmDelete()
 	
 	<div class="column thirty-three">
 		<div class="ColumnStyles">
+			<label for="enabled">Enabled</label>
+			<input type="checkbox" id="systemEnabled" name="systemEnabled" />
 	
 			<p><label for="LightSystemName">Light System Name:</label><br />
 	  		<input name="LightSystemName" type="text" id="LightSystemName" placeholder="100 characters or less" maxlength="100"></p>
@@ -721,10 +723,8 @@ function confirmDelete()
 	  	  <input name="mqttBroker" type="text" id="mqttBroker" placeholder="50 characters or less" maxlength="50">
 			</p>
 			
-			<p>
-			<label for="enabled">Enabled</label>
-			<input type="checkbox" id="systemEnabled" name="systemEnabled" />
 			
+			<p>
 			<label for="twitchSupport">Twitch Support</label>
 			<input type="checkbox" id="twitchSupport" name="twitchSupport" />
 			</p>
@@ -755,7 +755,10 @@ function confirmDelete()
 		
 	<div class="column fifty">
 		<div class="ColumnStyles">
-			Channel 1
+			Channel 1 
+			<label for="enabled">Enabled</label>
+			<input type="checkbox" id="channelEnabled" name="channelEnabled" />|
+
 		<table>
 			<tr>
 				<td><label for="StripType">Strip Type:</label></td>
@@ -798,12 +801,6 @@ function confirmDelete()
 			<td><label for="ongamma">Gamma:</label></td>
 			<td><input type="number" id="gamma" name="gamma" step=".1" min=".1" max="3.0" value="1"></td>
 			</tr>
-
-		<tr>
-			<td><label for="enabled">Enabled</label>
-			<input type="checkbox" id="channelEnabled" name="channelEnabled" /></td>
-
-		</tr>
 			
 		<tr>
 			<td><label for="matrixDirection">Matrix Direction</label></td>
@@ -816,6 +813,8 @@ function confirmDelete()
 	<div class="column fifty">
 		<div class="ColumnStyles">
 			Channel 2
+			<label for="enabled2">Enabled</label>
+			<input type="checkbox" id="channelEnabled2" name="channelEnabled2" />
 		<table>
 			<tr>
 				<td><label for="StripType2">Strip Type:</label></td>
@@ -858,12 +857,6 @@ function confirmDelete()
 				<td><label for="ongamma2">Gamma:</label></td>
 				<td><input type="number" id="gamma2" name="gamma2" step=".1" min=".1" max="3.0" value="1"></td>
 				</tr>
-
-			<tr>
-				<td><label for="enabled2">Enabled</label>
-				<input type="checkbox" id="channelEnabled2" name="channelEnabled2" /></td>
-
-			</tr>
 			
 			<tr>
 			<td><label for="matrixDirection2">Matrix Direction</label></td>
