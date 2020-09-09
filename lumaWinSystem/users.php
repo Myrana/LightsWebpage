@@ -173,7 +173,8 @@ include('nav.php');
 			</select>	
 			</p>
 	</div>
-	<div class="column seventy-five ColumnStyles">
+	<div class="column seventy-five">
+	<div class="ColumnStyles">	
 			<p>
 			<label for="username">Username:</label><br />
 			<input name="username" type="text" id="username" placeholder="50 characters or less" maxlength="100">
@@ -206,6 +207,7 @@ include('nav.php');
 			<button type="submit" name="btnEditUser">Edit User</button>
 			<button type="submit" name="btnRemoveUser">Remove User</button>
 		</form>
+	</div>
 	</div>
 </body>
 	<?php include("footer.php"); ?>
