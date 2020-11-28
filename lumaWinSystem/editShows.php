@@ -301,7 +301,7 @@ function hexToRgb(hex)
 
                     var colors = JSON.parse(json);
 
-                    playList.showParms[parmIndex].colors = colors;
+                    playList.showParms[parmIndex].c = colors;
 
                   break;
 
@@ -309,7 +309,7 @@ function hexToRgb(hex)
                     var cvtColor = hexToRgb(color1.value);
                     var json = '{"c1": "' + color1.value + '"},';
                     json += '{"c2": "' + color2.value + '"}';
-                    playList.showParms[parmIndex].colors = colors;
+                    playList.showParms[parmIndex].c = colors;
 
                   break;
 
@@ -321,7 +321,7 @@ function hexToRgb(hex)
                     
                     var colors = JSON.parse(json);
 
-                    playList.showParms[parmIndex].colors = colors;
+                    playList.showParms[parmIndex].c = colors;
 
                   break;
 

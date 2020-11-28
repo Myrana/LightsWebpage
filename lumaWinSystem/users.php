@@ -182,7 +182,7 @@ include('nav.php');
 
 			<p>
 			<label for="password">Password:</label><br />
-			<input name="password" type="text" id="password" placeholder="50 characters or less" maxlength="50">
+			<input name="password" type="password" id="password" placeholder="50 characters or less" maxlength="50">
 			</p>
 			
 			<p><label for="onLightSystem">Light System:</label><br />

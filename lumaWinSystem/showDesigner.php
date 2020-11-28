@@ -1011,5 +1011,3 @@ setShowSettings(true);
 
 		
 </script>    
-
-		
